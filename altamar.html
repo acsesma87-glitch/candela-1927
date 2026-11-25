@@ -252,8 +252,12 @@ const D=n=>(S.days[n]=S.days[n]||{scene:0,found:[],done:false,flags:{}});
 
 // ================= girar en vertical =================
 let rot=false;
-function layout(){rot=innerHeight>innerWidth;app.classList.toggle('rot',rot);sizeStage()}
-const toApp=(cx,cy)=>rot?[cy,innerWidth-cx]:[cx,cy];
+function layout(){const vv=window.visualViewport,W=Math.round(vv?vv.width:innerWidth),H=Math.round(vv?vv.height:innerHeight);
+  rot=H>W;app.classList.toggle('rot',rot);
+  // tamaño real visible (sin las barras del navegador), no 100vh
+  app.style.width=(rot?H:W)+'px';app.style.height=(rot?W:H)+'px';sizeStage()}
+if(window.visualViewport)visualViewport.addEventListener('resize',layout);
+const toApp=(cx,cy)=>rot?[cy,app.clientHeight-cx]:[cx,cy];
 addEventListener('resize',layout);addEventListener('orientationchange',()=>setTimeout(layout,250));
 
 // ================= calendario =================
@@ -297,7 +301,7 @@ function draw(){if(!SC)return;const k=K(),x=px*k,y=py*k,l=L(),z=2.6;
   if(lensSvg){const[fx,fy]=focus(),vw=(l-12)/k/z;lensSvg.setAttribute('viewBox',`${fx-vw/2} ${fy-vw/2} ${vw} ${vw}`)}}
 function rel(e){const[ax,ay]=toApp(e.clientX,e.clientY);const r=st.getBoundingClientRect();
   // r está en coordenadas de pantalla; pasamos a las de la app
-  const o=rot?[r.top,innerWidth-r.right]:[r.left,r.top];return[(ax-o[0])/K(),(ay-o[1])/K()]}
+  const o=rot?[r.top,app.clientHeight-r.right]:[r.left,r.top];return[(ax-o[0])/K(),(ay-o[1])/K()]}
 const mv=(x,y)=>{const m=marg();px=Math.min(800-m,Math.max(m,x));py=Math.min(500-m,Math.max(m,y));draw()};
 const GAIN=1.5;
 function setTool(t){if(busy&&t!=='mano')return;tool=t;st.classList.toggle('t-linterna',t==='linterna');st.classList.toggle('t-lupa',t==='lupa');
