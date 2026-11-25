@@ -1,4 +1,4 @@
-const C='candela-1927-v17';
+const C='candela-1927-v18';
 const F=["./","index.html","viaje.html","herramientas.html","altamar.html","manifest.webmanifest","icon-192.png","icon-512.png","icon-180.png"];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
