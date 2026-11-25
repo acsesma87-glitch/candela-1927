@@ -91,7 +91,7 @@ aside li .tg{display:inline-block;font-size:13px;padding:0 8px;border-radius:10p
     <button id="tLupa" aria-pressed="false"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="13" cy="13" r="8"/><path d="M19 19l9 9"/></svg>Lupa</button>
     <button id="tLaika"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 20c0-5 4-8 9-8h7l3-4 3 1-1 5c1 1 2 3 2 5"/><path d="M9 20v6M14 20v6M22 20v6M27 19v7M5 20l-2-5"/></svg>Soltar a Laika</button>
   </div>
-  <p class="cap" id="cap">La linterna ilumina donde apuntas. Agárrala por el borde de la luz y arrástrala por la habitación.</p>
+  <p class="cap" id="cap">La linterna ilumina donde apuntas. Desliza el dedo por cualquier parte de la pantalla para moverla.</p>
 </div>
 <aside aria-live="polite"><h2>Comprobado</h2><p class="n" id="cnt"></p><ul id="list"></ul></aside>
 </div>
@@ -124,7 +124,7 @@ function toast(t){q.push(t);if(!showing)next()}
 function next(){const t=q.shift();if(!t){showing=false;return}showing=true;const el=$('#toast');el.innerHTML=t;el.classList.add('on');setTimeout(()=>{el.classList.remove('on');setTimeout(next,400)},2600)}
 function setTool(t){tool=t;st.classList.toggle('t-linterna',t==='linterna');st.classList.toggle('t-lupa',t==='lupa');
   $('#tLinterna').setAttribute('aria-pressed',t==='linterna');$('#tLupa').setAttribute('aria-pressed',t==='lupa');
-  $('#cap').textContent=t==='lupa'?'La lupa amplía lo que tiene debajo. Agárrala por el borde y pásala despacio por los detalles.':'La linterna ilumina donde apuntas. Agárrala por el borde de la luz y arrástrala por la habitación.';draw()}
+  $('#cap').textContent=t==='lupa'?'La lupa amplía lo que tiene debajo. Desliza el dedo por cualquier parte para moverla despacio por los detalles.':'La linterna ilumina donde apuntas. Desliza el dedo por cualquier parte de la pantalla para moverla.';draw()}
 $('#tLinterna').onclick=()=>setTool('linterna');$('#tLupa').onclick=()=>setTool('lupa');
 const L=()=>Math.round(Math.min(220,Math.max(130,st.clientWidth*.27)));
 function draw(){
@@ -138,10 +138,12 @@ let grab=null;
 function rel(e){const r=st.getBoundingClientRect();return[(e.clientX-r.left)/r.width*800,(e.clientY-r.top)/r.height*500]}
 function toolR(){const W=st.clientWidth,k=W/800;return tool==='lupa'?L()/2/k:Math.max(90,W*.17)*.75/k}
 const clampMove=(x,y)=>{px=Math.min(800,Math.max(0,x));py=Math.min(500,Math.max(0,y));draw()};
+let placed=false;
 st.addEventListener('pointerdown',e=>{
   st.setPointerCapture(e.pointerId);const[x,y]=rel(e);
-  if(Math.hypot(x-px,y-py)<=toolR()){grab=[px-x,py-y]}      // dedo dentro: se agarra sin moverla
-  else{grab=[0,0];clampMove(x,y)}                         // dedo fuera: salta ahí
+  if(e.pointerType==='mouse'){grab=[0,0];clampMove(x,y);return}
+  if(!placed){const d=toolR()*.68;clampMove(x-d,y-d);placed=true}   // primera vez: el dedo queda en el borde inferior derecho
+  grab=[px-x,py-y];                                                  // después: se arrastra desde donde toques, sin recolocarse
 });
 st.addEventListener('pointermove',e=>{
   const[x,y]=rel(e);
