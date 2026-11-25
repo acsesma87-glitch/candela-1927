@@ -54,6 +54,8 @@ h1{font:clamp(26px,4.5vw,40px)/1.05 Limelight,Georgia,serif;margin:0;color:var(-
 @keyframes trot{0%{transform:rotate(22deg)}50%{transform:rotate(-22deg)}100%{transform:rotate(22deg)}}
 @keyframes wag{from{transform:rotate(-14deg)}to{transform:rotate(16deg)}}
 @keyframes bob{from{transform:rotate(0)}to{transform:rotate(14deg)}}
+.dog.lie svg{transform:translateY(22%) scaleY(.7);transform-origin:50% 100%}.dog.lie .leg{display:none}
+.item{position:absolute;z-index:2;width:3.6%;transform:translate(-50%,-60%);pointer-events:none;filter:drop-shadow(0 0 6px #ffe7a0)}
 .bubble{position:absolute;z-index:4;left:50%;top:18%;transform:translateX(-50%);background:var(--paper);color:#21170f;border-radius:10px;padding:8px 12px;font-size:15px;line-height:1.35;width:max-content;max-width:min(320px,82%);box-shadow:0 6px 20px #000c;opacity:0;transition:opacity .25s;pointer-events:none}
 .bubble.on{opacity:1}
 .tools{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
@@ -115,6 +117,8 @@ const ITEMS=[
  {id:'cenicero',tool:'lupa',x:392,y:290,t:'El cenicero',d:'Se les olvidó vaciarlo: tres colillas, una con carmín. Mío no es.'},
  {id:'reloj',tool:'lupa',x:418,y:282,t:'El despertador',d:'Las once y cuarto. Mañana, Donostia. Mañana, Aitor.'},
  {id:'postal',tool:'lupa',x:220,y:116,t:'La postal de la pared',d:'«Recuerdo de Fuenterrabía». Me la llevo de recuerdo. Que no se entere la dueña.'},
+ {id:'horquilla',tool:'laika',x:700,y:352,t:'Debajo del armario',d:'Laika ha encontrado una horquilla de pelo. Me viene de perlas para mañana.'},
+ {id:'zapatilla2',tool:'laika',x:610,y:440,t:'La otra zapatilla',d:'¡Laika ha encontrado la pareja de la zapatilla de debajo de la cama! Tampoco es mía.'},
  {id:'libreta',tool:'lupa',x:203,y:290,t:'Mi libreta',d:'Regla nº 1: un muerto no siempre está donde murió. Ojalá no me haga falta.'}
 ];
 const FUN=['Laika se ha subido a la cama. Dice que es suya.','Laika ha encontrado una galleta debajo de la mesilla. Para ella, caso resuelto.','Laika está chupando la alfombra. Muy concentrada.','Laika olfatea la zapatilla de debajo de la cama… y estornuda.','Laika quiere volver a casa.','Laika le ladra a la telaraña. La araña ni se inmuta.'];
@@ -123,7 +127,7 @@ let found=[];try{found=JSON.parse(localStorage.getItem('hostal-herramientas'))||
 let tool='linterna',px=400,py=260,dwell={},touch=false,q=[],showing=false;
 function list(){
   $('#cnt').textContent=`${found.length} de ${ITEMS.length} cosas revisadas`;
-  $('#list').innerHTML=ITEMS.map(c=>found.includes(c.id)?`<li><b>${c.t}</b>${c.d}</li>`:`<li class="no">Algo por revisar<br><span class="tg">${c.tool==='lupa'?'con la lupa':'con la linterna'}</span></li>`).join('');
+  $('#list').innerHTML=ITEMS.map(c=>found.includes(c.id)?`<li><b>${c.t}</b>${c.d}</li>`:`<li class="no">Algo por revisar<br><span class="tg">${c.tool==='lupa'?'con la lupa':c.tool==='laika'?'con Laika':'con la linterna'}</span></li>`).join('');
 }
 function toast(t){q.push(t);if(!showing)next()}
 function next(){const t=q.shift();if(!t){showing=false;return}showing=true;const el=$('#toast');el.innerHTML=t;el.classList.add('on');setTimeout(()=>{el.classList.remove('on');setTimeout(next,400)},2600)}
@@ -163,19 +167,31 @@ new ResizeObserver(draw).observe(st);
 function reach(){const k=st.clientWidth/800;return tool==='lupa'?(L()/2-7)/2.6/k*.85:Math.max(90,st.clientWidth*.17)*.6/k}
 let last=performance.now();
 function tick(now){const dt=now-last;last=now;
-  if(!busy)for(const c of ITEMS){if(found.includes(c.id))continue;const near=c.tool===tool&&Math.hypot(px-c.x,py-c.y)<reach();dwell[c.id]=near?(dwell[c.id]||0)+dt:0;
+  if(!busy)for(const c of ITEMS){if(found.includes(c.id)||c.tool==='laika')continue;const near=c.tool===tool&&Math.hypot(px-c.x,py-c.y)<reach();dwell[c.id]=near?(dwell[c.id]||0)+dt:0;
     if(dwell[c.id]>450){found.push(c.id);try{localStorage.setItem('hostal-herramientas',JSON.stringify(found))}catch(e){}list();toast('<b>'+c.t+':</b> '+c.d);
       const k=st.clientWidth/800,p=document.createElement('div');p.className='found';p.style.left=c.x*k+'px';p.style.top=c.y*k+'px';st.appendChild(p);setTimeout(()=>p.remove(),1300);
       if(found.length===ITEMS.length)toast('Todo en orden y las herramientas funcionan. A dormir, que mañana empieza lo bueno.')}}
   requestAnimationFrame(tick)}
 requestAnimationFrame(tick);
+const ICON={horquilla:'<svg viewBox="0 0 40 20"><path d="M2 10 H36 Q39 10 36 13 H6 Q4 14 6 15 H34" stroke="#2a2420" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>',
+ zapatilla2:'<svg viewBox="0 0 50 24"><path d="M2 20 q2 -12 18 -12 h18 q10 0 10 8 v4 h-46Z" fill="#6a4a5a"/><ellipse cx="10" cy="16" rx="6" ry="4" fill="#d8c8b8" opacity=".7"/></svg>'};
+function showItem(c){if(st.querySelector('[data-item="'+c.id+'"]'))return;const el=document.createElement('div');el.className='item';el.dataset.item=c.id;el.innerHTML=ICON[c.id];el.style.left=c.x/8+'%';el.style.top=c.y/5+'%';st.appendChild(el)}
+ITEMS.filter(c=>c.tool==='laika'&&found.includes(c.id)).forEach(showItem);
+let lk=0;try{lk=+localStorage.getItem('hostal-laika')||0}catch(e){}
 async function laika(){
   if(busy)return;busy=true;st.classList.add('dogs');$('#tLaika').disabled=true;BUB.classList.remove('on');
-  const W=st.clientWidth,dw=W*.09,k=W/800,home=300*k-dw/2,stop=W*(.15+Math.random()*.55),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const plan=['horquilla','tumbarse','zapatilla2'][lk]||'nada';lk++;try{localStorage.setItem('hostal-laika',lk)}catch(e){}
+  const c=ITEMS.find(i=>i.id===plan);
+  const W=st.clientWidth,dw=W*.09,k=W/800,home=300*k-dw/2,stop=c?c.x*k-dw*.9:W*(.15+Math.random()*.5),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const go=(a,b,ms)=>{FLIP.style.transform=b<a?'scaleX(-1)':'none';return DOG.animate([{transform:`translateX(${a}px)`},{transform:`translateX(${b}px)`}],{duration:reduce?1:ms,fill:'forwards',easing:'linear'}).finished};
   DOG.classList.add('run');await go(home,W-dw*.8,1400);await go(W-dw*.8,stop,1500);
-  DOG.classList.remove('run');DOG.classList.add('sniff');await new Promise(r=>setTimeout(r,reduce?10:1100));DOG.classList.remove('sniff');
-  BUB.textContent=FUN[fi++%FUN.length];BUB.classList.add('on');await new Promise(r=>setTimeout(r,3200));BUB.classList.remove('on');
+  DOG.classList.remove('run');DOG.classList.add('sniff');await new Promise(r=>setTimeout(r,reduce?10:1200));DOG.classList.remove('sniff');
+  if(c&&!found.includes(c.id)){found.push(c.id);try{localStorage.setItem('hostal-herramientas',JSON.stringify(found))}catch(e){}
+    BUB.innerHTML='<b>¡Guau! ¡Guau!</b> '+c.d;showItem(c);list();
+    if(found.length===ITEMS.length)toast('Todo en orden y las herramientas funcionan. A dormir, que mañana empieza lo bueno.')}
+  else if(plan==='tumbarse'){DOG.classList.add('lie');BUB.textContent='Laika olfatea, olfatea… no encuentra nada y se tumba en la alfombra. Fin del turno.'}
+  else BUB.textContent=FUN[fi++%FUN.length];
+  BUB.classList.add('on');await new Promise(r=>setTimeout(r,3400));BUB.classList.remove('on');DOG.classList.remove('lie');
   DOG.classList.add('run');await go(stop,home,1200);DOG.classList.remove('run');FLIP.style.transform='none';
   DOG.getAnimations().forEach(a=>a.cancel());busy=false;st.classList.remove('dogs');$('#tLaika').disabled=false;draw();
 }
