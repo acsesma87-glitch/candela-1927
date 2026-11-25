@@ -148,17 +148,19 @@ function draw(){
 let grab=null;
 function rel(e){const r=st.getBoundingClientRect();return[(e.clientX-r.left)/r.width*800,(e.clientY-r.top)/r.height*500]}
 function toolR(){const W=st.clientWidth,k=W/800;return tool==='lupa'?L()/2/k:Math.max(90,W*.17)*.75/k}
-const clampMove=(x,y)=>{px=Math.min(800,Math.max(0,x));py=Math.min(500,Math.max(0,y));draw()};
+function visR(){const W=st.clientWidth,k=W/800;return tool==='lupa'?L()/2/k:Math.max(90,W*.17)*.8/k}
+const clampMove=(x,y)=>{const m=-visR()*.1;px=Math.min(800-m,Math.max(m,x));py=Math.min(500-m,Math.max(m,y));draw()};
+const GAIN=1.5;
 let placed=false;
 st.addEventListener('pointerdown',e=>{
   st.setPointerCapture(e.pointerId);const[x,y]=rel(e);
   if(e.pointerType==='mouse'){grab=[0,0];clampMove(x,y);return}
   if(!placed){const d=toolR()*.68;clampMove(x-d,y-d);placed=true}   // primera vez: el dedo queda en el borde inferior derecho
-  grab=[px-x,py-y];                                                  // después: se arrastra desde donde toques, sin recolocarse
+  grab=[px,py,x,y];                                                  // después: se arrastra desde donde toques, sin recolocarse
 });
 st.addEventListener('pointermove',e=>{
   const[x,y]=rel(e);
-  if(grab)clampMove(x+grab[0],y+grab[1]);
+  if(grab&&grab.length===4)clampMove(grab[0]+(x-grab[2])*GAIN,grab[1]+(y-grab[3])*GAIN);else if(grab)clampMove(x,y);
   else if(e.pointerType==='mouse')clampMove(x,y);          // ratón sin pulsar: sigue al puntero
 });
 ['pointerup','pointercancel'].forEach(ev=>st.addEventListener(ev,()=>{grab=null}));
