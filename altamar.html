@@ -423,7 +423,7 @@ const FACE_CANDELA="<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"-42 -266
 // ---------- Día 1 ----------
 DAYS[1]=[
 // ===== Escena 0 · Portada del periódico =====
-{svg:SVG.periodico,dark:0,tools:['mano','lupa'],cartel:'JUEVES<br>1 DE DICIEMBRE DE 1927',
+{svg:SVG.periodico,dark:0,tools:['mano','linterna','lupa'],cartel:'JUEVES<br>1 DE DICIEMBRE DE 1927',
  spots:[
   {id:'breve',tool:'lupa',x:539,y:428,act:async()=>{await bubble('«El sereno de Altamar espera hoy la visita de una señorita argentina…» Mirá vos. Y Doña Puri preguntando si soy formal. Ya le contaré yo.',5200)}},
   {id:'jarabe',tool:'lupa',x:243,y:414,act:async()=>{await bubble('«Jarabe del Dr. Salazar: para la tos, los nervios y el insomnio.» Un médico que se anuncia como un tónico milagroso. Qué cosa.',4600)}},
@@ -459,7 +459,7 @@ DAYS[1]=[
 
 // ===== Escena 2 · (en construcción) =====
 {svg:'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500"><rect width="800" height="500" fill="#120d09"/><text x="400" y="250" text-anchor="middle" fill="#6f6556" font-family="Georgia" font-size="22" font-style="italic">La cocina de Aitor todavía se está dibujando…</text></svg>',
- dark:0,tools:['mano'],cartel:'ALTAMAR<br>CASA DEL SERENO',
+ dark:0,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>CASA DEL SERENO',
  enter:async()=>{nar('Hasta aquí llega la prueba de hoy. Lo siguiente: la cocina de Aitor, Eki y la nota bajo la puerta.');narBtn('Volver al calendario',()=>{SC=null;drawCal();show('cal')})}},
 ];
 FACES['Aitor']=FACE_AITOR;FACES['Candela']=FACE_CANDELA;
