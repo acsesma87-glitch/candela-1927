@@ -149,7 +149,7 @@ let grab=null;
 function rel(e){const r=st.getBoundingClientRect();return[(e.clientX-r.left)/r.width*800,(e.clientY-r.top)/r.height*500]}
 function toolR(){const W=st.clientWidth,k=W/800;return tool==='lupa'?L()/2/k:Math.max(90,W*.17)*.75/k}
 function visR(){const W=st.clientWidth,k=W/800;return tool==='lupa'?L()/2/k:Math.max(90,W*.17)*.8/k}
-const clampMove=(x,y)=>{const m=-visR()*.1;px=Math.min(800-m,Math.max(m,x));py=Math.min(500-m,Math.max(m,y));draw()};
+const clampMove=(x,y)=>{const m=-visR()*.4;px=Math.min(800-m,Math.max(m,x));py=Math.min(500-m,Math.max(m,y));draw()};
 const GAIN=1.5;
 let placed=false;
 st.addEventListener('pointerdown',e=>{
