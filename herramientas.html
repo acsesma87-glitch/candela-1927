@@ -140,17 +140,18 @@ function draw(){
   const W=st.clientWidth,H=st.clientHeight,k=W/800,x=px*k,y=py*k,l=L(),z=2.6;
   st.style.setProperty('--x',x+'px');st.style.setProperty('--y',y+'px');st.style.setProperty('--r',Math.max(90,W*.17)+'px');
   lens.style.width=lens.style.height=l+'px';lens.style.transform=`translate(${x-l/2}px,${y-l/2}px)`;
-  lens.style.backgroundSize=`${W*z}px ${H*z}px`;lens.style.backgroundPosition=`${-(x*z-l/2+7)}px ${-(y*z-l/2+7)}px`;
+  const[fx,fy]=focus(),gx=fx*k,gy=fy*k;lens.style.backgroundSize=`${W*z}px ${H*z}px`;lens.style.backgroundPosition=`${(l/2-7)-gx*z}px ${(l/2-7)-gy*z}px`;
   if(!busy){const dw=W*.09;DOG.style.transform=`translateX(${300*k-dw/2}px)`}
   if(tool==='lupa'&&!busy){const sr=st.getBoundingClientRect(),dr=DOG.getBoundingClientRect(),c=l/2-7;
-    LDOG.style.width=dr.width*z+'px';LDOG.style.transform=`translate(${(dr.left-sr.left)*z+c-x*z}px,${(dr.top-sr.top)*z+c-y*z}px)`}
+    LDOG.style.width=dr.width*z+'px';LDOG.style.transform=`translate(${(dr.left-sr.left)*z+c-gx*z}px,${(dr.top-sr.top)*z+c-gy*z}px)`}
 }
 let grab=null;
 function rel(e){const r=st.getBoundingClientRect();return[(e.clientX-r.left)/r.width*800,(e.clientY-r.top)/r.height*500]}
 function toolR(){const W=st.clientWidth,k=W/800;return tool==='lupa'?L()/2/k:Math.max(90,W*.17)*.75/k}
 function visR(){const W=st.clientWidth,k=W/800;return tool==='lupa'?L()/2/k:Math.max(90,W*.17)*.8/k}
-const clampMove=(x,y)=>{const m=-visR()*.4;px=Math.min(800-m,Math.max(m,x));py=Math.min(500-m,Math.max(m,y));draw()};
+const clampMove=(x,y)=>{const m=visR()*.4;px=Math.min(800-m,Math.max(m,x));py=Math.min(500-m,Math.max(m,y));draw()};
 const GAIN=1.5;
+function focus(){if(tool!=='lupa')return[px,py];const m=visR()*.4,f=(v,max)=>Math.min(max,Math.max(0,(v-m)/(max-2*m)*max));return[f(px,800),f(py,500)]}
 let placed=false;
 st.addEventListener('pointerdown',e=>{
   st.setPointerCapture(e.pointerId);const[x,y]=rel(e);
@@ -169,7 +170,7 @@ new ResizeObserver(draw).observe(st);
 function reach(){const k=st.clientWidth/800;return tool==='lupa'?(L()/2-7)/2.6/k*.85:Math.max(90,st.clientWidth*.17)*.6/k}
 let last=performance.now();
 function tick(now){const dt=now-last;last=now;
-  if(!busy)for(const c of ITEMS){if(found.includes(c.id)||c.tool==='laika')continue;const near=c.tool===tool&&Math.hypot(px-c.x,py-c.y)<reach();dwell[c.id]=near?(dwell[c.id]||0)+dt:0;
+  if(!busy)for(const c of ITEMS){if(found.includes(c.id)||c.tool==='laika')continue;const[fx,fy]=focus();const near=c.tool===tool&&Math.hypot(fx-c.x,fy-c.y)<reach();dwell[c.id]=near?(dwell[c.id]||0)+dt:0;
     if(dwell[c.id]>450){found.push(c.id);try{localStorage.setItem('hostal-herramientas',JSON.stringify(found))}catch(e){}list();toast('<b>'+c.t+':</b> '+c.d);
       const k=st.clientWidth/800,p=document.createElement('div');p.className='found';p.style.left=c.x*k+'px';p.style.top=c.y*k+'px';st.appendChild(p);setTimeout(()=>p.remove(),1300);
       if(found.length===ITEMS.length)toast('Todo en orden y las herramientas funcionan. A dormir, que mañana empieza lo bueno.')}}
