@@ -157,6 +157,7 @@ button{font:inherit;color:inherit;cursor:pointer}
   <div class="doors" id="doors"></div>
   <div class="calbar">
    <a class="postal" href="viaje.html"><svg viewBox="0 0 26 18" fill="none" stroke="#c9a24a" stroke-width="1.4"><rect x="1" y="1" width="24" height="16" rx="1"/><path d="M14 3v12M17 6h5M17 9h5M17 12h3"/><rect x="3.5" y="4" width="7" height="6" fill="#c9a24a33"/></svg>El viaje de Candela</a>
+   <button class="postal" id="calReset" style="display:none;border-color:#5a2a20">↺ Empezar desde cero</button>
    <button class="postal" id="calLib"><svg viewBox="0 0 26 18" fill="none" stroke="#c9a24a" stroke-width="1.4"><path d="M3 2h9q1 0 1 1v14q0-1-1-1H3zM23 2h-9q-1 0-1 1v14q0-1 1-1h9z"/></svg>La libreta</button>
   </div>
  </section>
@@ -539,6 +540,7 @@ async function knock(){await sleep(600);await shake();await sleep(250);await sha
   nar('Don Julián Arrieta. El del periódico. El de las cajas de Doña Maite…');narBtn('Salir corriendo',next)}
 
 
+if(ALL){const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 layout();drawCal();show('cal');
 if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>
