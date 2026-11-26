@@ -421,7 +421,7 @@ const FUN=['Laika está comiéndose un chorongo de otro perro. Qué asco, Laika.
 
 // ================= Eki (se completa en la escena de la cocina) =================
 const EK=$('#eki'),FE=$('#flipE');let ekiPick=false,ekiX=0;
-function ekiHome(){if(!SC||SC.ekiHome==null||(SC.tools&&!SC.tools.includes('eki')&&!SC.sleep)||!S.tools.includes('eki')){EK.classList.remove('on');return}
+function ekiHome(){if(!SC||SC.ekiHome==null||(SC.tools&&!SC.tools.includes('eki')&&!SC.sleep)||(!S.tools.includes('eki')&&!SC.sleep)){EK.classList.remove('on');return}
   const k=K(),dw=st.clientWidth*.17;ekiX=SC.ekiHome*k-dw/2;EK.getAnimations().forEach(a=>a.cancel());EK.style.transform=`translateX(${ekiX}px)`;FE.style.transform='none';EK.classList.add('on');EK.classList.remove('run','happy');EK.classList.toggle('lie',!!SC.sleep)}
 function ekiStart(){if(busy||!SC||!SC.ekiSpots)return;ekiPick=true;$('#tEki').classList.remove('new');$('#tEki').setAttribute('aria-pressed','true');st.classList.add('pick');EK.classList.add('happy');
   const k=K();SC.ekiSpots.filter(p=>!p.when||p.when()).forEach(p=>{const d=document.createElement('div');d.className='pring';d.style.left=p.x*k+'px';d.style.top=p.y*k+'px';st.appendChild(d)});
@@ -460,7 +460,7 @@ $('#homeBtn').onclick=()=>{SC=null;drawCal();show('cal')};
 
 // ================= días =================
 const DAYS={};
-async function playDay(d){curDay=d;const dd=D(d);show('game');$('#dayLbl').innerHTML=`Día ${d} · ${d} dic<b id="cdLbl">${countdown(d)}</b>`;toolsUI();badge();
+async function playDay(d){curDay=d;if(d>1&&!S.tools.includes('eki')){S.tools.push('eki');save()}const dd=D(d);show('game');$('#dayLbl').innerHTML=`Día ${d} · ${d} dic<b id="cdLbl">${countdown(d)}</b>`;toolsUI();badge();
   const day=DAYS[d];let i=dd.done?0:dd.scene;if(i>=day.length)i=0;await goScene(i,true)}
 async function goScene(i,first){const day=DAYS[curDay],dd=D(curDay);dd.scene=i;save();
   const sc=day[i];if(sc.cartel&&!first){await cartel(sc.cartel)}else if(sc.cartel){await cartel(sc.cartel)}
@@ -777,7 +777,7 @@ FACES['Mateo «el Rubio»']=FACE_MATEO;FACES['Un estibador']=FACE_EST;
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 39';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 40';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
