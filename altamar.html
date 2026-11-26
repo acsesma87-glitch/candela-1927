@@ -732,7 +732,7 @@ DAYS[2]=[
       await talk('Mateo «el Rubio»','A un sitio que no es asunto suyo. Y desde luego no al faro.');endTalk();
       f.mateoConf=1;save();await pista('mateoMiente','Mateo mintió','No estuvo en El Ancla hasta el cierre: dejó la guardia de amarras a medianoche y no quiere decir adónde fue.');
       persona('Mateo «el Rubio»','Mintió: dejó la guardia a medianoche y se niega a decir adónde fue.');
-      nar('Mateo mintió. Y esconde algo. Lo que no sé es si es un crimen… o otra cosa.');narBtn('Volver a casa',next)}
+      nar('Mateo mintió. Y esconde algo. Lo que no sé es si es un crimen… o otra cosa.');narBtn('Volver a casa',()=>goScene(3))}
     else if(pid==='botas'){await talk('Mateo «el Rubio»','¿Botas claveteadas? Mire a su alrededor, señorita. Todo el puerto lleva las mismas.');endTalk()}
     else{await talk('Mateo «el Rubio»','No sé qué tiene que ver eso conmigo. No tengo nada más que decirle.');endTalk()}}},
   {id:'botas',tool:'lupa',x:592,y:468,w:64,h:16,act:async()=>{await bubble('Las botas de Mateo: suela gruesa, claveteada. Como las huellas de las rocas del faro.',3800);
@@ -777,7 +777,7 @@ FACES['Mateo «el Rubio»']=FACE_MATEO;FACES['Un estibador']=FACE_EST;
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 38';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 39';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
