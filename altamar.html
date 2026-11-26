@@ -384,18 +384,18 @@ const FACES={};
 async function shake(){st.classList.remove('shake');void st.offsetWidth;st.classList.add('shake');await sleep(520);st.classList.remove('shake')}
 function talk(who,text){return new Promise(res=>{const d=$('#dlg');$('#shade').classList.add('on');d.classList.add('on');
   $('#face').innerHTML=FACES[who]||'';$('#face').style.display=FACES[who]?'':'none';$('#who').textContent=who.toUpperCase();$('#say').innerHTML=text;$('#opts').innerHTML='';$('#more').style.display='';
-  setTimeout(()=>{d.onclick=()=>{d.onclick=null;res()}},250)})}
+  setTimeout(()=>{d.onclick=()=>{d.onclick=null;res()}},700)})}
 function choose(who,text,opts){return new Promise(res=>{const d=$('#dlg');$('#shade').classList.add('on');d.classList.add('on');d.onclick=null;
   $('#face').innerHTML=FACES[who]||'';$('#face').style.display=FACES[who]?'':'none';$('#who').textContent=who.toUpperCase();$('#say').innerHTML=text;$('#more').style.display='none';
-  $('#opts').innerHTML='';opts.forEach((o,i)=>{const b=document.createElement('button');b.textContent=o;b.onclick=ev=>{ev.stopPropagation();res(i)};$('#opts').appendChild(b)})})}
+  $('#opts').innerHTML='';setTimeout(()=>opts.forEach((o,i)=>{const b=document.createElement('button');b.textContent=o;b.onclick=ev=>{ev.stopPropagation();res(i)};$('#opts').appendChild(b)}),900)})}
 function endTalk(){$('#dlg').classList.remove('on');$('#shade').classList.remove('on')}
 function persona(who,line){(S.personas[who]=S.personas[who]||[]);if(!S.personas[who].includes(line)){S.personas[who].push(line);(S.pd=S.pd||{})[who+'|'+line]=curDay}save()}
 async function pista(id,t,d){if(S.pistas.find(p=>p.id===id))return;S.pistas.push({id,day:curDay,t,d});save();badge();
-  $('#clueB').innerHTML=`<b>${t}.</b> ${d}`;const c=$('#clue');c.classList.add('on');await sleep(2600);c.classList.remove('on');await sleep(400)}
+  $('#clueB').innerHTML=`<b>${t}.</b> ${d}`;const c=$('#clue');c.classList.add('on');await sleep(5000);c.classList.remove('on');await sleep(400)}
 function objeto(o){if(!S.objetos.find(x=>x.id===o.id)){o.day=curDay;S.objetos.push(o);save()}}
 function badge(){const n=S.pistas.length-S.leidas,b=$('#badge');b.textContent=n;b.classList.toggle('on',n>0)}
 let bubExtra=0;
-async function bubble(t,ms=3200){const b=$('#bub');b.innerHTML=t;b.classList.add('on');await sleep(ms+1000+bubExtra);b.classList.remove('on');await sleep(300)}
+async function bubble(t,ms=3200){const b=$('#bub');b.innerHTML=t;b.classList.add('on');await sleep(5000);b.classList.remove('on');await sleep(300)}
 async function cartel(t){$('#cartelT').innerHTML=t;$('#cartel').classList.add('on');await sleep(1900);}
 async function cartelOff(){$('#cartel').classList.remove('on');await sleep(600)}
 function docShow(html){return new Promise(r=>{$('#docP').innerHTML=html;$('#doc').classList.add('on');$('#doc').onclick=()=>{$('#doc').classList.remove('on');r()}})}
@@ -508,7 +508,7 @@ DAYS[1]=[
     persona('Aitor','El sereno de Altamar. Me esperaba en el andén del Topo, con el farol todavía encendido.');
     persona('Aitor','Dice que Altamar «tiene su encanto… y sus cosas raras».');
     nar('Aitor me coge la maleta antes de que pueda decir nada. Laika lo huele de arriba abajo y decide que aprueba.');
-    narBtn('Ir a casa',async()=>{nar('Bajamos hacia el puerto. Las calles se estrechan, huele a sardina y a carbón, y la gente saluda a Aitor por su nombre…');await sleep(3800);next()})}},
+    narBtn('Ir a casa',async()=>{nar('Bajamos hacia el puerto. Las calles se estrechan, huele a sardina y a carbón, y la gente saluda a Aitor por su nombre…');await sleep(5000);next()})}},
   {id:'chapa',tool:'lupa',x:690,y:130,act:async()=>{await bubble('En la chapa de la gorra: «SERENO · 7». El siete. Me gusta.',3800)}},
   {id:'letrero',tool:'lupa',x:575,y:142,act:async()=>{await bubble('«TOPO · Frontera – San Sebastián». Un tren que va por la calle como un tranvía. En La Plata no me lo creerían.',4400)}},
  ],
@@ -677,7 +677,7 @@ async function faroCheck(){const f=D(1).flags;if(f.leonor||faroN()<3)return;f.le
   swapSvg(SVG.faroL);nar('Un motor. Un coche negro se para junto al camino del faro. Baja una mujer de luto, con velo y abrigo de pieles: Doña Leonor, la viuda.<br><br><i>Cuando tengas suficiente, habla con ella.</i>')}
 function luzVerde(){const t0=performance.now(),D=7000;const f=t=>{const p=Math.min(1,(t-t0)/D);
   document.querySelectorAll('.verde').forEach(c=>{c.setAttribute('cx',572+118*p);c.setAttribute('opacity',p<.15?p/.15:p>.8?(1-p)/.2:1)});if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
-async function alFaro(){nar('Corremos por el muelle. La niebla se traga las farolas una a una. Al fondo, la luz del faro gira, como si nada.');await sleep(3800);next()}
+async function alFaro(){nar('Corremos por el muelle. La niebla se traga las farolas una a una. Al fondo, la luz del faro gira, como si nada.');await sleep(5000);next()}
 async function knock(){await sleep(600);await shake();await sleep(250);await shake();
   nar('Tres golpes en la puerta. Fuertes.');await sleep(900);
   await talk('Txomin','¡Aitor! ¡Aitor! ¡En las rocas del faro! ¡Don Julián Arrieta!');
@@ -701,7 +701,7 @@ DAYS[2]=[
   {id:'p2ancla',tool:'lupa',x:243,y:455,w:240,h:30,act:async()=>{await bubble('Sidrería El Ancla: «se fía a los huelguistas». Ahí debe de saberse todo lo que pasa en el puerto.',4000)}},
   {id:'p2marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a las 2:10.» Cada día cambia un poco. Lo apunto, por si acaso.',3600)}},
  ],
- enter:async()=>{nar('Aitor deja el periódico encima de la mesa sin decir nada. Ya sale en portada.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');narBtn('Ir al muelle',async()=>{nar('Los estibadores se juntan en el muelle a mediodía. Si alguien sabe qué pasa en el puerto de noche, son ellos.');await sleep(3800);next()})}},
+ enter:async()=>{nar('Aitor deja el periódico encima de la mesa sin decir nada. Ya sale en portada.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');narBtn('Ir al muelle',async()=>{nar('Los estibadores se juntan en el muelle a mediodía. Si alguien sabe qué pasa en el puerto de noche, son ellos.');await sleep(5000);next()})}},
 
 // ===== El muelle =====
 {svg:SVG.muelle,dark:.22,cartel:'ALTAMAR<br>EL MUELLE',
@@ -719,7 +719,8 @@ DAYS[2]=[
       persona('Mateo «el Rubio»','Dice que la noche del 30 estuvo en El Ancla hasta el cierre.');
       nar('Mateo lo dice muy seguro. Demasiado seguro.<br><br><i>Mira por el muelle: la caseta, las barcas, la gente.</i>');return}
     if(f.mateoConf){await talk('Mateo «el Rubio»','Ya le he dicho lo que tenía que decirle, señorita.');endTalk();return}
-    const c=await choose('Candela','(Mateo me mira con los brazos cruzados.)',['¿Seguro que estuvo en El Ancla toda la noche?','Enseñarle una prueba de la libreta','Nada, gracias.']);
+    await talk('Mateo «el Rubio»','(Se cruza de brazos.) ¿Otra vez usted? ¿Qué quiere ahora?');
+    const c=await choose('Candela','¿Qué le digo?',['¿Seguro que estuvo en El Ancla toda la noche?','Enseñarle una prueba de la libreta','Nada, gracias.']);
     if(c===0){await talk('Mateo «el Rubio»','¿Me está llamando mentiroso delante de mis hombres?');endTalk();return}
     if(c===2){endTalk();return}
     const ps=S.pistas.filter(p=>p.day<=2);const k=await choose('Candela','¿Qué prueba le enseño?',ps.map(p=>p.t));const pid=ps[k].id;
@@ -775,7 +776,7 @@ FACES['Mateo «el Rubio»']=FACE_MATEO;FACES['Un estibador']=FACE_EST;
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 36';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 37';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
