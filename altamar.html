@@ -101,11 +101,11 @@ button{font:inherit;color:inherit;cursor:pointer}
 .ib svg{width:22px;height:22px}
 .badge{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;border-radius:10px;background:#a3271c;color:#fff;font-size:11px;display:none;align-items:center;justify-content:center;padding:0 5px;box-shadow:0 0 0 2px #0b0908}
 .badge.on{display:flex}
-.nar{flex:1;background:var(--paper);color:var(--ink);border-radius:4px;padding:10px 12px;font-family:'Special Elite',monospace;font-size:13px;line-height:1.4;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+.nar{flex:1 1 0;min-height:48px;background:var(--paper);color:var(--ink);border-radius:4px;padding:10px 12px;font-family:'Special Elite',monospace;font-size:13px;line-height:1.4;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
 .go{display:block;width:100%;background:#2a1d14;color:#f3dc9a;border:1px solid var(--brass);border-radius:4px;padding:9px;font-family:Spectral,serif;font-size:15px}
-.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.tool{display:flex;flex-direction:column;align-items:center;gap:2px;background:none;border:0;padding:0;color:#b8a888;font-size:12px}
-.tool .ic{width:46px;height:46px;border-radius:10px;border:1px solid #3a2e22;background:#15110e;display:flex;align-items:center;justify-content:center}
+.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 6px;flex:none}#acts{flex:none}.top{flex:none}
+.tool{display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;padding:0;color:#b8a888;font-size:11px}
+.tool .ic{width:42px;height:42px;border-radius:10px;border:1px solid #3a2e22;background:#15110e;display:flex;align-items:center;justify-content:center}
 .tool svg{width:24px;height:24px}
 .tool[aria-pressed=true] .ic{background:var(--paper);border-color:var(--paper)}
 .tool[aria-pressed=true]{color:#f3dc9a}.tool[aria-pressed=true] svg{stroke:#2a2018}
@@ -576,7 +576,7 @@ async function knock(){await sleep(600);await shake();await sleep(250);await sha
   nar('Don Julián Arrieta. El del periódico. El de las cajas de Doña Maite…');narBtn('Salir corriendo',next)}
 
 
-if(ALL){$('#ver').textContent=' · versión de prueba 22';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 23';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
