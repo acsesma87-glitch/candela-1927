@@ -333,7 +333,7 @@ function unlockTool(t){if(!S.tools.includes(t)){S.tools.push(t);save()}toolsUI()
 
 function loadScene(sc){
   SC=sc;base.innerHTML=sc.svg;lit.innerHTML=sc.svg;lens.innerHTML=sc.svg;lens.appendChild(LD);lens.querySelectorAll('.ol').forEach(e=>e.remove());lensSvg=lens.querySelector('svg');lensSvg.setAttribute('preserveAspectRatio','xMidYMid slice');applyDrags();
-  dark.style.opacity=sc.dark||0;toolsUI();ekiStop();st.querySelectorAll('.spark').forEach(e=>e.remove());placed=false;px=400;py=250;setTool('mano');sizeStage();marks()}
+  dark.style.opacity=sc.dark||0;toolsUI();ekiStop();st.classList.remove('dogs');LK.getAnimations().forEach(x=>x.cancel());EK.getAnimations().forEach(x=>x.cancel());LK.classList.remove('on');EK.classList.remove('on');st.querySelectorAll('.spark').forEach(e=>e.remove());placed=false;px=400;py=250;setTool('mano',1);sizeStage();laikaHome();ekiHome();marks()}
 function marks(){st.querySelectorAll('.spark').forEach(e=>e.remove());if(!SC)return;const k=K();
   (SC.spots||[]).forEach(s=>{if(s.glow&&!(s.glow===true?!found(s.id):s.glow())===false){}
     if(s.glow&&(typeof s.glow==='function'?s.glow():!found(s.id))){const d=document.createElement('div');d.className='spark';d.style.left=s.x*k+'px';d.style.top=s.y*k+'px';st.appendChild(d)}})}
@@ -674,7 +674,7 @@ async function knock(){await sleep(600);await shake();await sleep(250);await sha
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 32';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 33';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
