@@ -384,18 +384,17 @@ function pencilEnd(){const p=pencil;pencil=null;const sp=p.sp,[ax,ay,aw,ah]=sp.a
 let pk=null;
 function pickOpen(cfg){const ui=$('#pickUI');ui.classList.add('on');pk={cfg,ang:90,rot:0,stress:0,hold:false,sweet:cfg.sweet,last:performance.now()};pickHq();pickDraw();requestAnimationFrame(pickLoop)}
 function pickClose(){$('#pickUI').classList.remove('on');pk=null}
-function pickHq(){$('#pkHq').textContent='Horquillas: '+(S.horq||0)}
+function pickHq(){$('#pkHq').textContent='La horquilla de Laika'}
 function pickDraw(){if(!pk)return;const sh=pk.hold&&pk.stress>0?(Math.random()-.5)*4:0;
   $('#pkPick').setAttribute('transform',`rotate(${pk.ang-90+sh} 400 240)`);$('#pkKey').setAttribute('transform',`rotate(${pk.rot} 400 250)`);$('#pkTension').setAttribute('transform',`rotate(${pk.rot*.3} 400 300)`)}
 function pickLoop(t){if(!pk)return;const dt=Math.min(50,t-pk.last);pk.last=t;
-  if(pk.hold&&(S.horq||0)>0){const off=Math.abs(pk.ang-pk.sweet),allow=Math.max(0,Math.min(1,1-(off-pk.cfg.tol)/30)),lim=allow*90;
+  if(pk.hold){const off=Math.abs(pk.ang-pk.sweet),allow=Math.max(0,Math.min(1,1-(off-pk.cfg.tol)/30)),lim=allow*90;
     if(pk.rot<lim)pk.rot=Math.min(lim,pk.rot+dt*.09);
-    else if(allow<1){pk.stress+=dt;if(pk.stress>pk.cfg.breakMs){S.horq--;save();pickHq();pk.rot=0;pk.stress=0;pk.hold=false;$('#pkTurn').classList.remove('on');
-      bubble((S.horq||0)>0?'¡Crac! La horquilla se ha doblado. Me quedan '+S.horq+'.':'¡Crac! Era la última horquilla. Necesito más…',2000);if(pk.cfg.onBreak)pk.cfg.onBreak()}}
+    else if(allow<1){pk.stress+=dt;if(pk.stress>pk.cfg.breakMs){pk.rot=0;pk.stress=0;pk.hold=false;$('#pkTurn').classList.remove('on');bubble('¡Clinc! La horquilla se resbala. Otra vez.',1500)}}
     if(pk.rot>=89.5){const c=pk.cfg;pickClose();c.onOpen();return}}
   else{pk.rot=Math.max(0,pk.rot-dt*.25);pk.stress=0}
   pickDraw();requestAnimationFrame(pickLoop)}
-(()=>{const b=$('#pkTurn');const on=e=>{e.stopPropagation();e.preventDefault();if(!pk)return;if(!(S.horq>0)){bubble('No me quedan horquillas.',1500);return}pk.hold=true;b.classList.add('on')};
+(()=>{const b=$('#pkTurn');const on=e=>{e.stopPropagation();e.preventDefault();if(!pk)return;pk.hold=true;b.classList.add('on')};
   const off=e=>{if(pk){pk.hold=false}b.classList.remove('on')};b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)})();
 function setDrag(id,dx){[base,lit,lens].forEach(c=>{const g=c.querySelector('#'+id);if(g)g.setAttribute('transform',`translate(${dx} 0)`)})}
 function applyDrags(){const f=D(curDay).flags;Object.keys(f).filter(k=>k.startsWith('drag_')).forEach(k=>setDrag(k.slice(5),f[k]))}
@@ -968,14 +967,10 @@ DAYS[4]=[
     f.distr=1;save();nar('Ahora. La puerta del despacho, a la izquierda.')}},
   {id:'puertaDesp',tool:'mano',x:210,y:230,r:60,once:false,act:async()=>{const f=d4();
     if(!f.distr){await bubble('Doña Leonor no le quita ojo a la puerta del despacho. Necesito que alguien la distraiga.',4200);return}goScene(2)}},
-  {id:'platito',tool:'mano',x:772,y:379,r:35,once:false,act:async()=>{const f=d4();
-    if(!f.horqP){f.horqP=1;S.horq=(S.horq||0)+3;save();await bubble('En el platito del velador hay horquillas sueltas. Me guardo tres. Nunca se sabe.',4000);return}
-    if((S.horq||0)===0){S.horq=2;save();await bubble('Quedan un par de horquillas en el platito. Me las llevo.',3200);return}
-    await bubble('Ya llevo horquillas de sobra.',2400)}},
  ],
  enter:async()=>{const f=d4();if(f.pillada){nar('Ya me han echado. Mejor no tentar a la suerte.');narBtn('Volver a casa',()=>goScene(5));return}
    if(!f.salon){f.salon=1;save();nar('Velas, terciopelo y retratos de antepasados con cara de pocos amigos. Toda la familia Arrieta junta. Y ninguno llora.')}
-   else{nar(f.distr?'El salón sigue revuelto por lo de la bandeja. La puerta del despacho está a la izquierda.':'El salón huele a cera y a flores. Doña Leonor vigila.');if(f.distr)narBtn('Volver al despacho',()=>goScene(2))}}},
+   else nar(f.distr?'El salón sigue revuelto por lo de la bandeja. La puerta del despacho está a la izquierda.':'El salón huele a cera y a flores. Doña Leonor vigila.')}},
 
 // ===== El despacho =====
 {svg:SVG.despacho,dark:.55,tools:['mano','linterna','lupa'],
@@ -989,7 +984,7 @@ DAYS[4]=[
  ],
  enter:async()=>{const f=d4();
    if(f.pillada){swapSvg(SVG.despachoL);nar('Doña Leonor me está esperando en la puerta.');return}
-   nar(f.desp?'El despacho de Don Julián, a oscuras. Rápido.':'El despacho de Don Julián. Huele a tabaco frío. Tengo poco tiempo.<br><br><i>El escritorio, el retrato, el secreter…</i>');f.desp=1;save();narBtn('Volver al salón',()=>goScene(1));catch4()}},
+   nar(f.desp?'El despacho de Don Julián, a oscuras. Rápido.':'El despacho de Don Julián. Huele a tabaco frío. Tengo poco tiempo.<br><br><i>El escritorio, el retrato, el secreter…</i>');f.desp=1;save();catch4()}},
 
 // ===== El bloc y el lápiz =====
 {svg:SVG.escritorio,dark:0,tools:['mano','linterna','lupa'],
@@ -1014,12 +1009,11 @@ DAYS[4]=[
  ],
  enter:async()=>{const f=d4();
    if(f.secreter){swapSvg(SVG.secreterA);nar('El secreter de Doña Leonor, abierto.');narBtn('Volver al despacho',()=>goScene(2));return}
-   nar('El secreter de Doña Leonor está cerrado con llave. Una cerradura pequeña… se puede forzar con una horquilla.<br><br><i>Mueve el dedo para colocar la horquilla. Mantén «Girar». Si tiembla, estás cerca; si fuerzas, se rompe.</i>');
+   nar('El secreter de Doña Leonor está cerrado con llave. Una cerradura pequeña… se puede forzar con una horquilla.<br><br><i>Mueve el dedo para colocar la horquilla. Mantén «Girar». Si tiembla, estás cerca; si fuerzas, se resbala y hay que volver a empezar.</i>');
    narBtn('Volver al despacho',()=>goScene(2));
    if(!f.sweet){f.sweet=40+Math.round(Math.random()*100);save()}
    pickOpen({sweet:f.sweet,tol:7,breakMs:1100,onOpen:async()=>{f.secreter=1;save();swapSvg(SVG.secreterA);await bubble('¡Clic! El secreter se abre.',2400);
-     nar('Dentro: unos botines y un papel.<br><br><i>Míralos con la lupa.</i>');narBtn('Volver al despacho',()=>goScene(2))},
-     onBreak:()=>{if(!(S.horq>0)){nar('Me he quedado sin horquillas. En el salón había un platito en el velador…');narBtn('Ir a por horquillas al salón',()=>goScene(1))}}})}},
+     nar('Dentro: unos botines y un papel.<br><br><i>Míralos con la lupa.</i>');narBtn('Volver al despacho',()=>goScene(2))}})}},
 
 // ===== Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
@@ -1032,7 +1026,7 @@ FACES['Íñigo Arrieta']=FACE_INIGO;FACES['Clara Arrieta']=FACE_CLARA;FACES['Ben
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 48';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 49';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
