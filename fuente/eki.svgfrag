@@ -1,0 +1,22 @@
+<svg viewBox="0 -18 124 110" aria-hidden="true"><g class="bodyall">
+<path class="tail" d="M28 40 Q12 46 9 68 Q13 69 15 60 Q19 49 32 45Z" fill="#5c4c3a"/>
+<g class="leg la"><rect x="30" y="50" width="6" height="38" rx="3" fill="#4e4032"/><ellipse cx="34" cy="88" rx="5" ry="2.5" fill="#2a221c"/></g>
+<g class="leg lb"><rect x="39" y="50" width="6" height="38" rx="3" fill="#5c4c3a"/><ellipse cx="43" cy="88" rx="5" ry="2.5" fill="#2a221c"/></g>
+<g class="leg lb"><rect x="76" y="50" width="6" height="38" rx="3" fill="#4e4032"/><ellipse cx="80" cy="88" rx="5" ry="2.5" fill="#2a221c"/></g>
+<g class="leg la"><rect x="85" y="50" width="6" height="38" rx="3" fill="#5c4c3a"/><ellipse cx="89" cy="88" rx="5" ry="2.5" fill="#2a221c"/></g>
+<path d="M24 44 Q26 30 46 30 L80 28 Q93 30 93 44 Q91 57 81 59 Q66 53 50 56 Q32 58 24 50Z" fill="#6b5a44"/>
+<path d="M28 38 Q30 31 46 31 L80 29 Q90 30 91 38 Q70 36 50 38 Q36 40 28 38Z" fill="#3e3228" opacity=".55"/>
+<path d="M58 52 Q72 50 82 56" stroke="#8a7658" stroke-width="2" fill="none" opacity=".35"/>
+<g class="head">
+<path d="M82 38 Q86 20 96 14" stroke="#6b5a44" stroke-width="15" stroke-linecap="round" fill="none"/>
+<path d="M86 30 l12 -10" stroke="#4a2a1a" stroke-width="4" stroke-linecap="round"/><circle cx="92" cy="25" r="1.4" fill="#9a8a6a"/>
+<path d="M90 6 L93 -14 L100 4Z" fill="#2e2620"/><path d="M92.5 2 L93.6 -8 L97 2Z" fill="#6a5046"/>
+<path d="M98 4 L106 -15 L108 6Z" fill="#2e2620"/><path d="M101 3 L105.5 -7 L106.5 4Z" fill="#6a5046"/>
+<ellipse cx="100" cy="14" rx="12" ry="10" fill="#4a3d30"/>
+<path d="M104 10 L121 18 Q123 23 117 25 L102 23Z" fill="#2a2420"/>
+<path d="M103 18 Q110 15 119 19 Q120 24 116 25 L104 23Z" fill="#8f8a82" opacity=".75"/><ellipse cx="101" cy="9" rx="4" ry="2" fill="#8f8a82" opacity=".6"/><ellipse cx="95" cy="16" rx="3" ry="4" fill="#8f8a82" opacity=".45"/>
+<path d="M96 9 q4 -3 9 0" stroke="#8a857c" stroke-width="1.2" fill="none"/>
+<circle cx="120.5" cy="19.5" r="2.6" fill="#0e0c0a"/>
+<circle cx="103" cy="11.5" r="1.9" fill="#0e0c0a"/><circle cx="103.5" cy="11" r=".5" fill="#ccc"/>
+<path class="tongue" d="M112 24 q2 8 6 6 q2 -2 0 -7Z" fill="#b8807e"/>
+</g></g></svg>

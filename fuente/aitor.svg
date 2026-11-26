@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+<defs>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05090c"/><stop offset="1" stop-color="#1c252b"/></linearGradient>
+<radialGradient id="warm"><stop offset="0" stop-color="#ffcf80" stop-opacity=".85"/><stop offset=".4" stop-color="#ffb757" stop-opacity=".28"/><stop offset="1" stop-color="#ff9a30" stop-opacity="0"/></radialGradient>
+<radialGradient id="vig" cx=".5" cy=".5" r=".72"><stop offset=".45" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".9"/></radialGradient>
+<linearGradient id="coat" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3a3f48"/><stop offset=".5" stop-color="#2a2e35"/><stop offset="1" stop-color="#15171b"/></linearGradient>
+<linearGradient id="skin" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e3bea2"/><stop offset=".6" stop-color="#cfa588"/><stop offset="1" stop-color="#9c7660"/></linearGradient>
+<linearGradient id="hair" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#4a3a2e"/><stop offset=".5" stop-color="#33281f"/><stop offset="1" stop-color="#1e1712"/></linearGradient>
+<filter id="fog"><feTurbulence type="fractalNoise" baseFrequency=".01 .03" numOctaves="4" seed="3"/><feColorMatrix values="0 0 0 0 .8 0 0 0 0 .82 0 0 0 0 .84 0 0 0 1.1 -.45"/></filter>
+<filter id="b4"><feGaussianBlur stdDeviation="4"/></filter>
+<pattern id="cob" width="36" height="16" patternUnits="userSpaceOnUse"><rect width="36" height="16" fill="#1e1b18"/><path d="M0 15.5H36M18 0V8M0 7.5H36M9 8V16M27 8V16" stroke="#0c0a09" stroke-width="1.5"/></pattern>
+<pattern id="rain" width="46" height="70" patternUnits="userSpaceOnUse"><path d="M6 0l-5 16M28 26l-5 16M17 48l-5 16M40 10l-5 16" stroke="#cfdbe0" stroke-width="1" opacity=".15"/></pattern>
+</defs>
+<rect width="400" height="500" fill="url(#sky)"/>
+<!-- portal y farola -->
+<rect x="20" y="60" width="110" height="360" fill="#191512"/><rect x="34" y="150" width="82" height="270" rx="40" fill="#0d0b09"/>
+<rect x="318" y="90" width="7" height="330" fill="#14110f"/><path d="M304 92h35l-6 34h-23z" fill="#2a2420"/><rect x="309" y="98" width="25" height="24" fill="#ffd28a"/>
+<circle cx="321" cy="112" r="110" fill="url(#warm)"/>
+<rect y="420" width="400" height="80" fill="url(#cob)"/>
+<rect width="400" height="500" filter="url(#fog)" opacity=".5"/>
+<!-- sereno -->
+<g>
+ <ellipse cx="205" cy="462" rx="75" ry="9" fill="#000" opacity=".55"/>
+ <!-- chuzo -->
+ <rect x="268" y="150" width="6" height="312" fill="#3b2a1c"/><path d="M265 152l6-26 6 26z" fill="#8d8a80"/>
+ <!-- piernas -->
+ <rect x="178" y="380" width="22" height="78" fill="#191b1f"/><rect x="208" y="380" width="22" height="78" fill="#15171a"/>
+ <path d="M172 456h30v8h-34zM206 456h30l4 8h-34z" fill="#0b0b0b"/>
+ <!-- abrigo -->
+ <path d="M168 210q36-14 74 0l14 190h-102z" fill="url(#coat)"/>
+ <path d="M205 212v188" stroke="#0d0f12" stroke-width="2"/>
+ <g fill="#c9a24a"><circle cx="198" cy="236" r="3"/><circle cx="198" cy="266" r="3"/><circle cx="198" cy="296" r="3"/><circle cx="198" cy="326" r="3"/></g>
+ <path d="M178 212l27 30 27-30" fill="none" stroke="#14161a" stroke-width="5"/>
+ <rect x="160" y="318" width="96" height="9" fill="#1b130d"/>
+ <!-- llavero -->
+ <circle cx="236" cy="336" r="9" fill="none" stroke="#c9a24a" stroke-width="2.5"/>
+ <path d="M232 343l-3 14M238 344l2 15M243 340l6 12" stroke="#c9a24a" stroke-width="2.5" stroke-linecap="round"/>
+ <!-- brazos -->
+ <path d="M240 214q22 10 30 80" stroke="#272a30" stroke-width="22" fill="none" stroke-linecap="round"/>
+ <circle cx="271" cy="296" r="9" fill="url(#skin)"/>
+ <path d="M170 214q-24 30-22 90" stroke="#2f333a" stroke-width="22" fill="none" stroke-linecap="round"/>
+ <!-- farol -->
+ <circle cx="146" cy="326" r="55" fill="url(#warm)"/>
+ <path d="M146 300v8" stroke="#2a2420" stroke-width="3"/><circle cx="148" cy="303" r="8" fill="url(#skin)"/>
+ <rect x="134" y="310" width="24" height="32" rx="3" fill="#ffd28a" stroke="#2a2420" stroke-width="3"/><path d="M146 310v32" stroke="#2a2420" stroke-width="2"/>
+ <!-- cuello y cabeza -->
+ <rect x="196" y="190" width="18" height="22" fill="#b98f73"/>
+ <ellipse cx="205" cy="168" rx="25" ry="30" fill="url(#skin)"/>
+ <!-- pelo alborotado con canas -->
+ <path d="M178 158q-12-6-8-22q4 8 10 6q-2-14 12-20q0 8 6 8q4-12 18-10q-4 6 2 10q10-4 16 6q-6 2-2 8q8 2 6 16q-6-6-12-6q-26-8-48 4z" fill="url(#hair)"/>
+ <path d="M176 152q-6 12-2 24q-6-6-6-16zM234 152q6 12 2 24q6-6 6-16z" fill="#33281f"/>
+ <path d="M184 136l-4-8M200 128l2-9M222 132l5-7M230 146l8-3M176 148l-7-2" stroke="#8a8680" stroke-width="1.4" stroke-linecap="round"/>
+ <!-- gorra de sereno -->
+ <path d="M178 140q27-14 54 0v-14q-27-12-54 0z" fill="#1d2026"/>
+ <path d="M174 140q31 6 62 0l-2 6q-29 6-58 0z" fill="#0e0f12"/>
+ <rect x="196" y="127" width="18" height="8" rx="1" fill="#c9a24a"/>
+ <!-- mechones alborotados bajo la gorra -->
+ <path d="M172 140q-12 4-10 18q4-4 8-3q-6 10 0 20q2-8 7-10q-2 8 2 12l2-22q4-8 4-14z" fill="url(#hair)"/>
+ <path d="M238 140q12 4 10 18q-4-4-8-3q6 10 0 20q-2-8-7-10q2 8-2 12l-2-22q-4-8-4-14z" fill="#251c15"/>
+ <path d="M178 143q6 14 14 8q0 8 9 7q4 6 10-2q7 6 12-4q5 4 7-6l-2-4h-50z" fill="#33281f"/><path d="M196 151l3 6M212 150l2 5" stroke="#8f8a84" stroke-width="1.2" stroke-linecap="round"/>
+ <path d="M166 154l-6 2M244 154l6 2M170 166l-4 6M242 166l4 6M190 150l-1 5M218 151l1 5" stroke="#8f8a84" stroke-width="1.3" stroke-linecap="round"/>
+ <!-- cejas y ojos -->
+ <path d="M188 159q6-4 12 0M210 159q6-4 12 0" stroke="#2a2018" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+ <ellipse cx="194" cy="166" rx="3.2" ry="2.6" fill="#3a2a1c"/><ellipse cx="216" cy="166" rx="3.2" ry="2.6" fill="#3a2a1c"/>
+ <path d="M205 168l-3 12h6" stroke="#9c7660" stroke-width="1.5" fill="none"/>
+ <!-- barba corta canosa -->
+ <path d="M181 170q0 24 10 31q14 9 28 0q10-7 10-31q-4 8-9 10q-6-4-15-4t-15 4q-5-2-9-10z" fill="#6a625a"/>
+ <path d="M190 196q15 9 30 0q-4 7-15 8q-11-1-15-8z" fill="#a49d93"/>
+ <path d="M193 181q12-5 24 0" stroke="#4a423b" stroke-width="5" fill="none" stroke-linecap="round"/>
+ <path d="M199 188q6 1 12 0" stroke="#7a4f3f" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+ <path d="M184 182l2 6M226 182l-2 6M196 199l1 3M214 199l-1 3M205 200v3" stroke="#d6d0c6" stroke-width="1.1" stroke-linecap="round"/>
+</g>
+<rect width="400" height="500" fill="url(#rain)"/>
+<rect width="400" height="500" fill="url(#vig)"/>
+</svg>

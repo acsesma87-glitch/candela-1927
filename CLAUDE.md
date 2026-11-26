@@ -15,3 +15,10 @@ Se publica con GitHub Pages desde la rama `main`, carpeta raíz.
 
 ## Pasar cambios a Candela
 Solo cuando el usuario lo pida: copiar los archivos de `prueba/` a la raíz y subirlos.
+
+## Cómo se genera Altamar (importante)
+- `altamar.html` NO se edita a mano: se genera desde `fuente/` con `python3 fuente/build.py`, que escribe `prueba/altamar.html`.
+- `fuente/engine.html`: motor (pantallas, herramientas, perras, libreta, diálogos, puzles, sonido).
+- `fuente/dayN.js`: el guion de cada día. `fuente/scenes.py`: los dibujos (SVG) de las escenas y personajes.
+- Si se edita `prueba/altamar.html` directamente, el siguiente `build.py` borra esos cambios. Hay que cambiar `fuente/` y volver a generar.
+- Al cambiar algo en `prueba/`, subir el número de «versión de prueba N» en `fuente/engine.html` y el nombre de caché en `prueba/sw.js`.
