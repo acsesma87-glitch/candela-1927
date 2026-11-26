@@ -394,7 +394,7 @@ function docShow(html){return new Promise(r=>{$('#docP').innerHTML=html;$('#doc'
 // ================= Laika =================
 const LK=$('#laika'),FL=$('#flipL');
 function laikaHome(){if(!SC||SC.laikaHome==null||(SC.tools&&!SC.tools.includes('laika')&&!SC.sleep)){LK.classList.remove('on');return}
-  const W=st.clientWidth,dw=W*.125;LK.getAnimations().forEach(a=>a.cancel());LK.style.transform=`translateX(${SC.laikaHome*K()-dw/2}px)`;FL.style.transform=SC.laikaFlip?'scaleX(-1)':'none';LK.classList.remove('run','sniff');LK.classList.add('on','lie')}
+  const W=st.clientWidth,dw=W*.125;LK.getAnimations().forEach(a=>a.cancel());LK.style.transform=`translateX(${SC.laikaHome*K()-dw/2}px)`;FL.style.transform=SC.laikaFlip?'scaleX(-1)':'none';LK.classList.remove('run','sniff','lie');LK.classList.add('on');if(!SC.laikaStand)LK.classList.add('lie')}
 async function laika(){
   if(busy||!SC||(SC.tools&&!SC.tools.includes('laika')))return;busy=true;st.classList.add('dogs');$('#tLaika').disabled=true;$('#tLaika').classList.remove('new');
   const W=st.clientWidth,dw=W*.125,k=K(),c=SC.laika&&SC.laika(),stop=c&&c.x!=null?c.x*k-dw*.9:W*(.15+Math.random()*.55),home=SC.laikaHome!=null?SC.laikaHome*k-dw/2:-dw;
@@ -482,7 +482,7 @@ DAYS[1]=[
    narBtn('Pasar la página',next)}},
 
 // ===== Escena 1 · La estación del Topo =====
-{svg:SVG.topo,dark:.28,cartel:'DONOSTIA<br>ESTACIÓN DEL TOPO',
+{svg:SVG.topo,dark:.28,laikaHome:395,laikaStand:1,cartel:'DONOSTIA<br>ESTACIÓN DEL TOPO',
  spots:[
   {id:'aitor',tool:'mano',x:690,y:250,r:80,glow:()=>!D(1).flags.saludo,act:async()=>{
     const f=D(1).flags;
@@ -664,7 +664,7 @@ async function knock(){await sleep(600);await shake();await sleep(250);await sha
   nar('Don Julián Arrieta. El del periódico. El de las cajas de Doña Maite…');narBtn('Salir corriendo',next)}
 
 
-if(ALL){$('#ver').textContent=' · versión de prueba 30';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 31';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
