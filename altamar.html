@@ -333,7 +333,7 @@ function unlockTool(t){if(!S.tools.includes(t)){S.tools.push(t);save()}toolsUI()
 
 function loadScene(sc){
   SC=sc;base.innerHTML=sc.svg;lit.innerHTML=sc.svg;lens.innerHTML=sc.svg;lens.appendChild(LD);lens.querySelectorAll('.ol').forEach(e=>e.remove());lensSvg=lens.querySelector('svg');lensSvg.setAttribute('preserveAspectRatio','xMidYMid slice');applyDrags();
-  dark.style.opacity=sc.dark||0;toolsUI();ekiStop();st.classList.remove('dogs');LK.getAnimations().forEach(x=>x.cancel());EK.getAnimations().forEach(x=>x.cancel());LK.classList.remove('on');EK.classList.remove('on');st.querySelectorAll('.spark').forEach(e=>e.remove());placed=false;px=400;py=250;setTool('mano',1);sizeStage();laikaHome();ekiHome();marks()}
+  dark.style.opacity=sc.dark||0;toolsUI();ekiStop();st.classList.remove('dogs');LK.getAnimations().forEach(x=>x.cancel());EK.getAnimations().forEach(x=>x.cancel());LK.classList.remove('on','lie','run','sniff');EK.classList.remove('on','lie','run','happy');st.querySelectorAll('.spark').forEach(e=>e.remove());placed=false;px=400;py=250;setTool('mano',1);sizeStage();laikaHome();ekiHome();marks()}
 function marks(){st.querySelectorAll('.spark').forEach(e=>e.remove());if(!SC)return;const k=K();
   (SC.spots||[]).forEach(s=>{if(s.glow&&!(s.glow===true?!found(s.id):s.glow())===false){}
     if(s.glow&&(typeof s.glow==='function'?s.glow():!found(s.id))){const d=document.createElement('div');d.className='spark';d.style.left=s.x*k+'px';d.style.top=s.y*k+'px';st.appendChild(d)}})}
@@ -427,7 +427,7 @@ function ekiStart(){if(busy||!SC||!SC.ekiSpots)return;ekiPick=true;$('#tEki').cl
   const k=K();SC.ekiSpots.filter(p=>!p.when||p.when()).forEach(p=>{const d=document.createElement('div');d.className='pring';d.style.left=p.x*k+'px';d.style.top=p.y*k+'px';st.appendChild(d)});
   bubble('Toca a una persona para que Eki vaya a saludarla.',2400)}
 function ekiStop(){ekiPick=false;$('#tEki').setAttribute('aria-pressed','false');st.classList.remove('pick');st.querySelectorAll('.pring').forEach(e=>e.remove());EK.classList.remove('happy')}
-async function ekiGo(p){busy=true;st.classList.add('dogs');EK.classList.add('on');const k=K(),dw=st.clientWidth*.17,to=Math.min(st.clientWidth-dw,Math.max(0,p.x*k-dw/2-(p.side||-1)*dw*.6));
+async function ekiGo(p){busy=true;st.classList.add('dogs');EK.classList.remove('lie');EK.classList.add('on');const k=K(),dw=st.clientWidth*.17,to=Math.min(st.clientWidth-dw,Math.max(0,p.x*k-dw/2-(p.side||-1)*dw*.6));
   const go=(a,b,ms)=>{FE.style.transform=b<a?'scaleX(-1)':'none';return EK.animate([{transform:`translateX(${a}px)`},{transform:`translateX(${b}px)`}],{duration:ms,fill:'forwards',easing:'ease-in-out'}).finished};
   EK.classList.add('run');await go(ekiX,to,Math.max(500,Math.abs(to-ekiX)*2.2));EK.classList.remove('run');EK.classList.add('happy');
   bubExtra=1000;try{await p.act()}finally{bubExtra=0;EK.classList.remove('happy');EK.classList.add('run');await go(to,ekiX,Math.max(500,Math.abs(to-ekiX)*2.2));EK.classList.remove('run');FE.style.transform='none';
@@ -865,7 +865,7 @@ FACES['Paco']=FACE_PACO;FACES['Un marinero']=FACE_EST;
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 44';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 45';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
