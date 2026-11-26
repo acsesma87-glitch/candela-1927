@@ -402,8 +402,7 @@ const AU=(()=>{
   return{music,duck,sfx,toggle,isOn:()=>on};
 })();
 // qué música suena en cada pantalla (las de puzle o de detalle siguen con la de antes, más baja)
-const MUSICA={periodico:'periodico',periodico2:'periodico',periodico3:'periodico',periodico4:'periodico',topo:'estacion',cocina:'casa',portal:'portal',faro:'faro',faroL:'faro',
-  noche:'noche',muelle:'muelle',taberna:'taberna',salon:'velatorio',salonC:'velatorio',salonCa:'velatorio',despacho:'despacho',despachoL:'despacho',imprenta:'imprenta'};
+const MUSICA={}; // música generada quitada: se sustituirá por grabaciones reales
 const svgKey=svg=>Object.keys(SVG).find(k=>SVG[k]===svg);
 function musicaEscena(sc){const k=svgKey(sc.svg);if(k&&k.startsWith('periodico'))AU.sfx('papel');if(k&&MUSICA[k]){AU.duck(false);AU.music(MUSICA[k]);return}
   AU.duck(true);const day=DAYS[curDay]||[];for(let i=day.indexOf(sc)-1;i>=0;i--){const m=MUSICA[svgKey(day[i].svg)];if(m){AU.music(m);return}}}
