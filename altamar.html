@@ -637,12 +637,20 @@ DAYS[1]=[
    await talk('Doña Leonor','La verja del faro estaba abierta. Si no ha sido un suicidio, ese hombre dejó pasar a alguien… o algo peor. Mi familia se encargará de que no vuelva a llevar ese farol.');
    await shake();await talk('Aitor','(Blanco como la sábana.) La cerré a las doce y media. Lo juro.');
    await talk('Candela','(El comisario mira a Aitor de reojo y apunta algo en su libreta.)');
-   const c=await choose('Candela','Tengo que decir algo. ¿Qué le digo al comisario?',['«Esto no es un suicidio.»','Enseñarle una pista de la libreta']);
-   if(c===0)await talk('Comisario Ibarra','¿Y usted quién es, señorita?');
-   else{const ps=S.pistas.filter(p=>p.day===1);const k=await choose('Candela','¿Qué pista le enseño?',ps.map(p=>p.t));
+   const c=await choose('Candela','Tengo que decir algo. ¿Qué le digo al comisario?',['«Esto no es un suicidio.»','Enseñarle una pista de la libreta','«Comisario, usted conoce a Aitor desde hace años, ¿verdad?»']);
+   if(c===0)await talk('Comisario Ibarra','¿Y usted quién es, señorita? Llegó esta mañana en el Topo y ya sabe más que el médico.');
+   if(c===1){const ps=S.pistas.filter(p=>p.day===1);const k=await choose('Candela','¿Qué pista le enseño?',ps.map(p=>p.t));
      await talk('Candela',`(Le enseño: «${ps[k].t}».)`);await talk('Comisario Ibarra','Muy bonito. Eso no prueba nada.')}
-   await talk('Candela','Deme hasta Nochebuena. Si para entonces no le traigo al culpable, cierre el caso como quiera.');
-   await talk('Comisario Ibarra','(Se ríe.) Hasta Nochebuena, argentina. Ni un día más.');endTalk();
+   if(c!==2)await talk('Candela','(Respiro hondo. Por ahí no. Pruebo de otra manera.) Comisario… usted conoce a Aitor desde hace años, ¿verdad?');
+   await talk('Comisario Ibarra','(Gruñe.) Veinte años con ese farol. Es el único sereno que me trae los recados sin abrirlos.');
+   await talk('Candela','¿Y de verdad lo ve capaz de algo así? ¿De dejar pasar a un asesino por una verja?');
+   await talk('Comisario Ibarra','(Mira a Aitor un buen rato. Luego a Doña Leonor, que no le quita ojo.) Lo que yo vea da igual, señorita. Los Arrieta mandan en medio puerto.');
+   await talk('Candela','Entonces no le pido que abra nada. Ciérrelo como suicidio en sus papeles, si quiere. Pero no acuse a Aitor ni deje que lo echen hasta Nochebuena.');
+   await talk('Candela','Si para entonces no le traigo al culpable, haga lo que tenga que hacer.');
+   await talk('Comisario Ibarra','(Se rasca el bigote.) Sin escándalos. Sin molestar a la familia. Y lo que encuentre, me lo trae a mí primero, ¿entendido?');
+   await talk('Comisario Ibarra','Hasta Nochebuena, argentina. Ni un día más.');
+   await talk('Aitor','(En voz baja, sin mirarte.) …Gracias.');endTalk();
+   persona('Comisario Ibarra','Conoce a Aitor desde hace veinte años. Me da hasta Nochebuena, sin escándalos y contándole a él lo que encuentre.');
    S.trato=true;save();$('#dayLbl').innerHTML=`Día 1 · 1 dic<b id="cdLbl">${countdown()}</b>`;
    persona('Doña Leonor','La viuda. De luto, sin una lágrima. Acusa a Aitor delante de todos y amenaza con que lo echen.');
    nar('Hasta Nochebuena. Veintitrés días para encontrar al culpable… y para que Aitor no cargue con esto.');narBtn('Volver a casa',next)}},
@@ -679,7 +687,7 @@ async function knock(){await sleep(600);await shake();await sleep(250);await sha
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 34';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 35';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
