@@ -66,7 +66,7 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
 </head>
 <body>
 <div class="wrap">
-  <a href="index.html" style="color:var(--ink2);font-size:15px;text-decoration:none">‹ Presentación</a>
+  <div style="display:flex;justify-content:space-between;gap:10px"><a href="index.html#intro" style="color:var(--ink2);font-size:15px;text-decoration:none">‹ Presentación</a><a id="toAlt" href="altamar.html" hidden style="color:#c9a24a;font-size:15px;text-decoration:none">Altamar ›</a></div>
   <h1>El viaje de Candela</h1>
   <p class="sub">De La Plata a Donostia, noviembre de 1927. Cada día se abre una postal nueva.</p>
   <div class="route" id="route"></div>
@@ -75,6 +75,11 @@ body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bot
     <h2>30 de noviembre · La última noche</h2>
     <p>Antes de dormir en el hostal, voy a probar mis herramientas. Mañana no puede fallar nada.</p>
     <a href="herramientas.html">Probar mis herramientas</a>
+  </div>
+  <div class="next" id="next2" hidden>
+    <h2>1 de diciembre · Altamar</h2>
+    <p>El Topo ya está llegando. Veinticuatro puertas, una por noche, hasta Nochebuena.</p>
+    <a href="altamar.html">Abrir el calendario de Altamar</a>
   </div>
 </div>
 <script>
@@ -136,6 +141,7 @@ const placeAll=()=>list.querySelectorAll('.lk').forEach(b=>{const c=b.closest('.
 placeAll();addEventListener('resize',placeAll);list.querySelectorAll('img').forEach(im=>im.addEventListener('load',placeAll));
 document.getElementById('route').innerHTML=DAYS.map(x=>`<span class="${open(x.d)?'on':''}">${x.d}</span>`).join('')+'<span>1 dic</span>';
 document.getElementById('next').hidden=!(all||now.getMonth()>10||(now.getMonth()===10&&now.getDate()>=30));
+{const alt=Date.now()>=new Date(2026,11,1).getTime();document.getElementById('next2').hidden=!alt;document.getElementById('toAlt').hidden=!alt}
 const opened=DAYS.filter(x=>open(x.d));
 if(opened.length>1){const el=document.getElementById('dia'+opened[opened.length-1].d);if(el)setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),400)}
 }
