@@ -386,8 +386,9 @@ function talk(who,text){return new Promise(res=>{const d=$('#dlg');$('#shade').c
   $('#face').innerHTML=FACES[who]||'';$('#face').style.display=FACES[who]?'':'none';$('#who').textContent=who.toUpperCase();$('#say').innerHTML=text;$('#opts').innerHTML='';$('#more').style.display='';
   setTimeout(()=>{d.onclick=()=>{d.onclick=null;res()}},700)})}
 function choose(who,text,opts){return new Promise(res=>{const d=$('#dlg');$('#shade').classList.add('on');d.classList.add('on');d.onclick=null;
-  $('#face').innerHTML=FACES[who]||'';$('#face').style.display=FACES[who]?'':'none';$('#who').textContent=who.toUpperCase();$('#say').innerHTML=text;$('#more').style.display='none';
-  $('#opts').innerHTML='';setTimeout(()=>opts.forEach((o,i)=>{const b=document.createElement('button');b.textContent=o;b.onclick=ev=>{ev.stopPropagation();res(i)};$('#opts').appendChild(b)}),900)})}
+  if(text!=null){$('#face').innerHTML=FACES[who]||'';$('#face').style.display=FACES[who]?'':'none';$('#who').textContent=who.toUpperCase();$('#say').innerHTML=text}
+  $('#more').style.display='none';const o=$('#opts');o.innerHTML='';o.style.pointerEvents='none';setTimeout(()=>o.style.pointerEvents='',600);
+  opts.forEach((t,i)=>{const b=document.createElement('button');b.textContent=t;b.onclick=ev=>{ev.stopPropagation();res(i)};o.appendChild(b)})})}
 function endTalk(){$('#dlg').classList.remove('on');$('#shade').classList.remove('on')}
 function persona(who,line){(S.personas[who]=S.personas[who]||[]);if(!S.personas[who].includes(line)){S.personas[who].push(line);(S.pd=S.pd||{})[who+'|'+line]=curDay}save()}
 async function pista(id,t,d){if(S.pistas.find(p=>p.id===id))return;S.pistas.push({id,day:curDay,t,d});save();badge();
@@ -661,7 +662,7 @@ DAYS[1]=[
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
  enter:async()=>{const ids=['informe','ficha','bajos','huellas','verja','ampolla'],falta=ids.filter(i=>!S.pistas.find(p=>p.id===i)).length;
    nar(`La cocina a oscuras, solo con las brasas. Laika y Eki duermen enroscadas juntas junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===1).length}.`+(falta?`<br><i>Algo por descubrir en el faro…</i>`:''));
-   await sleep(3500);luzVerde();await bubble('Por la ventana, un punto de luz verde cruza la bahía despacio… y se apaga.',4200);
+   await sleep(5000);luzVerde();await bubble('Por la ventana, un punto de luz verde cruza la bahía despacio… y se apaga.',4200);
    nar('Lo he visto antes. En boca de un piloto, sobre Vigo…<br><br>Mañana, al muelle.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 1 resuelto. Mañana, al muelle.')})}},
 ];
@@ -720,7 +721,7 @@ DAYS[2]=[
       nar('Mateo lo dice muy seguro. Demasiado seguro.<br><br><i>Mira por el muelle: la caseta, las barcas, la gente.</i>');return}
     if(f.mateoConf){await talk('Mateo «el Rubio»','Ya le he dicho lo que tenía que decirle, señorita.');endTalk();return}
     await talk('Mateo «el Rubio»','(Se cruza de brazos.) ¿Otra vez usted? ¿Qué quiere ahora?');
-    const c=await choose('Candela','¿Qué le digo?',['¿Seguro que estuvo en El Ancla toda la noche?','Enseñarle una prueba de la libreta','Nada, gracias.']);
+    const c=await choose(null,null,['¿Seguro que estuvo en El Ancla toda la noche?','Enseñarle una prueba de la libreta','Nada, gracias.']);
     if(c===0){await talk('Mateo «el Rubio»','¿Me está llamando mentiroso delante de mis hombres?');endTalk();return}
     if(c===2){endTalk();return}
     const ps=S.pistas.filter(p=>p.day<=2);const k=await choose('Candela','¿Qué prueba le enseño?',ps.map(p=>p.t));const pid=ps[k].id;
@@ -768,7 +769,7 @@ DAYS[2]=[
 // ===== Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
  enter:async()=>{nar(`Aitor ronca en el sillón. Laika y Eki, junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===2).length}.<br>Mateo mintió… pero, ¿mintió por miedo, o por algo peor?`);
-   await sleep(3000);nar('Paco, el de El Ancla, dice Mateo que lo vio hasta el cierre. Habrá que preguntarle.<br><br>Mañana, a la taberna El Ancla.');
+   await sleep(5000);nar('Paco, el de El Ancla, dice Mateo que lo vio hasta el cierre. Habrá que preguntarle.<br><br>Mañana, a la taberna El Ancla.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 2 resuelto. Mañana, a la taberna El Ancla.')})}},
 ];
 FACES['Mateo «el Rubio»']=FACE_MATEO;FACES['Un estibador']=FACE_EST;
@@ -776,7 +777,7 @@ FACES['Mateo «el Rubio»']=FACE_MATEO;FACES['Un estibador']=FACE_EST;
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 37';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 38';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
