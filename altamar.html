@@ -975,7 +975,7 @@ DAYS[4]=[
  ],
  enter:async()=>{const f=d4();if(f.pillada){nar('Ya me han echado. Mejor no tentar a la suerte.');narBtn('Volver a casa',()=>goScene(5));return}
    if(!f.salon){f.salon=1;save();nar('Velas, terciopelo y retratos de antepasados con cara de pocos amigos. Toda la familia Arrieta junta. Y ninguno llora.')}
-   else nar(f.distr?'El salón sigue revuelto por lo de la bandeja. La puerta del despacho está a la izquierda.':'El salón huele a cera y a flores. Doña Leonor vigila.')}},
+   else{nar(f.distr?'El salón sigue revuelto por lo de la bandeja. La puerta del despacho está a la izquierda.':'El salón huele a cera y a flores. Doña Leonor vigila.');if(f.distr)narBtn('Volver al despacho',()=>goScene(2))}}},
 
 // ===== El despacho =====
 {svg:SVG.despacho,dark:.55,tools:['mano','linterna','lupa'],
@@ -989,7 +989,7 @@ DAYS[4]=[
  ],
  enter:async()=>{const f=d4();
    if(f.pillada){swapSvg(SVG.despachoL);nar('Doña Leonor me está esperando en la puerta.');return}
-   nar(f.desp?'El despacho de Don Julián, a oscuras. Rápido.':'El despacho de Don Julián. Huele a tabaco frío. Tengo poco tiempo.<br><br><i>El escritorio, el retrato, el secreter…</i>');f.desp=1;save();catch4()}},
+   nar(f.desp?'El despacho de Don Julián, a oscuras. Rápido.':'El despacho de Don Julián. Huele a tabaco frío. Tengo poco tiempo.<br><br><i>El escritorio, el retrato, el secreter…</i>');f.desp=1;save();narBtn('Volver al salón',()=>goScene(1));catch4()}},
 
 // ===== El bloc y el lápiz =====
 {svg:SVG.escritorio,dark:0,tools:['mano','linterna','lupa'],
@@ -1019,7 +1019,7 @@ DAYS[4]=[
    if(!f.sweet){f.sweet=40+Math.round(Math.random()*100);save()}
    pickOpen({sweet:f.sweet,tol:7,breakMs:1100,onOpen:async()=>{f.secreter=1;save();swapSvg(SVG.secreterA);await bubble('¡Clic! El secreter se abre.',2400);
      nar('Dentro: unos botines y un papel.<br><br><i>Míralos con la lupa.</i>');narBtn('Volver al despacho',()=>goScene(2))},
-     onBreak:()=>{if(!(S.horq>0))nar('Me he quedado sin horquillas. En el salón había un platito en el velador…');narBtn('Volver al despacho',()=>goScene(2))}})}},
+     onBreak:()=>{if(!(S.horq>0)){nar('Me he quedado sin horquillas. En el salón había un platito en el velador…');narBtn('Ir a por horquillas al salón',()=>goScene(1))}}})}},
 
 // ===== Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
@@ -1032,7 +1032,7 @@ FACES['Íñigo Arrieta']=FACE_INIGO;FACES['Clara Arrieta']=FACE_CLARA;FACES['Ben
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 47';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 48';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
