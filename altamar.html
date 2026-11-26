@@ -62,14 +62,14 @@ button{font:inherit;color:inherit;cursor:pointer}
 .spark{position:absolute;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,#ffe9a8aa,#ffe9a800 70%);animation:spk 1.6s ease-in-out infinite;z-index:2}
 @keyframes spk{0%,100%{opacity:.25;transform:scale(.8)}50%{opacity:.9;transform:scale(1.15)}}
 /* perras */
-.dog{position:absolute;left:0;bottom:4%;width:9%;pointer-events:none;z-index:4;display:none}
+.dog{position:absolute;left:0;bottom:4%;width:12.5%;pointer-events:none;z-index:4;display:none}
 .dog.on{display:block}
 .dog svg{width:100%;height:auto;display:block;overflow:visible;filter:drop-shadow(0 4px 4px #000a) brightness(.85) saturate(.8)}
 .dog .leg{transform-box:fill-box;transform-origin:50% 0}
 .dog.run .la{animation:trot .28s linear infinite}.dog.run .lb{animation:trot .28s linear infinite reverse}
 .dog .tail{transform-box:fill-box;transform-origin:100% 100%;animation:wag .3s ease-in-out infinite alternate}
 .dog.sniff .head{transform-box:fill-box;transform-origin:20% 80%;animation:bob .35s ease-in-out infinite alternate}
-.dog.eki{width:13%;bottom:2.5%}.dog .tongue{display:none}.dog.happy .tongue{display:block}
+.dog.eki{width:17%;bottom:2.5%}.dog .tongue{display:none}.dog.happy .tongue{display:block}
 .dog.happy .bodyall{animation:hop .32s ease-in-out infinite alternate}
 @keyframes hop{from{transform:translateY(0)}to{transform:translateY(-6px)}}
 @keyframes trot{0%{transform:rotate(22deg)}50%{transform:rotate(-22deg)}100%{transform:rotate(22deg)}}
@@ -379,10 +379,10 @@ function docShow(html){return new Promise(r=>{$('#docP').innerHTML=html;$('#doc'
 // ================= Laika =================
 const LK=$('#laika'),FL=$('#flipL');
 function laikaHome(){if(!SC||SC.laikaHome==null||(SC.tools&&!SC.tools.includes('laika'))){LK.classList.remove('on');return}
-  const W=st.clientWidth,dw=W*.09;LK.getAnimations().forEach(a=>a.cancel());LK.style.transform=`translateX(${SC.laikaHome*K()-dw/2}px)`;FL.style.transform=SC.laikaFlip?'scaleX(-1)':'none';LK.classList.remove('run','sniff');LK.classList.add('on','lie')}
+  const W=st.clientWidth,dw=W*.125;LK.getAnimations().forEach(a=>a.cancel());LK.style.transform=`translateX(${SC.laikaHome*K()-dw/2}px)`;FL.style.transform=SC.laikaFlip?'scaleX(-1)':'none';LK.classList.remove('run','sniff');LK.classList.add('on','lie')}
 async function laika(){
   if(busy||!SC||(SC.tools&&!SC.tools.includes('laika')))return;busy=true;st.classList.add('dogs');$('#tLaika').disabled=true;$('#tLaika').classList.remove('new');
-  const W=st.clientWidth,dw=W*.09,k=K(),c=SC.laika&&SC.laika(),stop=c&&c.x!=null?c.x*k-dw*.9:W*(.15+Math.random()*.55),home=SC.laikaHome!=null?SC.laikaHome*k-dw/2:-dw;
+  const W=st.clientWidth,dw=W*.125,k=K(),c=SC.laika&&SC.laika(),stop=c&&c.x!=null?c.x*k-dw*.9:W*(.15+Math.random()*.55),home=SC.laikaHome!=null?SC.laikaHome*k-dw/2:-dw;
   const go=(a,b,ms)=>{FL.style.transform=b<a?'scaleX(-1)':'none';return LK.animate([{transform:`translateX(${a}px)`},{transform:`translateX(${b}px)`}],{duration:Math.max(400,ms),fill:'forwards',easing:'linear'}).finished};
   LK.classList.remove('lie');LK.classList.add('on','run');await go(home,W-dw*.8,(W-dw*.8-home)*2.4);await go(W-dw*.8,stop,1400);
   LK.classList.remove('run');LK.classList.add('sniff');await sleep(1100);LK.classList.remove('sniff');
@@ -397,12 +397,12 @@ const FUN=['Laika está comiéndose un chorongo de otro perro. Qué asco, Laika.
 // ================= Eki (se completa en la escena de la cocina) =================
 const EK=$('#eki'),FE=$('#flipE');let ekiPick=false,ekiX=0;
 function ekiHome(){if(!SC||SC.ekiHome==null||(SC.tools&&!SC.tools.includes('eki'))||!S.tools.includes('eki')){EK.classList.remove('on');return}
-  const k=K(),dw=st.clientWidth*.13;ekiX=SC.ekiHome*k-dw/2;EK.getAnimations().forEach(a=>a.cancel());EK.style.transform=`translateX(${ekiX}px)`;FE.style.transform='none';EK.classList.add('on');EK.classList.remove('run','happy')}
+  const k=K(),dw=st.clientWidth*.17;ekiX=SC.ekiHome*k-dw/2;EK.getAnimations().forEach(a=>a.cancel());EK.style.transform=`translateX(${ekiX}px)`;FE.style.transform='none';EK.classList.add('on');EK.classList.remove('run','happy')}
 function ekiStart(){if(busy||!SC||!SC.ekiSpots)return;ekiPick=true;$('#tEki').classList.remove('new');$('#tEki').setAttribute('aria-pressed','true');st.classList.add('pick');EK.classList.add('happy');
   const k=K();SC.ekiSpots.forEach(p=>{const d=document.createElement('div');d.className='pring';d.style.left=p.x*k+'px';d.style.top=p.y*k+'px';st.appendChild(d)});
   bubble('Toca a una persona para que Eki vaya a saludarla.',2400)}
 function ekiStop(){ekiPick=false;$('#tEki').setAttribute('aria-pressed','false');st.classList.remove('pick');st.querySelectorAll('.pring').forEach(e=>e.remove());EK.classList.remove('happy')}
-async function ekiGo(p){busy=true;st.classList.add('dogs');EK.classList.add('on');const k=K(),dw=st.clientWidth*.13,to=Math.min(st.clientWidth-dw,Math.max(0,p.x*k-dw/2-(p.side||-1)*dw*.6));
+async function ekiGo(p){busy=true;st.classList.add('dogs');EK.classList.add('on');const k=K(),dw=st.clientWidth*.17,to=Math.min(st.clientWidth-dw,Math.max(0,p.x*k-dw/2-(p.side||-1)*dw*.6));
   const go=(a,b,ms)=>{FE.style.transform=b<a?'scaleX(-1)':'none';return EK.animate([{transform:`translateX(${a}px)`},{transform:`translateX(${b}px)`}],{duration:ms,fill:'forwards',easing:'ease-in-out'}).finished};
   EK.classList.add('run');await go(ekiX,to,Math.max(500,Math.abs(to-ekiX)*2.2));EK.classList.remove('run');EK.classList.add('happy');
   try{await p.act()}finally{EK.classList.remove('happy');EK.classList.add('run');await go(to,ekiX,Math.max(500,Math.abs(to-ekiX)*2.2));EK.classList.remove('run');FE.style.transform='none';
@@ -579,7 +579,7 @@ async function knock(){await sleep(600);await shake();await sleep(250);await sha
   nar('Don Julián Arrieta. El del periódico. El de las cajas de Doña Maite…');narBtn('Salir corriendo',next)}
 
 
-if(ALL){$('#ver').textContent=' · versión de prueba 25';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 26';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
