@@ -463,7 +463,7 @@ DAYS[1]=[
    narBtn('Pasar la página',next)}},
 
 // ===== Escena 1 · La estación del Topo =====
-{svg:SVG.topo,dark:.28,laikaHome:420,cartel:'DONOSTIA<br>ESTACIÓN DEL TOPO',
+{svg:SVG.topo,dark:.28,cartel:'DONOSTIA<br>ESTACIÓN DEL TOPO',
  spots:[
   {id:'aitor',tool:'mano',x:690,y:250,r:80,glow:()=>!D(1).flags.saludo,act:async()=>{
     const f=D(1).flags;
@@ -529,7 +529,7 @@ DAYS[1]=[
    else nar('La cocina huele a café y a leña. Aitor tiene su cuaderno de ronda abierto encima de la mesa.')}},
 
 // ===== Escena 3 · El portal =====
-{svg:SVG.portal,dark:.8,laikaHome:300,
+{svg:SVG.portal,dark:.8,
  spots:[
   {id:'papel',tool:'linterna',x:505,y:460,act:async()=>{await bubble('Algo blanco asoma por debajo del felpudo. La esquina de un papel.',3000);nar('Hay un papel debajo del felpudo.<br><br><i>Tócalo con la mano para cogerlo.</i>')}},
   {id:'coger',tool:'mano',x:505,y:462,r:55,when:()=>found('papel'),once:false,act:async()=>{next()}},
@@ -579,7 +579,7 @@ async function knock(){await sleep(600);await shake();await sleep(250);await sha
   nar('Don Julián Arrieta. El del periódico. El de las cajas de Doña Maite…');narBtn('Salir corriendo',next)}
 
 
-if(ALL){$('#ver').textContent=' · versión de prueba 24';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 25';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
