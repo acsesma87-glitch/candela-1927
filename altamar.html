@@ -596,7 +596,7 @@ DAYS[1]=[
   {who:'El comisario',x:532,y:300,act:async()=>{await bubble('Eki va derecha al comisario y le olisquea los bolsillos del gabán. Parece que le ha caído bien.',3600);ekiLog('Comisario Ibarra','le cae bien (sobre todo sus bolsillos).')}},
   {who:'El doctor',x:450,y:350,act:async()=>{await bubble('Eki se para a dos pasos del doctor. No se acerca. Vuelve y te da la pata para que la toques.',3800);
     await bubble('Al pasar a su lado notas olor a hospital, a éter. Normal: es médico.',3200);ekiLog('Dr. Salazar','NO se acerca. Huele a éter (es médico).')}},
-  {who:'Doña Leonor',x:598,y:400,when:()=>D(1).flags.leonor,act:async()=>{await bubble('Eki tampoco se acerca a Doña Leonor. Se sienta y te mira para que le hagas caso.',3600);
+  {who:'Doña Leonor',x:598,y:375,r:100,when:()=>D(1).flags.leonor,act:async()=>{await bubble('Eki tampoco se acerca a Doña Leonor. Se sienta y te mira para que le hagas caso.',3600);
     await bubble('El abrigo de luto huele muchísimo a naftalina.',2800);ekiLog('Doña Leonor','NO se acerca. Huele a naftalina.')}},
  ],
  spots:[
@@ -611,19 +611,19 @@ DAYS[1]=[
   {id:'verja',tool:'lupa',x:636,y:306,w:40,h:34,act:async()=>{await bubble('El candado de la verja está abierto. No forzado. Quien lo abrió tenía la llave.',3600);
     await bubble('Miro a Aitor. Aitor mira al suelo.',2600);
     await pista('verja','La verja del faro','El candado está abierto, no forzado. Quien lo abrió tenía la llave. Y la llave la tiene Aitor.');faroCheck()}},
-  {id:'doctor',tool:'mano',x:450,y:345,r:55,once:false,act:async()=>{const f=D(1).flags;
+  {id:'doctor',tool:'mano',x:448,y:340,r:72,once:false,act:async()=>{const f=D(1).flags;
     if(!f.informe){await talk('Dr. Salazar','¡Vaya! Usted debe de ser la famosa argentina. Doctor Ramón Salazar, para servirla. Mi querida colega aficionada…');
       await talk('Dr. Salazar','(Saca un papel del maletín y lo lee en voz alta.) «Suicidio. Muerte por la caída, hacia las tres de la madrugada.» Pobre Julián. Estaba hundido.');
       await talk('Dr. Salazar','Si necesita cualquier cosa, el dispensario del puerto está siempre abierto. Para usted, también.');endTalk();
       f.informe=1;save();persona('Dr. Salazar','Médico del dispensario del puerto. Muy amable conmigo: me llama «mi querida colega aficionada».');
       await pista('informe','El informe del doctor','«Suicidio. Muerte por la caída, hacia las tres de la madrugada.» Firmado: Dr. R. Salazar.');faroCheck()}
     else{await talk('Dr. Salazar','No se canse, querida. A veces las cosas son exactamente lo que parecen.');endTalk()}}},
-  {id:'comisario',tool:'mano',x:532,y:290,r:55,once:false,act:async()=>{await talk('Comisario Ibarra','Estaba arruinado. Se tiró. Caso cerrado antes del almuerzo.');endTalk();persona('Comisario Ibarra','Quiere cerrar el caso como suicidio «antes del almuerzo».')}},
-  {id:'guardia',tool:'mano',x:190,y:290,r:50,once:false,act:async()=>{await talk('El guardia','(Apenas habla.) Lo encontraron los pescadores. A las seis y cuarenta.');
+  {id:'comisario',tool:'mano',x:532,y:300,r:95,once:false,act:async()=>{await talk('Comisario Ibarra','Estaba arruinado. Se tiró. Caso cerrado antes del almuerzo.');endTalk();persona('Comisario Ibarra','Quiere cerrar el caso como suicidio «antes del almuerzo».')}},
+  {id:'guardia',tool:'mano',x:190,y:290,r:90,once:false,act:async()=>{await talk('El guardia','(Apenas habla.) Lo encontraron los pescadores. A las seis y cuarenta.');
     if(!found('algas'))await talk('El guardia','Uno juraba que el muerto aprieta algo en la mano. Pero con tanta alga encima, nadie ha querido tocarle.');
     endTalk();persona('El guardia civil','Los pescadores encontraron el cuerpo a las 6:40. Uno dice que el muerto aprieta algo en la mano.')}},
-  {id:'aitorF',tool:'mano',x:715,y:320,r:50,once:false,act:async()=>{await talk('Aitor','La cerré a las doce y media, Candela. Te lo juro. Está en mi cuaderno.');endTalk()}},
-  {id:'leonor',tool:'mano',x:598,y:400,r:55,once:false,when:()=>D(1).flags.leonor,act:async()=>{const n=faroN();
+  {id:'aitorF',tool:'mano',x:715,y:320,r:85,once:false,act:async()=>{await talk('Aitor','La cerré a las doce y media, Candela. Te lo juro. Está en mi cuaderno.');endTalk()}},
+  {id:'leonor',tool:'mano',x:598,y:375,r:100,once:false,when:()=>D(1).flags.leonor,act:async()=>{const n=faroN();
     if(!(found('ficha')&&D(1).flags.informe&&n>=4)){nar('Todavía no tengo suficiente para enfrentarme a esa mujer.<br><br><i>Busca más pistas en el faro.</i>');return}
     next()}},
  ],
@@ -865,7 +865,7 @@ FACES['Paco']=FACE_PACO;FACES['Un marinero']=FACE_EST;
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 42';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 43';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
