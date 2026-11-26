@@ -93,20 +93,20 @@ button{font:inherit;color:inherit;cursor:pointer}
 .shade{position:absolute;inset:0;background:#000;opacity:0;transition:opacity .3s;pointer-events:none;z-index:7}
 .shade.on{opacity:.4}
 /* columna lateral */
-.side{flex:1;display:flex;flex-direction:column;padding:10px 12px 10px;gap:8px;background:#0b0908;border-left:1px solid #221b15}
+.side{flex:1;display:flex;flex-direction:column;padding:8px 8px 6px;gap:6px;background:#0b0908;border-left:1px solid #221b15}
 .top{display:flex;align-items:center;gap:8px}
 .top .day{font-size:13px;color:#b8a888;line-height:1.15;flex:1}
 .top .day b{display:block;font-family:'Special Elite',monospace;color:#e0b66a;font-weight:400;font-size:12px}
-.ib{width:44px;height:44px;border-radius:8px;border:1px solid #3a2e22;background:#15110e;display:flex;align-items:center;justify-content:center;position:relative;flex:none}
+.ib{width:38px;height:38px;border-radius:8px;border:1px solid #3a2e22;background:#15110e;display:flex;align-items:center;justify-content:center;position:relative;flex:none}
 .ib svg{width:22px;height:22px}
 .badge{position:absolute;top:-6px;right:-6px;min-width:20px;height:20px;border-radius:10px;background:#a3271c;color:#fff;font-size:11px;display:none;align-items:center;justify-content:center;padding:0 5px;box-shadow:0 0 0 2px #0b0908}
 .badge.on{display:flex}
-.nar{flex:1 1 0;min-height:48px;background:var(--paper);color:var(--ink);border-radius:4px;padding:10px 12px;font-family:'Special Elite',monospace;font-size:13px;line-height:1.4;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
-.go{display:block;width:100%;background:#2a1d14;color:#f3dc9a;border:1px solid var(--brass);border-radius:4px;padding:9px;font-family:Spectral,serif;font-size:15px}
-.tools{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 6px;flex:none}#acts{flex:none}.top{flex:none}
-.tool{display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;padding:0;color:#b8a888;font-size:11px}
-.tool .ic{width:42px;height:42px;border-radius:10px;border:1px solid #3a2e22;background:#15110e;display:flex;align-items:center;justify-content:center}
-.tool svg{width:24px;height:24px}
+.nar{flex:1 1 0;min-height:48px;background:var(--paper);color:var(--ink);border-radius:4px;padding:7px 9px;font-family:'Special Elite',monospace;font-size:13px;line-height:1.4;overflow:auto;-webkit-overflow-scrolling:touch;touch-action:pan-y}
+.go{display:block;width:100%;background:#2a1d14;color:#f3dc9a;border:1px solid var(--brass);border-radius:4px;padding:6px;font-family:Spectral,serif;font-size:14px}
+.tools{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;flex:none}#acts{flex:none}.top{flex:none}
+.tool{display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;padding:0;color:#b8a888;font-size:10px}
+.tool .ic{width:min(40px,100%);aspect-ratio:1;height:auto;border-radius:10px;border:1px solid #3a2e22;background:#15110e;display:flex;align-items:center;justify-content:center}
+.tool svg{width:22px;height:22px}
 .tool[aria-pressed=true] .ic{background:var(--paper);border-color:var(--paper)}
 .tool[aria-pressed=true]{color:#f3dc9a}.tool[aria-pressed=true] svg{stroke:#2a2018}
 .tool.hid{visibility:hidden}.tool:disabled{opacity:.35}
@@ -294,7 +294,7 @@ function sizeStage(){
   const g=$('#game');if(!g.classList.contains('on'))return;
   const W=app.clientWidth,H=app.clientHeight,sideMin=Math.max(190,W*.22);
   let w=Math.min(W-sideMin,H*1.6),h=w/1.6;
-  $('#stageWrap').style.width=w+'px';$('#stageWrap').style.height=H+'px';st.style.width=w+'px';st.style.height=h+'px';draw();if(!busy)ekiHome()}
+  $('#stageWrap').style.width=w+'px';$('#stageWrap').style.height=H+'px';st.style.width=w+'px';st.style.height=h+'px';draw();if(!busy){ekiHome();laikaHome()}}
 const K=()=>st.clientWidth/800;
 const L=()=>Math.round(Math.min(200,Math.max(110,st.clientWidth*.25)));
 const RL=()=>Math.max(80,st.clientWidth*.15);
@@ -378,16 +378,19 @@ function docShow(html){return new Promise(r=>{$('#docP').innerHTML=html;$('#doc'
 
 // ================= Laika =================
 const LK=$('#laika'),FL=$('#flipL');
+function laikaHome(){if(!SC||SC.laikaHome==null||(SC.tools&&!SC.tools.includes('laika'))){LK.classList.remove('on');return}
+  const W=st.clientWidth,dw=W*.09;LK.getAnimations().forEach(a=>a.cancel());LK.style.transform=`translateX(${SC.laikaHome*K()-dw/2}px)`;FL.style.transform=SC.laikaFlip?'scaleX(-1)':'none';LK.classList.remove('run','sniff');LK.classList.add('on','lie')}
 async function laika(){
   if(busy||!SC||(SC.tools&&!SC.tools.includes('laika')))return;busy=true;st.classList.add('dogs');$('#tLaika').disabled=true;$('#tLaika').classList.remove('new');
-  const W=st.clientWidth,dw=W*.09,k=K(),c=SC.laika&&SC.laika(),stop=c&&c.x!=null?c.x*k-dw*.9:W*(.15+Math.random()*.55);
-  const go=(a,b,ms)=>{FL.style.transform=b<a?'scaleX(-1)':'none';return LK.animate([{transform:`translateX(${a}px)`},{transform:`translateX(${b}px)`}],{duration:ms,fill:'forwards',easing:'linear'}).finished};
-  LK.classList.add('on','run');await go(-dw,W-dw*.8,1500);await go(W-dw*.8,stop,1400);
+  const W=st.clientWidth,dw=W*.09,k=K(),c=SC.laika&&SC.laika(),stop=c&&c.x!=null?c.x*k-dw*.9:W*(.15+Math.random()*.55),home=SC.laikaHome!=null?SC.laikaHome*k-dw/2:-dw;
+  const go=(a,b,ms)=>{FL.style.transform=b<a?'scaleX(-1)':'none';return LK.animate([{transform:`translateX(${a}px)`},{transform:`translateX(${b}px)`}],{duration:Math.max(400,ms),fill:'forwards',easing:'linear'}).finished};
+  LK.classList.remove('lie');LK.classList.add('on','run');await go(home,W-dw*.8,(W-dw*.8-home)*2.4);await go(W-dw*.8,stop,1400);
   LK.classList.remove('run');LK.classList.add('sniff');await sleep(1100);LK.classList.remove('sniff');
   if(c&&c.lie)LK.classList.add('lie');
   if(c&&c.act){await c.act()}else await bubble(c&&c.t||FUN[Math.floor(Math.random()*FUN.length)]);
-  LK.classList.remove('lie');LK.classList.add('run');await go(stop,-dw*1.2,1300);LK.classList.remove('run','on');FL.style.transform='none';
-  LK.getAnimations().forEach(a=>a.cancel());busy=false;st.classList.remove('dogs');$('#tLaika').disabled=false;draw();SC.check&&SC.check()}
+  LK.classList.remove('lie');LK.classList.add('run');await go(stop,home,Math.abs(stop-home)*2.4);LK.classList.remove('run');FL.style.transform='none';
+  LK.getAnimations().forEach(a=>a.cancel());if(SC.laikaHome!=null)laikaHome();else LK.classList.remove('on');
+  busy=false;st.classList.remove('dogs');$('#tLaika').disabled=false;draw();SC.check&&SC.check()}
 $('#tLaika').onclick=laika;
 const FUN=['Laika está comiéndose un chorongo de otro perro. Qué asco, Laika.','Laika ha encontrado restos de un bocadillo. Para ella, caso resuelto.','Laika quiere volver a casa.','Laika está chupando el suelo. No preguntes.','Laika ha perseguido una gaviota. Gana la gaviota.','Laika se ha sentado a mirarte. Espera un premio por no hacer nada.'];
 
@@ -460,7 +463,7 @@ DAYS[1]=[
    narBtn('Pasar la página',next)}},
 
 // ===== Escena 1 · La estación del Topo =====
-{svg:SVG.topo,dark:.28,cartel:'DONOSTIA<br>ESTACIÓN DEL TOPO',
+{svg:SVG.topo,dark:.28,laikaHome:420,cartel:'DONOSTIA<br>ESTACIÓN DEL TOPO',
  spots:[
   {id:'aitor',tool:'mano',x:690,y:250,r:80,glow:()=>!D(1).flags.saludo,act:async()=>{
     const f=D(1).flags;
@@ -484,7 +487,7 @@ DAYS[1]=[
    if(D(1).flags.saludo)narBtn('Ir a casa',next)}},
 
 // ===== Escena 2 · La casa de Aitor y Eki =====
-{svg:SVG.cocina,dark:.22,cartel:'ALTAMAR<br>CASA DEL SERENO',ekiHome:150,
+{svg:SVG.cocina,dark:.22,laikaHome:560,cartel:'ALTAMAR<br>CASA DEL SERENO',ekiHome:150,
  ekiSpots:[
   {who:'Aitor',x:380,y:260,act:async()=>{const f=D(1).flags;
     if(!f.ekiTut){await bubble('Eki va a saludar a Aitor, pero cambia de idea a medio camino…',3000);await ekiToCandela();return}
@@ -526,7 +529,7 @@ DAYS[1]=[
    else nar('La cocina huele a café y a leña. Aitor tiene su cuaderno de ronda abierto encima de la mesa.')}},
 
 // ===== Escena 3 · El portal =====
-{svg:SVG.portal,dark:.8,
+{svg:SVG.portal,dark:.8,laikaHome:300,
  spots:[
   {id:'papel',tool:'linterna',x:505,y:460,act:async()=>{await bubble('Algo blanco asoma por debajo del felpudo. La esquina de un papel.',3000);nar('Hay un papel debajo del felpudo.<br><br><i>Tócalo con la mano para cogerlo.</i>')}},
   {id:'coger',tool:'mano',x:505,y:462,r:55,when:()=>found('papel'),once:false,act:async()=>{next()}},
@@ -576,7 +579,7 @@ async function knock(){await sleep(600);await shake();await sleep(250);await sha
   nar('Don Julián Arrieta. El del periódico. El de las cajas de Doña Maite…');narBtn('Salir corriendo',next)}
 
 
-if(ALL){$('#ver').textContent=' · versión de prueba 23';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 24';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
