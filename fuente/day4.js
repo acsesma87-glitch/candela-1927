@@ -15,14 +15,12 @@ DAYS[4]=[
 // ===== Periódico =====
 {svg:SVG.periodico4,dark:0,tools:['mano','linterna','lupa'],cartel:'DOMINGO<br>4 DE DICIEMBRE DE 1927',
  spots:[
-  {id:'p4vela',tool:'lupa',x:240,y:332,w:250,h:72,act:async()=>{await bubble('«Unos por respeto, otros por curiosidad, y algunos para asegurarse.» Hoy todo Altamar entra en el palacete. Yo también.',4800)}},
-  {id:'p4test',tool:'lupa',x:539,y:328,w:280,h:72,act:async()=>{persona('Don Julián Arrieta','Se rumorea que cambió el testamento días antes de morir.');await bubble('Un testamento cambiado días antes de morir… Y el heredero, otra vez en el Casino.',4400)}},
   {id:'p4joya',tool:'lupa',x:243,y:410,w:240,h:34,act:async()=>{await bubble('«Joyería Zubeldia: compramos oro y alhajas. Discreción.» En este barrio todo el mundo necesita discreción.',4400)}},
   {id:'p4flor',tool:'lupa',x:243,y:455,w:240,h:30,act:async()=>{await bubble('«Floristería Las Dalias. Servicio nocturno.» ¿Quién compra flores de noche?',4000)}},
   {id:'p4breve',tool:'lupa',x:539,y:432,w:280,h:44,act:async()=>{await bubble('«Del brazo del sereno.» Doña Puri, me cae usted mejor cada día.',3800)}},
   {id:'p4marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a las 3:30.»',3000)}},
  ],
- enter:async()=>{nar('Domingo. Aitor se ha puesto la chaqueta buena. «A un velatorio de los Arrieta no se va de sereno», dice.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
+ enter:async()=>{persona('Don Julián Arrieta','Se rumorea que cambió el testamento días antes de morir.');nar('Domingo. Aitor se ha puesto la chaqueta buena. «A un velatorio de los Arrieta no se va de sereno», dice.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
    narBtn('Ir al palacete',async()=>{narPaso('El palacete de los Arrieta, en lo alto. Medio barrio hace cola para dar el pésame. Unos por respeto, otros por curiosidad.');await sleep(5000);goScene(1)})}},
 
 // ===== El salón (velatorio) =====

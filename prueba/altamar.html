@@ -755,11 +755,9 @@ DAYS[1]=[
   {id:'breve',tool:'lupa',x:539,y:420,w:280,h:62,act:async()=>{await bubble('«El sereno de Altamar espera hoy la visita de una señorita argentina…» Mirá vos. Y Doña Puri preguntando si soy formal. Ya le contaré yo.',5200)}},
   {id:'jarabe',tool:'lupa',x:243,y:408,w:240,h:36,act:async()=>{await bubble('«Jarabe del Dr. Salazar: para la tos, los nervios y el insomnio.» Un médico que se anuncia como un tónico milagroso. Qué cosa.',4600)}},
   {id:'mozo',tool:'lupa',x:243,y:454,w:240,h:34,act:async()=>{await bubble('«Se busca mozo para la conservera. Abstenerse huelguistas.» Ni disimulan.',3600)}},
-  {id:'huelga',tool:'lupa',x:243,y:338,w:250,h:72,act:async()=>{persona('Mateo «el Rubio»','Capataz del muelle y cabeza de la huelga: «Sin seguridad en la conservera, no hay descarga».');await bubble('Mateo «el Rubio», capataz del muelle. «Sin seguridad en la conservera, no hay descarga.» Un hombre con motivos para odiar a Arrieta.',4800)}},
-  {id:'conservera',tool:'lupa',x:539,y:332,w:280,h:72,act:async()=>{persona('Íñigo Arrieta','El hijo de Don Julián. El periódico dice que anoche estaba en el Casino «de excelente humor», con la empresa de su padre en la ruina.');await bubble('La conservera no paga desde octubre… y el hijo, Íñigo, anoche en el Casino «de excelente humor». Con la empresa del padre en la ruina. Mirá vos.',5200)}},
   {id:'marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a la 1:30.» No sé por qué, pero lo apunto en la cabeza.',3600)}},
  ],
- enter:async()=>{nar('En el asiento del Topo, alguien ha dejado el periódico de hoy. Lo hojeo mientras el tren entra en Donostia.<br><br><i>La letra pequeña se lee con la lupa.</i>');
+ enter:async()=>{persona('Mateo «el Rubio»','Capataz del muelle y cabeza de la huelga: «Sin seguridad en la conservera, no hay descarga».');persona('Íñigo Arrieta','El hijo de Don Julián. El periódico dice que anoche estaba en el Casino «de excelente humor», con la empresa de su padre en la ruina.');nar('En el asiento del Topo, alguien ha dejado el periódico de hoy. Lo hojeo mientras el tren entra en Donostia.<br><br><i>La letra pequeña se lee con la lupa.</i>');
    narBtn('Pasar la página',next)}},
 
 // ===== Escena 1 · La estación del Topo =====
@@ -970,14 +968,12 @@ DAYS[2]=[
 // ===== Periódico =====
 {svg:SVG.periodico2,dark:0,tools:['mano','linterna','lupa'],cartel:'VIERNES<br>2 DE DICIEMBRE DE 1927',
  spots:[
-  {id:'p2suicidio',tool:'lupa',x:240,y:338,w:250,h:72,act:async()=>{await bubble('«A las tres de la madrugada, por la caída.» Lo firma el doctor. Y el comisario, encantado de cerrar el caso.',4400)}},
-  {id:'p2seguro',tool:'lupa',x:539,y:332,w:280,h:72,act:async()=>{persona('Doña Leonor','Dicen que el seguro de vida de Don Julián se subió hace apenas un mes.');await bubble('El seguro de vida, subido hace un mes. Y la viuda que no recibe visitas. Qué casualidad.',4200)}},
   {id:'p2breve',tool:'lupa',x:539,y:432,w:280,h:44,act:async()=>{await bubble('«Formal, lo que se dice formal, no es.» Doña Puri, te voy a conocer. Y los estibadores, en asamblea a mediodía en el muelle…',4600)}},
   {id:'p2funeraria',tool:'lupa',x:243,y:410,w:240,h:34,act:async()=>{await bubble('Pompas fúnebres Olazabal, «discreción absoluta». En Altamar hasta los entierros guardan secretos.',4000)}},
   {id:'p2ancla',tool:'lupa',x:243,y:455,w:240,h:30,act:async()=>{await bubble('Sidrería El Ancla: «se fía a los huelguistas». Ahí debe de saberse todo lo que pasa en el puerto.',4000)}},
   {id:'p2marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a las 2:10.» Cada día cambia un poco. Lo apunto, por si acaso.',3600)}},
  ],
- enter:async()=>{nar('Aitor deja el periódico encima de la mesa sin decir nada. Ya sale en portada.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');narBtn('Ir al muelle',async()=>{narPaso('Los estibadores se juntan en el muelle a mediodía. Si alguien sabe qué pasa en el puerto de noche, son ellos.');await sleep(5000);next()})}},
+ enter:async()=>{persona('Doña Leonor','Dicen que el seguro de vida de Don Julián se subió hace apenas un mes.');nar('Aitor deja el periódico encima de la mesa sin decir nada. Ya sale en portada.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');narBtn('Ir al muelle',async()=>{narPaso('Los estibadores se juntan en el muelle a mediodía. Si alguien sabe qué pasa en el puerto de noche, son ellos.');await sleep(5000);next()})}},
 
 // ===== El muelle =====
 {svg:SVG.muelle,dark:.22,cartel:'ALTAMAR<br>EL MUELLE',
@@ -1054,14 +1050,12 @@ DAYS[3]=[
 // ===== Periódico =====
 {svg:SVG.periodico3,dark:0,tools:['mano','linterna','lupa'],cartel:'SÁBADO<br>3 DE DICIEMBRE DE 1927',
  spots:[
-  {id:'p3mateo',tool:'lupa',x:240,y:332,w:250,h:72,act:async()=>{persona('Mateo «el Rubio»','En la asamblea dijo: «Arrieta tuvo lo que se merecía».');await bubble('«Arrieta tuvo lo que se merecía.» Y luego, «que nadie haga tonterías». ¿Tonterías como cuáles, Mateo?',4600)}},
-  {id:'p3viuda',tool:'lupa',x:539,y:328,w:280,h:72,act:async()=>{persona('Doña Leonor','Se queda al mando de la conservera hasta que se lea el testamento.');await bubble('La viuda al mando de la conservera. Y el testamento, sin fecha para leerse. Qué prisa no tiene nadie.',4600)}},
   {id:'p3casino',tool:'lupa',x:243,y:410,w:240,h:34,act:async()=>{await bubble('«Casino de Altamar. Esta noche, ruleta y orquesta.» Como la ficha que tenía Don Julián en la mano.',4200)}},
   {id:'p3disp',tool:'lupa',x:243,y:455,w:240,h:30,act:async()=>{await bubble('El doctor Salazar, vacunando gratis los martes. Ese hombre está en todas partes.',4000)}},
   {id:'p3breve',tool:'lupa',x:539,y:432,w:280,h:44,act:async()=>{await bubble('¡Doña Puri se ha comprado otra libreta para apuntar lo que hago! Y el tabernero de El Ancla «ya me guarda sitio». Habrá que ir.',4800)}},
   {id:'p3marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a las 2:50.» Cada noche, un poco más tarde.',3600)}},
  ],
- enter:async()=>{nar('Sábado. Llueve sobre Altamar. Aitor ha traído churros y el periódico, por este orden.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
+ enter:async()=>{persona('Mateo «el Rubio»','En la asamblea dijo: «Arrieta tuvo lo que se merecía».');persona('Doña Leonor','Se queda al mando de la conservera hasta que se lea el testamento.');nar('Sábado. Llueve sobre Altamar. Aitor ha traído churros y el periódico, por este orden.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
    narBtn('Ir a El Ancla',async()=>{narPaso('Si Mateo no estuvo en El Ancla hasta el cierre, el tabernero lo sabrá. En Altamar, los taberneros lo saben todo.');await sleep(5000);goScene(1)})}},
 
 // ===== Taberna El Ancla =====
@@ -1151,14 +1145,12 @@ DAYS[4]=[
 // ===== Periódico =====
 {svg:SVG.periodico4,dark:0,tools:['mano','linterna','lupa'],cartel:'DOMINGO<br>4 DE DICIEMBRE DE 1927',
  spots:[
-  {id:'p4vela',tool:'lupa',x:240,y:332,w:250,h:72,act:async()=>{await bubble('«Unos por respeto, otros por curiosidad, y algunos para asegurarse.» Hoy todo Altamar entra en el palacete. Yo también.',4800)}},
-  {id:'p4test',tool:'lupa',x:539,y:328,w:280,h:72,act:async()=>{persona('Don Julián Arrieta','Se rumorea que cambió el testamento días antes de morir.');await bubble('Un testamento cambiado días antes de morir… Y el heredero, otra vez en el Casino.',4400)}},
   {id:'p4joya',tool:'lupa',x:243,y:410,w:240,h:34,act:async()=>{await bubble('«Joyería Zubeldia: compramos oro y alhajas. Discreción.» En este barrio todo el mundo necesita discreción.',4400)}},
   {id:'p4flor',tool:'lupa',x:243,y:455,w:240,h:30,act:async()=>{await bubble('«Floristería Las Dalias. Servicio nocturno.» ¿Quién compra flores de noche?',4000)}},
   {id:'p4breve',tool:'lupa',x:539,y:432,w:280,h:44,act:async()=>{await bubble('«Del brazo del sereno.» Doña Puri, me cae usted mejor cada día.',3800)}},
   {id:'p4marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a las 3:30.»',3000)}},
  ],
- enter:async()=>{nar('Domingo. Aitor se ha puesto la chaqueta buena. «A un velatorio de los Arrieta no se va de sereno», dice.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
+ enter:async()=>{persona('Don Julián Arrieta','Se rumorea que cambió el testamento días antes de morir.');nar('Domingo. Aitor se ha puesto la chaqueta buena. «A un velatorio de los Arrieta no se va de sereno», dice.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
    narBtn('Ir al palacete',async()=>{narPaso('El palacete de los Arrieta, en lo alto. Medio barrio hace cola para dar el pésame. Unos por respeto, otros por curiosidad.');await sleep(5000);goScene(1)})}},
 
 // ===== El salón (velatorio) =====
@@ -1289,8 +1281,6 @@ DAYS[5]=[
 // ===== Periódico =====
 {svg:SVG.periodico5,dark:0,tools:['mano','linterna','lupa'],cartel:'LUNES<br>5 DE DICIEMBRE DE 1927',
  spots:[
-  {id:'p5ent',tool:'lupa',x:240,y:332,w:250,h:72,act:async()=>{await bubble('Toda la familia en el cementerio, y en el palacete solo el servicio. Por eso Benigna me citó a las once.',4600)}},
-  {id:'p5huelga',tool:'lupa',x:539,y:328,w:280,h:72,act:async()=>{await bubble('Tercera semana de huelga. Si la conservera cierra, medio puerto se queda sin pan.',4000)}},
   {id:'p5disp',tool:'lupa',x:243,y:410,w:240,h:34,act:async()=>{persona('Dr. Salazar','Tiene el dispensario del puerto: consultas de 10 a 13 y urgencias a cualquier hora.');
     await bubble('«Urgencias, a cualquier hora del día o de la noche.» El doctor Salazar no duerme nunca, por lo visto.',4400)}},
   {id:'p5monte',tool:'lupa',x:243,y:455,w:240,h:30,act:async()=>{await bubble('«Se presta sobre alhajas, relojes y papeles.» ¿Papeles? ¿Quién empeña papeles?',4000)}},
@@ -1405,7 +1395,7 @@ DAYS[5]=[
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 72';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 73';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});

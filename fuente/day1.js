@@ -6,11 +6,9 @@ DAYS[1]=[
   {id:'breve',tool:'lupa',x:539,y:420,w:280,h:62,act:async()=>{await bubble('«El sereno de Altamar espera hoy la visita de una señorita argentina…» Mirá vos. Y Doña Puri preguntando si soy formal. Ya le contaré yo.',5200)}},
   {id:'jarabe',tool:'lupa',x:243,y:408,w:240,h:36,act:async()=>{await bubble('«Jarabe del Dr. Salazar: para la tos, los nervios y el insomnio.» Un médico que se anuncia como un tónico milagroso. Qué cosa.',4600)}},
   {id:'mozo',tool:'lupa',x:243,y:454,w:240,h:34,act:async()=>{await bubble('«Se busca mozo para la conservera. Abstenerse huelguistas.» Ni disimulan.',3600)}},
-  {id:'huelga',tool:'lupa',x:243,y:338,w:250,h:72,act:async()=>{persona('Mateo «el Rubio»','Capataz del muelle y cabeza de la huelga: «Sin seguridad en la conservera, no hay descarga».');await bubble('Mateo «el Rubio», capataz del muelle. «Sin seguridad en la conservera, no hay descarga.» Un hombre con motivos para odiar a Arrieta.',4800)}},
-  {id:'conservera',tool:'lupa',x:539,y:332,w:280,h:72,act:async()=>{persona('Íñigo Arrieta','El hijo de Don Julián. El periódico dice que anoche estaba en el Casino «de excelente humor», con la empresa de su padre en la ruina.');await bubble('La conservera no paga desde octubre… y el hijo, Íñigo, anoche en el Casino «de excelente humor». Con la empresa del padre en la ruina. Mirá vos.',5200)}},
   {id:'marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a la 1:30.» No sé por qué, pero lo apunto en la cabeza.',3600)}},
  ],
- enter:async()=>{nar('En el asiento del Topo, alguien ha dejado el periódico de hoy. Lo hojeo mientras el tren entra en Donostia.<br><br><i>La letra pequeña se lee con la lupa.</i>');
+ enter:async()=>{persona('Mateo «el Rubio»','Capataz del muelle y cabeza de la huelga: «Sin seguridad en la conservera, no hay descarga».');persona('Íñigo Arrieta','El hijo de Don Julián. El periódico dice que anoche estaba en el Casino «de excelente humor», con la empresa de su padre en la ruina.');nar('En el asiento del Topo, alguien ha dejado el periódico de hoy. Lo hojeo mientras el tren entra en Donostia.<br><br><i>La letra pequeña se lee con la lupa.</i>');
    narBtn('Pasar la página',next)}},
 
 // ===== Escena 1 · La estación del Topo =====

@@ -29,8 +29,6 @@ DAYS[5]=[
 // ===== Periódico =====
 {svg:SVG.periodico5,dark:0,tools:['mano','linterna','lupa'],cartel:'LUNES<br>5 DE DICIEMBRE DE 1927',
  spots:[
-  {id:'p5ent',tool:'lupa',x:240,y:332,w:250,h:72,act:async()=>{await bubble('Toda la familia en el cementerio, y en el palacete solo el servicio. Por eso Benigna me citó a las once.',4600)}},
-  {id:'p5huelga',tool:'lupa',x:539,y:328,w:280,h:72,act:async()=>{await bubble('Tercera semana de huelga. Si la conservera cierra, medio puerto se queda sin pan.',4000)}},
   {id:'p5disp',tool:'lupa',x:243,y:410,w:240,h:34,act:async()=>{persona('Dr. Salazar','Tiene el dispensario del puerto: consultas de 10 a 13 y urgencias a cualquier hora.');
     await bubble('«Urgencias, a cualquier hora del día o de la noche.» El doctor Salazar no duerme nunca, por lo visto.',4400)}},
   {id:'p5monte',tool:'lupa',x:243,y:455,w:240,h:30,act:async()=>{await bubble('«Se presta sobre alhajas, relojes y papeles.» ¿Papeles? ¿Quién empeña papeles?',4000)}},

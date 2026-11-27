@@ -3,14 +3,12 @@ DAYS[3]=[
 // ===== Periódico =====
 {svg:SVG.periodico3,dark:0,tools:['mano','linterna','lupa'],cartel:'SÁBADO<br>3 DE DICIEMBRE DE 1927',
  spots:[
-  {id:'p3mateo',tool:'lupa',x:240,y:332,w:250,h:72,act:async()=>{persona('Mateo «el Rubio»','En la asamblea dijo: «Arrieta tuvo lo que se merecía».');await bubble('«Arrieta tuvo lo que se merecía.» Y luego, «que nadie haga tonterías». ¿Tonterías como cuáles, Mateo?',4600)}},
-  {id:'p3viuda',tool:'lupa',x:539,y:328,w:280,h:72,act:async()=>{persona('Doña Leonor','Se queda al mando de la conservera hasta que se lea el testamento.');await bubble('La viuda al mando de la conservera. Y el testamento, sin fecha para leerse. Qué prisa no tiene nadie.',4600)}},
   {id:'p3casino',tool:'lupa',x:243,y:410,w:240,h:34,act:async()=>{await bubble('«Casino de Altamar. Esta noche, ruleta y orquesta.» Como la ficha que tenía Don Julián en la mano.',4200)}},
   {id:'p3disp',tool:'lupa',x:243,y:455,w:240,h:30,act:async()=>{await bubble('El doctor Salazar, vacunando gratis los martes. Ese hombre está en todas partes.',4000)}},
   {id:'p3breve',tool:'lupa',x:539,y:432,w:280,h:44,act:async()=>{await bubble('¡Doña Puri se ha comprado otra libreta para apuntar lo que hago! Y el tabernero de El Ancla «ya me guarda sitio». Habrá que ir.',4800)}},
   {id:'p3marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a las 2:50.» Cada noche, un poco más tarde.',3600)}},
  ],
- enter:async()=>{nar('Sábado. Llueve sobre Altamar. Aitor ha traído churros y el periódico, por este orden.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
+ enter:async()=>{persona('Mateo «el Rubio»','En la asamblea dijo: «Arrieta tuvo lo que se merecía».');persona('Doña Leonor','Se queda al mando de la conservera hasta que se lea el testamento.');nar('Sábado. Llueve sobre Altamar. Aitor ha traído churros y el periódico, por este orden.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
    narBtn('Ir a El Ancla',async()=>{narPaso('Si Mateo no estuvo en El Ancla hasta el cierre, el tabernero lo sabrá. En Altamar, los taberneros lo saben todo.');await sleep(5000);goScene(1)})}},
 
 // ===== Taberna El Ancla =====

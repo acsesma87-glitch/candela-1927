@@ -6,14 +6,12 @@ DAYS[2]=[
 // ===== Periódico =====
 {svg:SVG.periodico2,dark:0,tools:['mano','linterna','lupa'],cartel:'VIERNES<br>2 DE DICIEMBRE DE 1927',
  spots:[
-  {id:'p2suicidio',tool:'lupa',x:240,y:338,w:250,h:72,act:async()=>{await bubble('«A las tres de la madrugada, por la caída.» Lo firma el doctor. Y el comisario, encantado de cerrar el caso.',4400)}},
-  {id:'p2seguro',tool:'lupa',x:539,y:332,w:280,h:72,act:async()=>{persona('Doña Leonor','Dicen que el seguro de vida de Don Julián se subió hace apenas un mes.');await bubble('El seguro de vida, subido hace un mes. Y la viuda que no recibe visitas. Qué casualidad.',4200)}},
   {id:'p2breve',tool:'lupa',x:539,y:432,w:280,h:44,act:async()=>{await bubble('«Formal, lo que se dice formal, no es.» Doña Puri, te voy a conocer. Y los estibadores, en asamblea a mediodía en el muelle…',4600)}},
   {id:'p2funeraria',tool:'lupa',x:243,y:410,w:240,h:34,act:async()=>{await bubble('Pompas fúnebres Olazabal, «discreción absoluta». En Altamar hasta los entierros guardan secretos.',4000)}},
   {id:'p2ancla',tool:'lupa',x:243,y:455,w:240,h:30,act:async()=>{await bubble('Sidrería El Ancla: «se fía a los huelguistas». Ahí debe de saberse todo lo que pasa en el puerto.',4000)}},
   {id:'p2marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a las 2:10.» Cada día cambia un poco. Lo apunto, por si acaso.',3600)}},
  ],
- enter:async()=>{nar('Aitor deja el periódico encima de la mesa sin decir nada. Ya sale en portada.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');narBtn('Ir al muelle',async()=>{narPaso('Los estibadores se juntan en el muelle a mediodía. Si alguien sabe qué pasa en el puerto de noche, son ellos.');await sleep(5000);next()})}},
+ enter:async()=>{persona('Doña Leonor','Dicen que el seguro de vida de Don Julián se subió hace apenas un mes.');nar('Aitor deja el periódico encima de la mesa sin decir nada. Ya sale en portada.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');narBtn('Ir al muelle',async()=>{narPaso('Los estibadores se juntan en el muelle a mediodía. Si alguien sabe qué pasa en el puerto de noche, son ellos.');await sleep(5000);next()})}},
 
 // ===== El muelle =====
 {svg:SVG.muelle,dark:.22,cartel:'ALTAMAR<br>EL MUELLE',
