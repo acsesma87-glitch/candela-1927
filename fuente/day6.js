@@ -99,17 +99,20 @@ DAYS[6]=[
   {id:'lacre',tool:'linterna',x:392,y:470,w:44,h:26,act:async()=>{await bubble('En la alfombra, debajo del retrato, una gota de lacre rojo. Seca: no es de esta noche. Y otra más allá… y otra. Van hacia la puerta del pasillo.',5000);
     await talk('Clara Arrieta','(Sigue el rastro con la vela, muy despacio.) Esa puerta… es la del dormitorio de mi madre.');endTalk();
     await pista('lacre','El rastro de lacre','Gotas de lacre rojo, secas, desde la caja fuerte hasta la puerta del dormitorio de Doña Leonor. Alguien abrió el testamento antes que yo… y se lo llevó a leer a su cuarto.')}},
-  {id:'resguardo',tool:'lupa',x:580,y:425,w:110,h:80,when:()=>d6().susto,act:async()=>{await bubble('En el bolsillo del abrigo de Íñigo asoma un papel roto: un resguardo de la casa de empeños El Monte. Le falta la esquina de la fecha y la hora.',5000);
-    await talk('Clara Arrieta','¿El Monte? ¿Mi hermano empeña cosas? … ¿Qué cosas?');endTalk();
-    await pista('resguardo','El resguardo de Íñigo','En el bolsillo de Íñigo, un resguardo roto de la casa de empeños El Monte. Le falta la esquina de la fecha y la hora.');
-    persona('Íñigo Arrieta','Lleva en el bolsillo un resguardo de la casa de empeños El Monte. Clara no sabía que empeñaba cosas.')}},
+  {id:'papelAbrigo',tool:'linterna',x:617,y:418,w:40,h:34,when:()=>d6().susto,act:async()=>{await bubble('Con la linterna se ve un papel asomando del bolsillo del abrigo de Íñigo.',3800)}},
+  {id:'resguardo',tool:'mano',x:617,y:418,r:40,once:false,when:()=>d6().susto&&found('papelAbrigo'),act:async()=>{
+    await docShow('<div style="font-size:15px;line-height:1.7"><b style="color:#8a2a20">CASA DE EMPEÑOS EL MONTE</b><br>Resguardo n.º 1187 · Reserva total<br>Objeto: <i>reloj de bolsillo de oro, con…</i><br><span style="opacity:.55">[falta la esquina: la fecha y la hora, arrancadas]</span></div>');
+    if(hasP('resguardo'))return;
+    await talk('Clara Arrieta','¿El Monte? ¿Mi hermano empeña cosas? … Ese reloj era de mi abuelo.');endTalk();
+    await pista('resguardo','El resguardo de Íñigo','En el bolsillo de Íñigo, un resguardo de la casa de empeños El Monte: un reloj de bolsillo de oro. Le han arrancado la esquina de la fecha y la hora.');
+    persona('Íñigo Arrieta','Empeñó un reloj de oro del abuelo en la casa de empeños El Monte. Arrancó la fecha y la hora del resguardo.')}},
   {id:'claraD',tool:'mano',x:735,y:340,r:80,once:false,act:async()=>{const f=d6();
     if(f.testamento){await talk('Clara Arrieta','(Mira la puerta.) Váyase antes de que…');endTalk();return}
     if(!f.claraD){f.claraD=1;save();await talk('Clara Arrieta','Mi padre era un hombre de costumbres. Cada noche, antes de acostarse, le daba cuerda a ese reloj. Hasta hace un mes: un día lo dejó parar y ya no lo volvió a tocar.');endTalk();return}
     await talk('Clara Arrieta','No sé la combinación, de verdad. Nunca me dejó acercarme a esa caja.');endTalk()}},
  ],
  check:()=>{const f=d6();if(f.testamento&&!f.susto){run(susto);return}
-   if(f.susto&&!f.despedida&&found('resguardo')&&found('lacre'))run(despedida6)},
+   if(f.susto&&!f.despedida&&hasP('resguardo')&&found('lacre'))run(despedida6)},
  enter:async()=>{const f=d6();
    if(f.susto){swapSvg(SVG.despachoNA);if(f.despedida){nar('El despacho, otra vez en silencio. Toca irse.');narBtn('Volver a casa',()=>{narSigue=true;goScene(5)});return}
      nar('Íñigo duerme arriba. Su abrigo, empapado en el sillón.');return}

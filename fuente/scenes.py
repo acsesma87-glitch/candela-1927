@@ -800,7 +800,7 @@ def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
         if abrigo:
             # el abrigo de Íñigo, empapado, en el sillón
             b += '<g transform="translate(-75 0)"><path d="M600 400h110v70h-110z" fill="#3a2018"/><path d="M594 380h16v90h-16zM700 380h16v90h-16z" fill="#2a160e"/>'
-            b += '<path d="M610 384q40-14 84 2l6 70q-48 8-96-2z" fill="#2c2c36"/><path d="M640 392l14 50M664 392l-8 52" stroke="#16161c" stroke-width="3"/><path d="M676 420h16v12h-16z" fill="#1a1a20"/>'
+            b += '<path d="M610 384q40-14 84 2l6 70q-48 8-96-2z" fill="#2c2c36"/><path d="M640 392l14 50M664 392l-8 52" stroke="#16161c" stroke-width="3"/><path d="M676 420h16v12h-16z" fill="#1a1a20"/><g class="ol"><path d="M679 422l12-14 8 6-10 12z" fill="#e8dcc0"/><path d="M683 418l8-8" stroke="#8a7a5a" stroke-width=".8"/></g>'
             b += '<g fill="#7a9ab0" opacity=".7"><circle cx="630" cy="458" r="1.6"/><circle cx="672" cy="461" r="1.4"/></g></g>'
         if not inigo:
             # Clara con una vela
