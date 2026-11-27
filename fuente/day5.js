@@ -1,6 +1,6 @@
 // ---------- Día 5 ----------
 const d5=()=>D(5).flags;
-const FR_OK=[0,1,2,3,4,5],FR_X=i=>140+i*92;
+const FR_OK=[5,4,3,2,1,0],FR_X=i=>140+i*92;
 function allSel(sel,fn){[base,lit,lens].forEach(c=>c.querySelectorAll(sel).forEach(fn))}
 function armarioPinta(){const f=d5();if(!f.orden){f.orden=[4,0,5,1,3,2];save()}
   f.orden.forEach((k,i)=>allSel(`.fr[data-k="${k}"]`,e=>e.setAttribute('transform',`translate(${FR_X(i)} 0)`)));
@@ -128,7 +128,7 @@ DAYS[5]=[
  enter:async()=>{const f=d5();if(f.sel!=null){f.sel=null;save()}armarioPinta();
    if(found('fichaMedica')){nar('Los frascos, en su sitio. El cajón, vacío… salvo por mi conciencia.');narBtn('Cerrar el armario',()=>goScene(2));return}
    if(f.cajon){nar('Hay un papel dentro del cajón.<br><br><i>Tócalo con la mano.</i>');narBtn('Cerrar el armario',()=>goScene(2));return}
-   nar('Seis frascos con las dosis en medidas antiguas de botica. Y una tarjeta del doctor: «Cada cosa en su sitio: de menos a más».<br><br><i>Toca un frasco y luego otro para cambiarlos de sitio.</i>');
+   nar('Seis frascos con las dosis en medidas antiguas de botica. Y una tarjeta del doctor: «Cada cosa en su sitio: de más a menos».<br><br><i>Toca un frasco y luego otro para cambiarlos de sitio.</i>');
    narBtn('Cerrar el armario',()=>goScene(2))}},
 
 // ===== Esa noche =====

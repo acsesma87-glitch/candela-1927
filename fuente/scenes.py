@@ -920,7 +920,7 @@ def armario():
     b += '<rect x="60" y="20" width="620" height="470" fill="#4a3a2a"/><rect x="80" y="40" width="580" height="430" fill="#cfd6d2"/><rect x="80" y="40" width="580" height="430" fill="#000" opacity=".18"/>'
     b += '<rect x="80" y="360" width="580" height="12" fill="#4a3a2a"/><rect x="80" y="150" width="580" height="10" fill="#4a3a2a"/>'
     # tarjeta del doctor
-    b += '<g transform="rotate(-2 370 100)"><rect x="270" y="70" width="200" height="56" fill="#efe6d0"/><text x="370" y="94" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">Cada cosa en su sitio:</text><text x="370" y="114" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">de menos a más. R. S.</text></g>'
+    b += '<g transform="rotate(-2 370 100)"><rect x="270" y="70" width="200" height="56" fill="#efe6d0"/><text x="370" y="94" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">Cada cosa en su sitio:</text><text x="370" y="114" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">de más a menos. R. S.</text></g>'
     # selección
     b += '<ellipse class="frSel" cx="0" cy="356" rx="44" ry="10" fill="#ffd27a" opacity="0"/>'
     for k, (nom, dosis) in enumerate(FRASCOS):
