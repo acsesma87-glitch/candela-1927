@@ -7,7 +7,7 @@ from scenes import SVG, defs, AITOR, CANDELA
 eng = open(os.path.join(D, 'engine.html')).read()
 laika = open(os.path.join(D, 'laika.svgfrag')).read()
 eki = open(os.path.join(D, 'eki.svgfrag')).read()
-day1 = open(os.path.join(D, 'day1.js')).read() + '\n' + open(os.path.join(D, 'day2.js')).read() + '\n' + open(os.path.join(D, 'day3.js')).read() + '\n' + open(os.path.join(D, 'day4.js')).read()
+day1 = open(os.path.join(D, 'day1.js')).read() + '\n' + open(os.path.join(D, 'day2.js')).read() + '\n' + open(os.path.join(D, 'day3.js')).read() + '\n' + open(os.path.join(D, 'day4.js')).read() + '\n' + open(os.path.join(D, 'day5.js')).read()
 
 def face(vb, body, bg='#2a2520'):
     x, y, w, h = vb

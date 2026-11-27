@@ -814,6 +814,137 @@ def secreter(abierto=False):
     return wrap(b)
 SVG['secreter'] = secreter(); SVG['secreterA'] = secreter(True)
 
+# ======================= DÍA 5 =======================
+G_CRUZ = f'<path d="M0 104q125-30 250 0z" fill="{ink}"/>' + ''.join(f'<rect x="{x-3}" y="{y}" width="6" height="{90-y}" fill="{ink}"/><rect x="{x-12}" y="{y+10}" width="24" height="5" fill="{ink}"/>' for x, y in ((60, 40), (125, 20), (190, 46))) + f'<path d="M100 96q25-10 50 0" stroke="{ink}" stroke-width="4" fill="none"/>'
+SVG['periodico5'] = diario('Lunes, 5 de diciembre de 1927', 'ALTAMAR DA HOY SEPULTURA A DON JULIÁN ARRIETA',
+  'Entierro a las once en el alto', G_CRUZ,
+  ['Toda la familia acompañará al féretro desde','el palacete hasta el cementerio del alto. La','casa quedará cerrada a las visitas hasta la','tarde. El comisario Ibarra asistirá «a título','personal».'],
+  'La conservera, todavía parada', G_FABRICA,
+  ['Tercera semana de huelga. Los obreros piden','el pago de octubre y noviembre. Nadie de la','familia ha querido decir si la fábrica volverá','a abrir. En el muelle se habla de cerrarla','«para siempre».'],
+  [('DISPENSARIO DEL PUERTO', ['Dr. R. Salazar. Consultas de 10 a 13.','Urgencias, a cualquier hora del día o de la noche.']),
+   ('CASA DE EMPEÑOS EL MONTE', ['Se presta sobre alhajas, relojes y papeles. Reserva total.'])],
+  'ECOS DEL BARRIO',
+  ['Doña Puri ha pedido sitio en primera fila para el','entierro. Dice que es «por cercanía». Del sereno y','de la señorita argentina no se sabe si irán.','En el palacete, solo se quedará el servicio.'],
+  'Lluvia fina. Viento del noroeste. Pleamar a las 4:10.')
+
+def cocinaP():
+    b = '<rect width="800" height="500" fill="#2a2118"/>'
+    b += '<rect width="800" height="340" fill="#4a3a2a"/>'
+    for y in range(0, 340, 26):
+        o = 0 if (y//26) % 2 else 30
+        for x in range(-30, 800, 60): b += f'<rect x="{x+o}" y="{y}" width="58" height="24" fill="#54432f" opacity=".55"/>'
+    # puerta de servicio (izquierda) y cajas
+    b += '<rect x="30" y="110" width="90" height="230" fill="#2a1c10" stroke="#1a1008" stroke-width="5"/><rect x="44" y="126" width="62" height="70" fill="#6a7a82" opacity=".5"/><circle cx="110" cy="230" r="4" fill="#8a7a5a"/>'
+    for (x, y) in ((130, 290), (178, 290), (150, 246)):
+        b += f'<rect x="{x}" y="{y}" width="46" height="44" fill="#7a5a32" stroke="#4a3418" stroke-width="2"/><text x="{x+23}" y="{y+20}" text-anchor="middle" font-size="5" fill="#2a1c0c" font-family="Georgia">CONSERVAS</text><text x="{x+23}" y="{y+28}" text-anchor="middle" font-size="5" fill="#2a1c0c" font-family="Georgia">ARRIETA</text><text x="{x+23}" y="{y+36}" text-anchor="middle" font-size="3.4" fill="#2a1c0c" font-family="Georgia">envases vacíos</text>'
+    # cobres colgados
+    b += '<path d="M260 60H520" stroke="#2a1c10" stroke-width="4"/>'
+    for k, x in enumerate((280, 330, 385, 440, 495)):
+        r = 18 + (k % 3) * 5
+        b += f'<path d="M{x} 60v14" stroke="#2a1c10" stroke-width="2"/><circle cx="{x}" cy="{74+r}" r="{r}" fill="#b0643a"/><path d="M{x-r+4} {74+r}a{r-4} {r-4} 0 0 1 {2*r-8} 0" fill="#d4885a" opacity=".6"/>'
+    # fogón
+    b += '<rect x="250" y="200" width="250" height="140" fill="#1c1c1e"/><rect x="250" y="190" width="250" height="14" fill="#2c2c30"/><rect x="270" y="250" width="70" height="50" fill="#2c2c30"/><rect x="282" y="262" width="46" height="26" fill="#ff8a30" opacity=".85"/><rect x="400" y="250" width="80" height="70" fill="#2c2c30"/>'
+    b += '<path d="M300 160h50v32h-50z" fill="#8a8a8a"/><path d="M304 160q21-12 42 0" fill="#9a9a9a"/><path d="M325 150q-8-20 4-40M318 140q-6-14 2-26" stroke="#d8d0c0" stroke-width="5" fill="none" opacity=".35"/>'
+    b += '<circle cx="305" cy="275" r="90" fill="url(#warm)" opacity=".7"/>'
+    # mesa
+    b += '<rect x="420" y="360" width="260" height="16" fill="#6a4a2a"/><rect x="430" y="376" width="14" height="110" fill="#4a3018"/><rect x="656" y="376" width="14" height="110" fill="#4a3018"/>'
+    b += '<ellipse cx="480" cy="356" rx="26" ry="6" fill="#d8d0c0"/><path d="M560 356l40-10l6 8l-40 8z" fill="#c9b48e"/><path d="M610 352h30v6h-30z" fill="#8a8680"/>'
+    # despensa (derecha, oscura)
+    b += '<rect x="620" y="80" width="150" height="260" fill="#0c0906" stroke="#2a1c10" stroke-width="6"/>'
+    for k in range(4): b += f'<rect x="628" y="{130+k*52}" width="134" height="5" fill="#1a120a"/>'
+    for k in range(4):
+        for j in range(5):
+            if (k, j) == (3, 3): continue
+            b += f'<rect x="{634+j*26}" y="{100+k*52}" width="16" height="30" rx="3" fill="#2a2418"/>'
+    # frasquito del dispensario (escondido detrás de los tarros)
+    b += '<g><rect x="714" y="270" width="12" height="22" rx="2" fill="#2a3a4a"/><rect x="716" y="264" width="8" height="7" fill="#1a1a1a"/><rect x="715" y="276" width="10" height="9" fill="#d8d0c0"/></g>'
+    b += '<rect x="620" y="80" width="150" height="260" fill="#000" opacity=".55"/>'
+    # suelo
+    b += '<rect y="340" width="800" height="160" fill="#3a2c1e"/>'
+    for x in range(0, 800, 50): b += f'<path d="M{x} 340l{(x-400)*.25} 160" stroke="#2a2016" stroke-width="2"/>'
+    # Benigna junto al fogón, con la escoba
+    b += '<path d="M590 470l-40-200" stroke="#8a6a3a" stroke-width="4"/><path d="M590 470l-14 8 30-4z" fill="#b89a5a"/>'
+    b += fig(BENIGNA.replace('<path d="M-16 -104h56" stroke="#8a8a8a" stroke-width="4"/><ellipse cx="22" cy="-106" rx="26" ry="4" fill="#b8b8b8"/><path d="M8 -110v-8h6v8M28 -110v-10h5v10" fill="#e8e2d4"/>', '<path d="M-24 -134q-12 30 -6 60M24 -134q12 30 6 60" stroke="#1e1e24" stroke-width="11" fill="none" stroke-linecap="round"/><circle cx="-30" cy="-74" r="5" fill="url(#skin)"/><circle cx="30" cy="-74" r="5" fill="url(#skin)"/>'), 545, 470, 1.25)
+    b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    return wrap(b)
+SVG['cocinaP'] = cocinaP()
+
+SALAZAR_D = SALAZAR.replace('<ellipse cx="0" cy="-140" rx="19" ry="4" fill="#151515"/><path d="M-11 -141q0-16 11-16t11 16z" fill="#1c1c1c"/>',
+  '<path d="M-13 -132q-2-16 13-17q15 1 13 17q-4-8-13-9q-9 1-13 9z" fill="#b8b4ac"/>')
+SALAZAR_D = SALAZAR_D.replace('<rect x="-5" y="-118"', '<path d="M-22 -96q-20 20 -26 54" stroke="#4a4c50" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="-48" cy="-40" r="5" fill="url(#skin)"/><rect x="-5" y="-118"', 1)
+SALAZAR_D = re.sub(r'<g><rect x="52" y="-22".*?</g>', '', SALAZAR_D, flags=re.S)
+
+def dispensario(doctor=True):
+    b = '<defs><pattern id="tile" width="24" height="24" patternUnits="userSpaceOnUse"><rect width="24" height="24" fill="#d8d6cc"/><path d="M0 23.5H24M23.5 0V24" stroke="#b8b6aa" stroke-width="1"/></pattern></defs>'
+    b += '<rect width="800" height="500" fill="#2a2a28"/><rect width="800" height="350" fill="url(#tile)"/><rect y="330" width="800" height="20" fill="#2a4a4a"/>'
+    # diploma
+    b += '<rect x="360" y="50" width="90" height="66" fill="#efe6d0" stroke="#4a3a1a" stroke-width="5"/><text x="405" y="72" text-anchor="middle" font-size="6.5" fill="#2a1d10" font-family="Georgia">LICENCIADO EN MEDICINA</text><text x="405" y="86" text-anchor="middle" font-size="5" fill="#2a1d10" font-family="Georgia">Ramón Salazar Ortiz</text><text x="405" y="98" text-anchor="middle" font-size="4.5" fill="#2a1d10" font-family="Georgia">Valladolid, 1901</text><circle cx="430" cy="106" r="5" fill="#a3271c"/>'
+    # estantería detrás del mostrador
+    for k in range(2):
+        y = 150 + k * 60
+        b += f'<rect x="300" y="{y+40}" width="250" height="5" fill="#5a4a3a"/>'
+        for j in range(9):
+            col = ['#7a3a2a', '#2a4a6a', '#5a6a3a', '#8a7a5a'][(j + k) % 4]
+            b += f'<rect x="{308+j*27}" y="{y+12}" width="16" height="28" rx="3" fill="{col}" opacity=".85"/><rect x="{310+j*27}" y="{y+22}" width="12" height="8" fill="#efe6d0"/>'
+    # armario de cristal (izquierda)
+    b += '<rect x="40" y="90" width="170" height="320" fill="#4a3a2a"/><rect x="52" y="102" width="146" height="230" fill="#9aa8a8" opacity=".35"/>'
+    for k in range(3): b += f'<rect x="52" y="{170+k*70}" width="146" height="5" fill="#4a3a2a"/>'
+    for j in range(6): b += f'<rect x="{60+j*23}" y="{140+(j%2)*4}" width="15" height="28" rx="3" fill="{["#7a3a2a","#2a4a6a","#5a6a3a"][j%3]}"/>'
+    b += '<path d="M125 102V332" stroke="#4a3a2a" stroke-width="4"/><circle cx="118" cy="230" r="3" fill="#c9a24a"/><circle cx="132" cy="230" r="3" fill="#c9a24a"/>'
+    b += '<rect x="52" y="345" width="146" height="50" fill="#3a2c1e"/><circle cx="125" cy="370" r="3" fill="#c9a24a"/>'
+    b += '<path d="M70 110l40 200" stroke="#fff" stroke-width="6" opacity=".15"/>'
+    # perchero con el impermeable de mar (derecha)
+    b += '<path d="M700 470V110" stroke="#3a2a1a" stroke-width="7"/><path d="M670 120h60" stroke="#3a2a1a" stroke-width="5"/><path d="M680 470h40" stroke="#3a2a1a" stroke-width="8"/>'
+    b += '<path d="M686 124q-30 10-34 60l-10 170h104l-10-170q-4-50-34-60z" fill="#3a4a2a"/><path d="M700 126v228" stroke="#2a3820" stroke-width="2"/><path d="M660 200q8 40 2 120M740 200q-8 40-2 120" stroke="#4a5a38" stroke-width="3" fill="none" opacity=".7"/>'
+    b += '<g fill="#e8e6e0" opacity=".55"><circle cx="664" cy="240" r="1.6"/><circle cx="676" cy="300" r="1.4"/><circle cx="722" cy="260" r="1.6"/><circle cx="732" cy="320" r="1.3"/><circle cx="690" cy="340" r="1.5"/></g>'
+    b += '<g fill="#9ab8c8" opacity=".7"><path d="M660 356q2 6 0 8q-2-2 0-8z"/><path d="M700 356q2 6 0 8q-2-2 0-8z"/><path d="M736 356q2 6 0 8q-2-2 0-8z"/></g><ellipse cx="700" cy="470" rx="34" ry="4" fill="#5a6a72" opacity=".5"/>'
+    # suelo
+    b += '<rect y="350" width="800" height="150" fill="#3a3a36"/>'
+    for x in range(0, 900, 60): b += f'<path d="M{x} 350l-60 150" stroke="#2e2e2a" stroke-width="2"/>'
+    # doctor
+    if doctor: b += fig(SALAZAR_D, 430, 545, 1.9)
+    # mostrador
+    b += '<rect x="250" y="440" width="340" height="14" fill="#5a4a3a"/><rect x="260" y="454" width="320" height="46" fill="#4a3a2a"/><path d="M260 480h320" stroke="#3a2c1e" stroke-width="3"/>'
+    b += '<path d="M300 440v-26h4v26M290 414h24M292 414l-6 12h16zM312 414l-6 12h16z" stroke="#c9a24a" stroke-width="2" fill="#c9a24a" opacity=".85"/>'
+    b += '<rect x="500" y="424" width="60" height="16" fill="#2a3a2a"/><rect x="504" y="427" width="52" height="10" fill="#efe6d0"/>'
+    b += '<rect width="800" height="500" fill="url(#vig)" opacity=".7"/>'
+    return wrap(b)
+SVG['dispensario'] = dispensario(); SVG['dispensarioV'] = dispensario(False)
+
+# frascos del armario: (etiqueta, dosis)
+FRASCOS = [('Bromuro potásico', '℈ 1'), ('Tint. de valeriana', 'gr. 30'), ('Polvo de quina', 'ʒ 1'),
+           ('Bicarbonato', '℈ 4'), ('Ruibarbo', 'ʒ 2'), ('Sal de Epsom', '℥ ½')]
+FR_COL = ['#7a3a2a', '#2a4a6a', '#5a6a3a', '#6a4a7a', '#8a6a2a', '#3a6a6a']
+def armario():
+    b = '<rect width="800" height="500" fill="#1e1a16"/>'
+    b += '<rect x="60" y="20" width="620" height="470" fill="#4a3a2a"/><rect x="80" y="40" width="580" height="430" fill="#cfd6d2"/><rect x="80" y="40" width="580" height="430" fill="#000" opacity=".18"/>'
+    b += '<rect x="80" y="360" width="580" height="12" fill="#4a3a2a"/><rect x="80" y="150" width="580" height="10" fill="#4a3a2a"/>'
+    # tarjeta del doctor
+    b += '<g transform="rotate(-2 370 100)"><rect x="270" y="70" width="200" height="56" fill="#efe6d0"/><text x="370" y="94" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">Cada cosa en su sitio:</text><text x="370" y="114" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">de menos a más. R. S.</text></g>'
+    # selección
+    b += '<ellipse class="frSel" cx="0" cy="356" rx="44" ry="10" fill="#ffd27a" opacity="0"/>'
+    for k, (nom, dosis) in enumerate(FRASCOS):
+        c = FR_COL[k]
+        b += f'<g class="fr" data-k="{k}" transform="translate({140+k*92} 0)">'
+        b += f'<rect x="-30" y="232" width="60" height="124" rx="10" fill="{c}" opacity=".92"/><rect x="-14" y="212" width="28" height="22" fill="{c}"/><rect x="-17" y="200" width="34" height="14" rx="3" fill="#2a2018"/>'
+        b += f'<path d="M-22 244v100" stroke="#fff" stroke-width="5" opacity=".2"/>'
+        b += f'<rect x="-27" y="262" width="54" height="66" fill="#efe6d0"/><rect x="-27" y="262" width="54" height="66" fill="none" stroke="#8a6a2a" stroke-width="1.2"/>'
+        b += f'<text x="0" y="276" text-anchor="middle" font-size="6.2" fill="#2a1d10" font-family="Georgia">{nom}</text>'
+        b += f'<text x="0" y="306" text-anchor="middle" font-size="19" fill="#2a1d10" font-family="Georgia,\'Noto Serif\',serif" font-weight="bold">{dosis}</text>'
+        b += f'<text x="0" y="322" text-anchor="middle" font-size="4.2" fill="#2a1d10" font-family="Georgia">Dispensario del Puerto</text></g>'
+    # cajón (cerrado / abierto)
+    b += '<rect x="80" y="380" width="580" height="80" fill="#3a2c1e"/><rect class="cajonC" x="300" y="396" width="140" height="48" fill="#4a3a2a" stroke="#2a1c10" stroke-width="3"/>'
+    b += '<g class="cajonA" opacity="0"><rect x="280" y="400" width="180" height="70" fill="#2a1c10"/><rect x="296" y="404" width="148" height="56" fill="#efe6d0" transform="rotate(-3 370 432)"/><text x="370" y="424" text-anchor="middle" font-size="9" fill="#2a1d10" font-family="Georgia" transform="rotate(-3 370 432)">FICHA CLÍNICA</text><text x="370" y="440" text-anchor="middle" font-size="8" fill="#2a1d10" font-family="Georgia" font-style="italic" transform="rotate(-3 370 432)">Arrieta, Julián</text></g>'
+    # cartel de equivalencias (letra pequeña, en el lateral)
+    b += '<rect x="690" y="120" width="96" height="150" fill="#e8dcc0"/><rect x="690" y="120" width="96" height="150" fill="#000" filter="url(#paperT)"/>'
+    b += '<text x="738" y="136" text-anchor="middle" font-size="6.2" fill="#2a1d10" font-family="Georgia" font-weight="bold">PESAS DE BOTICA</text>'
+    for k, t in enumerate(['1 libra = 12 onzas', '1 onza (℥) = 8 dracmas', '1 dracma (ʒ) = 3 escrúpulos', '1 escrúpulo (℈) = 24 granos', 'gr. = grano', '½ = media']):
+        b += f'<text x="738" y="{156+k*16}" text-anchor="middle" font-size="5.2" fill="#2a1d10" font-family="Georgia,\'Noto Serif\',serif">{t}</text>'
+    b += '<circle cx="738" cy="124" r="3" fill="#8a1a1a"/>'
+    b += '<rect width="800" height="500" fill="url(#vig)" opacity=".6"/>'
+    return wrap(b)
+SVG['armario'] = armario()
+
 if __name__ == '__main__':
     for k, v in SVG.items():
         open(__import__('os').path.join('/tmp', f'{k}.svg'), 'w').write(v)
