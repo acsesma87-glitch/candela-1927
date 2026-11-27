@@ -46,7 +46,7 @@ DAYS[7]=[
  ],
  spots:[
   {id:'remedios',tool:'mano',x:640,y:360,r:90,once:false,act:async()=>{const f=d7();
-    if(!f.permiso){await talk('Doña Remedios','(Sin dejar de mirar la fila de obreras.) Aitor. Tú siempre de noche, y ahora de día. ¿Y la señorita?');
+    if(!f.permiso){await talk('Doña Remedios','(Sin dejar de mirar la fila de obreras.) Aitor, hijo. ¿Tú despierto a estas horas? Si los serenos dormís de día como los murciélagos… ¿Y la señorita?');
       await talk('Aitor','Viene conmigo, Remedios. Solo quiere mirar.');
       await talk('Doña Remedios','Cinco minutos. Y que nadie toque la máquina del fondo: ya se llevó a un chaval por delante, no quiero otro.');endTalk();
       f.permiso=1;save();persona('Doña Remedios','La encargada de la conservera. Seca y desconfiada, pero conoce a Aitor de toda la vida.');return}

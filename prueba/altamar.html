@@ -1616,7 +1616,7 @@ DAYS[7]=[
  ],
  spots:[
   {id:'remedios',tool:'mano',x:640,y:360,r:90,once:false,act:async()=>{const f=d7();
-    if(!f.permiso){await talk('Doña Remedios','(Sin dejar de mirar la fila de obreras.) Aitor. Tú siempre de noche, y ahora de día. ¿Y la señorita?');
+    if(!f.permiso){await talk('Doña Remedios','(Sin dejar de mirar la fila de obreras.) Aitor, hijo. ¿Tú despierto a estas horas? Si los serenos dormís de día como los murciélagos… ¿Y la señorita?');
       await talk('Aitor','Viene conmigo, Remedios. Solo quiere mirar.');
       await talk('Doña Remedios','Cinco minutos. Y que nadie toque la máquina del fondo: ya se llevó a un chaval por delante, no quiero otro.');endTalk();
       f.permiso=1;save();persona('Doña Remedios','La encargada de la conservera. Seca y desconfiada, pero conoce a Aitor de toda la vida.');return}
@@ -1698,7 +1698,7 @@ FACES['Doña Remedios']=FACE_REMEDIOS;FACES['La obrera charlatana']=FACE_OBRERA;
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 99';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 100';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
