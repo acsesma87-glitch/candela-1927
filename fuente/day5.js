@@ -12,7 +12,7 @@ async function frasco(i){const f=d5();if(f.cajon)return;
   const o=f.orden;[o[f.sel],o[i]]=[o[i],o[f.sel]];f.sel=null;f.cambios=(f.cambios||0)+1;save();AU.sfx('clic');armarioPinta();
   if(o.every((k,j)=>k===FR_OK[j])){f.cajon=1;save();await sleep(400);AU.sfx('cerradura');armarioPinta();
     await bubble('¡Clic! Con los frascos en su sitio, se abre un cajón escondido en la base del armario.',4000);
-    nar('Hay un papel dentro del cajón.<br><br><i>Tócalo con la mano.</i>');return}
+    nar('Dentro del cajón hay un papel doblado.');return}
   if(f.cambios===10&&!f.pistaTabla){f.pistaTabla=1;save();await bubble('Esos símbolos raros de los frascos… Para compararlos habría que pasarlos todos a la misma medida. ¿Habrá algún papel por aquí que lo explique?',4600)}}
 async function vuelta5(){const f=d5();f.vuelta=1;save();await sleep(500);AU.sfx('clic');swapSvg(SVG.dispensario);
   await talk('Dr. Salazar','(Entra sacudiéndose la lluvia.) Ya estoy. Un corte feo en la frente, pero nada que no arregle un poco de hilo.');
@@ -127,7 +127,7 @@ DAYS[5]=[
  ],
  enter:async()=>{const f=d5();if(f.sel!=null){f.sel=null;save()}armarioPinta();
    if(hasP('fichaMedica')){nar('Los frascos, en su sitio. El cajón, vacío… salvo por mi conciencia.');narBtn('Cerrar el armario',()=>goScene(2));return}
-   if(f.cajon){nar('Hay un papel dentro del cajón.<br><br><i>Tócalo con la mano.</i>');return}
+   if(f.cajon){nar('Dentro del cajón hay un papel doblado.');return}
    nar('Seis frascos con las dosis en medidas antiguas de botica, cada una de su padre y de su madre. Y una tarjeta del doctor: «Cada cosa en su sitio: de más a menos, empezando por la derecha».<br><br><i>Toca un frasco y luego otro para cambiarlos de sitio.</i>');
    narBtn('Cerrar el armario',()=>goScene(2))}},
 
