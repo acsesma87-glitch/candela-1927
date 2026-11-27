@@ -1419,7 +1419,7 @@ function rondaOtro(){const svg=SVG.calle;const f=()=>{if(!SC||SC.svg!==svg)retur
   allSel('.otroS',e=>e.style.transform=`translate(${x}px,0px) scaleX(${dir})`);requestAnimationFrame(f)};requestAnimationFrame(f)}
 function cajaPinta(){const f=d6();if(!f.cifras){f.cifras=[0,0,0];save()}f.cifras.forEach((n,i)=>setText(`.cifra[data-i="${i}"]`,String(n)))}
 function cifra(i,paso){const f=d6();if(f.abierta)return;const c=f.cifras;c[i]=(c[i]+paso+100)%100;save();cajaPinta();
-  AU.sfx(c[i]===CAJA_OK[i]?'clic':'tic')}
+  AU.sfx('tic')}
 async function manija(){const f=d6();if(f.abierta)return;const c=f.cifras;AU.sfx('cerradura');
   if(c.every((n,i)=>n===CAJA_OK[i])){f.abierta=1;$('#acts').innerHTML='';save();await sleep(300);swapSvg(SVG.cajaA);await shake();
     await bubble('¡Clac! La puerta de la caja se abre. Dentro, unos billetes… y un sobre lacrado: «Testamento».',4600);
@@ -1576,7 +1576,7 @@ DAYS[6]=[
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 90';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 91';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});

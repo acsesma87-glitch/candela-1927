@@ -7,7 +7,7 @@ function rondaOtro(){const svg=SVG.calle;const f=()=>{if(!SC||SC.svg!==svg)retur
   allSel('.otroS',e=>e.style.transform=`translate(${x}px,0px) scaleX(${dir})`);requestAnimationFrame(f)};requestAnimationFrame(f)}
 function cajaPinta(){const f=d6();if(!f.cifras){f.cifras=[0,0,0];save()}f.cifras.forEach((n,i)=>setText(`.cifra[data-i="${i}"]`,String(n)))}
 function cifra(i,paso){const f=d6();if(f.abierta)return;const c=f.cifras;c[i]=(c[i]+paso+100)%100;save();cajaPinta();
-  AU.sfx(c[i]===CAJA_OK[i]?'clic':'tic')}
+  AU.sfx('tic')}
 async function manija(){const f=d6();if(f.abierta)return;const c=f.cifras;AU.sfx('cerradura');
   if(c.every((n,i)=>n===CAJA_OK[i])){f.abierta=1;$('#acts').innerHTML='';save();await sleep(300);swapSvg(SVG.cajaA);await shake();
     await bubble('¡Clac! La puerta de la caja se abre. Dentro, unos billetes… y un sobre lacrado: «Testamento».',4600);
