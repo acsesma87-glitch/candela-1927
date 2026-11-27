@@ -545,8 +545,8 @@ function pencilStart(sp,x,y){pencil={sp,x0:x,y0:y,cells:new Set(D(curDay).flags[
 function pencilMove(x,y){const p=pencil,sp=p.sp,dx=x-p.x0,dy=y-p.y0;[base,lit,lens].forEach(c=>{const g=c.querySelector('#'+sp.el);if(g)g.setAttribute('transform',`translate(${dx} ${dy})`)});
   const tx=sp.tip[0]+dx,ty=sp.tip[1]+dy,[ax,ay,aw,ah]=sp.area;
   if(tx>ax&&tx<ax+aw&&ty>ay&&ty<ay+ah){const m=base.querySelector('#rubPts');if(m){const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('cx',tx);c.setAttribute('cy',ty);c.setAttribute('r',16);c.setAttribute('fill','#fff');c.setAttribute('opacity','.55');m.appendChild(c)}
-    AU.sfx('lapiz');p.cells.add(Math.floor((tx-ax)/20)+'_'+Math.floor((ty-ay)/20))}}
-function pencilEnd(){const p=pencil;pencil=null;const sp=p.sp,[ax,ay,aw,ah]=sp.area,tot=Math.ceil(aw/20)*Math.ceil(ah/20);
+    AU.sfx('lapiz');const[zx,zy,zw,zh]=sp.zona||sp.area;if(tx>zx&&tx<zx+zw&&ty>zy&&ty<zy+zh)p.cells.add(Math.floor((tx-zx)/20)+'_'+Math.floor((ty-zy)/20))}}
+function pencilEnd(){const p=pencil;pencil=null;const sp=p.sp,[ax,ay,aw,ah]=sp.zona||sp.area,tot=Math.ceil(aw/20)*Math.ceil(ah/20);
   D(curDay).flags['rub_'+sp.id]=[...p.cells];save();
   if(p.cells.size/tot>=(sp.need||.5)&&!found(sp.id)){markFound(sp.id);rubSet(1);run(sp.act)}}
 // --- ganzúa ---
@@ -693,7 +693,7 @@ function polvo(x,y){const k=K();for(let i=0;i<7;i++){const d=document.createElem
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 75';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 76';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});

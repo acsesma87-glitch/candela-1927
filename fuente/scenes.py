@@ -800,13 +800,9 @@ def escritorio():
     for k in range(14): b += f'<path d="M214 {100+k*24}H506" stroke="#cfd8e0" stroke-width="1"/>'
     b += '<path d="M236 60V440" stroke="#e0a0a0" stroke-width="1.2"/>'
     b += '<g mask="url(#rubMask)"><rect x="200" y="60" width="320" height="380" fill="#4a4a50"/>'
-    for k, t in enumerate(['Esta noche', 'se acaba todo.', 'Que Dios', 'me perdone.']):
-        b += f'<text x="360" y="{170+k*58}" text-anchor="middle" font-size="34" fill="#efe6d0" font-family="Georgia" font-style="italic">{t}</text>'
-    b += '<text x="440" y="410" text-anchor="middle" font-size="22" fill="#efe6d0" font-family="Georgia" font-style="italic">J.</text></g>'
+    b += '<g transform="rotate(-28 435 362)">' + ''.join(f'<text x="435" y="{334+k*20}" text-anchor="middle" font-size="15" fill="#efe6d0" font-family="Georgia" font-style="italic">{t}</text>' for k, t in enumerate(['Esta noche se acaba todo.', 'Que Dios me perdone.', 'J.'])) + '</g></g>'
     b += '<g id="rubFull" opacity="0"><rect x="200" y="60" width="320" height="380" fill="#4a4a50"/>'
-    for k, t in enumerate(['Esta noche', 'se acaba todo.', 'Que Dios', 'me perdone.']):
-        b += f'<text x="360" y="{170+k*58}" text-anchor="middle" font-size="34" fill="#efe6d0" font-family="Georgia" font-style="italic">{t}</text>'
-    b += '<text x="440" y="410" text-anchor="middle" font-size="22" fill="#efe6d0" font-family="Georgia" font-style="italic">J.</text></g></g>'
+    b += '<g transform="rotate(-28 435 362)">' + ''.join(f'<text x="435" y="{334+k*20}" text-anchor="middle" font-size="15" fill="#efe6d0" font-family="Georgia" font-style="italic">{t}</text>' for k, t in enumerate(['Esta noche se acaba todo.', 'Que Dios me perdone.', 'J.'])) + '</g></g></g>'
     # lápiz (se arrastra)
     b += '<g id="lapiz"><g transform="translate(640 330) rotate(-35)"><rect x="-6" y="-110" width="12" height="100" fill="#c9a24a"/><rect x="-6" y="-120" width="12" height="12" fill="#e8a0a0"/><path d="M-6 -10l6 18 6-18z" fill="#e8d0a8"/><path d="M-2 2l2 6 2-6z" fill="#2a2a2a"/></g></g>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'

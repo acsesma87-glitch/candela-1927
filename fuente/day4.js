@@ -86,7 +86,7 @@ DAYS[4]=[
 // ===== El bloc y el lápiz =====
 {svg:SVG.escritorio,dark:0,tools:['mano','linterna','lupa'],
  spots:[
-  {id:'bloc',tool:'pencil',el:'lapiz',x:610,y:285,r:90,tip:[646,338],area:[230,130,260,290],need:.5,act:async()=>{
+  {id:'bloc',tool:'pencil',el:'lapiz',x:610,y:285,r:90,tip:[646,338],area:[205,65,310,370],zona:[345,270,165,120],need:.5,act:async()=>{
     await bubble('Con el grafito aparecen las letras que se marcaron en la hoja de abajo: «Esta noche se acaba todo. Que Dios me perdone. J.»',5000);
     await pista('bloc','El bloc de Don Julián','Calcado con lápiz: «Esta noche se acaba todo. Que Dios me perdone. J.». Parece una despedida.');
     nar('«Que Dios me perdone.» ¿Una nota de suicidio? ¿Y si el médico tenía razón?');narBtn('Volver al despacho',()=>goScene(2))}},
