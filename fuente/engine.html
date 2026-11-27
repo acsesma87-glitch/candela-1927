@@ -483,7 +483,8 @@ const L=()=>Math.round(Math.min(200,Math.max(110,st.clientWidth*.25)));
 const RL=()=>Math.max(80,st.clientWidth*.15);
 function visPx(){return tool==='lupa'?L()/2:RL()*.8}
 const marg=()=>visPx()*.4/K();
-function focus(){if(tool!=='lupa')return[px,py];const m=marg(),f=(v,max)=>Math.min(max,Math.max(0,(v-m)/(max-2*m)*max));return[f(px,800),f(py,500)]}
+// lo que se ve dentro de la lupa es justo lo que hay debajo de ella; para llegar a los bordes, la lupa puede salirse a medias de la escena
+function focus(){return[px,py]}
 let lensSvg=null;const LD=document.createElement('div');LD.style.cssText='position:absolute;left:0;top:0;transform-origin:0 0;pointer-events:none';
 const LDL=$('#laika').cloneNode(true),LDE=$('#eki').cloneNode(true);[LDL,LDE].forEach(n=>{n.removeAttribute('id');n.querySelectorAll('[id]').forEach(x=>x.removeAttribute('id'));LD.appendChild(n)});
 function lensDogs(){if(tool!=='lupa')return;const z=2.6,k=K(),l=L(),[fx,fy]=focus();LD.style.width=st.clientWidth+'px';LD.style.height=st.clientHeight+'px';
@@ -500,7 +501,7 @@ function draw(){if(!SC)return;const k=K(),x=px*k,y=py*k,l=L(),z=2.6;
 function rel(e){const[ax,ay]=toApp(e.clientX,e.clientY);const r=st.getBoundingClientRect();
   // r está en coordenadas de pantalla; pasamos a las de la app
   const o=rot?[r.top,app.clientHeight-r.right]:[r.left,r.top];return[(ax-o[0])/K(),(ay-o[1])/K()]}
-const mv=(x,y)=>{const m=marg();px=Math.min(800-m,Math.max(m,x));py=Math.min(500-m,Math.max(m,y));draw()};
+const mv=(x,y)=>{const m=tool==='lupa'?0:marg();px=Math.min(800-m,Math.max(m,x));py=Math.min(500-m,Math.max(m,y));draw()};
 const GAIN=1.5;
 function setTool(t,force){if(busy&&t!=='mano'&&!force)return;tool=t;st.classList.toggle('t-linterna',t==='linterna');st.classList.toggle('t-lupa',t==='lupa');
   ['Mano','Linterna','Lupa'].forEach(n=>$('#t'+n).setAttribute('aria-pressed',t===n.toLowerCase()));
@@ -700,7 +701,7 @@ function polvo(x,y){const k=K();for(let i=0;i<7;i++){const d=document.createElem
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 83';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 84';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
