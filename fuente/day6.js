@@ -1,10 +1,6 @@
 // ---------- Día 6 ----------
 const d6=()=>D(6).flags;
 const CAJA_OK=[7,9,19],CAJA_BODA=[12,4,98];
-// el otro sereno va y viene por la calle
-const otroX=()=>400+330*Math.sin(performance.now()/1500);
-function rondaOtro(){const svg=SVG.calle;const f=()=>{if(!SC||SC.svg!==svg)return;const x=otroX(),dir=Math.cos(performance.now()/1500)>0?1:-1;
-  allSel('.otroS',e=>e.style.transform=`translate(${x}px,0px) scaleX(${dir})`);requestAnimationFrame(f)};requestAnimationFrame(f)}
 function cajaPinta(){const f=d6();if(!f.cifras){f.cifras=[0,0,0];save()}f.cifras.forEach((n,i)=>setText(`.cifra[data-i="${i}"]`,String(n)))}
 function cifra(i,paso){const f=d6();if(f.abierta)return;const c=f.cifras;c[i]=(c[i]+paso+100)%100;save();cajaPinta();
   AU.sfx('tic')}
@@ -33,7 +29,7 @@ async function despedida6(){const f=d6();f.despedida=1;save();
   await talk('Candela','Gracias, Clara. Le prometo que voy a averiguar qué le pasó a su padre.');
   await talk('Clara Arrieta','No me prometa nada. Averígüelo.');endTalk();
   nar('Fuera, Aitor me espera con el farol apagado. No le digo nada hasta que doblamos la esquina.');
-  narBtn('Volver a casa',()=>{narSigue=true;goScene(5)})}
+  narBtn('Volver a casa',()=>{narSigue=true;goScene(4)})}
 DAYS[6]=[
 // ===== Periódico =====
 {svg:SVG.periodico6,dark:0,tools:['mano','linterna','lupa'],cartel:'MARTES<br>6 DE DICIEMBRE DE 1927',
@@ -48,19 +44,6 @@ DAYS[6]=[
    nar('Martes. Llueve sobre el entierro de ayer. Aitor lee el periódico en voz alta, despacio, como si le pesara.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
    narBtn('Ir al palacete, de noche',async()=>{narPaso('A las once de la noche, Aitor llama con los nudillos en la puerta de servicio: tres golpes cortos. No sé a quién espero encontrar.');await sleep(5000);goScene(1)})}},
 
-// ===== La calle del palacete: esquivar al otro sereno =====
-{svg:SVG.calle,dark:.15,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>LA CALLE DEL PALACETE',
- spots:[
-  {id:'puertaS',tool:'mano',x:675,y:330,r:75,once:false,act:async()=>{const f=d6();if(f.calle)return;
-    if(otroX()<260){f.calle=1;save();await bubble('Ahora. Cruzamos pegados a la tapia mientras el farol se aleja calle abajo. Aitor da tres golpes cortos en la puerta de servicio.',4600);goScene(2);return}
-    f.fallos=(f.fallos||0)+1;save();await shake();
-    await bubble('«¿Quién anda ahí?» El farol se vuelve hacia nosotros. Aitor me tira del brazo de vuelta a la sombra. Por los pelos.',4400);
-    if(f.fallos>=2)nar('Hay que esperar a que su farol esté bien lejos, al otro lado de la farola.<br><br><i>Entonces, toca la puerta de servicio.</i>')}},
-  {id:'aitorC',tool:'mano',x:70,y:330,r:70,once:false,act:async()=>{await talk('Aitor','(En un susurro.) Es Patxi, el sereno de esta calle. Buen hombre, pero tiene la lengua muy larga: si nos ve, mañana lo sabe todo Altamar.');endTalk()}},
- ],
- enter:async()=>{const f=d6();if(f.calle){goScene(2);return}rondaOtro();
-   nar('La calle del palacete, a oscuras. Patxi, el sereno de esta calle, hace la ronda con su farol de punta a punta. Si nos ve cruzar, adiós.<br><br><i>Cuando sea el momento, toca la puerta de servicio.</i>')}},
-
 // ===== La cocina, de noche =====
 {svg:SVG.cocinaN,dark:.2,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>EL PALACETE, DE NOCHE',
  ekiSpots:[
@@ -73,11 +56,11 @@ DAYS[6]=[
       await talk('Candela','En el despacho de su padre hay una caja fuerte. Necesito ver qué hay dentro.');
       await talk('Clara Arrieta','(Se queda callada un momento.) Mi madre en Hondarribia, mi hermano en el Casino… Si alguna vez hay una noche, es esta. Venga. Y no haga ruido.');
       endTalk();f.clara=1;save();persona('Clara Arrieta','Me abre el palacete de noche: quiere saber la verdad sobre su padre tanto como yo.');
-      nar('Clara me guía por la casa a oscuras, con la vela tapada con la mano.');narBtn('Subir al despacho',()=>goScene(3));return}
+      nar('Clara me guía por la casa a oscuras, con la vela tapada con la mano.');narBtn('Subir al despacho',()=>goScene(2));return}
     await talk('Clara Arrieta','Rápido, por favor.');endTalk()}},
  ],
  enter:async()=>{const f=d6();
-   if(f.clara){nar('La cocina, a oscuras. Clara me espera en la escalera.');narBtn('Subir al despacho',()=>goScene(3));return}
+   if(f.clara){nar('La cocina, a oscuras. Clara me espera en la escalera.');narBtn('Subir al despacho',()=>goScene(2));return}
    nar('La puerta de servicio se abre una rendija. Al otro lado no está Benigna: es Clara, la hija, con una vela. Aitor se queda fuera, vigilando la calle.')}},
 
 // ===== El despacho, de noche =====
@@ -88,7 +71,7 @@ DAYS[6]=[
  spots:[
   {id:'bodaR',tool:'lupa',x:400,y:203,w:110,h:20,act:async()=>{await bubble('En el marco, en letras doradas muy pequeñas: «Julián y Leonor · 12 · IV · 1898». El día de su boda.',4600);
     await pista('bodaRetrato','El retrato de la boda','En el marco del retrato de Don Julián: «Julián y Leonor · 12 · IV · 1898». La fecha de su boda.')}},
-  {id:'cajaVer',tool:'mano',x:390,y:135,r:70,once:false,act:async()=>{if(d6().testamento){await bubble('La caja, cerrada otra vez. Como si nadie la hubiera tocado.',3000);return}goScene(4)}},
+  {id:'cajaVer',tool:'mano',x:390,y:135,r:70,once:false,act:async()=>{if(d6().testamento){await bubble('La caja, cerrada otra vez. Como si nadie la hubiera tocado.',3000);return}goScene(3)}},
   {id:'horaR',tool:'lupa',x:514,y:104,w:46,h:46,act:async()=>{await bubble('Las agujas del reloj de pie, paradas: marcan las 4:45. Las cinco menos cuarto.',4200);
     await pista('horaReloj','El reloj parado','El reloj de pie del despacho está parado a las 4:45.')}},
   {id:'tarjeta',tool:'linterna',x:514,y:205,w:34,h:40,act:async()=>{await bubble('El reloj de pie está parado. Dentro, pegada en la caja del péndulo, una tarjetita con la letra de Don Julián: «No es la boda. Es lo único bueno que he hecho. J.»',5200);
@@ -114,7 +97,7 @@ DAYS[6]=[
  check:()=>{const f=d6();if(f.testamento&&!f.susto){run(susto);return}
    if(f.susto&&!f.despedida&&hasP('resguardo')&&found('lacre'))run(despedida6)},
  enter:async()=>{const f=d6();
-   if(f.susto){swapSvg(SVG.despachoNA);if(f.despedida){nar('El despacho, otra vez en silencio. Toca irse.');narBtn('Volver a casa',()=>{narSigue=true;goScene(5)});return}
+   if(f.susto){swapSvg(SVG.despachoNA);if(f.despedida){nar('El despacho, otra vez en silencio. Toca irse.');narBtn('Volver a casa',()=>{narSigue=true;goScene(4)});return}
      nar('Íñigo duerme arriba. Su abrigo, empapado en el sillón.');return}
    if(f.testamento)return;
    nar(f.desp?'El despacho de Don Julián. Clara vigila la puerta.':'El despacho de Don Julián, solo con la vela de Clara. Huele a tabaco frío y a cera.<br><br><i>La caja fuerte, detrás del retrato. Sin la combinación, no hay nada que hacer.</i>');f.desp=1;save()}},
@@ -134,19 +117,20 @@ DAYS[6]=[
     await talk('Clara Arrieta','(Lee por encima de mi hombro. Se queda blanca.) «A L. y a la niña»… ¿La niña? ¿Mi padre tenía… otra hija?');
     await talk('Candela','La fecha de la Biblia. «Lo único bueno que he hecho.» Lo siento, Clara.');
     await talk('Clara Arrieta','(Cierra la caja despacio.) Déjelo todo como estaba. Por favor.');endTalk();
-    f.testamento=1;save();nar('Dejamos el testamento donde estaba y cerramos la caja.');narBtn('Volver al despacho',()=>goScene(3))}},
+    f.testamento=1;save();nar('Dejamos el testamento donde estaba y cerramos la caja.');narBtn('Volver al despacho',()=>goScene(2))}},
  ],
  enter:async()=>{const f=d6();
-   if(f.abierta){swapSvg(SVG.cajaA);if(hasP('testamento')){nar('El testamento, otra vez en su sitio.');narBtn('Volver al despacho',()=>goScene(3));return}
+   if(f.abierta){swapSvg(SVG.cajaA);if(hasP('testamento')){nar('El testamento, otra vez en su sitio.');narBtn('Volver al despacho',()=>goScene(2));return}
      nar('Un testamento. Y el lacre está roto: alguien ya lo ha abierto antes que yo.');return}
    cajaPinta();
    nar('La caja fuerte de Don Julián: tres ruedas de números y una manija.<br><br><i>Toca las flechas para cambiar cada número y gira la manija para probar.</i>');
-   narBtn('Volver al despacho',()=>goScene(3))}},
+   narBtn('Volver al despacho',()=>goScene(2))}},
 
-// ===== Esa noche =====
-{svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
+// ===== En casa: atar cabos con Aitor =====
+{svg:SVG.cocina,dark:.22,laikaHome:560,ekiHome:150,cartel:'ALTAMAR<br>CASA DEL SERENO',
  enter:async()=>{const f=d6();
-   if(!f.cabos){await talk('Aitor','(Pone agua a calentar y se sienta enfrente.) A ver, detective. Despacio. Ese testamento nuevo: ¿quién sale perdiendo?');
+   if(!f.cabos){nar('Aitor enciende la estufa sin decir nada. Laika y Eki se acercan al calor. Me quito la gabardina mojada.');await sleep(1200);
+     {await talk('Aitor','(Se sienta enfrente, con las manos hacia la estufa.) A ver, detective. Despacio. Ese testamento nuevo: ¿quién sale perdiendo?');
      for(;;){const c=await choose(null,null,['Doña Leonor','Íñigo','Clara','«L.» y la niña']);
        if(c===1){await talk('Aitor','Íñigo. Desheredado. Y su padre lo firma un día antes de morir…');break}
        await talk('Aitor',['Leonor se queda el palacete y la conservera. Perder, lo que se dice perder… no.','Clara se queda con la mitad de todo. Esa no pierde.','Al revés: a esas dos les deja una renta. Ganan.'][c===0?0:c===2?1:2]);
@@ -159,7 +143,13 @@ DAYS[6]=[
      await talk('Aitor','Mañana voy contigo a la conservera. Allí todo el mundo sabe algo de todo el mundo… y alguien sabrá quién es «L.».');endTalk();
      f.cabos=1;save();await pista('cabos6','Atando cabos con Aitor','Íñigo pierde con el testamento nuevo, pero no sabe que existe. Doña Leonor sí lo sabía: el lacre roto llevaba a su dormitorio.');
      persona('Doña Leonor','Sabía lo del testamento nuevo antes que nadie: el rastro de lacre llevaba a su dormitorio.')}
-   nar(`Aitor pone agua a calentar sin preguntar nada. Laika y Eki duermen junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===6).length}.<br>Don Julián tenía otra mujer, «L.», y una hija de ocho años.`);
+   }
+   nar('La estufa crepita. Es tarde, y mañana toca madrugar.');narBtn('Irse a dormir',()=>goScene(5))}},
+
+// ===== Esa noche =====
+{svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
+ enter:async()=>{const f=d6();
+   nar(`La casa a oscuras, solo con las brasas de la estufa. Laika y Eki duermen junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===6).length}.<br>Don Julián tenía otra mujer, «L.», y una hija de ocho años.`);
    await sleep(5000);narAdd('Íñigo, desheredado un día antes de la muerte de su padre… sin saberlo. Y Doña Leonor, que lo sabía todo y no dijo nada.<br><br>¿Quién es «L.»? Mañana, a la conservera.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 6 resuelto. Mañana, la conservera.')})}},
 ];
