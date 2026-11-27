@@ -762,7 +762,7 @@ def salon():
     return wrap(b)
 SVG['salon'] = salon()
 
-def despacho(leonor=False):
+def despacho(leonor=False, noche=False, inigo=False):
     b = '<rect width="800" height="500" fill="#20140c"/>'
     b += '<rect width="800" height="320" fill="#2e1e12"/>'
     for k in range(0, 800, 50): b += f'<path d="M{k} 40V320" stroke="#26180e" stroke-width="3"/>'
@@ -785,12 +785,32 @@ def despacho(leonor=False):
     b += '<path d="M490 300v20h14v-20z" fill="#2a2a2a"/><g class="a-brillo"><circle cx="497" cy="296" r="70" fill="url(#warm)" opacity=".7"/></g><path d="M486 300l11-24 11 24z" fill="#6a4a2a"/>'
     # suelo
     b += '<rect y="482" width="800" height="18" fill="#1a0e08"/>'
+    if noche:
+        # inscripción del retrato (letra pequeña)
+        b += '<text x="444" y="204" text-anchor="end" font-size="4.6" fill="#c9a24a" font-family="Georgia" font-style="italic">Julián y Leonor · 12 · IV · 1898</text>'
+        # reloj de pie, parado
+        b += '<rect x="486" y="66" width="56" height="266" fill="#3a2010" stroke="#1e1008" stroke-width="3"/><path d="M482 66h64l-6-12h-52z" fill="#2a160a"/>'
+        b += '<circle cx="514" cy="104" r="21" fill="#e8dcc0" stroke="#8a6a2a" stroke-width="3"/><path d="M514 104v-14M514 104l9 5" stroke="#1a1a1a" stroke-width="2"/>'
+        b += '<rect x="498" y="142" width="32" height="150" fill="#140a04" stroke="#8a6a2a" stroke-width="2"/><path d="M514 146v104" stroke="#c9a24a" stroke-width="2"/><circle cx="514" cy="258" r="9" fill="#c9a24a"/>'
+        b += '<g class="ol"><rect x="501" y="196" width="26" height="18" fill="#efe6d0" transform="rotate(-4 514 205)"/><path d="M504 201h20M504 205h16M504 209h18" stroke="#3a2a1a" stroke-width=".8" transform="rotate(-4 514 205)"/></g>'
+        # la Biblia familiar, sobre el escritorio
+        b += '<rect x="194" y="300" width="56" height="20" rx="2" fill="#2a1408"/><rect x="196" y="300" width="52" height="6" fill="#e8dcc0"/><path d="M222 307v10M217 311h10" stroke="#c9a24a" stroke-width="2"/>'
+        if not inigo:
+            # Clara con una vela
+            b += fig(CLARA, 735, 488, 1.12)
+            b += '<rect x="764" y="380" width="5" height="16" fill="#efe6d0"/><path class="a-llama" d="M766 372q4 5 0 8q-4-3 0-8z" fill="#ffd27a"/><g class="a-brillo"><circle cx="766" cy="378" r="90" fill="url(#warm)" opacity=".8"/></g>'
+        else:
+            b += '<rect class="luzI" x="740" y="100" width="60" height="390" fill="#c9b48e" opacity=".22"/>'
+            b += fig(INIGO, 752, 488, 1.12, cls='borracho')
+            b += '<path d="M0 0h70q-20 140 0 500H0z" fill="#3a0e12"/><path d="M60 0q-16 140 4 500" stroke="#2a080c" stroke-width="6" fill="none"/>'
+        b += '<rect width="800" height="500" fill="#05070c" opacity=".45"/>'
     if leonor:
         b += '<rect class="luzL" x="740" y="100" width="60" height="390" fill="#c9b48e" opacity=".25"/>'
         b += fig(LEONOR, 760, 488, 1.15, cls='leoD')
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     return wrap(b)
 SVG['despacho'] = despacho(); SVG['despachoL'] = despacho(True)
+SVG['despachoN'] = despacho(noche=True); SVG['despachoI'] = despacho(noche=True, inigo=True)
 
 def escritorio():
     b = '<rect width="800" height="500" fill="#4a2e18"/>'
@@ -966,6 +986,62 @@ def armario():
     b += '<rect width="800" height="500" fill="url(#vig)" opacity=".6"/>'
     return wrap(b)
 SVG['armario'] = armario()
+
+# ======================= DÍA 6 =======================
+SVG['periodico6'] = diario('Martes, 6 de diciembre de 1927', 'ALTAMAR DESPIDE A DON JULIÁN; EL TESTAMENTO, EN EL AIRE',
+  'Medio barrio subió al alto', G_CRUZ,
+  ['Medio Altamar subió ayer al cementerio del alto.','Doña Leonor, del brazo de su hijo, no derramó','una lágrima. El comisario Ibarra asistió «a','título personal». Benigna, el ama de llaves,','lloró por todos.'],
+  '¿Dónde está el papel nuevo?', G_NOTARIO,
+  ['El notario Etxeberria se niega a hablar. En el','muelle se dice que Don Julián dejó un papel','nuevo, guardado «donde nadie mira». Íñigo','Arrieta celebró anoche el duelo en el Casino.','Hasta el amanecer.'],
+  [('CASINO DE ALTAMAR', ['Esta noche, baile de invierno.','Ruleta y orquesta hasta el amanecer.']),
+   ('RELOJERÍA ETXEBERRIA', ['Se arreglan relojes de pie y de bolsillo. A domicilio.'])],
+  'ECOS DEL BARRIO',
+  ['La viuda de Arrieta pasará esta noche en casa de','su hermana, en Hondarribia. El palacete queda en','manos del servicio. Doña Puri pregunta: ¿y quién','vigila al heredero?'],
+  'Noche cerrada, sin luna. Pleamar a las 4:50.')
+
+def cocinaN():
+    b = '<rect width="800" height="500" fill="#14100c"/>'
+    b += '<rect width="800" height="340" fill="#241c14"/>'
+    for y in range(0, 340, 26):
+        o = 0 if (y//26) % 2 else 30
+        for x in range(-30, 800, 60): b += f'<rect x="{x+o}" y="{y}" width="58" height="24" fill="#2a2118" opacity=".55"/>'
+    b += '<rect x="30" y="110" width="90" height="230" fill="#120c06" stroke="#0a0604" stroke-width="5"/><rect x="44" y="126" width="62" height="70" fill="#1e2a34" opacity=".8"/>'
+    b += '<path d="M260 60H520" stroke="#0e0a06" stroke-width="4"/>'
+    for k, x in enumerate((280, 330, 385, 440, 495)):
+        r = 18 + (k % 3) * 5
+        b += f'<path d="M{x} 60v14" stroke="#0e0a06" stroke-width="2"/><circle cx="{x}" cy="{74+r}" r="{r}" fill="#4a2a18"/>'
+    b += '<rect x="250" y="200" width="250" height="140" fill="#0e0e10"/><rect x="282" y="262" width="46" height="26" fill="#ff5a20" opacity=".35"/>'
+    b += '<rect x="420" y="360" width="260" height="16" fill="#2a1c10"/><rect x="430" y="376" width="14" height="110" fill="#1e140a"/><rect x="656" y="376" width="14" height="110" fill="#1e140a"/>'
+    b += '<rect x="620" y="80" width="150" height="260" fill="#060403" stroke="#120c06" stroke-width="6"/>'
+    b += '<rect y="340" width="800" height="160" fill="#181209"/>'
+    # Clara con una vela, junto a la puerta de servicio
+    b += fig(CLARA, 190, 470, 1.15)
+    b += '<rect x="219" y="362" width="5" height="16" fill="#efe6d0"/><path class="a-llama" d="M221 354q4 5 0 8q-4-3 0-8z" fill="#ffd27a"/><g class="a-brillo"><circle cx="221" cy="360" r="150" fill="url(#warm)" opacity=".9"/></g>'
+    b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    return wrap(b)
+SVG['cocinaN'] = cocinaN()
+
+def cajaF(abierta=False):
+    b = '<rect width="800" height="500" fill="#2e1e12"/>'
+    for k in range(0, 800, 50): b += f'<path d="M{k} 0V500" stroke="#26180e" stroke-width="3"/>'
+    # el retrato apartado a un lado
+    b += '<g transform="rotate(-14 120 250)"><rect x="40" y="110" width="150" height="190" fill="#2a1a0e" stroke="#8a6a2a" stroke-width="8"/><ellipse cx="115" cy="190" rx="40" ry="50" fill="#5a4a3a"/></g>'
+    b += '<rect x="230" y="70" width="340" height="360" rx="8" fill="#3a3e44" stroke="#1a1c20" stroke-width="8"/>'
+    if not abierta:
+        b += '<rect x="250" y="90" width="300" height="320" rx="6" fill="#4a5058"/><text x="400" y="124" text-anchor="middle" font-size="11" fill="#c9a24a" font-family="Georgia" letter-spacing="3">CAJAS FUERTES · BILBAO</text>'
+        for i in range(3):
+            x = 300 + i*100
+            b += f'<path d="M{x-18} 176l18-22 18 22z" fill="#c9a24a"/>'
+            b += f'<rect x="{x-34}" y="196" width="68" height="56" rx="4" fill="#14161a" stroke="#c9a24a" stroke-width="2"/><text class="cifra" data-i="{i}" x="{x}" y="236" text-anchor="middle" font-size="32" fill="#efe6d0" font-family="Georgia">0</text>'
+            b += f'<path d="M{x-18} 272l18 22 18-22z" fill="#c9a24a"/>'
+        b += '<circle cx="400" cy="350" r="28" fill="#2a2c30" stroke="#c9a24a" stroke-width="3"/><path d="M400 350h38" stroke="#c9a24a" stroke-width="8" stroke-linecap="round"/>'
+    else:
+        b += '<rect x="250" y="90" width="300" height="320" fill="#0e0c0a"/><path d="M250 90l-120 30v320l120-30z" fill="#4a5058" stroke="#1a1c20" stroke-width="4"/>'
+        b += '<rect x="270" y="300" width="260" height="8" fill="#2a2a2a"/><rect x="290" y="270" width="70" height="30" fill="#6a8a5a"/><rect x="296" y="264" width="70" height="30" fill="#7a9a6a"/>'
+        b += '<g transform="rotate(-4 450 250)"><rect x="380" y="190" width="140" height="100" fill="#efe6d0"/><text x="450" y="226" text-anchor="middle" font-size="13" fill="#2a1d10" font-family="Georgia" font-style="italic">Testamento</text><text x="450" y="246" text-anchor="middle" font-size="8" fill="#2a1d10" font-family="Georgia">Julián Arrieta Goñi</text><circle cx="490" cy="272" r="9" fill="#8a1a1a"/></g>'
+    b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    return wrap(b)
+SVG['cajaF'] = cajaF(); SVG['cajaA'] = cajaF(True)
 
 if __name__ == '__main__':
     for k, v in SVG.items():
