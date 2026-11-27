@@ -532,6 +532,9 @@ const LDL=$('#laika').cloneNode(true),LDE=$('#eki').cloneNode(true);[LDL,LDE].fo
 function lensDogs(){if(tool!=='lupa')return;const z=2.6,k=K(),l=L(),[fx,fy]=focus();LD.style.width=st.clientWidth+'px';LD.style.height=st.clientHeight+'px';
   LD.style.transform=`translate(${(l-12)/2-fx*k*z}px,${(l-12)/2-fy*k*z}px) scale(${z})`;
   [[LDL,$('#laika'),$('#flipL')],[LDE,$('#eki'),$('#flipE')]].forEach(([c,o,f])=>{c.className=o.className;c.style.transform=getComputedStyle(o).transform;c.firstElementChild.style.transform=f.style.transform})}
+// La lupa y la linterna se redibujan con cada movimiento del dedo: sin los filtros caros (niebla y textura
+// del papel) van fluidas también en el iPad. Dentro del cristal y de la luz no se nota su falta.
+function ligero(){[lens,lit].forEach(c=>c.querySelectorAll('[filter="url(#fog)"],[filter="url(#paperT)"]').forEach(e=>e.remove()))}
 function draw(){if(!SC)return;const k=K(),x=px*k,y=py*k,l=L(),z=2.6;
   st.style.setProperty('--x',x+'px');st.style.setProperty('--y',y+'px');st.style.setProperty('--r',RL()+'px');
   lens.style.width=lens.style.height=l+'px';lens.style.transform=`translate(${x-l/2}px,${y-l/2}px)`;
@@ -555,7 +558,7 @@ const NIEBLA={topo:1,faro:1,faroL:1,trato:1,muelle:1,portal:1};
 function nieblaEscena(){} // niebla en movimiento quitada: dejaba una raya vertical (la costura de la textura)
 $('#niebla').firstChild.style.backgroundImage='url("data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><filter id="f"><feTurbulence type="fractalNoise" baseFrequency=".006 .02" numOctaves="3" seed="9" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .85 0 0 0 0 .86 0 0 0 0 .87 0 0 0 1.3 -.5"/></filter><rect width="800" height="500" filter="url(#f)"/></svg>')+'")';
 function loadScene(sc){
-  SC=sc;base.innerHTML=sc.svg;lit.innerHTML=sc.svg;lens.innerHTML=sc.svg;lens.appendChild(LD);lens.querySelectorAll('.ol').forEach(e=>e.remove());lensSvg=lens.querySelector('svg');lensSvg.setAttribute('preserveAspectRatio','xMidYMid slice');applyDrags();
+  SC=sc;base.innerHTML=sc.svg;lit.innerHTML=sc.svg;lens.innerHTML=sc.svg;lens.appendChild(LD);lens.querySelectorAll('.ol').forEach(e=>e.remove());ligero();lensSvg=lens.querySelector('svg');lensSvg.setAttribute('preserveAspectRatio','xMidYMid slice');applyDrags();
   dark.style.opacity=sc.dark||0;toolsUI();ekiStop();pickClose();st.classList.remove('dogs');LK.getAnimations().forEach(x=>x.cancel());EK.getAnimations().forEach(x=>x.cancel());LK.classList.remove('on','lie','run','sniff');EK.classList.remove('on','lie','run','happy');st.querySelectorAll('.spark').forEach(e=>e.remove());placed=false;px=400;py=250;setTool('mano',1);sizeStage();laikaHome();ekiHome();marks();musicaEscena(sc);nieblaEscena()}
 function marks(){st.querySelectorAll('.spark').forEach(e=>e.remove());if(!SC)return;const k=K();
   (SC.spots||[]).forEach(s=>{if(s.glow&&!(s.glow===true?!found(s.id):s.glow())===false){}
@@ -614,7 +617,7 @@ function pickLoop(t){if(!pk)return;const dt=Math.min(50,t-pk.last);pk.last=t;
   const off=e=>{if(pk){pk.hold=false}b.classList.remove('on')};b.addEventListener('pointerdown',on);b.addEventListener('pointerup',off);b.addEventListener('pointercancel',off);b.addEventListener('pointerleave',off)})();
 function setDrag(id,dx){[base,lit,lens].forEach(c=>{const g=c.querySelector('#'+id);if(g)g.setAttribute('transform',`translate(${dx} 0)`)})}
 function applyDrags(){const f=D(curDay).flags;Object.keys(f).filter(k=>k.startsWith('drag_')).forEach(k=>setDrag(k.slice(5),f[k]))}
-function swapSvg(svg){SC.svg=svg;base.innerHTML=svg;lit.innerHTML=svg;lens.innerHTML=svg;lens.appendChild(LD);lens.querySelectorAll('.ol').forEach(e=>e.remove());lensSvg=lens.querySelector('svg');lensSvg.setAttribute('preserveAspectRatio','xMidYMid slice');applyDrags();draw();nieblaEscena()}
+function swapSvg(svg){SC.svg=svg;base.innerHTML=svg;lit.innerHTML=svg;lens.innerHTML=svg;lens.appendChild(LD);lens.querySelectorAll('.ol').forEach(e=>e.remove());ligero();lensSvg=lens.querySelector('svg');lensSvg.setAttribute('preserveAspectRatio','xMidYMid slice');applyDrags();draw();nieblaEscena()}
 function tapHand(x,y){const k=K(),h=$('#hand');h.style.left=x*k+'px';h.style.top=y*k+'px';h.classList.remove('on');void h.offsetWidth;h.classList.add('on');
   const r=document.createElement('div');r.className='ring';r.style.left=x*k+'px';r.style.top=y*k+'px';st.appendChild(r);setTimeout(()=>r.remove(),650)}
 function handSpot(x,y){const sp=(SC.spots||[]).filter(s=>s.tool==='mano'&&(!s.when||s.when())).find(s=>Math.hypot(s.x-x,s.y-y)<(s.r||40));
@@ -1520,7 +1523,7 @@ DAYS[6]=[
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 81';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 82';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
