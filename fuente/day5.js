@@ -111,7 +111,6 @@ DAYS[5]=[
  enter:async()=>{const f=d5();
    if(f.vuelta){nar('El doctor ordena su maletín y tararea algo. Ya tengo lo que venía a buscar.');narBtn('Volver a casa',()=>{narSigue=true;goScene(4)});return}
    if(f.solo){swapSvg(SVG.dispensarioV);if(f.cajon&&!hasP('fichaMedica')){nar('Me he dejado el cajón del armario abierto… y el papel dentro, sin leer.<br><br><i>Vuelve al armario y toca el papel.</i>');return}
-     if(hasP('fichaMedica')&&!found('impermeable')){nar('El doctor está al caer. Pero antes… ese impermeable del perchero chorrea en un día sin tormenta.<br><br><i>Míralo con la lupa.</i>');return}
      nar(hasP('fichaMedica')?'El doctor está a punto de volver.':'Sola en el dispensario. El armario de cristal, el perchero…');return}
    nar('Azulejo blanco, frascos de colores y olor a éter. El sitio más limpio y más seguro de todo Altamar.<br><br><i>El doctor Salazar está detrás del mostrador.</i>')}},
 
