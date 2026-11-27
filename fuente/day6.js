@@ -127,7 +127,7 @@ DAYS[6]=[
    narBtn('Volver al despacho',()=>goScene(2))}},
 
 // ===== En casa: atar cabos con Aitor =====
-{svg:SVG.cocina,dark:.22,laikaHome:560,ekiHome:150,cartel:'ALTAMAR<br>CASA DEL SERENO',
+{svg:SVG.cocinaMesa,dark:.22,laikaHome:560,ekiHome:150,cartel:'ALTAMAR<br>CASA DEL SERENO',
  enter:async()=>{const f=d6();
    if(!f.cabos){nar('Aitor enciende la estufa sin decir nada. Laika y Eki se acercan al calor. Me quito la gabardina mojada.');await sleep(1200);
      {await talk('Aitor','(Se sienta enfrente, con las manos hacia la estufa.) A ver, detective. Despacio. Ese testamento nuevo: ¿quién sale perdiendo?');

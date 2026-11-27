@@ -207,7 +207,7 @@ TXOMIN = """<g>
 </g>"""
 
 # ======================= COCINA DE AITOR =======================
-def cocina(gente=True):
+def cocina(gente=True, mesa=False):
     b = '<rect width="800" height="500" fill="#3a2618"/>'
     b += '<rect width="800" height="300" fill="#4a3020"/><path d="M0 300H800" stroke="#2a1a10" stroke-width="4"/>'
     for k in range(0, 800, 40):
@@ -237,7 +237,8 @@ def cocina(gente=True):
     b += '<g class="a-humo"><g filter="url(#b5)" opacity=".7"><ellipse cx="110" cy="160" rx="12" ry="20" fill="#e8e2d6"/><ellipse cx="118" cy="128" rx="10" ry="16" fill="#e8e2d6"/></g></g>'
     # Aitor sentado (detrás de la mesa)
     if gente: b += '<clipPath id="tbl"><rect x="0" y="0" width="800" height="340"/></clipPath>'
-    if gente: b += f'<g clip-path="url(#tbl)">{aitor_casa(380, 478, .8)}</g>'
+    if gente and not mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(380, 478, .8)}</g>'
+    if mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(318, 478, .8)}{candela_casa(462, 512, 1.22)}</g>'
     # mesa
     b += '<rect x="226" y="330" width="300" height="16" fill="#6b4426"/><rect x="226" y="346" width="300" height="12" fill="#4a2e18"/>'
     b += '<rect x="240" y="358" width="12" height="118" fill="#4a2e18"/><rect x="500" y="358" width="12" height="118" fill="#4a2e18"/>'
@@ -253,7 +254,8 @@ def cocina(gente=True):
     b += '<circle cx="498" cy="331" r="5" fill="#c9a24a" stroke="#6e5320"/><path d="M495 331h6M498 328v6" stroke="#8a6a2a" stroke-width=".6"/>'
     b += '<text x="498" y="332.4" text-anchor="middle" font-size="1.6" fill="#3a2a10" font-family="Georgia">PortAventura</text>'
     # Candela de pie junto a la ventana
-    if gente: b += candela_casa(628, 484, .9)
+    if gente and not mesa: b += candela_casa(628, 484, .9)
+    if mesa: b += '<rect x="556" y="68" width="154" height="154" fill="#0a0e14" opacity=".7"/>'
     # despensa (puerta entreabierta, a oscuras)
     b += '<rect x="716" y="246" width="84" height="232" fill="#120c08"/>'
     b += '<g class="ol"><path d="M724 280h76M724 330h76" stroke="#5a3a22" stroke-width="5"/><rect x="742" y="258" width="34" height="22" rx="2" fill="#a3271c"/><text x="759" y="272" text-anchor="middle" font-size="6" fill="#f0e0b0" font-family="Georgia">GALLETAS</text>'
@@ -263,7 +265,7 @@ def cocina(gente=True):
     if gente: b += f'<g class="txoP" opacity="0"><path d="M800 250L700 500H800z" fill="#ffd28a" opacity=".18"/>{fig(TXOMIN, 760, 430, 1.7)}</g>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     return wrap(b)
-SVG['cocina'] = cocina()
+SVG['cocina'] = cocina(); SVG['cocinaMesa'] = cocina(mesa=True)
 
 # ======================= PORTAL =======================
 def portal():
