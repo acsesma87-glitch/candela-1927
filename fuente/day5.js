@@ -110,7 +110,8 @@ DAYS[5]=[
  check:()=>{const f=d5();if(f.vuelta||!f.solo||!found('fichaMedica')||!found('impermeable'))return;run(vuelta5)},
  enter:async()=>{const f=d5();
    if(f.vuelta){nar('El doctor ordena su maletín y tararea algo. Ya tengo lo que venía a buscar.');narBtn('Volver a casa',()=>{narSigue=true;goScene(4)});return}
-   if(f.solo){swapSvg(SVG.dispensarioV);nar(found('fichaMedica')?'El doctor está a punto de volver. ¿Me queda algo por mirar?':'Sola en el dispensario. El armario de cristal, el perchero…');return}
+   if(f.solo){swapSvg(SVG.dispensarioV);if(found('fichaMedica')&&!found('impermeable')){nar('El doctor está al caer. Pero antes… ese impermeable del perchero chorrea en un día sin tormenta.<br><br><i>Míralo con la lupa.</i>');return}
+     nar(found('fichaMedica')?'El doctor está a punto de volver.':'Sola en el dispensario. El armario de cristal, el perchero…');return}
    nar('Azulejo blanco, frascos de colores y olor a éter. El sitio más limpio y más seguro de todo Altamar.<br><br><i>El doctor Salazar está detrás del mostrador.</i>')}},
 
 // ===== El armario de los frascos =====
