@@ -1141,18 +1141,18 @@ def conservera():
 SVG['conservera'] = conservera()
 
 # las cajas de latas (puzle): tablero 6x5, casillas de 66
-CAJAS = [(2, 0, 2, False), (1, 2, 2, False), (4, 3, 3, False), (2, 4, 2, True), (3, 2, 2, True), (2, 3, 2, True), (2, 5, 2, True), (0, 0, 2, True), (0, 4, 2, True)]
+CAJAS = [(2, 0, 2, False), (4, 4, 2, False), (5, 1, 2, False), (0, 5, 2, True), (1, 0, 3, False), (1, 3, 2, True), (0, 2, 2, False), (4, 0, 2, True), (4, 2, 2, False), (2, 2, 2, True), (2, 5, 2, True), (3, 0, 2, False)]
 def cajas():
     b = '<rect width="800" height="500" fill="#2e2e2a"/>'
     for x in range(0, 800, 40): b += f'<path d="M{x} 0V500" stroke="#262622" stroke-width="2"/>'
     # la máquina, al fondo a la derecha
-    b += '<rect x="600" y="150" width="190" height="200" fill="#3a3e42"/><circle cx="690" cy="230" r="50" fill="#2a2c30" stroke="#5a5e62" stroke-width="6"/><path d="M640 300h100" stroke="#5a5e62" stroke-width="8"/>'
-    b += '<text x="695" y="140" text-anchor="middle" font-size="10" fill="#c9a24a" font-family="Georgia" letter-spacing="2">LA MÁQUINA</text>'
+    b += '<rect x="600" y="120" width="190" height="200" fill="#3a3e42"/><circle cx="690" cy="200" r="50" fill="#2a2c30" stroke="#5a5e62" stroke-width="6"/><path d="M640 270h100" stroke="#5a5e62" stroke-width="8"/>'
+    b += '<text x="695" y="110" text-anchor="middle" font-size="10" fill="#c9a24a" font-family="Georgia" letter-spacing="2">LA MÁQUINA</text>'
     # suelo del tablero y salida
-    b += '<rect x="196" y="76" width="404" height="338" fill="#24241f" stroke="#5a4a36" stroke-width="4"/>'
-    for r in range(5):
-        for c in range(6): b += f'<rect x="{200+c*66}" y="{80+r*66}" width="64" height="64" fill="#2c2c27"/>'
-    b += '<path d="M600 212v66" stroke="#2c2c27" stroke-width="8"/><path d="M604 245h-14l8-8M590 245l8 8" stroke="#c9a24a" stroke-width="2" fill="none"/>'
+    b += '<rect x="196" y="48" width="404" height="404" fill="#24241f" stroke="#5a4a36" stroke-width="4"/>'
+    for r in range(6):
+        for c in range(6): b += f'<rect x="{200+c*66}" y="{52+r*66}" width="64" height="64" fill="#2c2c27"/>'
+    b += '<path d="M600 184v66" stroke="#2c2c27" stroke-width="8"/><path d="M604 217h-14l8-8M590 217l8 8" stroke="#c9a24a" stroke-width="2" fill="none"/>'
     for i, (r, c, l, v) in enumerate(CAJAS):
         w, h = (64, l*66-2) if v else (l*66-2, 64)
         if i == 0:
@@ -1160,7 +1160,7 @@ def cajas():
         else:
             g = f'<rect width="{w}" height="{h}" fill="#8a6a3e" stroke="#4a3418" stroke-width="3"/><path d="M4 4L{w-4} {h-4}M{w-4} 4L4 {h-4}" stroke="#6a4e2a" stroke-width="2"/>'
             g += f'<rect x="{w/2-26}" y="{h/2-9}" width="52" height="18" fill="#c9b48e"/><text x="{w/2}" y="{h/2+4}" text-anchor="middle" font-size="7" fill="#2a1c0c" font-family="Georgia">ARRIETA</text>'
-        b += f'<g class="caja" data-i="{i}" style="transform:translate({200+c*66}px,{80+r*66}px)">{g}</g>'
+        b += f'<g class="caja" data-i="{i}" style="transform:translate({200+c*66}px,{52+r*66}px)">{g}</g>'
     b += '<rect width="800" height="500" fill="url(#vig)" opacity=".7"/>'
     return wrap(b)
 SVG['cajas'] = cajas()

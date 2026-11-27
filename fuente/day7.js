@@ -1,7 +1,7 @@
 // ---------- Día 7 ----------
 const d7=()=>D(7).flags;
 // --- el puzle de las cajas: se deslizan por su raíl; la carretilla roja tiene que llegar a la máquina ---
-const CAJA_INI=[[2,0,2,0],[1,2,2,0],[4,3,3,0],[2,4,2,1],[3,2,2,1],[2,3,2,1],[2,5,2,1],[0,0,2,1],[0,4,2,1]],CW=66,CX=200,CY=80,COLS=6,FILAS=5;
+const CAJA_INI=[[2,0,2,0],[4,4,2,0],[5,1,2,0],[0,5,2,1],[1,0,3,0],[1,3,2,1],[0,2,2,0],[4,0,2,1],[4,2,2,0],[2,2,2,1],[2,5,2,1],[3,0,2,0]],CW=66,CX=200,CY=52,COLS=6,FILAS=6;
 function cajasEst(){const f=d7();if(!f.cajas){f.cajas=CAJA_INI.map(p=>[p[0],p[1]]);save()}return f.cajas}
 function cajasPinta(sel,dx,dy){const p=cajasEst();CAJA_INI.forEach((q,i)=>{let x=CX+p[i][1]*CW,y=CY+p[i][0]*CW;if(i===sel){x+=dx||0;y+=dy||0}
   allSel(`.caja[data-i="${i}"]`,e=>e.style.transform=`translate(${x}px,${y}px)`)})}
