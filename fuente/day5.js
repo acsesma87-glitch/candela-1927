@@ -12,7 +12,7 @@ async function frasco(i){const f=d5();if(f.cajon)return;
   const o=f.orden;[o[f.sel],o[i]]=[o[i],o[f.sel]];f.sel=null;f.cambios=(f.cambios||0)+1;save();AU.sfx('clic');armarioPinta();
   if(o.every((k,j)=>k===FR_OK[j])){f.cajon=1;save();await sleep(400);AU.sfx('cerradura');armarioPinta();
     await bubble('¡Clic! Con los frascos en su sitio, se abre un cajón escondido en la base del armario.',4000);
-    nar('Hay un papel dentro del cajón.<br><br><i>Tócalo con la mano.</i>');narBtn('Cerrar el armario',()=>goScene(2));return}
+    nar('Hay un papel dentro del cajón.<br><br><i>Tócalo con la mano.</i>');return}
   if(f.cambios===10&&!f.pistaTabla){f.pistaTabla=1;save();await bubble('Esos símbolos raros de los frascos… los he visto escritos en algún otro papel de este armario.',4600)}}
 async function vuelta5(){const f=d5();f.vuelta=1;save();await sleep(500);AU.sfx('clic');swapSvg(SVG.dispensario);
   await talk('Dr. Salazar','(Entra sacudiéndose la lluvia.) Ya estoy. Un corte feo en la frente, pero nada que no arregle un poco de hilo.');
@@ -110,7 +110,8 @@ DAYS[5]=[
  check:()=>{const f=d5();if(f.vuelta||!f.solo||!found('fichaMedica')||!found('impermeable'))return;run(vuelta5)},
  enter:async()=>{const f=d5();
    if(f.vuelta){nar('El doctor ordena su maletín y tararea algo. Ya tengo lo que venía a buscar.');narBtn('Volver a casa',()=>{narSigue=true;goScene(4)});return}
-   if(f.solo){swapSvg(SVG.dispensarioV);if(found('fichaMedica')&&!found('impermeable')){nar('El doctor está al caer. Pero antes… ese impermeable del perchero chorrea en un día sin tormenta.<br><br><i>Míralo con la lupa.</i>');return}
+   if(f.solo){swapSvg(SVG.dispensarioV);if(f.cajon&&!found('fichaMedica')){nar('Me he dejado el cajón del armario abierto… y el papel dentro, sin leer.<br><br><i>Vuelve al armario y toca el papel.</i>');return}
+     if(found('fichaMedica')&&!found('impermeable')){nar('El doctor está al caer. Pero antes… ese impermeable del perchero chorrea en un día sin tormenta.<br><br><i>Míralo con la lupa.</i>');return}
      nar(found('fichaMedica')?'El doctor está a punto de volver.':'Sola en el dispensario. El armario de cristal, el perchero…');return}
    nar('Azulejo blanco, frascos de colores y olor a éter. El sitio más limpio y más seguro de todo Altamar.<br><br><i>El doctor Salazar está detrás del mostrador.</i>')}},
 
@@ -128,7 +129,7 @@ DAYS[5]=[
  ],
  enter:async()=>{const f=d5();if(f.sel!=null){f.sel=null;save()}armarioPinta();
    if(found('fichaMedica')){nar('Los frascos, en su sitio. El cajón, vacío… salvo por mi conciencia.');narBtn('Cerrar el armario',()=>goScene(2));return}
-   if(f.cajon){nar('Hay un papel dentro del cajón.<br><br><i>Tócalo con la mano.</i>');narBtn('Cerrar el armario',()=>goScene(2));return}
+   if(f.cajon){nar('Hay un papel dentro del cajón.<br><br><i>Tócalo con la mano.</i>');return}
    nar('Seis frascos con las dosis en medidas antiguas de botica. Y una tarjeta del doctor: «Cada cosa en su sitio: de más a menos, empezando por la derecha».<br><br><i>Toca un frasco y luego otro para cambiarlos de sitio.</i>');
    narBtn('Cerrar el armario',()=>goScene(2))}},
 
