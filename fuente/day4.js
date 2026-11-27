@@ -1,6 +1,8 @@
 // ---------- Día 4 ----------
 const d4=()=>D(4).flags;
-function catch4(){const f=d4();if(f.pillada||!found('bloc')||!f.secreter||!found('poliza'))return;run(pillada)}
+function catch4(){const f=d4();if(f.pillada||!found('bloc')||!f.secreter||!found('poliza'))return;
+  if(!found('cajaF')){if(!f.avisoCaja){f.avisoCaja=1;save();nar('Tengo lo del bloc, lo del secreter y la póliza. Pero algo de este despacho no me cuadra… Ese retrato tan torcido.')}return}
+  run(pillada)}
 async function pillada(){const f=d4();f.pillada=1;save();await sleep(600);swapSvg(SVG.despachoL);anima('.luzL',[{opacity:0},{opacity:.25}],{duration:700});
   if(ANIM2)anima('.leoD',[{transform:'translateX(70px)',opacity:0},{transform:'none',opacity:1}],{duration:900,easing:'ease-out'});await shake();
   await talk('Doña Leonor','¿Qué hace usted aquí?');
@@ -74,8 +76,12 @@ DAYS[4]=[
   {id:'blocVer',tool:'mano',x:295,y:310,r:45,once:false,act:async()=>{goScene(3)}},
   {id:'poliza',tool:'lupa',x:432,y:311,w:70,h:22,act:async()=>{await bubble('Una póliza de La Previsora: el seguro de vida de Don Julián, subido el 2 de noviembre a 200.000 pesetas. Beneficiaria: Leonor Arrieta.',5000);
     await pista('poliza','El seguro de vida','Subido el 2 de noviembre a 200.000 pesetas. Beneficiaria: Doña Leonor.')}},
-  {id:'retrato',tool:'mano',x:390,y:135,r:70,once:false,act:async()=>{const f=d4();if(!f.caja){f.caja=1;save();persona('Don Julián Arrieta','Tenía una caja fuerte detrás de su retrato, en el despacho.')}
-    await bubble('Detrás del retrato de Don Julián hay una caja fuerte, con una rueda de números. Cerrada. Sin la combinación, ni lo intento.',4600)}},
+  {id:'retrato',tool:'mano',x:390,y:135,r:70,once:false,act:async()=>{if(found('cajaF')){await bubble('La caja fuerte, detrás del retrato. Sin la combinación, ni lo intento.',3600);return}
+    await bubble('El retrato de Don Julián. Me mira como si me hubiera pillado. El marco está un poco torcido.',4000)}},
+  {id:'cajaF',tool:'linterna',x:390,y:135,w:120,h:150,when:()=>found('bloc')&&d4().secreter&&found('poliza'),act:async()=>{
+    await bubble('Con la linterna se ve que el marco no toca la pared. Por la rendija brilla algo metálico… Detrás del retrato hay una caja fuerte, con una rueda de números.',5000);
+    await pista('cajaFuerte','La caja fuerte del despacho','Detrás del retrato de Don Julián hay una caja fuerte con una rueda de números. Cerrada: hace falta la combinación.');
+    persona('Don Julián Arrieta','Tenía una caja fuerte escondida detrás de su retrato, en el despacho.')}},
   {id:'secreterVer',tool:'mano',x:640,y:196,r:80,once:false,act:async()=>{goScene(4)}},
  ],
  enter:async()=>{const f=d4();
