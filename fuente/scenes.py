@@ -863,8 +863,9 @@ def cocinaP():
     b += '<rect y="340" width="800" height="160" fill="#3a2c1e"/>'
     for x in range(0, 800, 50): b += f'<path d="M{x} 340l{(x-400)*.25} 160" stroke="#2a2016" stroke-width="2"/>'
     # Benigna junto al fogón, con la escoba
-    b += '<path d="M590 470l-40-200" stroke="#8a6a3a" stroke-width="4"/><path d="M590 470l-14 8 30-4z" fill="#b89a5a"/>'
     b += fig(BENIGNA.replace('<path d="M-16 -104h56" stroke="#8a8a8a" stroke-width="4"/><ellipse cx="22" cy="-106" rx="26" ry="4" fill="#b8b8b8"/><path d="M8 -110v-8h6v8M28 -110v-10h5v10" fill="#e8e2d4"/>', '<path d="M-24 -134q-12 30 -6 60M24 -134q12 30 6 60" stroke="#1e1e24" stroke-width="11" fill="none" stroke-linecap="round"/><circle cx="-30" cy="-74" r="5" fill="url(#skin)"/><circle cx="30" cy="-74" r="5" fill="url(#skin)"/>'), 545, 470, 1.25)
+    # la escoba, delante, en su mano derecha
+    b += '<path d="M566 300L600 452" stroke="#8a6a3a" stroke-width="5" stroke-linecap="round"/><path d="M588 448h26l10 30h-46z" fill="#b89a5a"/><path d="M584 462h34M582 470h38" stroke="#8a6a3a" stroke-width="1.5"/><circle cx="582" cy="377" r="6.5" fill="url(#skin)"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     return wrap(b)
 SVG['cocinaP'] = cocinaP()
