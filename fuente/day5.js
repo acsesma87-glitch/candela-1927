@@ -13,7 +13,7 @@ async function frasco(i){const f=d5();if(f.cajon)return;
   if(o.every((k,j)=>k===FR_OK[j])){f.cajon=1;save();await sleep(400);AU.sfx('cerradura');armarioPinta();
     await bubble('¡Clic! Con los frascos en su sitio, se abre un cajón escondido en la base del armario.',4000);
     nar('Hay un papel dentro del cajón.<br><br><i>Tócalo con la mano.</i>');return}
-  if(f.cambios===10&&!f.pistaTabla){f.pistaTabla=1;save();await bubble('Esos símbolos raros de los frascos… los he visto escritos en algún otro papel de este armario.',4600)}}
+  if(f.cambios===10&&!f.pistaTabla){f.pistaTabla=1;save();await bubble('Esos símbolos raros de los frascos… Para compararlos habría que pasarlos todos a la misma medida. ¿Habrá algún papel por aquí que lo explique?',4600)}}
 async function vuelta5(){const f=d5();f.vuelta=1;save();await sleep(500);AU.sfx('clic');swapSvg(SVG.dispensario);
   await talk('Dr. Salazar','(Entra sacudiéndose la lluvia.) Ya estoy. Un corte feo en la frente, pero nada que no arregle un poco de hilo.');
   const c=await choose('Candela','(Me aparto del perchero, como si nada.)',['«¿Sale usted a la mar, doctor? Ese impermeable está empapado.»','No decir nada.']);
@@ -118,8 +118,8 @@ DAYS[5]=[
 {svg:SVG.armario,dark:0,tools:['mano','linterna','lupa'],
  spots:[
   ...[0,1,2,3,4,5].map(i=>({id:'fr'+i,tool:'mano',x:FR_X(i),y:290,r:44,once:false,when:()=>!d5().cajon,act:()=>frasco(i)})),
-  {id:'tabla',tool:'lupa',x:740,y:200,w:104,h:176,act:async()=>{await bubble('Una receta del doctor, «Jarabe para la tos». Cada ingrediente con su medida… y al lado, lo que pesa en granos.',4800);
-    await pista('tablaBotica','La receta del doctor','«Jarabe para la tos»: regaliz ℈ 4 = 96 gr. · azúcar ℥ ½ = 288 gr. · canela ℈ 1 = 24 gr. · anís ʒ 2 = 144 gr. · limón gr. 30 = 30 gr. · miel ʒ 1 = 72 gr.')}},
+  {id:'tabla',tool:'lupa',x:740,y:200,w:104,h:176,act:async()=>{await bubble('Una hoja del recetario: «Pesas de botica». 1 escrúpulo (℈) = 24 granos · 1 dracma (ʒ) = 72 granos · 1 onza (℥) = 576 granos.',5000);
+    await pista('tablaBotica','Pesas de botica','gr. = 1 grano. ℈ = 1 escrúpulo = 24 granos. ʒ = 1 dracma = 72 granos. ℥ = 1 onza = 576 granos. ½ = media, 1/10 = una décima.')}},
   {id:'fichaMedica',tool:'mano',x:370,y:432,r:70,when:()=>d5().cajon,act:async()=>{
     await docShow('<div style="text-align:left;font-size:15px;line-height:1.7"><b style="color:#8a2a20">Ficha clínica · Dispensario del Puerto</b><br>Paciente: <b>Arrieta, Julián</b>. 58 años.<br>Diagnóstico: tumor de estómago, muy avanzado.<br>Pronóstico: <u>pocos meses</u>. El paciente lo sabe.<br>Tratamiento: calmantes, según dolor.<br><i>No informar a la familia, por deseo expreso del paciente.</i><br><span style="float:right">R. S.</span></div>');
     await pista('fichaMedica','La ficha médica de Don Julián','Escondida en un cajón secreto del dispensario: Don Julián tenía un tumor de estómago y le quedaban pocos meses. Él lo sabía; su familia, no.');
@@ -129,7 +129,7 @@ DAYS[5]=[
  enter:async()=>{const f=d5();if(f.sel!=null){f.sel=null;save()}armarioPinta();
    if(hasP('fichaMedica')){nar('Los frascos, en su sitio. El cajón, vacío… salvo por mi conciencia.');narBtn('Cerrar el armario',()=>goScene(2));return}
    if(f.cajon){nar('Hay un papel dentro del cajón.<br><br><i>Tócalo con la mano.</i>');return}
-   nar('Seis frascos con las dosis en medidas antiguas de botica. Y una tarjeta del doctor: «Cada cosa en su sitio: de más a menos, empezando por la derecha».<br><br><i>Toca un frasco y luego otro para cambiarlos de sitio.</i>');
+   nar('Seis frascos con las dosis en medidas antiguas de botica, cada una de su padre y de su madre. Y una tarjeta del doctor: «Cada cosa en su sitio: de más a menos, empezando por la derecha».<br><br><i>Toca un frasco y luego otro para cambiarlos de sitio.</i>');
    narBtn('Cerrar el armario',()=>goScene(2))}},
 
 // ===== Esa noche =====

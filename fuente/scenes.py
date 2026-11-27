@@ -912,8 +912,9 @@ def dispensario(doctor=True):
 SVG['dispensario'] = dispensario(); SVG['dispensarioV'] = dispensario(False)
 
 # frascos del armario: (etiqueta, dosis)
-FRASCOS = [('Bromuro potásico', '℈ 1'), ('Tint. de valeriana', 'gr. 30'), ('Polvo de quina', 'ʒ 1'),
-           ('Bicarbonato', '℈ 4'), ('Ruibarbo', 'ʒ 2'), ('Sal de Epsom', '℥ ½')]
+# ordenados de menos a más granos (la solución): 36 · 44 · 48 · 57,6 · 96 · 108
+FRASCOS = [('Bicarbonato', 'ʒ ½'), ('Ruibarbo', 'gr. 44'), ('Bromuro potásico', '℈ 2'),
+           ('Sal de Epsom', '℥ 1/10'), ('Tint. de valeriana', '℈ 4'), ('Polvo de quina', 'ʒ 1½')]
 FR_COL = ['#7a3a2a', '#2a4a6a', '#5a6a3a', '#6a4a7a', '#8a6a2a', '#3a6a6a']
 def armario():
     b = '<rect width="800" height="500" fill="#1e1a16"/>'
@@ -930,18 +931,19 @@ def armario():
         b += f'<path d="M-22 244v100" stroke="#fff" stroke-width="5" opacity=".2"/>'
         b += f'<rect x="-27" y="262" width="54" height="66" fill="#efe6d0"/><rect x="-27" y="262" width="54" height="66" fill="none" stroke="#8a6a2a" stroke-width="1.2"/>'
         b += f'<text x="0" y="276" text-anchor="middle" font-size="6.2" fill="#2a1d10" font-family="Georgia">{nom}</text>'
-        b += f'<text x="0" y="306" text-anchor="middle" font-size="19" fill="#2a1d10" font-family="Georgia,\'Noto Serif\',serif" font-weight="bold">{dosis}</text>'
+        b += f'<text x="0" y="306" text-anchor="middle" font-size="{16 if len(dosis)>5 else 19}" fill="#2a1d10" font-family="Georgia,\'Noto Serif\',serif" font-weight="bold">{dosis}</text>'
         b += f'<text x="0" y="322" text-anchor="middle" font-size="4.2" fill="#2a1d10" font-family="Georgia">Dispensario del Puerto</text></g>'
     # cajón (cerrado / abierto)
     b += '<rect x="80" y="380" width="580" height="80" fill="#3a2c1e"/><rect class="cajonC" x="300" y="396" width="140" height="48" fill="#4a3a2a" stroke="#2a1c10" stroke-width="3"/>'
     b += '<g class="cajonA" opacity="0"><rect x="280" y="400" width="180" height="70" fill="#2a1c10"/><rect x="296" y="404" width="148" height="56" fill="#efe6d0" transform="rotate(-3 370 432)"/><text x="370" y="424" text-anchor="middle" font-size="9" fill="#2a1d10" font-family="Georgia" transform="rotate(-3 370 432)">FICHA CLÍNICA</text><text x="370" y="440" text-anchor="middle" font-size="8" fill="#2a1d10" font-family="Georgia" font-style="italic" transform="rotate(-3 370 432)">Arrieta, Julián</text></g>'
-    # receta del doctor (letra pequeña, en el lateral): la clave de las medidas
+    # receta del doctor (letra pequeña, en el lateral): cuánto vale cada medida en granos
     b += '<g transform="rotate(2 738 200)"><rect x="688" y="112" width="104" height="176" fill="#efe8d6"/><rect x="688" y="112" width="104" height="176" fill="#000" filter="url(#paperT)"/>'
-    b += '<text x="694" y="130" font-size="10" fill="#2a1d10" font-family="Georgia" font-style="italic">Rp/</text><text x="714" y="129" font-size="5.4" fill="#2a1d10" font-family="Georgia" font-style="italic">Jarabe para la tos</text>'
+    b += '<text x="694" y="130" font-size="10" fill="#2a1d10" font-family="Georgia" font-style="italic">Rp/</text><text x="714" y="129" font-size="5.6" fill="#2a1d10" font-family="Georgia" font-style="italic">Pesas de botica</text>'
     b += '<path d="M694 136H786" stroke="#8a7a5a" stroke-width=".5"/>'
-    for k, (n, m, g) in enumerate([('Regaliz', '℈ 4', '96 gr.'), ('Azúcar', '℥ ½', '288 gr.'), ('Canela', '℈ 1', '24 gr.'), ('Anís', 'ʒ 2', '144 gr.'), ('Limón', 'gr. 30', '30 gr.'), ('Miel', 'ʒ 1', '72 gr.')]):
-        y = 152 + k*19
-        b += f'<text x="694" y="{y}" font-size="5.6" fill="#2a1d10" font-family="Georgia" font-style="italic">{n}</text><text x="748" y="{y}" text-anchor="middle" font-size="6.4" fill="#2a1d10" font-family="Georgia,\'Noto Serif\',serif">{m}</text><text x="786" y="{y}" text-anchor="end" font-size="5.2" fill="#2a1d10" font-family="Georgia">{g}</text>'
+    for k, (m, n, g) in enumerate([('gr.', 'grano', '1 gr.'), ('℈', 'escrúpulo', '24 gr.'), ('ʒ', 'dracma', '72 gr.'), ('℥', 'onza', '576 gr.')]):
+        y = 154 + k*22
+        b += f'<text x="702" y="{y}" text-anchor="middle" font-size="8" fill="#2a1d10" font-family="Georgia,\'Noto Serif\',serif">{m}</text><text x="716" y="{y}" font-size="5.8" fill="#2a1d10" font-family="Georgia" font-style="italic">1 {n}</text><text x="786" y="{y}" text-anchor="end" font-size="5.6" fill="#2a1d10" font-family="Georgia">= {g}</text>'
+    b += '<path d="M694 236H786" stroke="#8a7a5a" stroke-width=".5"/><text x="740" y="250" text-anchor="middle" font-size="5.4" fill="#2a1d10" font-family="Georgia" font-style="italic">½ = media · 1/10 = una décima</text>'
     b += '<text x="786" y="278" text-anchor="end" font-size="6" fill="#2a1d10" font-family="Georgia" font-style="italic">R. S.</text><circle cx="740" cy="116" r="3" fill="#8a1a1a"/></g>'
     b += '<rect width="800" height="500" fill="url(#vig)" opacity=".6"/>'
     return wrap(b)
