@@ -191,6 +191,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .niebla.on{display:block}
 .niebla div{position:absolute;top:0;left:0;width:200%;height:100%;opacity:.16;background-size:50% 100%;animation:niebla 70s linear infinite}
 @keyframes niebla{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+/* dentro de la lupa, todo quieto: se redibuja con cada movimiento del dedo */
+#lens *{animation:none!important;transition:none!important}
 /* ===== Tanda 2 (se quita poniendo ANIM2=false) ===== */
 .anim2 #st .resp{transform-box:fill-box;transform-origin:50% 100%;animation:resp 3.4s ease-in-out infinite alternate}
 @keyframes resp{from{transform:scaleY(1)}to{transform:scaleY(1.012)}}
@@ -489,7 +491,7 @@ function lensDogs(){if(tool!=='lupa')return;const z=2.6,k=K(),l=L(),[fx,fy]=focu
   [[LDL,$('#laika'),$('#flipL')],[LDE,$('#eki'),$('#flipE')]].forEach(([c,o,f])=>{c.className=o.className;c.style.transform=getComputedStyle(o).transform;c.firstElementChild.style.transform=f.style.transform})}
 // La lupa y la linterna se redibujan con cada movimiento del dedo: sin los filtros caros (niebla y textura
 // del papel) van fluidas también en el iPad. Dentro del cristal y de la luz no se nota su falta.
-function ligero(){[lens,lit].forEach(c=>c.querySelectorAll('[filter="url(#fog)"],[filter="url(#paperT)"]').forEach(e=>e.remove()))}
+function ligero(){[lens,lit].forEach(c=>c.querySelectorAll('[filter="url(#fog)"],[filter="url(#paperT)"]').forEach(e=>e.remove()));lens.querySelectorAll('[filter]').forEach(e=>e.removeAttribute('filter'))}
 function draw(){if(!SC)return;const k=K(),x=px*k,y=py*k,l=L(),z=2.6;
   st.style.setProperty('--x',x+'px');st.style.setProperty('--y',y+'px');st.style.setProperty('--r',RL()+'px');
   lens.style.width=lens.style.height=l+'px';lens.style.transform=`translate(${x-l/2}px,${y-l/2}px)`;
@@ -698,7 +700,7 @@ function polvo(x,y){const k=K();for(let i=0;i<7;i++){const d=document.createElem
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 82';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 83';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
