@@ -505,7 +505,7 @@ function toolsUI(){['linterna','lupa','laika','eki'].forEach(t=>$('#t'+t[0].toUp
 function unlockTool(t){if(!S.tools.includes(t)){S.tools.push(t);save()}toolsUI();if(t==='eki')ekiHome();$('#t'+t[0].toUpperCase()+t.slice(1)).classList.add('new')}
 
 const NIEBLA={topo:1,faro:1,faroL:1,trato:1,muelle:1,portal:1};
-function nieblaEscena(){const k=SC&&svgKey(SC.svg);$('#niebla').classList.toggle('on',!!(k&&NIEBLA[k]))}
+function nieblaEscena(){} // niebla en movimiento quitada: dejaba una raya vertical (la costura de la textura)
 $('#niebla').firstChild.style.backgroundImage='url("data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><filter id="f"><feTurbulence type="fractalNoise" baseFrequency=".006 .02" numOctaves="3" seed="9" stitchTiles="stitch"/><feColorMatrix values="0 0 0 0 .85 0 0 0 0 .86 0 0 0 0 .87 0 0 0 1.3 -.5"/></filter><rect width="800" height="500" filter="url(#f)"/></svg>')+'")';
 function loadScene(sc){
   SC=sc;base.innerHTML=sc.svg;lit.innerHTML=sc.svg;lens.innerHTML=sc.svg;lens.appendChild(LD);lens.querySelectorAll('.ol').forEach(e=>e.remove());lensSvg=lens.querySelector('svg');lensSvg.setAttribute('preserveAspectRatio','xMidYMid slice');applyDrags();
@@ -693,7 +693,7 @@ function polvo(x,y){const k=K();for(let i=0;i<7;i++){const d=document.createElem
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 74';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 75';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
