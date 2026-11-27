@@ -65,7 +65,7 @@ DAYS[2]=[
  spots:[
   ...[160,222,284,346].map((y,i)=>({id:'slot'+i,tool:'mano',x:520,y:y,r:40,once:false,act:async()=>{const f=D(2).flags;if(f.turnosOk)return;
     const k=await choose('Candela',`¿Quién hacía la guardia de ${['23:00 a 1:00','1:00 a 3:00','3:00 a 5:00','5:00 a 7:00'][i]}?`,NOMBRES);endTalk();
-    (f.turnos=f.turnos||[])[i]=NOMBRES[k];save();pizarraPinta();
+    (f.turnos=f.turnos||[])[i]=NOMBRES[k];save();pizarraPinta();polvo(520,y);
     if(f.turnos.filter(Boolean).length===4){
       if(GUARDIA_OK.every((n,j)=>f.turnos[j]===n)){f.turnosOk=1;save();await bubble('Ahora sí: Mateo, Koldo, Bixente y Patxi. La guardia de once a una era de Mateo, justo al lado de las barcas.',4600);
         await pista('guardia','La guardia de amarras','La noche del 30, Mateo tenía la guardia de las barcas de 23:00 a 1:00. Alguien borró su nombre de la pizarra.');

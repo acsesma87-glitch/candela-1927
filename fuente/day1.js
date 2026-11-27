@@ -76,7 +76,7 @@ DAYS[1]=[
  check:()=>{const f=D(1).flags;if(f.knock||!f.ekiTut||!found('ronda'))return;f.knock=1;save();run(knock)},
  enter:async()=>{const f=D(1).flags;
    if(!f.ekiTut){unlockTool('eki');nar('Eki levanta las orejas. Me mira. Yo la miro…<br><br><i>Pulsa el botón de Eki y toca a una persona.</i>')}
-   else if(f.knock){nar('Txomin espera en la puerta, sin aliento.');narBtn('Salir corriendo',next)}
+   else if(f.knock){if(ANIM2)allSel('.txoP',e=>e.setAttribute('opacity','1'));nar('Txomin espera en la puerta, sin aliento.');narBtn('Salir corriendo',next)}
    else nar('La cocina huele a café y a leña. Aitor tiene su cuaderno de ronda abierto encima de la mesa.')}},
 
 // ===== Escena 3 · El portal =====
@@ -197,11 +197,15 @@ async function ekiToCandela(){const f=D(1).flags;
   nar('Eki ya me ha adoptado. Ahora, a ver qué tiene Aitor encima de la mesa…<br><br><i>Hay cosas que solo se ven con la lupa o con la linterna.</i>')}
 const faroN=()=>['informe','ficha','bajos','huellas','verja','ampolla'].filter(i=>S.pistas.find(p=>p.id===i)).length;
 async function faroCheck(){const f=D(1).flags;if(f.leonor||faroN()<3)return;f.leonor=1;save();await sleep(500);await shake();
-  swapSvg(SVG.faroL);nar('Un motor. Un coche negro se para junto al camino del faro. Baja una mujer de luto, con velo y abrigo de pieles: Doña Leonor, la viuda.<br><br><i>Cuando tengas suficiente, habla con ella.</i>')}
+  swapSvg(SVG.faroL);llegaLeonor();nar('Un motor. Un coche negro se para junto al camino del faro. Baja una mujer de luto, con velo y abrigo de pieles: Doña Leonor, la viuda.<br><br><i>Cuando tengas suficiente, habla con ella.</i>')}
+function llegaLeonor(){anima('.cocheL',[{transform:'translateX(160px)'},{transform:'none'}],{duration:1800,easing:'cubic-bezier(.2,.7,.3,1)'});
+  anima('.farosL',[{opacity:0},{opacity:1,offset:.3},{opacity:1}],{duration:2600});
+  if(ANIM2)anima('.leoF',[{transform:'translateX(130px)',opacity:0},{transform:'translateX(130px)',opacity:0,offset:.45},{transform:'translateX(90px)',opacity:1,offset:.55},{transform:'none',opacity:1}],{duration:3400,easing:'ease-out'})}
 function luzVerde(){const t0=performance.now(),D=7000;const f=t=>{const p=Math.min(1,(t-t0)/D);
   document.querySelectorAll('.verde').forEach(c=>{c.setAttribute('cx',572+118*p);c.setAttribute('opacity',p<.15?p/.15:p>.8?(1-p)/.2:1)});if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
 async function alFaro(){narPaso('Corremos por el muelle. La niebla se traga las farolas una a una. Al fondo, la luz del faro gira, como si nada.');await sleep(5000);next()}
 async function knock(){await sleep(600);AU.sfx('toc');await shake();await sleep(250);await shake();
+  if(ANIM2){allSel('.txoP',e=>e.setAttribute('opacity','1'));await anima('.txoP',[{transform:'translateX(140px)'},{transform:'none'}],{duration:450,easing:'ease-out'})}
   nar('Tres golpes en la puerta. Fuertes.');await sleep(900);
   await talk('Txomin','¡Aitor! ¡Aitor! ¡En las rocas del faro! ¡Don Julián Arrieta!');
   await talk('Aitor','¿Arrieta? ¿El de la conservera?');

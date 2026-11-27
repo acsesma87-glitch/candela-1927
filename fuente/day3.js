@@ -56,7 +56,7 @@ DAYS[3]=[
 // ===== La diana =====
 {svg:SVG.diana,dark:0,tools:['mano','linterna','lupa'],
  spots:[
-  {id:'apartar',tool:'drag',el:'diana',x:400,y:250,r:160,dist:170,hint:'Está colgada de un clavo. Arrástrala con el dedo hacia un lado.',act:async()=>{await bubble('Detrás de la diana hay un hueco en la pared. Y dentro, un papel doblado.',4000);
+  {id:'apartar',tool:'drag',el:'diana',x:400,y:250,r:160,dist:170,hint:'Está colgada de un clavo. Arrástrala con el dedo hacia un lado.',act:async()=>{anima('.dianaG',[{transform:'rotate(0)'},{transform:'rotate(9deg)'},{transform:'rotate(-6deg)'},{transform:'rotate(3.5deg)'},{transform:'rotate(-1.5deg)'},{transform:'rotate(0)'}],{origin:'400px 82px',duration:1800,easing:'ease-out',fill:'none'});await bubble('Detrás de la diana hay un hueco en la pared. Y dentro, un papel doblado.',4000);
     nar('Un papel doblado, escondido detrás de la diana.<br><br><i>Tócalo con la mano.</i>');narBtn('Volver a la barra',()=>goScene(1))}},
   {id:'papel',tool:'mano',x:400,y:245,r:45,once:false,when:()=>found('apartar'),act:async()=>{goScene(3)}},
  ],

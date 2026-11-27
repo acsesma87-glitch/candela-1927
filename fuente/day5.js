@@ -1,20 +1,21 @@
 // ---------- Día 5 ----------
 const d5=()=>D(5).flags,hasP=id=>S.pistas.some(p=>p.id===id);
 const FR_OK=[0,1,2,3,4,5],FR_X=i=>140+i*92;
-function allSel(sel,fn){[base,lit,lens].forEach(c=>c.querySelectorAll(sel).forEach(fn))}
-function armarioPinta(){const f=d5();if(!f.orden){f.orden=[4,0,5,1,3,2];save()}
-  f.orden.forEach((k,i)=>allSel(`.fr[data-k="${k}"]`,e=>e.setAttribute('transform',`translate(${FR_X(i)} 0)`)));
+function armarioPinta(ya){const f=d5();if(!f.orden){f.orden=[4,0,5,1,3,2];save()}if(ya)allSel('.fr',e=>e.style.transition='none');
+  f.orden.forEach((k,i)=>allSel(`.fr[data-k="${k}"]`,e=>e.style.transform=`translate(${FR_X(i)}px,0px)`));
   allSel('.frSel',e=>{e.setAttribute('opacity',f.sel!=null&&!f.cajon?'.8':'0');if(f.sel!=null)e.setAttribute('cx',FR_X(f.sel))});
-  allSel('.cajonA',e=>e.setAttribute('opacity',f.cajon?'1':'0'));allSel('.cajonC',e=>e.setAttribute('opacity',f.cajon?'0':'1'))}
+  allSel('.cajonA',e=>e.setAttribute('opacity',f.cajon?'1':'0'));allSel('.cajonC',e=>e.setAttribute('opacity',f.cajon?'0':'1'));
+  if(ya){void base.offsetWidth;requestAnimationFrame(()=>allSel('.fr',e=>e.style.transition=''))}}
 async function frasco(i){const f=d5();if(f.cajon)return;
   if(f.sel==null){f.sel=i;save();AU.sfx('tic');armarioPinta();return}
   if(f.sel===i){f.sel=null;save();armarioPinta();return}
   const o=f.orden;[o[f.sel],o[i]]=[o[i],o[f.sel]];f.sel=null;f.cambios=(f.cambios||0)+1;save();AU.sfx('clic');armarioPinta();
-  if(o.every((k,j)=>k===FR_OK[j])){f.cajon=1;save();await sleep(400);AU.sfx('cerradura');armarioPinta();
+  if(o.every((k,j)=>k===FR_OK[j])){f.cajon=1;save();await sleep(500);AU.sfx('cerradura');armarioPinta();anima('.cajonA',[{transform:'translateY(-34px)',opacity:0},{transform:'none',opacity:1}],{duration:700,easing:'ease-out'});
     await bubble('¡Clic! Con los frascos en su sitio, se abre un cajón escondido en la base del armario.',4000);
     nar('Dentro del cajón hay un papel doblado.');return}
   if(f.cambios===10&&!f.pistaTabla){f.pistaTabla=1;save();await bubble('Esos símbolos raros de los frascos… Para compararlos habría que pasarlos todos a la misma medida. ¿Habrá algún papel por aquí que lo explique?',4600)}}
 async function vuelta5(){const f=d5();f.vuelta=1;save();await sleep(500);AU.sfx('clic');swapSvg(SVG.dispensario);
+  if(ANIM2)await anima('.docG',[{transform:'translate(-380px,0)',opacity:0},{transform:'translate(-285px,-6px)',opacity:1},{transform:'translate(-190px,0)'},{transform:'translate(-95px,-6px)'},{transform:'translate(0,0)'}],{duration:1600,easing:'linear'});
   await talk('Dr. Salazar','(Entra sacudiéndose la lluvia.) Ya estoy. Un corte feo en la frente, pero nada que no arregle un poco de hilo.');
   const c=await choose('Candela','(Me aparto del perchero, como si nada.)',['«¿Sale usted a la mar, doctor? Ese impermeable está empapado.»','No decir nada.']);
   if(c===1)await talk('Dr. Salazar','(Ve que miro el perchero y sonríe.) ¿Le llama la atención mi impermeable? Está empapado, ya lo sé.');
@@ -49,11 +50,11 @@ DAYS[5]=[
  spots:[
   {id:'benigna',tool:'mano',x:545,y:330,r:100,once:false,act:async()=>{const f=d5();
     if(!f.carta){await talk('Benigna','(Sin dejar de barrer.) Puntual. Bien. Están todos en el cementerio; tenemos hasta la una.');
-      await talk('Candela','Su hermana Maite me dio esto para usted, en Buenos Aires.');
+      await talk('Candela','Su hermana Maite me dio esto para usted, en Buenos Aires.');if(ANIM2)allSel('.a-escoba',e=>e.classList.add('quieta'));
       await talk('Benigna','(Apoya la escoba en el fogón y lee la carta despacio. Se le escapa una sonrisa, la primera.) «A ver si te cuidas, Beni, que en esa casa te matan a trabajar»… La misma de siempre.');
       await talk('Benigna','De crías, en Rentería, nos escapábamos al río a coger cangrejos con la saya remangada. A ella siempre la pillaban. A mí, nunca.');
       await talk('Candela','(Rentería… No sé muy bien por qué, pero sonrío.)');
-      await talk('Benigna','(Se seca los ojos con el delantal y se endereza.) Bueno. Pregunte lo que tenga que preguntar, que tengo el caldo al fuego.');endTalk();
+      allSel('.a-escoba',e=>e.classList.remove('quieta'));await talk('Benigna','(Se seca los ojos con el delantal y se endereza.) Bueno. Pregunte lo que tenga que preguntar, que tengo el caldo al fuego.');endTalk();
       f.carta=1;save();persona('Benigna','De Rentería, como su hermana Maite, que vive en Buenos Aires. Con la carta se ha ablandado… un poco.');return}
     const P=[['comia','¿Cómo estaba Don Julián estos días?'],['salia','¿Salía mucho de casa?'],['nota','¿Fue usted quien me dejó una nota bajo la puerta?']],f2=f.preg||{},q=P.filter(p=>!f2[p[0]]);
     if(!q.length){await talk('Benigna','Váyase ya, que vuelven del cementerio y si la señora la ve aquí, a la que echan es a mí.');endTalk();return}
@@ -96,8 +97,11 @@ DAYS[5]=[
     await choose(null,null,['«Benigna dice que usted le traía medicinas.»','«¿Lo atendía usted a menudo?»']);
     await talk('Dr. Salazar','Tónicos, para el estómago y para los nervios. Lo demás es secreto médico, querida. Ni muerto se lo cuento a nadie.');
     persona('Dr. Salazar','«Julián estaba hundido.» Le daba tónicos para el estómago y los nervios; lo demás, «secreto médico».');
+    if(ANIM2){allSel('.chaval',e=>e.setAttribute('opacity','1'));anima('.chaval',[{transform:'translateX(110px)'},{transform:'none'}],{duration:350,easing:'ease-out'})}
     await bubble('Un chaval asoma por la puerta: «¡Doctor! ¡En la conservera, a uno del piquete le han abierto la cabeza!».',4400);
+    if(ANIM2)anima('.chaval',[{transform:'none'},{transform:'translateX(110px)'}],{duration:300,easing:'ease-in'});
     await talk('Dr. Salazar','(Coge el maletín.) El deber llama. Cinco minutos. No toque nada, que aquí hay frascos que tumban a un caballo.');endTalk();
+    if(ANIM2)await anima('.docG',[{transform:'translate(0,0)'},{transform:'translate(-95px,-6px)'},{transform:'translate(-190px,0)'},{transform:'translate(-285px,-6px)',opacity:1},{transform:'translate(-380px,0)',opacity:0}],{duration:1700,easing:'linear'});
     f.solo=1;save();AU.sfx('clic');swapSvg(SVG.dispensarioV);
     nar('Me he quedado sola en el dispensario. Cinco minutos.<br><br><i>El armario de cristal, el perchero… Mira bien.</i>')}},
   {id:'armarioVer',tool:'mano',x:125,y:250,r:90,once:false,act:async()=>{const f=d5();
@@ -125,7 +129,7 @@ DAYS[5]=[
     persona('Don Julián Arrieta','Estaba muy enfermo: le quedaban pocos meses de vida. Su familia no lo sabía.');
     nar('Don Julián se moría. Y lo sabía. ¿Por eso escribió «que Dios me perdone»?');narBtn('Cerrar el armario',()=>goScene(2))}},
  ],
- enter:async()=>{const f=d5();if(f.sel!=null){f.sel=null;save()}armarioPinta();
+ enter:async()=>{const f=d5();if(f.sel!=null){f.sel=null;save()}armarioPinta(1);
    if(hasP('fichaMedica')){nar('Los frascos, en su sitio. El cajón, vacío… salvo por mi conciencia.');narBtn('Cerrar el armario',()=>goScene(2));return}
    if(f.cajon){nar('Dentro del cajón hay un papel doblado.');return}
    nar('Seis frascos con las dosis en medidas antiguas de botica, cada una de su padre y de su madre. Y una tarjeta del doctor: «Cada cosa en su sitio: de más a menos, empezando por la derecha».<br><br><i>Toca un frasco y luego otro para cambiarlos de sitio.</i>');

@@ -1,7 +1,8 @@
 // ---------- Día 4 ----------
 const d4=()=>D(4).flags;
 function catch4(){const f=d4();if(f.pillada||!found('bloc')||!f.secreter||!found('poliza'))return;run(pillada)}
-async function pillada(){const f=d4();f.pillada=1;save();await sleep(600);swapSvg(SVG.despachoL);await shake();
+async function pillada(){const f=d4();f.pillada=1;save();await sleep(600);swapSvg(SVG.despachoL);anima('.luzL',[{opacity:0},{opacity:.25}],{duration:700});
+  if(ANIM2)anima('.leoD',[{transform:'translateX(70px)',opacity:0},{transform:'none',opacity:1}],{duration:900,easing:'ease-out'});await shake();
   await talk('Doña Leonor','¿Qué hace usted aquí?');
   const ops=['«Buscaba el baño, perdone.»','«Su marido no se suicidó, Doña Leonor.»'];if(S.pistas.find(p=>p.id==='floristeria'))ops.push('«Usted dijo que no salió esa noche. Mintió.»');
   const c=await choose(null,null,ops);
@@ -110,7 +111,7 @@ DAYS[4]=[
    nar('El secreter de Doña Leonor está cerrado con llave. Una cerradura pequeña… se puede forzar con una horquilla.<br><br><i>Mueve el dedo para colocar la horquilla. Mantén «Girar». Si tiembla, estás cerca; si fuerzas, se resbala y hay que volver a empezar.</i>');
    narBtn('Volver al despacho',()=>goScene(2));
    if(!f.sweet){f.sweet=40+Math.round(Math.random()*100);save()}
-   pickOpen({sweet:f.sweet,tol:7,breakMs:1100,onOpen:async()=>{f.secreter=1;save();swapSvg(SVG.secreterA);await bubble('¡Clic! El secreter se abre.',2400);
+   pickOpen({sweet:f.sweet,tol:7,breakMs:1100,onOpen:async()=>{f.secreter=1;save();swapSvg(SVG.secreterA);allSel('.tapaS',e=>e.setAttribute('opacity','1'));anima('.tapaS',[{transform:'none'},{transform:'scaleY(.02)'}],{origin:'400px 430px',duration:800,easing:'cubic-bezier(.5,0,.9,.6)'});await bubble('¡Clic! El secreter se abre.',2400);
      nar('Dentro: unos botines y un papel.<br><br><i>Míralos con la lupa.</i>');narBtn('Volver al despacho',()=>goScene(2))}})}},
 
 // ===== Esa noche =====

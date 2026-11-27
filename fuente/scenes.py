@@ -17,6 +17,17 @@ def defs(extra=''):
 <pattern id="cob" width="36" height="16" patternUnits="userSpaceOnUse"><rect width="36" height="16" fill="#3a3530"/><path d="M0 15.5H36M18 0V8M0 7.5H36M9 8V16M27 8V16" stroke="#22201c" stroke-width="1.5"/></pattern>
 {extra}</defs>'''
 
+def resp(inner, who=None, x=0):
+    d = f' data-who="{who}"' if who else ''
+    return f'<g class="resp"{d} style="animation-delay:-{int(x*37)%3000}ms">{inner}</g>'
+
+QUIEN = {'LEONOR':'Doña Leonor','SALAZAR':'Dr. Salazar','SALAZAR_D':'Dr. Salazar','IBARRA':'Comisario Ibarra','GUARDIA':'El guardia','PACO':'Paco',
+         'INIGO':'Íñigo Arrieta','CLARA':'Clara Arrieta','BENIGNA':'Benigna','MATEO':'Mateo «el Rubio»','TXOMIN':'Txomin'}
+def fig(g, x, y, s=1, flip=False, who=None, cls=''):
+    who = who or next((v for k, v in QUIEN.items() if globals().get(k) == g), None)
+    g2 = f'<g transform="translate({x} {y}) scale({-s if flip else s} {s})">{resp(g, who, x)}</g>'
+    return f'<g class="{cls}">{g2}</g>' if cls else g2
+
 def wrap(body, extra=''):
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="none">{defs(extra)}{body}</svg>'
 
@@ -28,7 +39,7 @@ AITOR = AITOR.replace('<rect x="196" y="127" width="18" height="8" rx="1" fill="
   '<rect x="196" y="127" width="18" height="8" rx="1" fill="#c9a24a"/><text x="205" y="133.6" text-anchor="middle" font-size="4.2" fill="#3a2a10" font-family="Georgia">SERENO 7</text>')
 
 def aitor(x, y, s=1):  # x,y = pies (centro)
-    return f'<g transform="translate({x-205*s} {y-462*s}) scale({s})">{AITOR}</g>'
+    return f'<g transform="translate({x-205*s} {y-462*s}) scale({s})">{resp(AITOR, "Aitor", x)}</g>'
 
 # ---------------- Candela de pie con maleta ----------------
 CANDELA = '''<g>
@@ -60,14 +71,14 @@ CANDELA = '''<g>
  <path d="M-15 -243h30v4h-30z" fill="#8a2a20"/>
 </g>'''
 def candela(x, y, s=1):
-    return f'<g transform="translate({x} {y}) scale({s})">{CANDELA}</g>'
+    return f'<g transform="translate({x} {y}) scale({s})">{resp(CANDELA, "Candela", x)}</g>'
 
 SVG = {}
 
 # ======================= PERIÓDICO =======================
 def periodico():
     b = '<rect width="800" height="500" fill="#0b0908"/>'
-    b += '<g transform="rotate(-1.2 400 250)">'
+    b += '<g class="diarioG"><g transform="rotate(-1.2 400 250)">'
     b += '<rect x="96" y="14" width="608" height="476" fill="#e6dcc2"/><rect x="96" y="14" width="608" height="476" fill="#000" filter="url(#paperT)"/>'
     b += '<rect x="96" y="14" width="608" height="476" fill="none" stroke="#c9bb98" stroke-width="2"/>'
     ink = '#1f1a14'
@@ -114,7 +125,7 @@ def periodico():
     for k,t in enumerate(br):
         b += f'<text x="539" y="{418+k*10}" text-anchor="middle" font-size="5.6" fill="{ink}" font-family="Georgia" font-style="italic">{t}</text>'
     b += f'<text x="539" y="468" text-anchor="middle" font-size="5" fill="{ink}" font-family="Georgia">Mar en calma. Niebla al alba. Pleamar a la 1:30.</text>'
-    b += '</g>'
+    b += '</g></g>'
     return wrap(b)
 SVG['periodico'] = periodico()
 
@@ -141,13 +152,13 @@ def topo():
     # cable del trole
     b += '<path d="M0 118L800 104" stroke="#1a1a1a" stroke-width="2"/>'
     # el Topo (tranvía)
-    b += '<g><rect x="20" y="230" width="300" height="160" rx="10" fill="#7a2a22"/><rect x="20" y="230" width="300" height="24" rx="8" fill="#5a1d18"/>'
+    b += '<g class="a-ralenti"><rect x="20" y="230" width="300" height="160" rx="10" fill="#7a2a22"/><rect x="20" y="230" width="300" height="24" rx="8" fill="#5a1d18"/>'
     for k in range(5):
         b += f'<rect x="{40+k*56}" y="264" width="40" height="52" rx="4" fill="#2a2724"/><rect x="{42+k*56}" y="266" width="36" height="48" rx="3" fill="#e8c27a" opacity=".45"/>'
     b += '<rect x="20" y="330" width="300" height="10" fill="#c9a24a"/><text x="170" y="364" text-anchor="middle" font-family="Georgia" font-size="14" fill="#e8d6a8" letter-spacing="3">TOPO</text>'
     b += '<path d="M200 230L260 116" stroke="#111" stroke-width="4"/><circle cx="60" cy="398" r="14" fill="#111"/><circle cx="280" cy="398" r="14" fill="#111"/></g>'
     # vapor
-    b += '<g filter="url(#b5)" opacity=".7"><ellipse cx="120" cy="400" rx="90" ry="26" fill="#d8d6d0"/><ellipse cx="240" cy="390" rx="70" ry="22" fill="#d8d6d0"/></g>'
+    b += '<g class="a-vapor"><g filter="url(#b5)" opacity=".7"><ellipse cx="120" cy="400" rx="90" ry="26" fill="#d8d6d0"/><ellipse cx="240" cy="390" rx="70" ry="22" fill="#d8d6d0"/></g></g>'
     # letrero esmaltado sobre el andén
     b += '<rect x="540" y="150" width="3" height="40" fill="#222"/><rect x="606" y="150" width="3" height="40" fill="#222"/>'
     b += '<rect x="510" y="120" width="130" height="34" rx="4" fill="#1d3a5a" stroke="#e8e2d6" stroke-width="2"/>'
@@ -155,7 +166,7 @@ def topo():
     b += '<text x="575" y="148" text-anchor="middle" font-family="Georgia" font-size="6.5" fill="#f0ead8">Frontera – San Sebastián</text>'
     # farola encendida
     b += '<rect x="726" y="150" width="6" height="214" fill="#1a1715"/><path d="M714 150h30l-5 26h-20z" fill="#2a2420"/><rect x="719" y="155" width="20" height="18" fill="#ffd28a"/>'
-    b += '<circle cx="729" cy="165" r="90" fill="url(#warm)"/>'
+    b += '<g class="a-brillo"><circle cx="729" cy="165" r="90" fill="url(#warm)"/></g>'
     # niebla
     b += '<rect width="800" height="500" filter="url(#fog)" opacity=".55"/>'
     # personajes
@@ -177,12 +188,12 @@ AITOR_CASA = AITOR_CASA.replace('<!-- cuello y cabeza -->', '<circle cx="148" cy
 AITOR_CASA = _cut(AITOR_CASA, '<!-- gorra de sereno -->', '<!-- mechones')
 AITOR_CASA = AITOR_CASA.replace('<!-- mechones', '<path d="M175 150q0-30 30-33q30 3 31 33q-9-14-31-15q-21 1-30 15z" fill="url(#hairA)"/><path d="M190 126q8-3 14 0M212 124q8 0 12 5" stroke="#8a8680" stroke-width="1" fill="none"/>\n <!-- mechones')
 def aitor_casa(x, y, s=1):
-    return f'<g transform="translate({x-205*s} {y-462*s}) scale({s})">{AITOR_CASA}</g>'
+    return f'<g transform="translate({x-205*s} {y-462*s}) scale({s})">{resp(AITOR_CASA, "Aitor", x)}</g>'
 CANDELA_CASA = _cut(CANDELA, '<!-- brazo con maleta -->', '<path d="M-24 -184q-10 30-8 70"')
 CANDELA_CASA = CANDELA_CASA.replace('<path d="M-24 -184q-10 30-8 70"', '<path d="M24 -184q10 30 8 70" stroke="#7a6c52" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="32" cy="-112" r="6" fill="url(#skin)"/><path d="M-24 -184q-10 30-8 70"')
 CANDELA_CASA = CANDELA_CASA[:CANDELA_CASA.index('<!-- sombrero -->')] + '<path d="M-16 -226q0-20 16-21q16 1 16 21q-6-9-16-10q-10 1-16 10z" fill="#3a281e"/><path d="M0 -247v12" stroke="#22170f" stroke-width="1.2"/></g>'
 def candela_casa(x, y, s=1):
-    return f'<g transform="translate({x} {y}) scale({s})">{CANDELA_CASA}</g>'
+    return f'<g transform="translate({x} {y}) scale({s})">{resp(CANDELA_CASA, "Candela", x)}</g>'
 
 TXOMIN = """<g>
  <path d="M-34 60q0-46 34-50q34 4 34 50z" fill="#4a3a2a"/>
@@ -216,14 +227,14 @@ def cocina(gente=True):
     b += '<ellipse cx="248" cy="128" rx="9" ry="7" fill="#8a5a2a" opacity=".45"/>'
     b += '<text x="252" y="176" font-size="5" fill="#e9dfc7" font-family="Georgia" opacity=".9">La Plata</text>'
     # fogón de hierro
-    b += '<circle cx="120" cy="300" r="190" fill="url(#warm)" opacity=".9"/>'
+    b += '<g class="a-brillo"><circle cx="120" cy="300" r="190" fill="url(#warm)" opacity=".9"/></g>'
     b += '<rect x="40" y="220" width="160" height="190" rx="6" fill="#1c1a18"/><rect x="40" y="214" width="160" height="12" fill="#2c2926"/>'
-    b += '<rect x="62" y="310" width="70" height="44" rx="4" fill="#ff9a30"/><path d="M70 350q10-30 20-6q6-24 16 0q8-20 18 4" fill="#ffd27a"/>'
+    b += '<rect x="62" y="310" width="70" height="44" rx="4" fill="#ff9a30"/><path class="a-llama" d="M70 350q10-30 20-6q6-24 16 0q8-20 18 4" fill="#ffd27a"/>'
     b += '<rect x="58" y="306" width="78" height="52" rx="4" fill="none" stroke="#3a3632" stroke-width="5"/>'
     b += '<rect x="150" y="250" width="34" height="140" fill="#2c2926"/><rect x="70" y="40" width="30" height="176" fill="#24211e"/>'
     # cafetera humeando
     b += '<path d="M90 214l6-34h28l6 34z" fill="#8d8a80"/><path d="M130 196q12 2 10 14" stroke="#8d8a80" stroke-width="4" fill="none"/>'
-    b += '<g filter="url(#b5)" opacity=".7"><ellipse cx="110" cy="160" rx="12" ry="20" fill="#e8e2d6"/><ellipse cx="118" cy="128" rx="10" ry="16" fill="#e8e2d6"/></g>'
+    b += '<g class="a-humo"><g filter="url(#b5)" opacity=".7"><ellipse cx="110" cy="160" rx="12" ry="20" fill="#e8e2d6"/><ellipse cx="118" cy="128" rx="10" ry="16" fill="#e8e2d6"/></g></g>'
     # Aitor sentado (detrás de la mesa)
     if gente: b += '<clipPath id="tbl"><rect x="0" y="0" width="800" height="340"/></clipPath>'
     if gente: b += f'<g clip-path="url(#tbl)">{aitor_casa(380, 478, .8)}</g>'
@@ -249,6 +260,7 @@ def cocina(gente=True):
     b += '<rect x="732" y="306" width="16" height="24" fill="#6a7a5a"/><rect x="756" y="300" width="14" height="30" fill="#8a6a3a"/></g>'
     b += '<path d="M716 246l-30 10v228l30-6z" fill="#5a3a22"/><circle cx="694" cy="370" r="3" fill="#c9a24a"/>'
     b += '<rect x="716" y="246" width="84" height="232" fill="#000" class="ob" opacity=".85"/>'
+    if gente: b += f'<g class="txoP" opacity="0"><path d="M800 250L700 500H800z" fill="#ffd28a" opacity=".18"/>{fig(TXOMIN, 760, 430, 1.7)}</g>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     return wrap(b)
 SVG['cocina'] = cocina()
@@ -352,22 +364,21 @@ LEONOR = """<g>
  <path d="M-20 -206q20-20 40 0v4h-40z" fill="#0c0b0d"/><ellipse cx="0" cy="-205" rx="24" ry="5" fill="#0c0b0d"/>
  <path d="M-18 -204q-2 16 2 26h32q4-10 2-26" fill="#000" opacity=".35"/>
 </g>"""
-def fig(g, x, y, s=1, flip=False):
-    return f'<g transform="translate({x} {y}) scale({-s if flip else s} {s})">{g}</g>'
-
 def faro(leonor=False):
     b = '<linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3340"/><stop offset=".6" stop-color="#5a5e62"/><stop offset="1" stop-color="#7a7266"/></linearGradient>'
     b += '<rect width="800" height="500" fill="url(#dawn)"/>'
     # faro y casa del farero arriba a la derecha
     b += '<path d="M640 40h40v-8h-40z" fill="#2a2a2a"/><rect x="644" y="20" width="32" height="22" fill="#fff3c4"/><circle cx="660" cy="31" r="70" fill="url(#warm)"/>'
-    b += '<path d="M676 30L800 6v50z" fill="#ffe9a8" opacity=".15"/>'
+    b += '<g class="a-haz"><path d="M676 30L860 -6v76z" fill="#ffe9a8" opacity=".2"/></g>'
     b += '<path d="M636 42h48l8 150h-64z" fill="#d8d4cc"/><path d="M634 90h52M630 140h60" stroke="#8a2a20" stroke-width="14"/>'
     b += '<rect x="700" y="150" width="70" height="44" fill="#c8c0b0"/><path d="M694 152l41-22 41 22z" fill="#6a2a22"/><rect x="712" y="164" width="12" height="12" fill="#ffd28a"/>'
     # mar y olas a la izquierda
     b += '<path d="M0 230q100-10 200 0t260 6V500H0z" fill="#26323a"/>'
+    b += '<g class="a-olas">'
     for k in range(6):
         y = 250 + k*30
-        b += f'<path d="M0 {y}q30-8 60 0t60 0t60 0t60 0" stroke="#4a5a64" stroke-width="2" fill="none" opacity=".6"/>'
+        b += f'<path d="M-120 {y}' + 'q30-8 60 0' + 't60 0'*8 + '" stroke="#4a5a64" stroke-width="2" fill="none" opacity=".6"/>'
+    b += '</g>'
     # barca sin luces en la niebla
     b += '<path d="M60 236h90l-12 14h-66z" fill="#1a1e22" opacity=".7"/><path d="M104 236v-40" stroke="#1a1e22" stroke-width="3" opacity=".7"/>'
     # camino y verja hacia el faro
@@ -390,15 +401,15 @@ def faro(leonor=False):
     b += '<g id="algas"><path d="M200 420q20-24 50-14q-10 10-6 22q-20-8-44-8z" fill="#2e4a2a"/><path d="M206 424q16-14 40-10M212 430q14-6 30-4" stroke="#1e3a1a" stroke-width="3" fill="none"/><path d="M196 414q14-4 24 4" stroke="#3a5a34" stroke-width="5" fill="none"/></g>'
     # guardia civil con farol (izquierda del cuerpo)
     b += fig(GUARDIA, 190, 380, .9)
-    b += '<circle cx="216" cy="309" r="60" fill="url(#warm)"/>'
+    b += '<g class="a-brillo"><circle cx="216" cy="309" r="60" fill="url(#warm)"/></g>'
     # doctor arrodillado y comisario
     b += fig(SALAZAR, 450, 404, .95)
     b += fig(IBARRA, 532, 404, .95)
     # Aitor junto a la verja
     b += aitor(715, 420, .62)
     if leonor:
-        b += '<path d="M720 470h80v-40h-50l-14 18h-16z" fill="#0c0c0c"/><circle cx="738" cy="472" r="9" fill="#050505"/><rect x="756" y="434" width="30" height="14" fill="#3a4a5a" opacity=".6"/>'
-        b += fig(LEONOR, 598, 470, .95)
+        b += '<g class="cocheL"><path d="M720 470h80v-40h-50l-14 18h-16z" fill="#0c0c0c"/><circle cx="738" cy="472" r="9" fill="#050505"/><rect x="756" y="434" width="30" height="14" fill="#3a4a5a" opacity=".6"/><g class="farosL"><path d="M722 456L600 430v50z" fill="#fff3c4" opacity=".22"/><circle cx="723" cy="457" r="4" fill="#fff3c4"/></g></g>'
+        b += fig(LEONOR, 598, 470, .95, cls='leoF')
     b += '<rect width="800" height="500" filter="url(#fog)" opacity=".45"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     return wrap(b)
@@ -409,7 +420,7 @@ def trato():
     b += '<g filter="url(#b5)" opacity=".7"><path d="M0 300q200-20 400 0t400 0V500H0z" fill="#2a2622"/><path d="M300 320q70-20 150-6l6 18q-80 10-160 2z" fill="#d6d2c6"/><rect x="620" y="60" width="40" height="160" fill="#d8d4cc"/></g>'
     b += '<rect width="800" height="500" filter="url(#fog)" opacity=".5"/>'
     b += fig(LEONOR, 180, 500, 1.9)
-    b += f'<g transform="translate({400-205*1.2} {560-462*1.2}) scale(1.2)">{AITOR_CASA}</g>'
+    b += f'<g transform="translate({400-205*1.2} {560-462*1.2}) scale(1.2)">{resp(AITOR_CASA, "Aitor", 400)}</g>'
     b += '<path d="M330 420q-14 6-10 20q14 6 24-2z" fill="#1d2026"/>'
     b += fig(IBARRA, 630, 520, 1.85)
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
@@ -429,7 +440,7 @@ SVG['noche'] = noche()
 # ======================= PERIÓDICO GENÉRICO =======================
 def diario(fecha, titular, a_tit, a_grab, a_txt, b_tit, b_grab, b_txt, ads, breve_tit, breve, pie):
     ink = '#1f1a14'
-    b = '<rect width="800" height="500" fill="#0b0908"/><g transform="rotate(1 400 250)">'
+    b = '<rect width="800" height="500" fill="#0b0908"/><g class="diarioG"><g transform="rotate(1 400 250)">'
     b += '<rect x="96" y="14" width="608" height="476" fill="#e6dcc2"/><rect x="96" y="14" width="608" height="476" fill="#000" filter="url(#paperT)"/>'
     b += '<rect x="96" y="14" width="608" height="476" fill="none" stroke="#c9bb98" stroke-width="2"/>'
     b += f'<text x="400" y="66" text-anchor="middle" font-family="Limelight,Georgia,serif" font-size="46" fill="{ink}" letter-spacing="3">EL FARO DE ALTAMAR</text>'
@@ -457,7 +468,7 @@ def diario(fecha, titular, a_tit, a_grab, a_txt, b_tit, b_grab, b_txt, ads, brev
     b += f'<text x="539" y="402" text-anchor="middle" font-size="8" fill="{ink}" font-family="Georgia" font-weight="bold">{breve_tit}</text>'
     for k,t in enumerate(breve): b += f'<text x="539" y="{418+k*10}" text-anchor="middle" font-size="5.6" fill="{ink}" font-family="Georgia" font-style="italic">{t}</text>'
     b += f'<text x="539" y="468" text-anchor="middle" font-size="5" fill="{ink}" font-family="Georgia">{pie}</text>'
-    b += '</g>'
+    b += '</g></g>'
     return wrap(b)
 
 ink = '#1f1a14'
@@ -507,7 +518,9 @@ def muelle():
     b += '<g fill="none" stroke="#3a3c3e" stroke-width="6"><path d="M90 300V60l140 20M90 120l120 -40"/><path d="M620 300V40l-150 30M620 110l-130-30"/></g><path d="M226 80v80" stroke="#3a3c3e" stroke-width="2"/><path d="M474 70v70" stroke="#3a3c3e" stroke-width="2"/>'
     # agua
     b += '<rect y="250" width="800" height="90" fill="#3e4a50"/>'
-    for k in range(4): b += f'<path d="M0 {262+k*20}q40-6 80 0t80 0t80 0t80 0t80 0t80 0t80 0t80 0t80 0t80 0" stroke="#5a6a72" stroke-width="1.5" fill="none"/>'
+    b += '<g class="a-agua">'
+    for k in range(4): b += f'<path d="M-160 {262+k*20}q40-6 80 0' + 't80 0'*11 + '" stroke="#5a6a72" stroke-width="1.5" fill="none"/>'
+    b += '</g>'
     # barcas amarradas (la Gaviota, sin farol)
     def barca(x, col, nombre, farol=True, w=120):
         s = f'<path d="M{x} 270h{w}l-14 22h-{w-28}z" fill="{col}"/><path d="M{x+w/2} 270v-60" stroke="#2a2622" stroke-width="3"/>'
@@ -515,7 +528,9 @@ def muelle():
         else: s += f'<path d="M{x+w/2} 210h6v4" stroke="#2a2622" stroke-width="1.5" fill="none"/>'
         s += f'<text x="{x+w/2}" y="284" text-anchor="middle" font-size="5" fill="#e8e2d0" font-family="Georgia" letter-spacing="1">{nombre}</text>'
         return s
-    b += barca(150, '#3a5a6a', 'SAN TELMO') + barca(300, '#f0ece0', 'GAVIOTA', False, 100) + barca(440, '#6a3a2a', 'ARANTZAZU')
+    for k, bc in enumerate([barca(150, '#3a5a6a', 'SAN TELMO'), barca(300, '#f0ece0', 'GAVIOTA', False, 100), barca(440, '#6a3a2a', 'ARANTZAZU')]):
+        b += f'<g class="a-barca" style="animation-delay:-{k*1.3}s">{bc}</g>'
+    b += '<g class="a-gaviota"><path d="M0 0q7-7 14 0q7-7 14 0" stroke="#2a2a2a" stroke-width="2.2" fill="none"/></g>'
     b += '<path d="M330 270q-10 20-24 30" stroke="#2a2622" stroke-width="1.5" fill="none"/>'
     # muelle
     b += '<rect y="320" width="800" height="180" fill="#57524a"/><path d="M0 320H800" stroke="#2a2622" stroke-width="5"/>'
@@ -580,7 +595,7 @@ SVG['periodico3'] = diario('Sábado, 3 de diciembre de 1927', 'TENSIÓN EN EL MU
 PACO = """<g>
  <path d="M-46 0q-4-120 46-130q50 10 46 130z" fill="#3a2c24"/>
  <path d="M-30 -110h60l6 110h-72z" fill="#e8e2d4"/><path d="M-30 -110q30 10 60 0" stroke="#bfb7a6" stroke-width="2" fill="none"/>
- <path d="M44 -100q18 20 14 54" stroke="#3a2c24" stroke-width="18" fill="none" stroke-linecap="round"/><circle cx="58" cy="-44" r="9" fill="url(#skin)"/>
+ <path d="M44 -100q18 20 14 54" stroke="#3a2c24" stroke-width="18" fill="none" stroke-linecap="round"/><g class="a-vaso"><path d="M50 -66h18l-2 22h-14z" fill="#d8e4e0" opacity=".75"/><path d="M46 -52q12-10 26 -2l-4 10q-10-6-20 2z" fill="#e8e2d4"/></g><circle cx="58" cy="-44" r="9" fill="url(#skin)"/>
  <rect x="-9" y="-146" width="18" height="18" fill="#c9a084"/>
  <ellipse cx="0" cy="-162" rx="22" ry="24" fill="url(#skin)"/>
  <path d="M-22 -168q2 -18 22-18q20 0 22 18q-4-8-22-9q-18 1-22 9z" fill="#d8b89a" opacity=".6"/>
@@ -595,7 +610,7 @@ def taberna():
     for k in range(0, 800, 46): b += f'<path d="M{k} 0V300" stroke="#2e1c10" stroke-width="2"/>'
     b += '<path d="M0 40H800M0 44H800" stroke="#1e120a" stroke-width="6"/>'
     # vigas y faroles
-    for x in (180, 480): b += f'<path d="M{x} 44v40" stroke="#1e120a" stroke-width="2"/><rect x="{x-9}" y="84" width="18" height="22" fill="#ffd28a"/><circle cx="{x}" cy="96" r="130" fill="url(#warm)"/>'
+    for k, x in enumerate((180, 480)): b += f'<g class="a-lampara" style="transform-origin:{x}px 44px;animation-delay:-{k*1.7}s"><path d="M{x} 44v40" stroke="#1e120a" stroke-width="2"/><rect x="{x-9}" y="84" width="18" height="22" fill="#ffd28a"/><circle cx="{x}" cy="96" r="130" fill="url(#warm)"/></g>'
     # barriles de sidra al fondo
     for i in range(4):
         x = 30 + i*72; b += f'<ellipse cx="{x+30}" cy="200" rx="30" ry="40" fill="#5a3a22"/><path d="M{x+2} 186h56M{x+2} 214h56" stroke="#2a1a10" stroke-width="4"/><circle cx="{x+30}" cy="200" r="5" fill="#2a1a10"/>'
@@ -635,7 +650,7 @@ def diana():
     for k in range(0, 800, 46): b += f'<path d="M{k} 0V500" stroke="#2e1c10" stroke-width="2"/>'
     # hueco en la pared con el papel (debajo de la diana)
     b += '<rect x="330" y="180" width="140" height="140" fill="#160c06"/><g transform="rotate(-6 400 250)"><rect x="362" y="214" width="76" height="62" fill="#e9dfc7"/><path d="M362 245h76M400 214v62" stroke="#c9bb98"/></g>'
-    b += '<g id="diana"><circle cx="400" cy="250" r="170" fill="#121212"/>'
+    b += '<g id="diana"><g class="dianaG"><circle cx="400" cy="250" r="170" fill="#121212"/>'
     cols = ['#e8dcc0', '#1a1a1a']
     for i in range(20):
         a0 = i*18-9; a1 = a0+18
@@ -647,7 +662,7 @@ def diana():
     b += '<circle cx="400" cy="250" r="16" fill="#2a7a3a"/><circle cx="400" cy="250" r="7" fill="#a3271c"/>'
     for (x, y, a) in [(360, 210, -30), (452, 280, 20), (410, 160, -5)]:
         b += f'<g transform="rotate({a} {x} {y})"><rect x="{x-2}" y="{y-40}" width="4" height="40" fill="#c9a24a"/><path d="M{x} {y-40}l-8-14h16z" fill="#a3271c"/></g>'
-    b += '</g><rect width="800" height="500" fill="url(#vig)"/>'
+    b += '</g></g><path d="M400 76v8" stroke="#8a8a8a" stroke-width="4"/><rect width="800" height="500" fill="url(#vig)"/>'
     return wrap(b)
 SVG['diana'] = diana()
 
@@ -685,7 +700,7 @@ INIGO = """<g>
  <path d="M-26 -170q-12 40-6 82" stroke="#2a2a34" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="-31" cy="-86" r="6" fill="url(#skin)"/>
  <path d="M-32 -86l-6 86" stroke="#4a2a14" stroke-width="4"/><circle cx="-31" cy="-88" r="5" fill="#c9a24a"/>
  <path d="M26 -170q14 20 6 42" stroke="#2a2a34" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="30" cy="-126" r="6" fill="url(#skin)"/>
- <path d="M34 -128l16-4" stroke="#e8e2d4" stroke-width="2.5"/><circle cx="50" cy="-132" r="1.6" fill="#ff8a3a"/>
+ <path d="M34 -128l16-4" stroke="#e8e2d4" stroke-width="2.5"/><circle class="a-brasa" cx="50" cy="-132" r="1.6" fill="#ff8a3a"/><g class="a-humoC"><path d="M51 -135q-5 -7 1 -14q6 -7 0 -14" stroke="#d8d8d8" stroke-width="1.6" fill="none" opacity=".45"/></g>
  <rect x="-6" y="-192" width="12" height="16" fill="#c9a084"/>
  <ellipse cx="0" cy="-206" rx="15" ry="18" fill="url(#skin)"/>
  <path d="M-16 -210q0-18 16-20q18 2 17 18q-8-12-18-10q-8 2-15 12z" fill="#1a120c"/>
@@ -731,7 +746,7 @@ def salon():
     # ataúd y velas
     b += '<path d="M300 300h220l20 30h-260z" fill="#2a1a10"/><path d="M296 290h228v14H296z" fill="#4a2e18"/><path d="M300 290h220l-10-14H310z" fill="#3a2414"/><path d="M410 278v10M402 283h16" stroke="#c9a24a" stroke-width="2"/>'
     for x in (280, 540):
-        b += f'<rect x="{x-3}" y="230" width="6" height="66" fill="#c9a24a"/><rect x="{x-4}" y="212" width="8" height="18" fill="#efe6d0"/><path d="M{x} 202q5 6 0 10q-5-4 0-10z" fill="#ffd27a"/><circle cx="{x}" cy="208" r="70" fill="url(#warm)"/>'
+        b += f'<rect x="{x-3}" y="230" width="6" height="66" fill="#c9a24a"/><rect x="{x-4}" y="212" width="8" height="18" fill="#efe6d0"/><path class="a-llama" d="M{x} 202q5 6 0 10q-5-4 0-10z" fill="#ffd27a"/><g class="a-brillo"><circle cx="{x}" cy="208" r="70" fill="url(#warm)"/></g>'
     # alfombra y suelo
     b += '<rect y="330" width="800" height="170" fill="#2a1a12"/><path d="M120 360h560l40 140H80z" fill="#4a1a1e"/><path d="M140 372h520l34 120H106z" fill="none" stroke="#8a6a2a" stroke-width="2"/>'
     # personajes
@@ -739,7 +754,7 @@ def salon():
     b += fig(INIGO, 680, 470, 1.0)
     b += fig(CLARA, 120, 470, .98)
     b += fig(BENIGNA, 300, 480, .95)
-    b += f'<g transform="translate({560-205*.78} {478-462*.78}) scale(.78)">{AITOR_CASA}</g>'
+    b += f'<g transform="translate({560-205*.78} {478-462*.78}) scale(.78)">{resp(AITOR_CASA, "Aitor", 560)}</g>'
     b += '<path d="M548 380q-8 6-4 14l10-2z" fill="#1d2026"/>'
     # platito con horquillas en el velador
     b += '<rect x="752" y="380" width="40" height="6" fill="#4a2e18"/><rect x="768" y="386" width="6" height="90" fill="#4a2e18"/><ellipse cx="772" cy="379" rx="14" ry="4" fill="#d8d0c0"/><path d="M764 377l6-2M770 378l6-3M772 376l4 3" stroke="#3a3a3a" stroke-width="1.2"/>'
@@ -767,12 +782,12 @@ def despacho(leonor=False):
     b += '<rect x="180" y="320" width="360" height="22" fill="#5a3a22"/><rect x="190" y="342" width="60" height="140" fill="#3a2414"/><rect x="470" y="342" width="60" height="140" fill="#3a2414"/>'
     b += '<rect x="260" y="300" width="70" height="20" fill="#efe6d0"/><path d="M262 304h66M262 309h50" stroke="#cfc4a8" stroke-width=".8"/><path d="M336 316l40-8" stroke="#c9a24a" stroke-width="3"/>'
     b += '<rect x="400" y="302" width="64" height="18" fill="#e8dcc0" transform="rotate(4 432 311)"/><text x="432" y="313" text-anchor="middle" font-size="4" fill="#2a1d10" font-family="Georgia" transform="rotate(4 432 311)">LA PREVISORA</text>'
-    b += '<path d="M490 300v20h14v-20z" fill="#2a2a2a"/><circle cx="497" cy="296" r="70" fill="url(#warm)" opacity=".7"/><path d="M486 300l11-24 11 24z" fill="#6a4a2a"/>'
+    b += '<path d="M490 300v20h14v-20z" fill="#2a2a2a"/><g class="a-brillo"><circle cx="497" cy="296" r="70" fill="url(#warm)" opacity=".7"/></g><path d="M486 300l11-24 11 24z" fill="#6a4a2a"/>'
     # suelo
     b += '<rect y="482" width="800" height="18" fill="#1a0e08"/>'
     if leonor:
-        b += '<rect x="740" y="100" width="60" height="390" fill="#c9b48e" opacity=".25"/>'
-        b += fig(LEONOR, 760, 488, 1.15)
+        b += '<rect class="luzL" x="740" y="100" width="60" height="390" fill="#c9b48e" opacity=".25"/>'
+        b += fig(LEONOR, 760, 488, 1.15, cls='leoD')
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     return wrap(b)
 SVG['despacho'] = despacho(); SVG['despachoL'] = despacho(True)
@@ -803,11 +818,12 @@ def secreter(abierto=False):
     b += '<rect x="120" y="40" width="560" height="420" fill="#4a2a18"/><rect x="150" y="70" width="500" height="360" fill="#3a2014" stroke="#2a180c" stroke-width="6"/>'
     if abierto:
         b += '<rect x="170" y="90" width="460" height="320" fill="#1a0e08"/>'
+        tapa = '<rect class="tapaS" x="150" y="70" width="500" height="360" fill="#3a2014" stroke="#2a180c" stroke-width="6" opacity="0"/>'
         b += '<path d="M220 380q0-50 30-60h40q10 30 0 60z" fill="#1a1a1a"/><path d="M300 380q0-50 30-60h40q10 30 0 60z" fill="#1a1a1a"/><path d="M220 372h80M300 372h80" stroke="#6a5a3a" stroke-width="6"/><g fill="#6a5a3a" opacity=".8"><ellipse cx="240" cy="378" rx="10" ry="3"/><ellipse cx="330" cy="379" rx="12" ry="3"/></g>'
         b += '<g transform="rotate(-8 520 250)"><rect x="450" y="200" width="150" height="100" fill="#efe6d0"/>'
         for k, t in enumerate(['FLORISTERÍA LAS DALIAS', 'Servicio nocturno', '30 de noviembre', 'Entrega: 23:00', '1 ramo blanco', 'Cobrado. Gracias.']):
             b += f'<text x="525" y="{218+k*14}" text-anchor="middle" font-size="{8 if k==0 else 6.5}" fill="#2a1d10" font-family="Georgia">{t}</text>'
-        b += '</g>'
+        b += '</g>' + tapa
     else:
         b += '<circle cx="400" cy="250" r="90" fill="url(#warm)" opacity=".5"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
@@ -843,9 +859,9 @@ def cocinaP():
         r = 18 + (k % 3) * 5
         b += f'<path d="M{x} 60v14" stroke="#2a1c10" stroke-width="2"/><circle cx="{x}" cy="{74+r}" r="{r}" fill="#b0643a"/><path d="M{x-r+4} {74+r}a{r-4} {r-4} 0 0 1 {2*r-8} 0" fill="#d4885a" opacity=".6"/>'
     # fogón
-    b += '<rect x="250" y="200" width="250" height="140" fill="#1c1c1e"/><rect x="250" y="190" width="250" height="14" fill="#2c2c30"/><rect x="270" y="250" width="70" height="50" fill="#2c2c30"/><rect x="282" y="262" width="46" height="26" fill="#ff8a30" opacity=".85"/><rect x="400" y="250" width="80" height="70" fill="#2c2c30"/>'
-    b += '<path d="M300 160h50v32h-50z" fill="#8a8a8a"/><path d="M304 160q21-12 42 0" fill="#9a9a9a"/><path d="M325 150q-8-20 4-40M318 140q-6-14 2-26" stroke="#d8d0c0" stroke-width="5" fill="none" opacity=".35"/>'
-    b += '<circle cx="305" cy="275" r="90" fill="url(#warm)" opacity=".7"/>'
+    b += '<rect x="250" y="200" width="250" height="140" fill="#1c1c1e"/><rect x="250" y="190" width="250" height="14" fill="#2c2c30"/><rect x="270" y="250" width="70" height="50" fill="#2c2c30"/><rect class="a-llama" x="282" y="262" width="46" height="26" fill="#ff8a30" opacity=".85"/><rect x="400" y="250" width="80" height="70" fill="#2c2c30"/>'
+    b += '<path d="M300 160h50v32h-50z" fill="#8a8a8a"/><path d="M304 160q21-12 42 0" fill="#9a9a9a"/><g class="a-humo"><path d="M325 150q-8-20 4-40M318 140q-6-14 2-26" stroke="#d8d0c0" stroke-width="5" fill="none" opacity=".35"/></g>'
+    b += '<g class="a-brillo"><circle cx="305" cy="275" r="90" fill="url(#warm)" opacity=".7"/></g>'
     # mesa
     b += '<rect x="420" y="360" width="260" height="16" fill="#6a4a2a"/><rect x="430" y="376" width="14" height="110" fill="#4a3018"/><rect x="656" y="376" width="14" height="110" fill="#4a3018"/>'
     b += '<ellipse cx="480" cy="356" rx="26" ry="6" fill="#d8d0c0"/><path d="M560 356l40-10l6 8l-40 8z" fill="#c9b48e"/><path d="M610 352h30v6h-30z" fill="#8a8680"/>'
@@ -863,9 +879,9 @@ def cocinaP():
     b += '<rect y="340" width="800" height="160" fill="#3a2c1e"/>'
     for x in range(0, 800, 50): b += f'<path d="M{x} 340l{(x-400)*.25} 160" stroke="#2a2016" stroke-width="2"/>'
     # Benigna junto al fogón, con la escoba
-    b += fig(BENIGNA.replace('<path d="M-16 -104h56" stroke="#8a8a8a" stroke-width="4"/><ellipse cx="22" cy="-106" rx="26" ry="4" fill="#b8b8b8"/><path d="M8 -110v-8h6v8M28 -110v-10h5v10" fill="#e8e2d4"/>', '<path d="M-24 -134q-12 30 -6 60M24 -134q12 30 6 60" stroke="#1e1e24" stroke-width="11" fill="none" stroke-linecap="round"/><circle cx="-30" cy="-74" r="5" fill="url(#skin)"/><circle cx="30" cy="-74" r="5" fill="url(#skin)"/>'), 545, 470, 1.25)
+    b += fig(who='Benigna', g=BENIGNA.replace('<path d="M-16 -104h56" stroke="#8a8a8a" stroke-width="4"/><ellipse cx="22" cy="-106" rx="26" ry="4" fill="#b8b8b8"/><path d="M8 -110v-8h6v8M28 -110v-10h5v10" fill="#e8e2d4"/>', '<path d="M-24 -134q-12 30 -6 60M24 -134q12 30 6 60" stroke="#1e1e24" stroke-width="11" fill="none" stroke-linecap="round"/><circle cx="-30" cy="-74" r="5" fill="url(#skin)"/><circle cx="30" cy="-74" r="5" fill="url(#skin)"/>'), x=545, y=470, s=1.25)
     # la escoba, delante, en su mano derecha
-    b += '<path d="M566 300L600 452" stroke="#8a6a3a" stroke-width="5" stroke-linecap="round"/><path d="M588 448h26l10 30h-46z" fill="#b89a5a"/><path d="M584 462h34M582 470h38" stroke="#8a6a3a" stroke-width="1.5"/><circle cx="582" cy="377" r="6.5" fill="url(#skin)"/>'
+    b += '<g class="a-escoba"><path d="M566 300L600 452" stroke="#8a6a3a" stroke-width="5" stroke-linecap="round"/><path d="M588 448h26l10 30h-46z" fill="#b89a5a"/><path d="M584 462h34M582 470h38" stroke="#8a6a3a" stroke-width="1.5"/></g><circle cx="582" cy="377" r="6.5" fill="url(#skin)"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     return wrap(b)
 SVG['cocinaP'] = cocinaP()
@@ -898,12 +914,14 @@ def dispensario(doctor=True):
     b += '<path d="M700 470V110" stroke="#3a2a1a" stroke-width="7"/><path d="M670 120h60" stroke="#3a2a1a" stroke-width="5"/><path d="M680 470h40" stroke="#3a2a1a" stroke-width="8"/>'
     b += '<path d="M686 124q-30 10-34 60l-10 170h104l-10-170q-4-50-34-60z" fill="#3a4a2a"/><path d="M700 126v228" stroke="#2a3820" stroke-width="2"/><path d="M660 200q8 40 2 120M740 200q-8 40-2 120" stroke="#4a5a38" stroke-width="3" fill="none" opacity=".7"/>'
     b += '<g fill="#e8e6e0" opacity=".55"><circle cx="664" cy="240" r="1.6"/><circle cx="676" cy="300" r="1.4"/><circle cx="722" cy="260" r="1.6"/><circle cx="732" cy="320" r="1.3"/><circle cx="690" cy="340" r="1.5"/></g>'
-    b += '<g fill="#9ab8c8" opacity=".7"><path d="M660 356q2 6 0 8q-2-2 0-8z"/><path d="M700 356q2 6 0 8q-2-2 0-8z"/><path d="M736 356q2 6 0 8q-2-2 0-8z"/></g><ellipse cx="700" cy="470" rx="34" ry="4" fill="#5a6a72" opacity=".5"/>'
+    b += ''.join(f'<g class="a-gota" style="animation-delay:-{d}s"><path d="M{x} 356q2 6 0 8q-2-2 0-8z" fill="#9ab8c8" opacity=".8"/></g>' for x, d in ((660, 0), (700, 1.1), (736, 2.0)))
+    b += '<ellipse cx="700" cy="470" rx="34" ry="4" fill="#5a6a72" opacity=".5"/>'
     # suelo
     b += '<rect y="350" width="800" height="150" fill="#3a3a36"/>'
     for x in range(0, 900, 60): b += f'<path d="M{x} 350l-60 150" stroke="#2e2e2a" stroke-width="2"/>'
     # doctor
-    if doctor: b += fig(SALAZAR_D, 430, 545, 1.9)
+    if doctor: b += fig(SALAZAR_D, 430, 545, 1.9, cls='docG')
+    b += f'<g class="chaval" opacity="0">{fig(TXOMIN, 770, 330, 1.5)}</g>'
     # mostrador
     b += '<rect x="250" y="440" width="340" height="14" fill="#5a4a3a"/><rect x="260" y="454" width="320" height="46" fill="#4a3a2a"/><path d="M260 480h320" stroke="#3a2c1e" stroke-width="3"/>'
     b += '<path d="M300 440v-26h4v26M290 414h24M292 414l-6 12h16zM312 414l-6 12h16z" stroke="#c9a24a" stroke-width="2" fill="#c9a24a" opacity=".85"/>'
@@ -927,7 +945,7 @@ def armario():
     b += '<ellipse class="frSel" cx="0" cy="356" rx="44" ry="10" fill="#ffd27a" opacity="0"/>'
     for k, (nom, dosis) in enumerate(FRASCOS):
         c = FR_COL[k]
-        b += f'<g class="fr" data-k="{k}" transform="translate({140+k*92} 0)">'
+        b += f'<g class="fr" data-k="{k}" style="transform:translate({140+k*92}px,0px)">'
         b += f'<rect x="-30" y="232" width="60" height="124" rx="10" fill="{c}" opacity=".92"/><rect x="-14" y="212" width="28" height="22" fill="{c}"/><rect x="-17" y="200" width="34" height="14" rx="3" fill="#2a2018"/>'
         b += f'<path d="M-22 244v100" stroke="#fff" stroke-width="5" opacity=".2"/>'
         b += f'<rect x="-27" y="262" width="54" height="66" fill="#efe6d0"/><rect x="-27" y="262" width="54" height="66" fill="none" stroke="#8a6a2a" stroke-width="1.2"/>'
