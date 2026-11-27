@@ -129,10 +129,10 @@ DAYS[1]=[
     await bubble('Miro a Aitor. Aitor mira al suelo.',2600);
     await pista('verja','La verja del faro','El candado está abierto, no forzado. Quien lo abrió tenía la llave. Y la llave la tiene Aitor.');faroCheck()}},
   {id:'doctor',tool:'mano',x:448,y:340,r:72,once:false,act:async()=>{const f=D(1).flags;
-    if(!f.informe){await talk('Dr. Salazar','¡Vaya! Usted debe de ser la famosa argentina. Doctor Ramón Salazar, para servirla. Mi querida colega aficionada…');
+    if(!f.informe){await talk('Dr. Salazar','¡Vaya! Usted debe de ser la famosa argentina. Doctor Ramón Salazar, para servirla. Mi querida detective…');
       await talk('Dr. Salazar','(Saca un papel del maletín y lo lee en voz alta.) «Suicidio. Muerte por la caída, hacia las tres de la madrugada.» Pobre Julián. Estaba hundido.');
       await talk('Dr. Salazar','Si necesita cualquier cosa, el dispensario del puerto está siempre abierto. Para usted, también.');endTalk();
-      f.informe=1;save();persona('Dr. Salazar','Médico del dispensario del puerto. Muy amable conmigo: me llama «mi querida colega aficionada».');
+      f.informe=1;save();persona('Dr. Salazar','Médico del dispensario del puerto. Muy amable conmigo: me llama «mi querida detective».');
       await pista('informe','El informe del doctor','«Suicidio. Muerte por la caída, hacia las tres de la madrugada.» Firmado: Dr. R. Salazar.');faroCheck()}
     else{await talk('Dr. Salazar','No se canse, querida. A veces las cosas son exactamente lo que parecen.');endTalk()}}},
   {id:'comisario',tool:'mano',x:532,y:300,r:95,once:false,act:async()=>{await talk('Comisario Ibarra','Estaba arruinado. Se tiró. Caso cerrado antes del almuerzo.');endTalk();persona('Comisario Ibarra','Quiere cerrar el caso como suicidio «antes del almuerzo».')}},

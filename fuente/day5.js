@@ -89,7 +89,7 @@ DAYS[5]=[
  spots:[
   {id:'salazar',tool:'mano',x:430,y:360,r:95,once:false,when:()=>!d5().solo||d5().vuelta,act:async()=>{const f=d5();
     if(f.vuelta){await talk('Dr. Salazar','¿Algo más, querida? Si es la tos, pásese el jueves.');endTalk();return}
-    await talk('Dr. Salazar','¡Mi querida colega aficionada! Pase, pase. ¿Viene a que le mire esa tos, o a hacerme preguntas?');
+    await talk('Dr. Salazar','¡Mi querida detective! Pase, pase. ¿Viene a que le mire esa tos, o a hacerme preguntas?');
     await talk('Candela','Preguntas. En el despacho de Don Julián encontré una nota: «Esta noche se acaba todo. Que Dios me perdone».');
     await talk('Dr. Salazar','(Se quita las gafas y las limpia despacio.) No me sorprende. Julián estaba hundido, Candela. La fábrica, el hijo, las deudas… Un hombre puede cargar con mucho. Hasta que no puede.');
     await choose(null,null,['«Benigna dice que usted le traía medicinas.»','«¿Lo atendía usted a menudo?»']);
