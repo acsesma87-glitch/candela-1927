@@ -9,7 +9,7 @@ async function pillada(){const f=d4();f.pillada=1;save();await sleep(600);swapSv
   if(c===1)await talk('Doña Leonor','(Se pone pálida un instante. Solo un instante.) Mi marido era un cobarde. Y los cobardes se tiran desde las rocas.');
   if(c===2){await talk('Doña Leonor','(Mira el secreter abierto. Le tiembla la mano, apenas.) Lo que yo haga de noche es asunto mío y de Dios. De nadie más.');persona('Doña Leonor','Al enseñarle que salió esa noche, no lo niega: «es asunto mío y de Dios».')}
   await talk('Doña Leonor','¡Benigna! Acompañe a la señorita a la puerta. Y que el sereno se vaya con ella.');endTalk();
-  nar('Fuera. Bajo la lluvia, con Aitor, en la puerta del palacete. Pero no me voy con las manos vacías.');narBtn('Volver a casa',()=>goScene(5))}
+  nar('Fuera. Bajo la lluvia, con Aitor, en la puerta del palacete. Pero no me voy con las manos vacías.');narBtn('Volver a casa',()=>{narSigue=true;goScene(5)})}
 DAYS[4]=[
 // ===== Periódico =====
 {svg:SVG.periodico4,dark:0,tools:['mano','linterna','lupa'],cartel:'DOMINGO<br>4 DE DICIEMBRE DE 1927',
@@ -22,7 +22,7 @@ DAYS[4]=[
   {id:'p4marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a las 3:30.»',3000)}},
  ],
  enter:async()=>{nar('Domingo. Aitor se ha puesto la chaqueta buena. «A un velatorio de los Arrieta no se va de sereno», dice.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
-   narBtn('Ir al palacete',async()=>{nar('El palacete de los Arrieta, en lo alto. Medio barrio hace cola para dar el pésame. Unos por respeto, otros por curiosidad.');await sleep(5000);goScene(1)})}},
+   narBtn('Ir al palacete',async()=>{narPaso('El palacete de los Arrieta, en lo alto. Medio barrio hace cola para dar el pésame. Unos por respeto, otros por curiosidad.');await sleep(5000);goScene(1)})}},
 
 // ===== El salón (velatorio) =====
 {svg:SVG.salon,dark:.25,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>EL PALACETE',
@@ -64,7 +64,7 @@ DAYS[4]=[
   {id:'puertaDesp',tool:'mano',x:210,y:230,r:60,once:false,act:async()=>{const f=d4();
     if(!f.distr){await bubble('Doña Leonor no le quita ojo a la puerta del despacho. Necesito que alguien la distraiga.',4200);return}goScene(2)}},
  ],
- enter:async()=>{const f=d4();if(f.pillada){nar('Ya me han echado. Mejor no tentar a la suerte.');narBtn('Volver a casa',()=>goScene(5));return}
+ enter:async()=>{const f=d4();if(f.pillada){nar('Ya me han echado. Mejor no tentar a la suerte.');narBtn('Volver a casa',()=>{narSigue=true;goScene(5)});return}
    if(f.distr)swapSvg(SVG.salonC);
    if(!f.salon){f.salon=1;save();nar('Velas, terciopelo y retratos de antepasados con cara de pocos amigos. Toda la familia Arrieta junta. Y ninguno llora.')}
    else nar(f.distr?'El salón sigue revuelto por lo de la bandeja. La puerta del despacho está a la izquierda.':'El salón huele a cera y a flores. Doña Leonor vigila.')}},
@@ -80,7 +80,7 @@ DAYS[4]=[
   {id:'secreterVer',tool:'mano',x:640,y:196,r:80,once:false,act:async()=>{goScene(4)}},
  ],
  enter:async()=>{const f=d4();
-   if(f.pillada){swapSvg(SVG.despachoL);nar('Doña Leonor me ha pillado. Toca irse.');narBtn('Volver a casa',()=>goScene(5));return}
+   if(f.pillada){swapSvg(SVG.despachoL);nar('Doña Leonor me ha pillado. Toca irse.');narBtn('Volver a casa',()=>{narSigue=true;goScene(5)});return}
    nar(f.desp?'El despacho de Don Julián, a oscuras. Rápido.':'El despacho de Don Julián. Huele a tabaco frío. Tengo poco tiempo.<br><br><i>El escritorio, el retrato, el secreter…</i>');f.desp=1;save()},
  check:catch4},
 

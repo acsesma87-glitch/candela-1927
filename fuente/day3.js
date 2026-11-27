@@ -11,7 +11,7 @@ DAYS[3]=[
   {id:'p3marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a las 2:50.» Cada noche, un poco más tarde.',3600)}},
  ],
  enter:async()=>{nar('Sábado. Llueve sobre Altamar. Aitor ha traído churros y el periódico, por este orden.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');
-   narBtn('Ir a El Ancla',async()=>{nar('Si Mateo no estuvo en El Ancla hasta el cierre, el tabernero lo sabrá. En Altamar, los taberneros lo saben todo.');await sleep(5000);goScene(1)})}},
+   narBtn('Ir a El Ancla',async()=>{narPaso('Si Mateo no estuvo en El Ancla hasta el cierre, el tabernero lo sabrá. En Altamar, los taberneros lo saben todo.');await sleep(5000);goScene(1)})}},
 
 // ===== Taberna El Ancla =====
 {svg:SVG.taberna,dark:.3,cartel:'ALTAMAR<br>TABERNA EL ANCLA',
@@ -80,5 +80,5 @@ DAYS[3]=[
    await sleep(5000);narAdd('¿Quién es C.? ¿Qué papeles? Y en el despacho de Don Julián debe de haber respuestas…<br><br>Mañana, al palacete de los Arrieta.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 3 resuelto. Mañana, al palacete de los Arrieta.')})}},
 ];
-function fin3(){nar('Mateo se fue a medianoche a ver a alguien. A «C.». Ya tengo bastante por hoy.');narBtn('Volver a casa',()=>goScene(4))}
+function fin3(){nar('Mateo se fue a medianoche a ver a alguien. A «C.». Ya tengo bastante por hoy.');narBtn('Volver a casa',()=>{narSigue=true;goScene(4)})}
 FACES['Paco']=FACE_PACO;FACES['Un marinero']=FACE_EST;

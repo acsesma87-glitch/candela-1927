@@ -13,7 +13,7 @@ DAYS[2]=[
   {id:'p2ancla',tool:'lupa',x:243,y:455,w:240,h:30,act:async()=>{await bubble('Sidrería El Ancla: «se fía a los huelguistas». Ahí debe de saberse todo lo que pasa en el puerto.',4000)}},
   {id:'p2marea',tool:'lupa',x:539,y:467,w:200,h:10,act:async()=>{await bubble('«Pleamar a las 2:10.» Cada día cambia un poco. Lo apunto, por si acaso.',3600)}},
  ],
- enter:async()=>{nar('Aitor deja el periódico encima de la mesa sin decir nada. Ya sale en portada.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');narBtn('Ir al muelle',async()=>{nar('Los estibadores se juntan en el muelle a mediodía. Si alguien sabe qué pasa en el puerto de noche, son ellos.');await sleep(5000);next()})}},
+ enter:async()=>{nar('Aitor deja el periódico encima de la mesa sin decir nada. Ya sale en portada.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');narBtn('Ir al muelle',async()=>{narPaso('Los estibadores se juntan en el muelle a mediodía. Si alguien sabe qué pasa en el puerto de noche, son ellos.');await sleep(5000);next()})}},
 
 // ===== El muelle =====
 {svg:SVG.muelle,dark:.22,cartel:'ALTAMAR<br>EL MUELLE',
@@ -43,7 +43,7 @@ DAYS[2]=[
       await talk('Mateo «el Rubio»','A un sitio que no es asunto suyo. Y desde luego no al faro.');endTalk();
       f.mateoConf=1;save();await pista('mateoMiente','Mateo mintió','No estuvo en El Ancla hasta el cierre: dejó la guardia de amarras a medianoche y no quiere decir adónde fue.');
       persona('Mateo «el Rubio»','Mintió: dejó la guardia a medianoche y se niega a decir adónde fue.');
-      nar('Mateo mintió. Y esconde algo. Lo que no sé es si es un crimen… o otra cosa.');narBtn('Volver a casa',()=>goScene(3))}
+      nar('Mateo mintió. Y esconde algo. Lo que no sé es si es un crimen… o otra cosa.');narBtn('Volver a casa',()=>{narSigue=true;goScene(3)})}
     else if(pid==='botas'){await talk('Mateo «el Rubio»','¿Botas claveteadas? Mire a su alrededor, señorita. Todo el puerto lleva las mismas.');endTalk()}
     else{await talk('Mateo «el Rubio»','No sé qué tiene que ver eso conmigo. No tengo nada más que decirle.');endTalk()}}},
   {id:'botas',tool:'lupa',x:592,y:468,w:64,h:16,act:async()=>{await bubble('Las botas de Mateo: suela gruesa, claveteada. Como las huellas de las rocas del faro.',3800);
@@ -56,7 +56,7 @@ DAYS[2]=[
  ],
  laika:()=>{const f=D(2).flags;if(!f.sardina){f.sardina=1;save();return{x:76,t:'Laika ha robado una sardina de una caja. El pescadero no la ha visto. Tú sí.'}}return null},
  enter:async()=>{const f=D(2).flags;
-   if(f.mateoConf){nar('Mateo mintió. Y esconde algo.');narBtn('Volver a casa',()=>goScene(3));return}
+   if(f.mateoConf){nar('Mateo mintió. Y esconde algo.');narBtn('Volver a casa',()=>{narSigue=true;goScene(3)});return}
    if(!f.muelle){f.muelle=1;save();nar('Grúas paradas, barcos sin descargar y un montón de hombres con los brazos cruzados. En el centro, un rubio con los tirantes caídos: Mateo, el capataz.')}
    else nar('El muelle sigue en silencio. La pizarra de la caseta sigue ahí.')}},
 

@@ -29,7 +29,7 @@ DAYS[1]=[
     persona('Aitor','El sereno de Altamar. Me esperaba en el andén del Topo, con el farol todavía encendido.');
     persona('Aitor','Dice que Altamar «tiene su encanto… y sus cosas raras».');
     nar('Aitor me coge la maleta antes de que pueda decir nada. Laika lo huele de arriba abajo y decide que aprueba.');
-    narBtn('Ir a casa',async()=>{nar('Bajamos hacia el puerto. Las calles se estrechan, huele a sardina y a carbón, y la gente saluda a Aitor por su nombre…');await sleep(5000);next()})}},
+    narBtn('Ir a casa',async()=>{narPaso('Bajamos hacia el puerto. Las calles se estrechan, huele a sardina y a carbón, y la gente saluda a Aitor por su nombre…');await sleep(5000);next()})}},
   {id:'chapa',tool:'lupa',x:690,y:130,act:async()=>{await bubble('En la chapa de la gorra: «SERENO · 7». El siete. Me gusta.',3800)}},
   {id:'letrero',tool:'lupa',x:575,y:142,act:async()=>{await bubble('«TOPO · Frontera – San Sebastián». Un tren que va por la calle como un tranvía. En La Plata no me lo creerían.',4400)}},
  ],
@@ -178,7 +178,7 @@ DAYS[1]=[
    persona('Comisario Ibarra','Conoce a Aitor desde hace veinte años. Me da hasta Nochebuena, sin escándalos y contándole a él lo que encuentre.');
    S.trato=true;save();$('#dayLbl').innerHTML=`Día 1 · 1 dic<b id="cdLbl">${countdown(1)}</b>`;
    persona('Doña Leonor','La viuda. De luto, sin una lágrima. Acusa a Aitor delante de todos y amenaza con que lo echen.');
-   nar('Hasta Nochebuena. Veintitrés días para encontrar al culpable… y para que Aitor no cargue con esto.');narBtn('Volver a casa',next)}},
+   nar('Hasta Nochebuena. Veintitrés días para encontrar al culpable… y para que Aitor no cargue con esto.');narBtn('Volver a casa',()=>{narSigue=true;next()})}},
 
 // ===== Escena 6 · Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
@@ -200,7 +200,7 @@ async function faroCheck(){const f=D(1).flags;if(f.leonor||faroN()<3)return;f.le
   swapSvg(SVG.faroL);nar('Un motor. Un coche negro se para junto al camino del faro. Baja una mujer de luto, con velo y abrigo de pieles: Doña Leonor, la viuda.<br><br><i>Cuando tengas suficiente, habla con ella.</i>')}
 function luzVerde(){const t0=performance.now(),D=7000;const f=t=>{const p=Math.min(1,(t-t0)/D);
   document.querySelectorAll('.verde').forEach(c=>{c.setAttribute('cx',572+118*p);c.setAttribute('opacity',p<.15?p/.15:p>.8?(1-p)/.2:1)});if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
-async function alFaro(){nar('Corremos por el muelle. La niebla se traga las farolas una a una. Al fondo, la luz del faro gira, como si nada.');await sleep(5000);next()}
+async function alFaro(){narPaso('Corremos por el muelle. La niebla se traga las farolas una a una. Al fondo, la luz del faro gira, como si nada.');await sleep(5000);next()}
 async function knock(){await sleep(600);AU.sfx('toc');await shake();await sleep(250);await shake();
   nar('Tres golpes en la puerta. Fuertes.');await sleep(900);
   await talk('Txomin','¡Aitor! ¡Aitor! ¡En las rocas del faro! ¡Don Julián Arrieta!');
