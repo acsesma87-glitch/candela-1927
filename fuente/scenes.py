@@ -1141,7 +1141,7 @@ def conservera():
 SVG['conservera'] = conservera()
 
 # las cajas de latas (puzle): tablero 6x5, casillas de 66
-CAJAS = [(2, 1, 2, False), (0, 2, 3, False), (3, 3, 2, False), (0, 0, 2, True), (1, 4, 2, True), (0, 5, 2, True), (4, 2, 2, False), (1, 1, 2, False), (5, 2, 2, False), (4, 5, 2, True), (4, 0, 2, True), (3, 1, 2, True), (2, 0, 2, True), (1, 3, 2, True)]
+CAJAS = [(2, 0, 2, False), (4, 4, 2, False), (5, 1, 2, False), (0, 5, 2, True), (1, 0, 3, False), (1, 3, 2, True), (0, 2, 2, False), (4, 0, 2, True), (4, 2, 2, False), (2, 2, 2, True), (2, 5, 2, True), (3, 0, 2, False)]
 def cajas():
     b = '<rect width="800" height="500" fill="#2e2e2a"/>'
     for x in range(0, 800, 40): b += f'<path d="M{x} 0V500" stroke="#262622" stroke-width="2"/>'
