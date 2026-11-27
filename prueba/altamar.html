@@ -573,6 +573,8 @@ requestAnimationFrame(loop);
 
 // ================= narración, diálogos, pistas =================
 function nar(t){const n=$('#nar');n.innerHTML=t;$('#acts').innerHTML='';n.scrollTop=0}
+// añade una nota debajo de la anterior, sin borrarla
+function narAdd(t){const n=$('#nar'),d=document.createElement('div');d.style.cssText='margin-top:14px;padding-top:12px;border-top:1px solid rgba(201,162,74,.25);opacity:0;transition:opacity .7s';d.innerHTML=t;n.appendChild(d);requestAnimationFrame(()=>{d.style.opacity=1;n.scrollTo({top:n.scrollHeight,behavior:'smooth'})})}
 function narBtn(t,go){const a=$('#acts');a.innerHTML='';const b=document.createElement('button');b.className='go';b.textContent=t;b.onclick=()=>{b.remove();go()};a.appendChild(b)}
 const FACES={};
 async function shake(){AU.sfx('golpe');st.classList.remove('shake');void st.offsetWidth;st.classList.add('shake');await sleep(520);st.classList.remove('shake')}
@@ -864,7 +866,7 @@ DAYS[1]=[
  enter:async()=>{const ids=['informe','ficha','bajos','huellas','verja','ampolla'],falta=ids.filter(i=>!S.pistas.find(p=>p.id===i)).length;
    nar(`La cocina a oscuras, solo con las brasas. Laika y Eki duermen enroscadas juntas junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===1).length}.`+(falta?`<br><i>Algo por descubrir en el faro…</i>`:''));
    await sleep(5000);luzVerde();await bubble('Por la ventana, un punto de luz verde cruza la bahía despacio… y se apaga.',4200);
-   nar('Lo he visto antes. En boca de un piloto, sobre Vigo…<br><br>Mañana, al muelle.');
+   narAdd('Lo he visto antes. En boca de un piloto, sobre Vigo…<br><br>Mañana, al muelle.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 1 resuelto. Mañana, al muelle.')})}},
 ];
 FACES['Aitor']=FACE_AITOR;FACES['Candela']=FACE_CANDELA;FACES['Txomin']=FACE_TXOMIN;FACES['Comisario Ibarra']=FACE_IBARRA;FACES['Dr. Salazar']=FACE_SALAZAR;FACES['El guardia']=FACE_GUARDIA;FACES['Doña Leonor']=FACE_LEONOR;
@@ -970,7 +972,7 @@ DAYS[2]=[
 // ===== Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
  enter:async()=>{nar(`Aitor ronca en el sillón. Laika y Eki, junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===2).length}.<br>Mateo mintió… pero, ¿mintió por miedo, o por algo peor?`);
-   await sleep(5000);nar('Paco, el de El Ancla, dice Mateo que lo vio hasta el cierre. Habrá que preguntarle.<br><br>Mañana, a la taberna El Ancla.');
+   await sleep(5000);narAdd('Paco, el de El Ancla, dice Mateo que lo vio hasta el cierre. Habrá que preguntarle.<br><br>Mañana, a la taberna El Ancla.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 2 resuelto. Mañana, a la taberna El Ancla.')})}},
 ];
 FACES['Mateo «el Rubio»']=FACE_MATEO;FACES['Un estibador']=FACE_EST;
@@ -1054,7 +1056,7 @@ DAYS[3]=[
 // ===== Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
  enter:async()=>{nar(`Llueve sobre los tejados del puerto. Laika y Eki, junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===3).length}.<br>Mateo se fue a medianoche a ver a alguien. A «C.».`);
-   await sleep(5000);nar('¿Quién es C.? ¿Qué papeles? Y en el despacho de Don Julián debe de haber respuestas…<br><br>Mañana, al palacete de los Arrieta.');
+   await sleep(5000);narAdd('¿Quién es C.? ¿Qué papeles? Y en el despacho de Don Julián debe de haber respuestas…<br><br>Mañana, al palacete de los Arrieta.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 3 resuelto. Mañana, al palacete de los Arrieta.')})}},
 ];
 function fin3(){nar('Mateo se fue a medianoche a ver a alguien. A «C.». Ya tengo bastante por hoy.');narBtn('Volver a casa',()=>goScene(4))}
@@ -1178,7 +1180,7 @@ DAYS[4]=[
 // ===== Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
  enter:async()=>{nar(`Aitor se seca el pelo junto al fogón. Laika y Eki duermen.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===4).length}.<br>Doña Leonor mintió. Y Don Julián escribió algo que parece una despedida.`);
-   await sleep(5000);nar('¿Y si de verdad se tiró? Mañana, a las once, la puerta de servicio. Benigna tiene algo que contarme… y yo tengo una carta para ella.');
+   await sleep(5000);narAdd('¿Y si de verdad se tiró? Mañana, a las once, la puerta de servicio. Benigna tiene algo que contarme… y yo tengo una carta para ella.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 4 resuelto. Mañana, la cocina del palacete.')})}},
 ];
 FACES['Íñigo Arrieta']=FACE_INIGO;FACES['Clara Arrieta']=FACE_CLARA;FACES['Benigna']=FACE_BENIGNA;
@@ -1186,7 +1188,7 @@ FACES['Íñigo Arrieta']=FACE_INIGO;FACES['Clara Arrieta']=FACE_CLARA;FACES['Ben
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 54';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 55';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});

@@ -185,7 +185,7 @@ DAYS[1]=[
  enter:async()=>{const ids=['informe','ficha','bajos','huellas','verja','ampolla'],falta=ids.filter(i=>!S.pistas.find(p=>p.id===i)).length;
    nar(`La cocina a oscuras, solo con las brasas. Laika y Eki duermen enroscadas juntas junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===1).length}.`+(falta?`<br><i>Algo por descubrir en el faro…</i>`:''));
    await sleep(5000);luzVerde();await bubble('Por la ventana, un punto de luz verde cruza la bahía despacio… y se apaga.',4200);
-   nar('Lo he visto antes. En boca de un piloto, sobre Vigo…<br><br>Mañana, al muelle.');
+   narAdd('Lo he visto antes. En boca de un piloto, sobre Vigo…<br><br>Mañana, al muelle.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 1 resuelto. Mañana, al muelle.')})}},
 ];
 FACES['Aitor']=FACE_AITOR;FACES['Candela']=FACE_CANDELA;FACES['Txomin']=FACE_TXOMIN;FACES['Comisario Ibarra']=FACE_IBARRA;FACES['Dr. Salazar']=FACE_SALAZAR;FACES['El guardia']=FACE_GUARDIA;FACES['Doña Leonor']=FACE_LEONOR;

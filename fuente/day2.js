@@ -80,7 +80,7 @@ DAYS[2]=[
 // ===== Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
  enter:async()=>{nar(`Aitor ronca en el sillón. Laika y Eki, junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===2).length}.<br>Mateo mintió… pero, ¿mintió por miedo, o por algo peor?`);
-   await sleep(5000);nar('Paco, el de El Ancla, dice Mateo que lo vio hasta el cierre. Habrá que preguntarle.<br><br>Mañana, a la taberna El Ancla.');
+   await sleep(5000);narAdd('Paco, el de El Ancla, dice Mateo que lo vio hasta el cierre. Habrá que preguntarle.<br><br>Mañana, a la taberna El Ancla.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 2 resuelto. Mañana, a la taberna El Ancla.')})}},
 ];
 FACES['Mateo «el Rubio»']=FACE_MATEO;FACES['Un estibador']=FACE_EST;

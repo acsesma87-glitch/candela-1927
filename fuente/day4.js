@@ -116,7 +116,7 @@ DAYS[4]=[
 // ===== Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
  enter:async()=>{nar(`Aitor se seca el pelo junto al fogón. Laika y Eki duermen.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===4).length}.<br>Doña Leonor mintió. Y Don Julián escribió algo que parece una despedida.`);
-   await sleep(5000);nar('¿Y si de verdad se tiró? Mañana, a las once, la puerta de servicio. Benigna tiene algo que contarme… y yo tengo una carta para ella.');
+   await sleep(5000);narAdd('¿Y si de verdad se tiró? Mañana, a las once, la puerta de servicio. Benigna tiene algo que contarme… y yo tengo una carta para ella.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 4 resuelto. Mañana, la cocina del palacete.')})}},
 ];
 FACES['Íñigo Arrieta']=FACE_INIGO;FACES['Clara Arrieta']=FACE_CLARA;FACES['Benigna']=FACE_BENIGNA;

@@ -77,7 +77,7 @@ DAYS[3]=[
 // ===== Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
  enter:async()=>{nar(`Llueve sobre los tejados del puerto. Laika y Eki, junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===3).length}.<br>Mateo se fue a medianoche a ver a alguien. A «C.».`);
-   await sleep(5000);nar('¿Quién es C.? ¿Qué papeles? Y en el despacho de Don Julián debe de haber respuestas…<br><br>Mañana, al palacete de los Arrieta.');
+   await sleep(5000);narAdd('¿Quién es C.? ¿Qué papeles? Y en el despacho de Don Julián debe de haber respuestas…<br><br>Mañana, al palacete de los Arrieta.');
    narBtn('Cerrar el día',()=>{endDay();SC=null;drawCal();show('cal');bubCal('Día 3 resuelto. Mañana, al palacete de los Arrieta.')})}},
 ];
 function fin3(){nar('Mateo se fue a medianoche a ver a alguien. A «C.». Ya tengo bastante por hoy.');narBtn('Volver a casa',()=>goScene(4))}
