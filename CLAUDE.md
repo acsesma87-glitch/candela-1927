@@ -22,3 +22,7 @@ Solo cuando el usuario lo pida: copiar los archivos de `prueba/` a la raíz y su
 - `fuente/dayN.js`: el guion de cada día. `fuente/scenes.py`: los dibujos (SVG) de las escenas y personajes.
 - Si se edita `prueba/altamar.html` directamente, el siguiente `build.py` borra esos cambios. Hay que cambiar `fuente/` y volver a generar.
 - Al cambiar algo en `prueba/`, subir el número de «versión de prueba N» en `fuente/engine.html` y el nombre de caché en `prueba/sw.js`.
+
+## Lupa y linterna: BLINDADAS
+- El manejo de la lupa y la linterna (cómo se mueven con el dedo, el tamaño, lo que se ve dentro del cristal, que vuelvan al centro al cambiar de herramienta, cómo detectan las pistas) funciona bien y NO se toca.
+- Para cambiar cualquier cosa de su manejo hay que preguntárselo expresamente al usuario antes.
