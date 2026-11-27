@@ -422,7 +422,7 @@ const AU=(()=>{
 // qué música suena en cada pantalla (las de puzle o de detalle siguen con la de antes, más baja)
 // Música de cada escena (grabaciones de dominio público / CC, en prueba/musica). Las escenas que no están aquí
 // (puzles, primeros planos, el despacho) siguen con la música anterior, más baja.
-const MUSICA={topo:'estacion',cocina:'casa',portal:'faro',faro:'faro',faroL:'faro',trato:'faro',noche:'noche',muelle:'muelle',taberna:'taberna',salon:'velatorio',salonC:'velatorio',salonCa:'velatorio',cocinaP:'velatorio',dispensario:'muelle',dispensarioV:'muelle',cocinaN:'noche',despachoN:'noche',calle:'noche',cocinaMesa:'casa'};
+const MUSICA={topo:'estacion',cocina:'casa',portal:'faro',faro:'faro',faroL:'faro',trato:'faro',noche:'noche',muelle:'muelle',taberna:'taberna',salon:'velatorio',salonC:'velatorio',salonCa:'velatorio',cocinaP:'velatorio',dispensario:'muelle',dispensarioV:'muelle',cocinaN:'noche',despachoN:'noche',calle:'noche',cocinaMesa:'casa',conservera:'muelle'};
 Object.keys(SVG).filter(k=>k.startsWith('periodico')).forEach(k=>MUSICA[k]='periodico');
 const svgKey=svg=>Object.keys(SVG).find(k=>SVG[k]===svg);
 function musicaEscena(sc){const k=svgKey(sc.svg);if(k&&k.startsWith('periodico'))AU.sfx('papel');if(k&&MUSICA[k]){AU.duck(false);AU.music(MUSICA[k]);return}
@@ -705,7 +705,7 @@ function polvo(x,y){const k=K();for(let i=0;i<7;i++){const d=document.createElem
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 94';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 95';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});

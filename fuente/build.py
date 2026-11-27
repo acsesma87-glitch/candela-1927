@@ -7,7 +7,7 @@ from scenes import SVG, defs, AITOR, CANDELA
 eng = open(os.path.join(D, 'engine.html')).read()
 laika = open(os.path.join(D, 'laika.svgfrag')).read()
 eki = open(os.path.join(D, 'eki.svgfrag')).read()
-day1 = open(os.path.join(D, 'day1.js')).read() + '\n' + open(os.path.join(D, 'day2.js')).read() + '\n' + open(os.path.join(D, 'day3.js')).read() + '\n' + open(os.path.join(D, 'day4.js')).read() + '\n' + open(os.path.join(D, 'day5.js')).read() + '\n' + open(os.path.join(D, 'day6.js')).read()
+day1 = open(os.path.join(D, 'day1.js')).read() + '\n' + open(os.path.join(D, 'day2.js')).read() + '\n' + open(os.path.join(D, 'day3.js')).read() + '\n' + open(os.path.join(D, 'day4.js')).read() + '\n' + open(os.path.join(D, 'day5.js')).read() + '\n' + open(os.path.join(D, 'day6.js')).read() + '\n' + open(os.path.join(D, 'day7.js')).read()
 
 def face(vb, body, bg='#2a2520'):
     x, y, w, h = vb
@@ -26,6 +26,8 @@ faces = {
   'FACE_CLARA': face((-24, -204, 48, 48), scenes.CLARA),
   'FACE_BENIGNA': face((-24, -196, 48, 48), scenes.BENIGNA),
   'FACE_MATEO': face((-30, -228, 60, 60), scenes.MATEO),
+  'FACE_REMEDIOS': face((-26, -210, 52, 52), scenes.REMEDIOS),
+  'FACE_OBRERA': face((-22, -176, 44, 44), scenes.OBRERA.replace('COL','#2e3a46').replace('PAN','#d8c070')),
   'FACE_EST': face((-22, -174, 44, 44), scenes.ESTIBADOR.replace('COL2','#34404a').replace('COL','#3a4652')),
 }
 consts = ''.join(f'const {k}={json.dumps(v)};\n' for k, v in faces.items())

@@ -1078,6 +1078,136 @@ def calle():
     return wrap(b)
 SVG['calle'] = calle()
 
+# ======================= DÍA 7 =======================
+OBRERA = """<g>
+ <ellipse cx="0" cy="0" rx="28" ry="5" fill="#000" opacity=".4"/>
+ <path d="M-24 0q2-96 24-136q22 40 24 136z" fill="COL"/>
+ <path d="M-16 -110h32l5 106h-42z" fill="#d8d2c2"/>
+ <path d="M-20 -124q-12 26 -2 52M20 -124q12 26 2 52" stroke="COL" stroke-width="10" fill="none" stroke-linecap="round"/><circle cx="-22" cy="-70" r="4.5" fill="url(#skin)"/><circle cx="22" cy="-70" r="4.5" fill="url(#skin)"/>
+ <rect x="-4" y="-146" width="8" height="10" fill="#c9a084"/>
+ <ellipse cx="0" cy="-156" rx="11" ry="13" fill="url(#skin)"/>
+ <path d="M-13 -158q0-16 13-16q13 0 13 16l2 8q-15-8-30 0z" fill="PAN"/>
+ <circle cx="-4" cy="-156" r="1.4" fill="#2a2018"/><circle cx="4" cy="-156" r="1.4" fill="#2a2018"/><path d="M-4 -148q4 2 8 0" stroke="#7a4f3f" stroke-width="1.2" fill="none"/>
+</g>"""
+def obrera(x, y, s, col, pan, flip=False, who=None):
+    return fig(OBRERA.replace('COL', col).replace('PAN', pan), x, y, s, flip, who=who)
+REMEDIOS = """<g>
+ <ellipse cx="0" cy="0" rx="32" ry="6" fill="#000" opacity=".45"/>
+ <path d="M-28 0q0-110 28-160q28 50 28 160z" fill="#1a1a1e"/>
+ <path d="M-22 -140q22-12 44 0" stroke="#2a2a30" stroke-width="12" fill="none"/>
+ <path d="M-24 -134q-10 30 -2 62M24 -134q10 30 2 62" stroke="#1a1a1e" stroke-width="11" fill="none" stroke-linecap="round"/><circle cx="-26" cy="-72" r="5" fill="url(#skin)"/><circle cx="26" cy="-72" r="5" fill="url(#skin)"/>
+ <path d="M26 -70v18" stroke="#8a7a5a" stroke-width="2"/><circle cx="26" cy="-50" r="4" fill="none" stroke="#c9a24a" stroke-width="1.6"/>
+ <rect x="-5" y="-170" width="10" height="12" fill="#c9a084"/>
+ <ellipse cx="0" cy="-182" rx="13" ry="15" fill="url(#skin)"/>
+ <path d="M-14 -186q2-16 14-16q12 0 14 16q-6-8-14-8t-14 8z" fill="#3a3a3a"/><circle cx="0" cy="-200" r="6" fill="#3a3a3a"/>
+ <circle cx="-5" cy="-183" r="1.6" fill="#2a2018"/><circle cx="5" cy="-183" r="1.6" fill="#2a2018"/><path d="M-6 -173h12" stroke="#6a3f2f" stroke-width="1.4"/>
+ <path d="M-9 -189l6 2M9 -189l-6 2" stroke="#2a2a2a" stroke-width="1.6"/>
+</g>"""
+G_LATAS = f'<g fill="{ink}">' + ''.join(f'<rect x="{60+c*30+r*15}" y="{76-r*18}" width="26" height="15" rx="3"/>' for r in range(4) for c in range(6) if c < 6-r) + '</g>'
+SVG['periodico7'] = diario('Miércoles, 7 de diciembre de 1927', 'LA VIUDA REABRE LA CONSERVERA; EL MUELLE SIGUE PARADO',
+  'Las mujeres vuelven a las latas', G_FABRICA,
+  ['Doña Leonor Arrieta reabrió ayer la conservera','con las mujeres del barrio. Los estibadores','siguen en huelga y no cargan ni una caja.','La máquina del accidente sigue parada','«hasta nueva orden».'],
+  'Latas que nadie carga', G_LATAS,
+  ['En el almacén se amontonan las cajas sin','embarcar. «Si no salen esta semana, se','pierde la campaña», dice la encargada,','Doña Remedios. Mateo «el Rubio» responde:','«Antes, que arreglen la máquina».'],
+  [('CAFÉ ROYAL', ['Calle del Farol. Esta noche, LOLA y sus «artistas».','Reservados discretos. Hasta el amanecer.']),
+   ('ULTRAMARINOS ZABALETA', ['Bacalao, aceite y velas. Se fía a las conserveras.'])],
+  'ECOS DEL BARRIO',
+  ['A la señorita argentina se la vio ayer de noche','cerca del palacete. Doña Puri no da crédito:','«¿A esas horas? ¿Y sola?». No iba sola: iba','con el sereno. Doña Puri, menos todavía.'],
+  'Viento sur. Cielo despejado. Pleamar a las 5:30.')
+
+def conservera():
+    b = '<rect width="800" height="500" fill="#3a3a36"/>'
+    b += '<rect width="800" height="330" fill="#5a5a52"/>'
+    for x in range(0, 800, 100): b += f'<path d="M{x} 0V330" stroke="#4a4a44" stroke-width="10"/>'
+    b += '<path d="M0 40h800" stroke="#3a3a34" stroke-width="12"/>'
+    for x in (120, 360, 600): b += f'<rect x="{x}" y="70" width="90" height="120" fill="#8a9a9a" opacity=".6"/><path d="M{x+45} 70v120M{x} 130h90" stroke="#4a4a44" stroke-width="4"/>'
+    # vapor de las calderas
+    b += '<g class="a-humo"><g filter="url(#b5)" opacity=".5"><ellipse cx="700" cy="220" rx="60" ry="40" fill="#e8e6e0"/><ellipse cx="660" cy="170" rx="40" ry="30" fill="#e8e6e0"/></g></g>'
+    b += '<rect x="650" y="230" width="110" height="110" fill="#2a2a2a"/><rect x="664" y="250" width="80" height="30" fill="#ff8a30" opacity=".6"/>'
+    # mesa larga de enlatar
+    b += '<rect y="330" width="800" height="170" fill="#4a4a44"/>'
+    b += '<rect x="120" y="360" width="460" height="16" fill="#7a6a52"/><rect x="130" y="376" width="12" height="100" fill="#5a4a36"/><rect x="560" y="376" width="12" height="100" fill="#5a4a36"/>'
+    for k in range(12): b += f'<rect x="{140+k*36}" y="{348-(k%3)*2}" width="18" height="12" rx="3" fill="#b8bcc0"/>'
+    b += '<ellipse cx="230" cy="358" rx="22" ry="5" fill="#9aa8b0"/><path d="M215 356l12-4l8 3" stroke="#6a7a82" stroke-width="2"/>'
+    # obreras y la encargada
+    b += obrera(210, 470, 1.15, '#4a3a44', '#a3271c')
+    b += obrera(330, 472, 1.12, '#2e3a46', '#d8c070', flip=True, who='La obrera charlatana')
+    b += obrera(470, 470, 1.15, '#3a4436', '#e8e2d4')
+    b += fig(REMEDIOS, 640, 482, 1.12, who='Doña Remedios')
+    # Aitor en la puerta
+    b += aitor(90, 480, .62)
+    b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    return wrap(b)
+SVG['conservera'] = conservera()
+
+# las cajas de latas (puzle): tablero 6x5, casillas de 66
+CAJAS = [(2, 0, 2, False), (1, 2, 2, False), (4, 3, 3, False), (2, 4, 2, True), (3, 2, 2, True), (2, 3, 2, True), (2, 5, 2, True), (0, 0, 2, True), (0, 4, 2, True)]
+def cajas():
+    b = '<rect width="800" height="500" fill="#2e2e2a"/>'
+    for x in range(0, 800, 40): b += f'<path d="M{x} 0V500" stroke="#262622" stroke-width="2"/>'
+    # la máquina, al fondo a la derecha
+    b += '<rect x="600" y="150" width="190" height="200" fill="#3a3e42"/><circle cx="690" cy="230" r="50" fill="#2a2c30" stroke="#5a5e62" stroke-width="6"/><path d="M640 300h100" stroke="#5a5e62" stroke-width="8"/>'
+    b += '<text x="695" y="140" text-anchor="middle" font-size="10" fill="#c9a24a" font-family="Georgia" letter-spacing="2">LA MÁQUINA</text>'
+    # suelo del tablero y salida
+    b += '<rect x="196" y="76" width="404" height="338" fill="#24241f" stroke="#5a4a36" stroke-width="4"/>'
+    for r in range(5):
+        for c in range(6): b += f'<rect x="{200+c*66}" y="{80+r*66}" width="64" height="64" fill="#2c2c27"/>'
+    b += '<path d="M600 212v66" stroke="#2c2c27" stroke-width="8"/><path d="M604 245h-14l8-8M590 245l8 8" stroke="#c9a24a" stroke-width="2" fill="none"/>'
+    for i, (r, c, l, v) in enumerate(CAJAS):
+        w, h = (64, l*66-2) if v else (l*66-2, 64)
+        if i == 0:
+            g = f'<rect width="{w}" height="{h}" rx="6" fill="#8a2a20" stroke="#4a1410" stroke-width="3"/><circle cx="20" cy="{h-6}" r="7" fill="#1a1a1a"/><circle cx="{w-20}" cy="{h-6}" r="7" fill="#1a1a1a"/><text x="{w/2}" y="{h/2+4}" text-anchor="middle" font-size="11" fill="#f0e0c0" font-family="Georgia">CARRETILLA</text>'
+        else:
+            g = f'<rect width="{w}" height="{h}" fill="#8a6a3e" stroke="#4a3418" stroke-width="3"/><path d="M4 4L{w-4} {h-4}M{w-4} 4L4 {h-4}" stroke="#6a4e2a" stroke-width="2"/>'
+            g += f'<rect x="{w/2-26}" y="{h/2-9}" width="52" height="18" fill="#c9b48e"/><text x="{w/2}" y="{h/2+4}" text-anchor="middle" font-size="7" fill="#2a1c0c" font-family="Georgia">ARRIETA</text>'
+        b += f'<g class="caja" data-i="{i}" style="transform:translate({200+c*66}px,{80+r*66}px)">{g}</g>'
+    b += '<rect width="800" height="500" fill="url(#vig)" opacity=".7"/>'
+    return wrap(b)
+SVG['cajas'] = cajas()
+
+def maquina():
+    b = '<rect width="800" height="500" fill="#262624"/>'
+    b += '<rect x="160" y="60" width="480" height="330" fill="#3a3e42" stroke="#1a1c1e" stroke-width="6"/>'
+    b += '<circle cx="330" cy="200" r="100" fill="#2a2c30" stroke="#5a5e62" stroke-width="10"/>'
+    for k in range(12):
+        import math
+        a = k*30
+        b += f'<path d="M{330+70*math.cos(math.radians(a)):.0f} {200+70*math.sin(math.radians(a)):.0f}L{330+100*math.cos(math.radians(a)):.0f} {200+100*math.sin(math.radians(a)):.0f}" stroke="#6a6e72" stroke-width="12"/>'
+    b += '<circle cx="330" cy="200" r="20" fill="#5a5e62"/>'
+    # donde iba la reja: agujeros de los tornillos, limpios
+    b += '<rect x="214" y="84" width="232" height="232" fill="none" stroke="#4a4e52" stroke-width="2" stroke-dasharray="6 6"/>'
+    for x, y in ((214, 84), (446, 84), (214, 316), (446, 316)): b += f'<circle cx="{x}" cy="{y}" r="6" fill="#141414"/><circle cx="{x}" cy="{y}" r="9" fill="none" stroke="#c9a24a" stroke-width="1.2" opacity=".6"/>'
+    b += '<rect x="500" y="110" width="100" height="160" fill="#2e3236"/><circle cx="550" cy="150" r="16" fill="#8a2a20"/><text x="550" y="200" text-anchor="middle" font-size="9" fill="#c9c4b8" font-family="Georgia">PARADA</text>'
+    b += '<rect x="160" y="390" width="480" height="110" fill="#121210"/>'
+    # la orden, debajo de la máquina (solo con la linterna)
+    b += '<g class="ol"><rect x="450" y="430" width="70" height="40" fill="#e8dcc0" transform="rotate(-6 485 450)"/><path d="M458 440h50M458 448h40M458 456h46" stroke="#3a2a1a" stroke-width="1" transform="rotate(-6 485 450)"/></g>'
+    b += '<rect x="160" y="390" width="480" height="110" fill="#000" class="ob" opacity=".6"/>'
+    b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    return wrap(b)
+SVG['maquina'] = maquina()
+
+def oficina():
+    b = '<rect width="800" height="500" fill="#3a2e22"/>'
+    b += '<rect width="800" height="320" fill="#4a3c2c"/>'
+    b += '<rect x="560" y="60" width="180" height="150" fill="#8a9a9a" opacity=".5"/><path d="M650 60v150M560 135h180" stroke="#3a2e22" stroke-width="6"/>'
+    # estante con frascos de matarratas
+    b += '<rect x="60" y="80" width="200" height="8" fill="#2a1e14"/>'
+    for k in range(5): b += f'<rect x="{74+k*36}" y="44" width="22" height="36" rx="3" fill="#3a5a3a"/><rect x="{76+k*36}" y="56" width="18" height="12" fill="#e8dcc0"/><path d="M{80+k*36} 60h10M{80+k*36} 64h8" stroke="#8a1a1a" stroke-width="1.2"/>'
+    b += '<text x="160" y="104" text-anchor="middle" font-size="8" fill="#e8dcc0" font-family="Georgia">VENENO · MATARRATAS</text>'
+    # mesa con el registro y el libro de envíos
+    b += '<rect x="120" y="300" width="520" height="20" fill="#6a4a2a"/><rect x="130" y="320" width="16" height="160" fill="#4a3018"/><rect x="614" y="320" width="16" height="160" fill="#4a3018"/>'
+    b += '<g transform="rotate(-3 250 288)"><rect x="180" y="268" width="140" height="36" fill="#e8dcc0"/><path d="M250 268v36" stroke="#a89a7a"/>'
+    for k in range(4): b += f'<path d="M186 {276+k*7}h58M256 {276+k*7}h{56-k*8}" stroke="#4a3a2a" stroke-width=".8"/>'
+    b += '<text x="215" y="264" text-anchor="middle" font-size="6" fill="#e8dcc0" font-family="Georgia">REGISTRO</text></g>'
+    b += '<g transform="rotate(4 470 286)"><rect x="410" y="266" width="120" height="38" fill="#1e2a3a"/><rect x="414" y="270" width="112" height="30" fill="#e8dcc0"/>'
+    for k in range(4): b += f'<text x="420" y="{278+k*7}" font-size="5.6" fill="#2a1d10" font-family="Georgia,\'Noto Serif\',serif">{["12-XI ✶◆✶ 40","19-XI ◆◆✶ 38","26-XI ✶✶◆ 44","30-XI ◆✶◆ —"][k]}</text>'
+    b += '</g>'
+    b += '<path d="M560 300v-30h4v30M548 270h28l-6-10h-16z" fill="#2a2a2a"/><circle cx="562" cy="270" r="60" fill="url(#warm)" opacity=".6"/>'
+    b += '<rect y="482" width="800" height="18" fill="#22180e"/>'
+    b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    return wrap(b)
+SVG['oficina'] = oficina()
+
 if __name__ == '__main__':
     for k, v in SVG.items():
         open(__import__('os').path.join('/tmp', f'{k}.svg'), 'w').write(v)
