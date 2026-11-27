@@ -1303,20 +1303,28 @@ SVG['camerino'] = camerino()
 
 # la carta rota: 8 trozos (4x2) de 90x100; el texto completo va en <defs>
 CARTA_TXT = ['Lola:', 'Esta noche se acaba todo. Ya no puedo', 'seguir con esta mentira. Te espero en el', 'faro a la una, para despedirme como Dios', 'manda. Lo de la niña está arreglado: pase', 'lo que pase, no os faltará de nada.', 'J. · 30 de noviembre']
-TROZOS0 = [(380, 300, 2), (20, 30, 1), (680, 160, 3), (110, 300, 0), (520, 300, 1), (680, 30, 0), (20, 160, 3), (245, 300, 1)]
+# 15 trozos de la carta (5x3, de 72x66) + 4 trozos de otro papel (la cuenta del café) que no encajan
+TROZOS0 = [(10, 10, 1), (600, 10, 2), (240, 290, 3), (90, 22, 0), (700, 120, 1), (520, 335, 2), (10, 104, 3), (430, 296, 1),
+           (690, 30, 3), (140, 330, 2), (620, 200, 0), (100, 112, 2), (330, 330, 1), (40, 300, 3), (610, 110, 2),
+           (20, 196, 0), (706, 214, 2), (620, 300, 1), (240, 400, 3)]
 def carta():
     b = '<rect width="800" height="500" fill="#24141a"/>'
     for x in range(0, 800, 40): b += f'<path d="M{x} 0V500" stroke="#2c1820" stroke-width="10"/>'
-    t = '<g id="cartaTxt"><rect width="360" height="200" fill="#efe6d0"/>' + ''.join(f'<path d="M8 {32+k*25}H352" stroke="#c8bca0" stroke-width=".7"/>' for k in range(7)) + '<rect x="6" y="6" width="348" height="188" fill="none" stroke="#a8987a" stroke-width="1"/>'
+    t = '<g id="cartaTxt"><rect width="360" height="198" fill="#efe6d0"/>' + ''.join(f'<path d="M8 {32+k*25}H352" stroke="#c8bca0" stroke-width=".7"/>' for k in range(7)) + '<rect x="6" y="6" width="348" height="186" fill="none" stroke="#a8987a" stroke-width="1"/>'
     for k, l in enumerate(CARTA_TXT):
         fit = '' if k in (0, 6) else ' textLength="334" lengthAdjust="spacingAndGlyphs"'
         t += f'<text x="{14 if k < 6 else 190}" y="{28+k*25}" font-size="{15 if k in (0, 6) else 14}" fill="#1e2a4a" font-family="Georgia" font-style="italic"{fit}>{l}</text>'
     t += '</g>'
-    b += f'<defs>{t}' + ''.join(f'<clipPath id="ctz{i}"><rect width="90" height="100"/></clipPath>' for i in range(8)) + '</defs>'
-    b += '<rect x="216" y="46" width="368" height="208" fill="none" stroke="#c9a24a" stroke-width="2" stroke-dasharray="8 6" opacity=".6"/>'
+    c = '<g id="cuentaTxt"><rect width="288" height="132" fill="#f0e2da"/>'
+    for k, l in enumerate(['Café Royal · cuenta n.º 212', '2 copas de anís ........ 1,50', '1 botella de champán .. 12,00', 'Reservado nº 3 · Total 13,50 pts']):
+        c += f'<text x="10" y="{26+k*28}" font-size="13" fill="#5a5a5a" font-family="Georgia" textLength="266" lengthAdjust="spacingAndGlyphs">{l}</text>'
+    c += '</g>'
+    b += f'<defs>{t}{c}<clipPath id="ctz"><rect width="72" height="66"/></clipPath></defs>'
+    b += '<rect x="216" y="46" width="368" height="206" fill="none" stroke="#c9a24a" stroke-width="2" stroke-dasharray="8 6" opacity=".6"/>'
     for i, (x, y, r) in enumerate(TROZOS0):
-        cx, cy = (i % 4)*90, (i//4)*100
-        b += f'<g class="trozo" data-i="{i}" style="transform:translate({x}px,{y}px) rotate({r*90}deg);transform-origin:45px 50px"><g clip-path="url(#ctz{i})"><use href="#cartaTxt" x="{-cx}" y="{-cy}"/></g><rect width="90" height="100" fill="none" stroke="#b8a88a" stroke-width="1.5"/></g>'
+        if i < 15: src, cx, cy, edge = '#cartaTxt', (i % 5)*72, (i//5)*66, '#b8a88a'
+        else: src, cx, cy, edge = '#cuentaTxt', ((i-15) % 4)*72, (i % 2)*66, '#c0a8a0'
+        b += f'<g class="trozo" data-i="{i}" style="transform:translate({x}px,{y}px) rotate({r*90}deg);transform-origin:36px 33px"><g clip-path="url(#ctz)"><use href="{src}" x="{-cx}" y="{-cy}"/></g><rect width="72" height="66" fill="none" stroke="{edge}" stroke-width="1.5"/></g>'
     b += '<rect width="800" height="500" fill="url(#vig)" opacity=".6"/>'
     return wrap(b)
 SVG['carta'] = carta()
