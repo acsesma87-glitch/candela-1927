@@ -47,7 +47,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .dark{position:absolute;inset:0;background:#000;pointer-events:none}
 .lit{opacity:0;-webkit-mask-image:radial-gradient(circle at var(--x,50%) var(--y,50%),#000 0,#000 calc(var(--r,90px)*.4),rgba(0,0,0,.6) calc(var(--r,90px)*.75),transparent var(--r,90px));mask-image:radial-gradient(circle at var(--x,50%) var(--y,50%),#000 0,#000 calc(var(--r,90px)*.4),rgba(0,0,0,.6) calc(var(--r,90px)*.75),transparent var(--r,90px));filter:brightness(1.15)}
 .scene.t-linterna .lit{opacity:1}
-.recu{pointer-events:none;display:none}#recu .ob{display:none}#recu *{animation:none!important}
+.recu{pointer-events:none;-webkit-mask-image:linear-gradient(transparent,transparent);mask-image:linear-gradient(transparent,transparent)}#recu .ob{display:none}#recu *{animation:none!important}
 #base .ol{display:none}#lit .ob{display:none}
 .shake{animation:shake .5s}@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 .scene.pick{cursor:crosshair}.pring{position:absolute;width:70px;height:70px;margin:-35px 0 0 -35px;border-radius:50%;border:2px dashed #f3dc9a;pointer-events:none;animation:spk 1.2s infinite;z-index:3}
@@ -500,8 +500,8 @@ function lensDogs(){if(tool!=='lupa')return;const z=2.6,k=K(),l=L(),[fx,fy]=focu
 function ligero(){[lens,lit,$('#recu')].forEach(c=>c.querySelectorAll('[filter="url(#fog)"],[filter="url(#paperT)"]').forEach(e=>e.remove()));lens.querySelectorAll('[filter]').forEach(e=>e.removeAttribute('filter'))}
 // Lo que ya se ha descubierto con la linterna no vuelve a quedar a oscuras del todo: queda en penumbra,
 // lo justo para volver a encontrarlo (y cogerlo con la mano o mirarlo con la lupa).
-function revelados(){const recu=$('#recu');if(!SC){recu.style.display='none';return}const k=K(),zonas=(SC.spots||[]).filter(s=>s.tool==='linterna'&&found(s.id)).map(s=>({x:s.x,y:s.y,w:(s.w||(s.reach||40)*2)/2+14,h:(s.h||(s.reach||40)*2)/2+14}));
-  if(!zonas.length){recu.style.display='none';return}recu.style.display='block';
+function revelados(){const recu=$('#recu'),nada='linear-gradient(transparent,transparent)';if(!SC){recu.style.webkitMaskImage=recu.style.maskImage=nada;return}const k=K(),zonas=(SC.spots||[]).filter(s=>s.tool==='linterna'&&found(s.id)).map(s=>({x:s.x,y:s.y,w:(s.w||(s.reach||40)*2)/2+14,h:(s.h||(s.reach||40)*2)/2+14}));
+  if(!zonas.length){recu.style.webkitMaskImage=recu.style.maskImage=nada;return}
   recu.style.webkitMaskImage=recu.style.maskImage=zonas.map(z=>`radial-gradient(ellipse ${z.w*k}px ${z.h*k}px at ${z.x*k}px ${z.y*k}px, rgba(0,0,0,.21) 0%, rgba(0,0,0,.14) 55%, transparent 100%)`).join(',')}
 function draw(){if(!SC)return;const k=K(),x=px*k,y=py*k,l=L(),z=2.6;
   st.style.setProperty('--x',x+'px');st.style.setProperty('--y',y+'px');st.style.setProperty('--r',RL()+'px');
@@ -597,7 +597,7 @@ function loop(t){const dt=t-lastT;lastT=t;if(SC)lensDogs();
   if(SC&&!busy&&(tool==='lupa'||tool==='linterna')){const[fx,fy]=focus(),reach=visPx()*.62/K();
     for(const s of SC.spots||[]){if(s.tool!==tool||(s.once!==false&&found(s.id))||(s.when&&!s.when()))continue;
       const near=s.w?(Math.abs(fx-s.x)<s.w/2+reach*.35&&Math.abs(fy-s.y)<s.h/2+reach*.35):Math.hypot(fx-s.x,fy-s.y)<reach;dwell[s.id]=near?(dwell[s.id]||0)+dt:0;
-      if(!near)s._in=false;if(dwell[s.id]>(s.ms||350)&&!s._in){dwell[s.id]=0;s._in=true;if(s.once!==false)markFound(s.id);run(s.act);if(s.tool==='linterna')setTimeout(revelados,50);break}}}
+      if(!near)s._in=false;if(dwell[s.id]>(s.ms||350)&&!s._in){dwell[s.id]=0;s._in=true;if(s.once!==false)markFound(s.id);run(s.act);if(s.tool==='linterna')revelados();break}}}
   requestAnimationFrame(loop)}
 requestAnimationFrame(loop);
 
@@ -711,7 +711,7 @@ function polvo(x,y){const k=K();for(let i=0;i<7;i++){const d=document.createElem
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 105';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 106';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
