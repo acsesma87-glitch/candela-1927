@@ -1,5 +1,5 @@
 // ---------- Día 5 ----------
-const d5=()=>D(5).flags;
+const d5=()=>D(5).flags,hasP=id=>S.pistas.some(p=>p.id===id);
 const FR_OK=[0,1,2,3,4,5],FR_X=i=>140+i*92;
 function allSel(sel,fn){[base,lit,lens].forEach(c=>c.querySelectorAll(sel).forEach(fn))}
 function armarioPinta(){const f=d5();if(!f.orden){f.orden=[4,0,5,1,3,2];save()}
@@ -107,12 +107,12 @@ DAYS[5]=[
     await pista('impermeable','El impermeable del doctor','En el perchero del dispensario, un impermeable de mar empapado, con costras de sal. No es lluvia: es agua de mar.')}},
   {id:'diploma',tool:'lupa',x:405,y:83,w:90,h:66,act:async()=>{await bubble('«Licenciado en Medicina. Ramón Salazar Ortiz. Valladolid, 1901.» Veintiséis años de médico. Y de puerto.',4200)}},
  ],
- check:()=>{const f=d5();if(f.vuelta||!f.solo||!found('fichaMedica')||!found('impermeable'))return;run(vuelta5)},
+ check:()=>{const f=d5();if(f.vuelta||!f.solo||!hasP('fichaMedica')||!found('impermeable'))return;run(vuelta5)},
  enter:async()=>{const f=d5();
    if(f.vuelta){nar('El doctor ordena su maletín y tararea algo. Ya tengo lo que venía a buscar.');narBtn('Volver a casa',()=>{narSigue=true;goScene(4)});return}
-   if(f.solo){swapSvg(SVG.dispensarioV);if(f.cajon&&!found('fichaMedica')){nar('Me he dejado el cajón del armario abierto… y el papel dentro, sin leer.<br><br><i>Vuelve al armario y toca el papel.</i>');return}
-     if(found('fichaMedica')&&!found('impermeable')){nar('El doctor está al caer. Pero antes… ese impermeable del perchero chorrea en un día sin tormenta.<br><br><i>Míralo con la lupa.</i>');return}
-     nar(found('fichaMedica')?'El doctor está a punto de volver.':'Sola en el dispensario. El armario de cristal, el perchero…');return}
+   if(f.solo){swapSvg(SVG.dispensarioV);if(f.cajon&&!hasP('fichaMedica')){nar('Me he dejado el cajón del armario abierto… y el papel dentro, sin leer.<br><br><i>Vuelve al armario y toca el papel.</i>');return}
+     if(hasP('fichaMedica')&&!found('impermeable')){nar('El doctor está al caer. Pero antes… ese impermeable del perchero chorrea en un día sin tormenta.<br><br><i>Míralo con la lupa.</i>');return}
+     nar(hasP('fichaMedica')?'El doctor está a punto de volver.':'Sola en el dispensario. El armario de cristal, el perchero…');return}
    nar('Azulejo blanco, frascos de colores y olor a éter. El sitio más limpio y más seguro de todo Altamar.<br><br><i>El doctor Salazar está detrás del mostrador.</i>')}},
 
 // ===== El armario de los frascos =====
@@ -128,7 +128,7 @@ DAYS[5]=[
     nar('Don Julián se moría. Y lo sabía. ¿Por eso escribió «que Dios me perdone»?');narBtn('Cerrar el armario',()=>goScene(2))}},
  ],
  enter:async()=>{const f=d5();if(f.sel!=null){f.sel=null;save()}armarioPinta();
-   if(found('fichaMedica')){nar('Los frascos, en su sitio. El cajón, vacío… salvo por mi conciencia.');narBtn('Cerrar el armario',()=>goScene(2));return}
+   if(hasP('fichaMedica')){nar('Los frascos, en su sitio. El cajón, vacío… salvo por mi conciencia.');narBtn('Cerrar el armario',()=>goScene(2));return}
    if(f.cajon){nar('Hay un papel dentro del cajón.<br><br><i>Tócalo con la mano.</i>');return}
    nar('Seis frascos con las dosis en medidas antiguas de botica. Y una tarjeta del doctor: «Cada cosa en su sitio: de más a menos, empezando por la derecha».<br><br><i>Toca un frasco y luego otro para cambiarlos de sitio.</i>');
    narBtn('Cerrar el armario',()=>goScene(2))}},
