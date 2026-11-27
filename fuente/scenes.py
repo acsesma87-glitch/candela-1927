@@ -173,6 +173,7 @@ def _cut(t, a, b):
 AITOR_CASA = AITOR
 AITOR_CASA = _cut(AITOR_CASA, '<!-- chuzo -->', '<!-- piernas -->')
 AITOR_CASA = _cut(AITOR_CASA, '<!-- farol -->', '<!-- cuello y cabeza -->')
+AITOR_CASA = AITOR_CASA.replace('<!-- cuello y cabeza -->', '<circle cx="148" cy="305" r="8" fill="url(#skin)"/>\n <!-- cuello y cabeza -->', 1)  # mano derecha (sin farol)
 AITOR_CASA = _cut(AITOR_CASA, '<!-- gorra de sereno -->', '<!-- mechones')
 AITOR_CASA = AITOR_CASA.replace('<!-- mechones', '<path d="M175 150q0-30 30-33q30 3 31 33q-9-14-31-15q-21 1-30 15z" fill="url(#hairA)"/><path d="M190 126q8-3 14 0M212 124q8 0 12 5" stroke="#8a8680" stroke-width="1" fill="none"/>\n <!-- mechones')
 def aitor_casa(x, y, s=1):
