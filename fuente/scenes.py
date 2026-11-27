@@ -869,8 +869,8 @@ def cocinaP():
     return wrap(b)
 SVG['cocinaP'] = cocinaP()
 
-SALAZAR_D = SALAZAR.replace('<ellipse cx="0" cy="-140" rx="19" ry="4" fill="#151515"/><path d="M-11 -141q0-16 11-16t11 16z" fill="#1c1c1c"/>',
-  '<path d="M-13 -132q-2-16 13-17q15 1 13 17q-4-8-13-9q-9 1-13 9z" fill="#b8b4ac"/>')
+SALAZAR_D = SALAZAR.replace('<ellipse cx="0" cy="-140" rx="19" ry="4" fill="#151515"/>',
+  '<path d="M-13 -132q0-6 2-8M13 -132q0-6-2-8" stroke="#b8b4ac" stroke-width="3" fill="none"/><ellipse cx="0" cy="-140" rx="19" ry="4" fill="#151515"/>')  # siempre con su bombín
 SALAZAR_D = SALAZAR_D.replace('<rect x="-5" y="-118"', '<path d="M-22 -96q-20 20 -26 54" stroke="#4a4c50" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="-48" cy="-40" r="5" fill="url(#skin)"/><rect x="-5" y="-118"', 1)
 SALAZAR_D = re.sub(r'<g><rect x="52" y="-22".*?</g>', '', SALAZAR_D, flags=re.S)
 

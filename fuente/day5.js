@@ -97,7 +97,7 @@ DAYS[5]=[
     await talk('Dr. Salazar','Tónicos, para el estómago y para los nervios. Lo demás es secreto médico, querida. Ni muerto se lo cuento a nadie.');
     persona('Dr. Salazar','«Julián estaba hundido.» Le daba tónicos para el estómago y los nervios; lo demás, «secreto médico».');
     await bubble('Un chaval asoma por la puerta: «¡Doctor! ¡En la conservera, a uno del piquete le han abierto la cabeza!».',4400);
-    await talk('Dr. Salazar','(Coge el maletín y el sombrero.) El deber llama. Cinco minutos. No toque nada, que aquí hay frascos que tumban a un caballo.');endTalk();
+    await talk('Dr. Salazar','(Coge el maletín.) El deber llama. Cinco minutos. No toque nada, que aquí hay frascos que tumban a un caballo.');endTalk();
     f.solo=1;save();AU.sfx('clic');swapSvg(SVG.dispensarioV);
     nar('Me he quedado sola en el dispensario. Cinco minutos.<br><br><i>El armario de cristal, el perchero… Mira bien.</i>')}},
   {id:'armarioVer',tool:'mano',x:125,y:250,r:90,once:false,act:async()=>{const f=d5();
