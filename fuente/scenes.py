@@ -1208,6 +1208,119 @@ def oficina():
     return wrap(b)
 SVG['oficina'] = oficina()
 
+# ======================= DÍA 8 =======================
+LOLA = """<g>
+ <ellipse cx="0" cy="0" rx="30" ry="6" fill="#000" opacity=".45"/>
+ <path d="M-8 0l-4-60h10zM8 0l4-60h-10z" fill="url(#skin)"/>
+ <path d="M-26 -50q0-60 12-96h28q12 36 12 96q-26 10-52 0z" fill="#6a1424"/>
+ <g fill="#e8c060" opacity=".55">""" + ''.join(f'<circle cx="{x}" cy="{y}" r="1.4"/>' for x in range(-20, 22, 7) for y in range(-140, -56, 9)) + """</g>
+ <path d="M-14 -146q14 8 28 0l-2 -10h-24z" fill="#5a1020"/>
+ <path d="M-30 -150q30 22 60 0q4 10-4 16q-26 14-52 0q-8-6-4-16z" fill="#f0e8e0" opacity=".9"/>
+ <path d="M-16 -150q-14 30 -8 60M16 -150q14 30 8 60" stroke="url(#skin)" stroke-width="8" fill="none" stroke-linecap="round"/>
+ <rect x="-4" y="-166" width="8" height="12" fill="#e0b494"/>
+ <ellipse cx="0" cy="-180" rx="13" ry="15" fill="url(#skin)"/>
+ <path d="M-17 -182q-4-22 17-22q21 0 17 22q-2 12-6 16q2-18-11-22q-13 4-11 22q-4-4-6-16z" fill="#1a0e0a"/>
+ <circle cx="-14" cy="-170" r="5" fill="#1a0e0a"/><circle cx="14" cy="-170" r="5" fill="#1a0e0a"/>
+ <path d="M8 -200q14-12 20 4q-10-2-16 6z" fill="#d84a6a"/>
+ <circle cx="-5" cy="-181" r="1.6" fill="#1a1010"/><circle cx="5" cy="-181" r="1.6" fill="#1a1010"/><path d="M-8 -186l5 1M8 -186l-5 1" stroke="#1a1010" stroke-width="1.2"/>
+ <path d="M-4 -172q4 3 8 0" stroke="#b02030" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="-8" cy="-176" r="2.5" fill="#e0707a" opacity=".5"/><circle cx="8" cy="-176" r="2.5" fill="#e0707a" opacity=".5"/>
+</g>"""
+PORTERO = """<g>
+ <ellipse cx="0" cy="0" rx="38" ry="7" fill="#000" opacity=".45"/>
+ <rect x="-22" y="-80" width="18" height="80" fill="#1a1a1a"/><rect x="4" y="-80" width="18" height="80" fill="#1a1a1a"/>
+ <path d="M-40 -80q-4-70 40-90q44 20 40 90z" fill="#2a2a30"/>
+ <path d="M-40 -150q-14 40 -6 76M40 -150q14 40 6 76" stroke="#2a2a30" stroke-width="18" fill="none" stroke-linecap="round"/><circle cx="-46" cy="-72" r="9" fill="url(#skin)"/><circle cx="46" cy="-72" r="9" fill="url(#skin)"/>
+ <rect x="-8" y="-180" width="16" height="12" fill="#c9a084"/>
+ <ellipse cx="0" cy="-194" rx="17" ry="18" fill="url(#skin)"/>
+ <path d="M-18 -196q0-20 18-20q18 0 18 20q-4-8-18-8t-18 8z" fill="#1a1a1a"/>
+ <circle cx="-6" cy="-194" r="1.8" fill="#1a1010"/><circle cx="6" cy="-194" r="1.8" fill="#1a1010"/><path d="M-11 -200l8 2M11 -200l-8 2" stroke="#1a1010" stroke-width="2.2"/>
+ <path d="M-8 -182h16" stroke="#6a3f2f" stroke-width="1.8"/><path d="M-14 -186q14 10 28 0" stroke="#2a1a14" stroke-width="3" fill="none"/>
+</g>"""
+SVG['periodico8'] = diario('Jueves, 8 de diciembre de 1927', 'INMACULADA: PROCESIÓN SIN HUELGUISTAS Y CON MUCHO FRÍO',
+  'Altamar sale a la calle', G_CRUZ,
+  ['La procesión de la Inmaculada recorrió ayer','el muelle con más paraguas que velas. Los','estibadores no la siguieron: «La Virgen','no carga cajas, pero nosotros tampoco»,','dijo uno, entre risas.'],
+  'El puerto, en un puño', G_LATAS,
+  ['El capitán del puerto, Don Fermín Olaso, pide','que se cierre «de una vez» el caso Arrieta:','«Aquí se cayó un hombre, y punto. Lo demás','son ganas de hablar». Ni el comisario Ibarra','le lleva la contraria.'],
+  [('CAFÉ ROYAL', ['Calle del Farol. Esta noche y todas las noches,','LOLA canta para usted. Entrada discreta.']),
+   ('SASTRERÍA LARRAÑAGA', ['Lutos en veinticuatro horas. Se arreglan gabardinas.'])],
+  'ECOS DEL BARRIO',
+  ['Un comisario de esta ciudad, cuyo nombre no','diremos, frecuenta últimamente la calle del Farol.','Doña Puri asegura que «por razones de servicio».','Nadie se lo cree, ni ella.'],
+  'Frío seco. Luna menguante. Pleamar a las 6:10.')
+
+def calleFarol():
+    b = '<defs><radialGradient id="rojo"><stop offset="0" stop-color="#ff3a2a" stop-opacity=".42"/><stop offset=".5" stop-color="#ff3a2a" stop-opacity=".12"/><stop offset="1" stop-color="#ff3a2a" stop-opacity="0"/></radialGradient></defs>'
+    b += '<rect width="800" height="500" fill="#0c0a10"/>'
+    for x, w, h in ((0, 220, 380), (220, 190, 420), (410, 200, 400), (610, 190, 370)):
+        b += f'<rect x="{x}" y="{500-h-80}" width="{w}" height="{h}" fill="#1a1418"/>'
+        for k in range(2): b += f'<rect x="{x+30+k*90}" y="{500-h-40}" width="44" height="60" fill="#3a1418" opacity=".8"/><rect x="{x+34+k*90}" y="{500-h-36}" width="36" height="52" fill="#a83a2a" opacity=".35"/>'
+    # farolas rojas
+    for x in (120, 560):
+        b += f'<rect x="{x-3}" y="230" width="6" height="190" fill="#111"/><path d="M{x-12} 222h24l-4 20h-16z" fill="#1e0e0e"/><rect x="{x-7}" y="226" width="14" height="14" fill="#ff5a4a"/>'
+        b += f'<g class="a-brillo"><circle cx="{x}" cy="236" r="150" fill="url(#rojo)"/></g>'
+    # puerta del Café Royal
+    b += '<rect x="300" y="250" width="110" height="170" fill="#ffd28a" opacity=".85"/><rect x="306" y="256" width="98" height="164" fill="#e8a85a" opacity=".5"/>'
+    b += '<path d="M290 236h130v14h-130z" fill="#2a0e14"/><text x="355" y="247" text-anchor="middle" font-size="10" fill="#ffd28a" font-family="Georgia" letter-spacing="3">CAFÉ ROYAL</text>'
+    b += '<path d="M410 420L520 500H300L300 420z" fill="#ffd28a" opacity=".12"/>'
+    # señoritas en el portal (siluetas, fumando)
+    for x, f in ((470, False), (520, True)):
+        b += f'<g transform="translate({x} 420) scale({-1 if f else 1} 1)"><path d="M-12 0q-2-60 12-96q14 36 12 96z" fill="#2a0e1a"/><circle cx="0" cy="-104" r="9" fill="#1a0e10"/><path d="M6 -98l12-4" stroke="#e8e2d4" stroke-width="1.6"/><circle class="a-brasa" cx="18" cy="-102" r="1.4" fill="#ff8a3a"/></g>'
+    b += '<rect y="420" width="800" height="80" fill="#121014"/><ellipse cx="120" cy="450" rx="60" ry="5" fill="#ff3a2a" opacity=".15"/><ellipse cx="560" cy="452" rx="60" ry="5" fill="#ff3a2a" opacity=".15"/>'
+    b += fig(PORTERO, 270, 440, 1.0, who='El portero')
+    b += aitor(80, 480, .7)
+    b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    return wrap(b)
+SVG['calleFarol'] = calleFarol()
+
+def camerino():
+    b = '<rect width="800" height="500" fill="#2a1418"/>'
+    b += '<rect width="800" height="330" fill="#3a1a22"/>'
+    for x in range(0, 800, 40): b += f'<path d="M{x} 0V330" stroke="#42202a" stroke-width="14"/>'
+    # biombo con vestidos
+    b += '<path d="M600 90l60-10v300l-60 10zM660 80l60 10v300l-60-10zM720 90l60-10v300l-60 10z" fill="#4a2a2a" stroke="#2a1416" stroke-width="3"/>'
+    b += '<path d="M640 100q20 40 0 160h40q-20-120 0-160z" fill="#b8a040" opacity=".8"/><path d="M730 110q-30 60 10 170" stroke="#f0e8e0" stroke-width="14" fill="none" opacity=".7"/>'
+    # espejo con bombillas
+    b += '<rect x="250" y="40" width="240" height="190" rx="10" fill="#1a1012" stroke="#c9a24a" stroke-width="6"/><rect x="262" y="52" width="216" height="166" fill="#5a4a52" opacity=".6"/><path d="M280 60l60 150" stroke="#fff" stroke-width="10" opacity=".08"/>'
+    for k in range(7): b += f'<circle cx="{262+k*36}" cy="34" r="7" fill="#ffe6a8"/>'
+    for k in range(5): b += f'<circle cx="244" cy="{62+k*38}" r="7" fill="#ffe6a8"/><circle cx="496" cy="{62+k*38}" r="7" fill="#ffe6a8"/>'
+    b += '<g class="a-brillo"><circle cx="370" cy="140" r="200" fill="url(#warm)" opacity=".55"/></g>'
+    # la foto metida en el marco del espejo
+    b += '<g transform="rotate(8 455 75)"><rect x="432" y="52" width="46" height="56" fill="#e8dcc0"/><rect x="436" y="56" width="38" height="38" fill="#8a7a6a"/><circle cx="450" cy="70" r="6" fill="#4a3a2a"/><path d="M442 94q8-18 16 0z" fill="#3a2a1a"/><circle cx="462" cy="80" r="4" fill="#4a3a2a"/><path d="M457 94q5-10 10 0z" fill="#5a4a3a"/></g>'
+    # el dibujo de la niña
+    b += '<g transform="rotate(-4 130 110)"><rect x="80" y="60" width="104" height="96" fill="#f4efe2"/><circle cx="104" cy="82" r="10" fill="#e8c040"/><path d="M120 140v-26l20-16 20 16v26z" fill="none" stroke="#c03030" stroke-width="3"/><path d="M96 150v-18M96 136l-6 6M96 136l6 6M168 150v-24M168 132l-7 7M168 132l7 7M132 150v-12" stroke="#3050a0" stroke-width="2.4"/><circle cx="96" cy="128" r="5" fill="none" stroke="#3050a0" stroke-width="2"/><circle cx="168" cy="122" r="5" fill="none" stroke="#3050a0" stroke-width="2"/><circle cx="132" cy="134" r="4" fill="none" stroke="#3050a0" stroke-width="2"/><circle cx="120" cy="64" r="3" fill="#8a1a1a"/></g>'
+    # tocador
+    b += '<rect x="220" y="260" width="300" height="20" fill="#5a3020"/><rect x="230" y="280" width="16" height="150" fill="#3a1e14"/><rect x="494" y="280" width="16" height="150" fill="#3a1e14"/>'
+    for k, c in enumerate(('#c9a24a', '#d84a6a', '#8ab0c0', '#e8dcc0')): b += f'<rect x="{260+k*28}" y="{240+(k%2)*4}" width="14" height="{20-(k%2)*4}" rx="3" fill="{c}"/>'
+    b += '<ellipse cx="420" cy="256" rx="24" ry="6" fill="#e8dcc0"/><circle cx="420" cy="250" r="9" fill="#f4e8d8"/>'
+    # papelera debajo del tocador
+    b += '<path d="M440 400l8 70h48l8-70z" fill="#2a1812"/><ellipse cx="472" cy="400" rx="32" ry="7" fill="#1a0e0a"/>'
+    b += '<g class="ol"><path d="M452 396l10-8 6 6-8 6zM470 392l12-4 2 8-10 2zM486 398l8-6 4 6-8 4z" fill="#e8dcc0"/></g>'
+    b += '<rect x="420" y="380" width="110" height="100" fill="#000" class="ob" opacity=".55"/>'
+    b += '<rect y="430" width="800" height="70" fill="#1e0e10"/>'
+    b += fig(LOLA, 340, 480, 1.45, who='Lola')
+    b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    return wrap(b)
+SVG['camerino'] = camerino()
+
+# la carta rota: 8 trozos (4x2) de 90x100; el texto completo va en <defs>
+CARTA_TXT = ['Lola:', 'Esta noche se acaba todo. Ya no puedo', 'seguir con esta mentira. Te espero en el', 'faro a la una, para despedirme como Dios', 'manda. Lo de la niña está arreglado: pase', 'lo que pase, no os faltará de nada.', 'J. · 30 de noviembre']
+TROZOS0 = [(380, 300, 2), (20, 30, 1), (680, 160, 3), (110, 300, 0), (520, 300, 1), (680, 30, 0), (20, 160, 3), (245, 300, 1)]
+def carta():
+    b = '<rect width="800" height="500" fill="#24141a"/>'
+    for x in range(0, 800, 40): b += f'<path d="M{x} 0V500" stroke="#2c1820" stroke-width="10"/>'
+    t = '<g id="cartaTxt"><rect width="360" height="200" fill="#efe6d0"/>' + ''.join(f'<path d="M8 {32+k*25}H352" stroke="#c8bca0" stroke-width=".7"/>' for k in range(7)) + '<rect x="6" y="6" width="348" height="188" fill="none" stroke="#a8987a" stroke-width="1"/>'
+    for k, l in enumerate(CARTA_TXT):
+        fit = '' if k in (0, 6) else ' textLength="334" lengthAdjust="spacingAndGlyphs"'
+        t += f'<text x="{14 if k < 6 else 190}" y="{28+k*25}" font-size="{15 if k in (0, 6) else 14}" fill="#1e2a4a" font-family="Georgia" font-style="italic"{fit}>{l}</text>'
+    t += '</g>'
+    b += f'<defs>{t}' + ''.join(f'<clipPath id="ctz{i}"><rect width="90" height="100"/></clipPath>' for i in range(8)) + '</defs>'
+    b += '<rect x="216" y="46" width="368" height="208" fill="none" stroke="#c9a24a" stroke-width="2" stroke-dasharray="8 6" opacity=".6"/>'
+    for i, (x, y, r) in enumerate(TROZOS0):
+        cx, cy = (i % 4)*90, (i//4)*100
+        b += f'<g class="trozo" data-i="{i}" style="transform:translate({x}px,{y}px) rotate({r*90}deg);transform-origin:45px 50px"><g clip-path="url(#ctz{i})"><use href="#cartaTxt" x="{-cx}" y="{-cy}"/></g><rect width="90" height="100" fill="none" stroke="#b8a88a" stroke-width="1.5"/></g>'
+    b += '<rect width="800" height="500" fill="url(#vig)" opacity=".6"/>'
+    return wrap(b)
+SVG['carta'] = carta()
+
 if __name__ == '__main__':
     for k, v in SVG.items():
         open(__import__('os').path.join('/tmp', f'{k}.svg'), 'w').write(v)
