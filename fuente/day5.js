@@ -10,7 +10,7 @@ async function frasco(i){const f=d5();if(f.cajon)return;
   if(f.sel==null){f.sel=i;save();AU.sfx('tic');armarioPinta();return}
   if(f.sel===i){f.sel=null;save();armarioPinta();return}
   const o=f.orden;[o[f.sel],o[i]]=[o[i],o[f.sel]];f.sel=null;f.cambios=(f.cambios||0)+1;save();AU.sfx('clic');armarioPinta();
-  if(o.every((k,j)=>k===FR_OK[j])){f.cajon=1;save();await sleep(500);AU.sfx('cerradura');armarioPinta();anima('.cajonA',[{transform:'translateY(-34px)',opacity:0},{transform:'none',opacity:1}],{duration:700,easing:'ease-out'});
+  if(o.every((k,j)=>k===FR_OK[j])){f.cajon=1;save();$('#acts').innerHTML='';await sleep(500);AU.sfx('cerradura');armarioPinta();anima('.cajonA',[{transform:'translateY(-34px)',opacity:0},{transform:'none',opacity:1}],{duration:700,easing:'ease-out'});
     await bubble('¡Clic! Con los frascos en su sitio, se abre un cajón escondido en la base del armario.',4000);
     nar('Dentro del cajón hay un papel doblado.');return}
   if(f.cambios===10&&!f.pistaTabla){f.pistaTabla=1;save();await bubble('Esos símbolos raros de los frascos… Para compararlos habría que pasarlos todos a la misma medida. ¿Habrá algún papel por aquí que lo explique?',4600)}}
