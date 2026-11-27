@@ -920,7 +920,7 @@ def armario():
     b += '<rect x="60" y="20" width="620" height="470" fill="#4a3a2a"/><rect x="80" y="40" width="580" height="430" fill="#cfd6d2"/><rect x="80" y="40" width="580" height="430" fill="#000" opacity=".18"/>'
     b += '<rect x="80" y="360" width="580" height="12" fill="#4a3a2a"/><rect x="80" y="150" width="580" height="10" fill="#4a3a2a"/>'
     # tarjeta del doctor
-    b += '<g transform="rotate(-2 370 100)"><rect x="270" y="70" width="200" height="56" fill="#efe6d0"/><text x="370" y="94" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">Cada cosa en su sitio:</text><text x="370" y="114" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">de más a menos. R. S.</text></g>'
+    b += '<g transform="rotate(-2 370 98)"><rect x="240" y="58" width="260" height="78" fill="#efe6d0"/><text x="370" y="82" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">Cada cosa en su sitio:</text><text x="370" y="102" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">de más a menos,</text><text x="370" y="122" text-anchor="middle" font-size="15" fill="#2a1d10" font-family="Georgia" font-style="italic">empezando por la derecha. R. S.</text></g>'
     # selección
     b += '<ellipse class="frSel" cx="0" cy="356" rx="44" ry="10" fill="#ffd27a" opacity="0"/>'
     for k, (nom, dosis) in enumerate(FRASCOS):
@@ -935,12 +935,14 @@ def armario():
     # cajón (cerrado / abierto)
     b += '<rect x="80" y="380" width="580" height="80" fill="#3a2c1e"/><rect class="cajonC" x="300" y="396" width="140" height="48" fill="#4a3a2a" stroke="#2a1c10" stroke-width="3"/>'
     b += '<g class="cajonA" opacity="0"><rect x="280" y="400" width="180" height="70" fill="#2a1c10"/><rect x="296" y="404" width="148" height="56" fill="#efe6d0" transform="rotate(-3 370 432)"/><text x="370" y="424" text-anchor="middle" font-size="9" fill="#2a1d10" font-family="Georgia" transform="rotate(-3 370 432)">FICHA CLÍNICA</text><text x="370" y="440" text-anchor="middle" font-size="8" fill="#2a1d10" font-family="Georgia" font-style="italic" transform="rotate(-3 370 432)">Arrieta, Julián</text></g>'
-    # cartel de equivalencias (letra pequeña, en el lateral)
-    b += '<rect x="690" y="120" width="96" height="150" fill="#e8dcc0"/><rect x="690" y="120" width="96" height="150" fill="#000" filter="url(#paperT)"/>'
-    b += '<text x="738" y="136" text-anchor="middle" font-size="6.2" fill="#2a1d10" font-family="Georgia" font-weight="bold">PESAS DE BOTICA</text>'
-    for k, t in enumerate(['1 onza (℥) = 8 dracmas', '= 576 granos', '1 dracma (ʒ) = 3 escrúpulos', '= 72 granos', '1 escrúpulo (℈) = 24 granos', 'gr. = grano · ½ = media']):
-        b += f'<text x="738" y="{156+k*16}" text-anchor="middle" font-size="5.2" fill="#2a1d10" font-family="Georgia,\'Noto Serif\',serif">{t}</text>'
-    b += '<circle cx="738" cy="124" r="3" fill="#8a1a1a"/>'
+    # receta del doctor (letra pequeña, en el lateral): la clave de las medidas
+    b += '<g transform="rotate(2 738 200)"><rect x="688" y="112" width="104" height="176" fill="#efe8d6"/><rect x="688" y="112" width="104" height="176" fill="#000" filter="url(#paperT)"/>'
+    b += '<text x="694" y="130" font-size="10" fill="#2a1d10" font-family="Georgia" font-style="italic">Rp/</text><text x="714" y="129" font-size="5.4" fill="#2a1d10" font-family="Georgia" font-style="italic">Jarabe para la tos</text>'
+    b += '<path d="M694 136H786" stroke="#8a7a5a" stroke-width=".5"/>'
+    for k, (n, m, g) in enumerate([('Regaliz', '℈ 4', '96 gr.'), ('Azúcar', '℥ ½', '288 gr.'), ('Canela', '℈ 1', '24 gr.'), ('Anís', 'ʒ 2', '144 gr.'), ('Limón', 'gr. 30', '30 gr.'), ('Miel', 'ʒ 1', '72 gr.')]):
+        y = 152 + k*19
+        b += f'<text x="694" y="{y}" font-size="5.6" fill="#2a1d10" font-family="Georgia" font-style="italic">{n}</text><text x="748" y="{y}" text-anchor="middle" font-size="6.4" fill="#2a1d10" font-family="Georgia,\'Noto Serif\',serif">{m}</text><text x="786" y="{y}" text-anchor="end" font-size="5.2" fill="#2a1d10" font-family="Georgia">{g}</text>'
+    b += '<text x="786" y="278" text-anchor="end" font-size="6" fill="#2a1d10" font-family="Georgia" font-style="italic">R. S.</text><circle cx="740" cy="116" r="3" fill="#8a1a1a"/></g>'
     b += '<rect width="800" height="500" fill="url(#vig)" opacity=".6"/>'
     return wrap(b)
 SVG['armario'] = armario()
