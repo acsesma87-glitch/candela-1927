@@ -481,10 +481,14 @@ const D=n=>(S.days[n]=S.days[n]||{scene:0,found:[],done:false,flags:{}});
 
 // ================= girar en vertical =================
 let rot=false;
-function layout(){const vv=window.visualViewport,W=Math.round(vv?vv.width:innerWidth),H=Math.round(vv?vv.height:innerHeight);
+// márgenes seguros (barras de Safari en iPad/iPhone que se montan encima de la página)
+const SAFE=document.createElement('div');SAFE.style.cssText='position:fixed;visibility:hidden;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)';document.body.appendChild(SAFE);
+function layout(){const vv=window.visualViewport,cs=getComputedStyle(SAFE),st_=parseFloat(cs.paddingTop)||0,sb=parseFloat(cs.paddingBottom)||0,sl=parseFloat(cs.paddingLeft)||0,sr=parseFloat(cs.paddingRight)||0;
+  const ox=(vv?vv.offsetLeft:0)+sl,oy=(vv?vv.offsetTop:0)+st_,W=Math.round((vv?vv.width:innerWidth)-sl-sr),H=Math.round((vv?vv.height:innerHeight)-st_-sb);
   rot=H>W;app.classList.toggle('rot',rot);
   // tamaño real visible (sin las barras del navegador), no 100vh
-  app.style.width=(rot?H:W)+'px';app.style.height=(rot?W:H)+'px';sizeStage()}
+  app.style.left=ox+'px';app.style.top=oy+'px';app.style.width=(rot?H:W)+'px';app.style.height=(rot?W:H)+'px';window.scrollTo(0,0);sizeStage()}
+if(window.visualViewport)visualViewport.addEventListener('scroll',layout);
 if(window.visualViewport)visualViewport.addEventListener('resize',layout);
 const toApp=(cx,cy)=>rot?[cy,app.clientHeight-cx]:[cx,cy];
 addEventListener('resize',layout);addEventListener('orientationchange',()=>setTimeout(layout,250));
@@ -1526,7 +1530,7 @@ DAYS[6]=[
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 84';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 85';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
