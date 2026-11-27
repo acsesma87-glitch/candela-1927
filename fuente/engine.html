@@ -502,7 +502,7 @@ function ligero(){[lens,lit,$('#recu')].forEach(c=>c.querySelectorAll('[filter="
 // lo justo para volver a encontrarlo (y cogerlo con la mano o mirarlo con la lupa).
 function revelados(){const recu=$('#recu');if(!SC){recu.style.display='none';return}const k=K(),zonas=(SC.spots||[]).filter(s=>s.tool==='linterna'&&found(s.id)).map(s=>({x:s.x,y:s.y,w:(s.w||(s.reach||40)*2)/2+14,h:(s.h||(s.reach||40)*2)/2+14}));
   if(!zonas.length){recu.style.display='none';return}recu.style.display='block';
-  recu.style.webkitMaskImage=recu.style.maskImage=zonas.map(z=>`radial-gradient(ellipse ${z.w*k}px ${z.h*k}px at ${z.x*k}px ${z.y*k}px, rgba(0,0,0,.26) 0%, rgba(0,0,0,.18) 55%, transparent 100%)`).join(',')}
+  recu.style.webkitMaskImage=recu.style.maskImage=zonas.map(z=>`radial-gradient(ellipse ${z.w*k}px ${z.h*k}px at ${z.x*k}px ${z.y*k}px, rgba(0,0,0,.21) 0%, rgba(0,0,0,.14) 55%, transparent 100%)`).join(',')}
 function draw(){if(!SC)return;const k=K(),x=px*k,y=py*k,l=L(),z=2.6;
   st.style.setProperty('--x',x+'px');st.style.setProperty('--y',y+'px');st.style.setProperty('--r',RL()+'px');
   lens.style.width=lens.style.height=l+'px';lens.style.transform=`translate(${x-l/2}px,${y-l/2}px)`;
@@ -711,7 +711,7 @@ function polvo(x,y){const k=K();for(let i=0;i<7;i++){const d=document.createElem
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 102';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 103';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
