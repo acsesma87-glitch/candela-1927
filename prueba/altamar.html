@@ -1799,6 +1799,25 @@ DAYS[8]=[
    nar('Los trozos de la carta, mezclados con los de otro papel, sobre el tocador.<br><br><i>Arrastra cada trozo a su sitio dentro del marco. Toca dos veces un trozo para girarlo.</i>');
    narBtn('Dejarlo para luego',()=>goScene(2));const b=document.createElement('button');b.className='go';b.textContent='Revolver los trozos otra vez';b.onclick=trozosReinicia;$('#acts').appendChild(b)}},
 
+// ===== En casa: atar cabos con Aitor =====
+{svg:SVG.cocinaMesa,dark:.22,laikaHome:560,ekiHome:150,cartel:'ALTAMAR<br>CASA DEL SERENO',
+ enter:async()=>{const f=d8();
+   if(!f.cabos){nar('Aitor enciende la estufa y pone dos tazas de caldo en la mesa. Laika y Eki se arriman al calor.');await sleep(1200);
+     await talk('Aitor','(Sopla el caldo.) A ver, detective. La nota del bloc, la de «que Dios me perdone»… ¿qué era, entonces?');
+     for(;;){const c=await choose(null,null,['Una nota de suicidio','El borrador de su carta a Lola','Una confesión de algo que había hecho']);
+       if(c===1){await talk('Aitor','El borrador de la carta. «Esta noche se acaba todo»: lo suyo con Lola, no su vida.');break}
+       await talk('Aitor',c===0?'¿Suicidio? Si iba al faro a despedirse y a dejarle a la niña bien atada…':'Confesión… no. Fíjate en la carta rota: es la misma frase.');
+       await talk('Aitor','Piénsalo otra vez.')}
+     await talk('Aitor','Ahora lo gordo. Si todo Altamar cree que se tiró… ¿quién sale ganando?');
+     for(;;){const c=await choose(null,null,['Lola','Quien lo hubiera matado','Don Julián']);
+       if(c===1){await talk('Aitor','Eso es. Un suicidio no se investiga. Un asesinato, sí.');break}
+       await talk('Aitor',c===0?'¿Lola? Lola pierde: se queda sin él y sin despedida.':'¿Don Julián? Ese ya no gana nada, mujer.');
+       await talk('Aitor','Otra vez.')}
+     await talk('Candela','Y Lola sabe algo más, Aitor. Lo llevaba en la cara.');
+     await talk('Aitor','En la calle del Farol aprenden a callar antes que a cantar. Ya hablará. Dale tiempo.');endTalk();
+     f.cabos=1;save();await pista('cabos8','Atando cabos con Aitor','La nota del bloc era el borrador de la carta a Lola, no una nota de suicidio. Si parecía un suicidio, el que salía ganando era quien lo hubiera matado.')}
+   nar('El caldo se enfría en las tazas. Fuera, empieza a llover.');narBtn('Irse a dormir',()=>goScene(5))}},
+
 // ===== Esa noche =====
 {svg:SVG.noche,dark:.35,tools:['mano','linterna','lupa'],sleep:1,laikaHome:120,ekiHome:215,cartel:'ALTAMAR<br>ESA NOCHE',
  enter:async()=>{nar(`Aitor ha salido de ronda. Laika y Eki duermen junto al fogón.<br><br>Pistas de hoy: ${S.pistas.filter(p=>p.day===8).length}.<br>«Esta noche se acaba todo» no era una despedida del mundo. Era una despedida para Lola.`);
@@ -1813,15 +1832,13 @@ async function confiesa8(){const f=d8();f.confesion=1;save();
   await talk('Madame Odette','(Abriendo la puerta de golpe.) ¡Lola, a escena! Y usted, señorita, fuera de mi casa. Aquí no se viene a hacer llorar a mis artistas.');endTalk();
   persona('Lola','Confiesa que esperó a Julián en el faro a la una y que «no vino». Insiste demasiado en que se volvió y «eso es todo».');
   f.salida=1;save();
-  await talk('Aitor','(En la calle, encendiendo el farol.) ¿Y bien?');
-  await talk('Candela','Que la nota del despacho no era de un suicida, Aitor. Y que Lola sabe algo más. Lo lleva en la cara.');endTalk();
-  nar('Volvemos por los callejones. Detrás, el piano del Café Royal empieza una canción triste.');narBtn('Volver a casa',()=>{narSigue=true;goScene(4)})}
+  nar('Volvemos por los callejones sin decir nada. Detrás, el piano del Café Royal empieza una canción triste.');narBtn('Volver a casa',()=>{narSigue=true;goScene(4)})}
 FACES['Lola']=FACE_LOLA;FACES['El portero']=FACE_PORTERO;
 
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 106';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 107';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
