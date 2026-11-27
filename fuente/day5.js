@@ -48,9 +48,9 @@ DAYS[5]=[
  ],
  spots:[
   {id:'benigna',tool:'mano',x:545,y:330,r:100,once:false,act:async()=>{const f=d5();
-    if(!f.carta){await talk('Benigna','(Sin dejar de remover el caldo.) Puntual. Bien. Están todos en el cementerio; tenemos hasta la una.');
+    if(!f.carta){await talk('Benigna','(Sin dejar de barrer.) Puntual. Bien. Están todos en el cementerio; tenemos hasta la una.');
       await talk('Candela','Su hermana Maite me dio esto para usted, en Buenos Aires.');
-      await talk('Benigna','(Se limpia las manos en el delantal y lee la carta despacio. Se le escapa una sonrisa, la primera.) «A ver si te cuidas, Beni, que en esa casa te matan a trabajar»… La misma de siempre.');
+      await talk('Benigna','(Apoya la escoba en el fogón y lee la carta despacio. Se le escapa una sonrisa, la primera.) «A ver si te cuidas, Beni, que en esa casa te matan a trabajar»… La misma de siempre.');
       await talk('Benigna','De crías, en Rentería, nos escapábamos al río a coger cangrejos con la saya remangada. A ella siempre la pillaban. A mí, nunca.');
       await talk('Candela','(Rentería… No sé muy bien por qué, pero sonrío.)');
       await talk('Benigna','(Se seca los ojos con el delantal y se endereza.) Bueno. Pregunte lo que tenga que preguntar, que tengo el caldo al fuego.');endTalk();
@@ -64,7 +64,7 @@ DAYS[5]=[
       persona('Don Julián Arrieta','Según Benigna, estos días no comía ni dormía, y le dolía el estómago.')}
     if(k==='salia'){await talk('Benigna','Al dispensario, todos los jueves. Y el doctor venía aquí a traerle sus medicinas. En frasquitos, como si fueran perfume.');
       persona('Don Julián Arrieta','Iba al dispensario todos los jueves; el doctor le traía medicinas en frasquitos.')}
-    if(k==='nota'){await talk('Benigna','(Se queda quieta un segundo. Luego remueve el caldo con más fuerza.) No sé de qué nota me habla. Yo no he visto nada. Ni en esta casa, ni en la despensa, ni en ningún sitio.');
+    if(k==='nota'){await talk('Benigna','(Se queda quieta un segundo. Luego barre con más fuerza.) No sé de qué nota me habla. Yo no he visto nada. Ni en esta casa, ni en la despensa, ni en ningún sitio.');
       persona('Benigna','Le pregunté por la nota anónima: «Yo no he visto nada». Pero se quedó quieta un segundo.')}
     endTalk()}},
   {id:'cajasP',tool:'lupa',x:175,y:290,w:110,h:90,act:async()=>{await bubble('«Conservas Arrieta · envases vacíos». Como las cajas que iban en el barco… y que tanto le interesaban a Laika.',4600)}},
@@ -79,7 +79,7 @@ DAYS[5]=[
  enter:async()=>{const f=d5();
    if(f.salida){nar('Benigna me da la espalda. Ya me ha dicho todo lo que piensa decirme.');narBtn('Ir al dispensario',()=>goScene(2));return}
    if(!f.cocina){f.cocina=1;save();nar('La puerta de servicio, a las once en punto. Aitor se queda fuera, vigilando la calle. Dentro huele a caldo y a leña.<br><br><i>Benigna está junto al fogón.</i>')}
-   else nar('La cocina del palacete. Benigna remueve el caldo sin mirarme.')}},
+   else nar('La cocina del palacete. Benigna barre sin mirarme.')}},
 
 // ===== El dispensario del doctor =====
 {svg:SVG.dispensario,dark:.1,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>EL DISPENSARIO DEL PUERTO',
