@@ -9,7 +9,7 @@ async function manija(){const f=d6();if(f.abierta)return;const c=f.cifras;AU.sfx
     await bubble('¡Clac! La puerta de la caja se abre. Dentro, unos billetes… y un sobre lacrado: «Testamento».',4600);
     nar('Un testamento. Y el lacre está roto: alguien ya lo ha abierto antes que yo.');return}
   if(c.every((n,i)=>n===CAJA_BODA[i])){f.boda=1;save();await bubble('Un clic sordo. Nada. La fecha de su boda no es.',3600);return}
-  if(c[0]===4&&c[1]===25){await bubble('Un clic sordo. Las cuatro y veinticinco tampoco. Esa hora no es la clave.',3800);return}
+  if(c[0]===4&&c[1]===45){await bubble('Un clic sordo. Las 4:45 tampoco. Esa hora no es la clave.',3800);return}
   await bubble('La manija no cede. No es esa combinación.',3000)}
 async function susto(){const f=d6();f.susto=1;save();await sleep(400);AU.sfx('toc');await shake();
   await bubble('¡La puerta de la calle! Clara apaga la vela de un soplo y me empuja detrás de la cortina.',4400);
@@ -69,8 +69,8 @@ DAYS[6]=[
   {id:'bodaR',tool:'lupa',x:400,y:203,w:110,h:20,act:async()=>{await bubble('En el marco, en letras doradas muy pequeñas: «Julián y Leonor · 12 · IV · 1898». El día de su boda.',4600);
     await pista('bodaRetrato','El retrato de la boda','En el marco del retrato de Don Julián: «Julián y Leonor · 12 · IV · 1898». La fecha de su boda.')}},
   {id:'cajaVer',tool:'mano',x:390,y:135,r:70,once:false,act:async()=>{if(d6().testamento){await bubble('La caja, cerrada otra vez. Como si nadie la hubiera tocado.',3000);return}goScene(3)}},
-  {id:'horaR',tool:'lupa',x:514,y:104,w:46,h:46,act:async()=>{await bubble('Las agujas del reloj de pie, paradas: marcan las cuatro y veinticinco.',4200);
-    await pista('horaReloj','El reloj parado','El reloj de pie del despacho está parado a las 4:25.')}},
+  {id:'horaR',tool:'lupa',x:514,y:104,w:46,h:46,act:async()=>{await bubble('Las agujas del reloj de pie, paradas: marcan las 4:45. Las cinco menos cuarto.',4200);
+    await pista('horaReloj','El reloj parado','El reloj de pie del despacho está parado a las 4:45.')}},
   {id:'tarjeta',tool:'linterna',x:514,y:205,w:34,h:40,act:async()=>{await bubble('El reloj de pie está parado. Dentro, pegada en la caja del péndulo, una tarjetita con la letra de Don Julián: «No es la boda. Es lo único bueno que he hecho. J.»',5200);
     await pista('tarjetaReloj','La tarjeta del reloj','Escondida dentro del reloj de pie: «No es la boda. Es lo único bueno que he hecho. J.»')}},
   {id:'biblia',tool:'mano',x:222,y:308,r:40,once:false,act:async()=>{

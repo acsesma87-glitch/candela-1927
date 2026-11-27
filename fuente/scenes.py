@@ -790,7 +790,7 @@ def despacho(leonor=False, noche=False, inigo=False):
         b += '<text x="444" y="204" text-anchor="end" font-size="4.6" fill="#c9a24a" font-family="Georgia" font-style="italic">Julián y Leonor · 12 · IV · 1898</text>'
         # reloj de pie, parado
         b += '<rect x="486" y="66" width="56" height="266" fill="#3a2010" stroke="#1e1008" stroke-width="3"/><path d="M482 66h64l-6-12h-52z" fill="#2a160a"/>'
-        b += '<circle cx="514" cy="104" r="21" fill="#e8dcc0" stroke="#8a6a2a" stroke-width="3"/><path d="M514 104L521 116.1" stroke="#1a1a1a" stroke-width="1.6"/><path d="M514 104L520.6 110.1" stroke="#1a1a1a" stroke-width="2.6"/>'
+        b += '<circle cx="514" cy="104" r="21" fill="#e8dcc0" stroke="#8a6a2a" stroke-width="3"/><path d="M514 104H499" stroke="#1a1a1a" stroke-width="1.6"/><path d="M514 104L519.5 111.1" stroke="#1a1a1a" stroke-width="2.6"/>'
         b += '<rect x="498" y="142" width="32" height="150" fill="#140a04" stroke="#8a6a2a" stroke-width="2"/><path d="M514 146v104" stroke="#c9a24a" stroke-width="2"/><circle cx="514" cy="258" r="9" fill="#c9a24a"/>'
         b += '<g class="ol"><rect x="501" y="196" width="26" height="18" fill="#efe6d0" transform="rotate(-4 514 205)"/><path d="M504 201h20M504 205h16M504 209h18" stroke="#3a2a1a" stroke-width=".8" transform="rotate(-4 514 205)"/></g>'
         # la Biblia familiar, sobre el escritorio
