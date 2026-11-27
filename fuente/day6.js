@@ -75,7 +75,7 @@ DAYS[6]=[
     await pista('bibliaNina','La Biblia de la familia','En la primera página, los nacimientos de la familia. Al final, con otra tinta y sin apellido: «La niña — 7 · IX · 1919».')}},
   {id:'claraD',tool:'mano',x:735,y:340,r:80,once:false,act:async()=>{const f=d6();
     if(f.testamento){await talk('Clara Arrieta','(Mira la puerta.) Váyase antes de que…');endTalk();return}
-    if(!f.claraD){f.claraD=1;save();await talk('Clara Arrieta','Mi padre era un hombre de fechas. Lo apuntaba todo: en la Biblia, en los relojes, en los retratos… Decía que lo que no se apunta, se olvida.');endTalk();return}
+    if(!f.claraD){f.claraD=1;save();await talk('Clara Arrieta','Mi padre era un hombre de costumbres. Cada noche, antes de acostarse, le daba cuerda a ese reloj. Hasta hace un mes: un día lo dejó parar y ya no lo volvió a tocar.');endTalk();return}
     await talk('Clara Arrieta','No sé la combinación, de verdad. Nunca me dejó acercarme a esa caja.');endTalk()}},
  ],
  check:()=>{const f=d6();if(f.testamento&&!f.susto)run(susto)},
