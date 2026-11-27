@@ -762,7 +762,7 @@ def salon():
     return wrap(b)
 SVG['salon'] = salon()
 
-def despacho(leonor=False, noche=False, inigo=False):
+def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
     b = '<rect width="800" height="500" fill="#20140c"/>'
     b += '<rect width="800" height="320" fill="#2e1e12"/>'
     for k in range(0, 800, 50): b += f'<path d="M{k} 40V320" stroke="#26180e" stroke-width="3"/>'
@@ -795,6 +795,13 @@ def despacho(leonor=False, noche=False, inigo=False):
         b += '<g class="ol"><rect x="501" y="196" width="26" height="18" fill="#efe6d0" transform="rotate(-4 514 205)"/><path d="M504 201h20M504 205h16M504 209h18" stroke="#3a2a1a" stroke-width=".8" transform="rotate(-4 514 205)"/></g>'
         # la Biblia familiar, sobre el escritorio
         b += '<rect x="194" y="300" width="56" height="20" rx="2" fill="#2a1408"/><rect x="196" y="300" width="52" height="6" fill="#e8dcc0"/><path d="M222 307v10M217 311h10" stroke="#c9a24a" stroke-width="2"/>'
+        # gotas de lacre rojo, secas, del retrato hacia la puerta del pasillo (solo con la linterna)
+        b += '<g class="ol" fill="#8a1a1a">' + ''.join(f'<ellipse cx="{x}" cy="{y}" rx="{r}" ry="{r*.55}"/>' for x, y, r in ((392, 470, 3.2), (468, 474, 2.4), (560, 477, 2.8), (650, 474, 2.2), (722, 478, 2.6))) + '</g>'
+        if abrigo:
+            # el abrigo de Íñigo, empapado, en el sillón
+            b += '<g transform="translate(-75 0)"><path d="M600 400h110v70h-110z" fill="#3a2018"/><path d="M594 380h16v90h-16zM700 380h16v90h-16z" fill="#2a160e"/>'
+            b += '<path d="M610 384q40-14 84 2l6 70q-48 8-96-2z" fill="#2c2c36"/><path d="M640 392l14 50M664 392l-8 52" stroke="#16161c" stroke-width="3"/><path d="M676 420h16v12h-16z" fill="#1a1a20"/>'
+            b += '<g fill="#7a9ab0" opacity=".7"><circle cx="630" cy="458" r="1.6"/><circle cx="672" cy="461" r="1.4"/></g></g>'
         if not inigo:
             # Clara con una vela
             b += fig(CLARA, 735, 488, 1.12)
@@ -810,7 +817,7 @@ def despacho(leonor=False, noche=False, inigo=False):
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     return wrap(b)
 SVG['despacho'] = despacho(); SVG['despachoL'] = despacho(True)
-SVG['despachoN'] = despacho(noche=True); SVG['despachoI'] = despacho(noche=True, inigo=True)
+SVG['despachoN'] = despacho(noche=True); SVG['despachoI'] = despacho(noche=True, inigo=True); SVG['despachoNA'] = despacho(noche=True, abrigo=True)
 
 def escritorio():
     b = '<rect width="800" height="500" fill="#4a2e18"/>'
@@ -1042,6 +1049,32 @@ def cajaF(abierta=False):
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     return wrap(b)
 SVG['cajaF'] = cajaF(); SVG['cajaA'] = cajaF(True)
+
+def calle():
+    b = '<rect width="800" height="500" fill="#0a0c12"/>'
+    # tapia y fachada del palacete
+    b += '<rect y="120" width="800" height="300" fill="#1e1c1a"/>'
+    for y in range(120, 420, 22):
+        o = 0 if (y//22) % 2 else 24
+        for x in range(-24, 800, 48): b += f'<rect x="{x+o}" y="{y}" width="46" height="20" fill="#24221f" opacity=".7"/>'
+    b += '<path d="M0 120h800" stroke="#121110" stroke-width="8"/>'
+    for x in (160, 470): b += f'<rect x="{x}" y="150" width="40" height="60" fill="#14181e"/><rect x="{x+4}" y="154" width="32" height="52" fill="#1e2a36" opacity=".6"/>'
+    # puerta de servicio
+    b += '<rect x="640" y="250" width="70" height="170" fill="#140c06" stroke="#0a0604" stroke-width="5"/><circle cx="700" cy="340" r="3" fill="#6a5a3a"/><text x="675" y="244" text-anchor="middle" font-size="7" fill="#5a4a3a" font-family="Georgia">SERVICIO</text>'
+    # farola de gas
+    b += '<rect x="317" y="200" width="6" height="220" fill="#111"/><path d="M308 196h24l-4 22h-16z" fill="#1e1a14"/><rect x="313" y="200" width="14" height="14" fill="#ffd28a"/><g class="a-brillo"><circle cx="320" cy="210" r="120" fill="url(#warm)" opacity=".75"/></g>'
+    # calle mojada
+    b += '<rect y="420" width="800" height="80" fill="#14161a"/><path d="M0 420h800" stroke="#2a2c30" stroke-width="3"/>'
+    b += '<ellipse cx="320" cy="460" rx="70" ry="6" fill="#ffd28a" opacity=".12"/>'
+    # el otro sereno, con su farol (lo mueve el guion)
+    est_ = ESTIBADOR.replace('COL2', '#2a2e36').replace('COL', '#30343c')
+    b += f'<g class="otroS" style="transform:translate(200px,0px)">{fig(est_, 0, 470, 1.4, who="El otro sereno")}<path d="M20 340v14" stroke="#111" stroke-width="2"/><rect x="13" y="354" width="14" height="18" fill="#ffd28a"/><circle cx="20" cy="363" r="80" fill="url(#warm)"/></g>'
+    # Aitor esperando en la sombra
+    b += '<rect x="0" y="120" width="120" height="380" fill="#000" opacity=".45"/>'
+    b += aitor(70, 478, .72)
+    b += '<rect width="800" height="500" fill="#05070c" opacity=".35"/><rect width="800" height="500" fill="url(#vig)"/>'
+    return wrap(b)
+SVG['calle'] = calle()
 
 if __name__ == '__main__':
     for k, v in SVG.items():
