@@ -938,7 +938,7 @@ def armario():
     # cartel de equivalencias (letra pequeña, en el lateral)
     b += '<rect x="690" y="120" width="96" height="150" fill="#e8dcc0"/><rect x="690" y="120" width="96" height="150" fill="#000" filter="url(#paperT)"/>'
     b += '<text x="738" y="136" text-anchor="middle" font-size="6.2" fill="#2a1d10" font-family="Georgia" font-weight="bold">PESAS DE BOTICA</text>'
-    for k, t in enumerate(['1 libra = 12 onzas', '1 onza (℥) = 8 dracmas', '1 dracma (ʒ) = 3 escrúpulos', '1 escrúpulo (℈) = 24 granos', 'gr. = grano', '½ = media']):
+    for k, t in enumerate(['1 onza (℥) = 8 dracmas', '= 576 granos', '1 dracma (ʒ) = 3 escrúpulos', '= 72 granos', '1 escrúpulo (℈) = 24 granos', 'gr. = grano · ½ = media']):
         b += f'<text x="738" y="{156+k*16}" text-anchor="middle" font-size="5.2" fill="#2a1d10" font-family="Georgia,\'Noto Serif\',serif">{t}</text>'
     b += '<circle cx="738" cy="124" r="3" fill="#8a1a1a"/>'
     b += '<rect width="800" height="500" fill="url(#vig)" opacity=".6"/>'

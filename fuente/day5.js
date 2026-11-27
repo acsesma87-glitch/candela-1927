@@ -117,8 +117,8 @@ DAYS[5]=[
 {svg:SVG.armario,dark:0,tools:['mano','linterna','lupa'],
  spots:[
   ...[0,1,2,3,4,5].map(i=>({id:'fr'+i,tool:'mano',x:FR_X(i),y:290,r:44,once:false,when:()=>!d5().cajon,act:()=>frasco(i)})),
-  {id:'tabla',tool:'lupa',x:738,y:195,w:96,h:150,act:async()=>{await bubble('«Pesas de botica: 1 onza (℥) = 8 dracmas · 1 dracma (ʒ) = 3 escrúpulos · 1 escrúpulo (℈) = 24 granos.»',5000);
-    await pista('tablaBotica','Pesas de botica','1 onza (℥) = 8 dracmas. 1 dracma (ʒ) = 3 escrúpulos. 1 escrúpulo (℈) = 24 granos (gr.). ½ = media.')}},
+  {id:'tabla',tool:'lupa',x:738,y:195,w:96,h:150,act:async()=>{await bubble('«Pesas de botica: 1 onza (℥) = 576 granos · 1 dracma (ʒ) = 72 granos · 1 escrúpulo (℈) = 24 granos. ½ = media.»',5000);
+    await pista('tablaBotica','Pesas de botica','1 onza (℥) = 8 dracmas = 576 granos. 1 dracma (ʒ) = 3 escrúpulos = 72 granos. 1 escrúpulo (℈) = 24 granos. gr. = grano. ½ = media.')}},
   {id:'fichaMedica',tool:'mano',x:370,y:432,r:70,when:()=>d5().cajon,act:async()=>{
     await docShow('<div style="text-align:left;font-size:15px;line-height:1.7"><b style="color:#8a2a20">Ficha clínica · Dispensario del Puerto</b><br>Paciente: <b>Arrieta, Julián</b>. 58 años.<br>Diagnóstico: tumor de estómago, muy avanzado.<br>Pronóstico: <u>pocos meses</u>. El paciente lo sabe.<br>Tratamiento: calmantes, según dolor.<br><i>No informar a la familia, por deseo expreso del paciente.</i><br><span style="float:right">R. S.</span></div>');
     await pista('fichaMedica','La ficha médica de Don Julián','Escondida en un cajón secreto del dispensario: Don Julián tenía un tumor de estómago y le quedaban pocos meses. Él lo sabía; su familia, no.');
