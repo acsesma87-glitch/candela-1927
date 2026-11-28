@@ -1158,7 +1158,7 @@ def cajaF(abierta=False):
     else:
         b += '<rect x="250" y="90" width="300" height="320" fill="#0e0c0a"/><path d="M250 90l-120 30v320l120-30z" fill="#4a5058" stroke="#1a1c20" stroke-width="4"/>'
         b += '<rect x="270" y="300" width="260" height="8" fill="#2a2a2a"/><rect x="290" y="270" width="70" height="30" fill="#6a8a5a"/><rect x="296" y="264" width="70" height="30" fill="#7a9a6a"/>'
-        b += '<g transform="rotate(-4 450 250)"><rect x="380" y="190" width="140" height="100" fill="#efe6d0"/><text x="450" y="226" text-anchor="middle" font-size="13" fill="#2a1d10" font-family="Georgia" font-style="italic">Testamento</text><text x="450" y="246" text-anchor="middle" font-size="8" fill="#2a1d10" font-family="Georgia">Julián Arrieta Goñi</text><circle cx="490" cy="272" r="9" fill="#8a1a1a"/></g>'
+        b += '<g transform="rotate(-4 450 250)"><rect x="380" y="190" width="140" height="100" fill="#efe6d0"/><text x="450" y="226" text-anchor="middle" font-size="13" fill="#2a1d10" font-family="Georgia" font-style="italic">Testamento</text><text x="450" y="246" text-anchor="middle" font-size="8" fill="#2a1d10" font-family="Georgia">Julián Arrieta Goñi</text><circle cx="490" cy="272" r="9" fill="#8a1a1a"/><path d="M487 264l2 4-2 3 3 3-1 3" stroke="#3a0808" stroke-width=".9" fill="none" opacity=".8"/></g>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     b = conluz(b, .5, [(400,250,300,290,1)], [(400,-30,440,'warm',.38,0)], tono=.06)
     return wrap(b)
