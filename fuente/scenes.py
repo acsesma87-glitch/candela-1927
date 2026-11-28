@@ -188,14 +188,26 @@ def topo():
     b += '<path d="M0 420H800M0 452H800" stroke="#4a4640" stroke-width="4"/>' + ''.join(f'<rect x="{x}" y="414" width="30" height="44" fill="#1a1612" opacity=".7"/>' for x in range(0, 800, 52))
     b += '<rect x="420" y="360" width="380" height="16" fill="#3a3530"/><path d="M420 360H800" stroke="#6a6258" stroke-width="3"/><rect x="420" y="376" width="380" height="8" fill="#0c0b0a"/>'
     b += '<path d="M440 384h340" stroke="#e8c27a" stroke-width="1.5" opacity=".18"/>'
-    # el Topo
-    b += '<g class="a-ralenti"><rect x="20" y="230" width="300" height="160" rx="10" fill="#7a2a20"/><rect x="20" y="230" width="300" height="24" rx="8" fill="#3a100c"/>'
-    for k in range(5):
-        b += f'<rect x="{40+k*56}" y="264" width="40" height="52" rx="4" fill="#120a08"/><rect x="{42+k*56}" y="266" width="36" height="48" rx="3" fill="#f0c070" opacity=".8"/>'
-    b += '<rect x="20" y="330" width="300" height="8" fill="#8a6a30"/><text x="170" y="364" text-anchor="middle" font-family="Georgia" font-size="14" fill="#c8b080" letter-spacing="3" opacity=".85">TOPO</text>'
-    b += '<path d="M200 230L260 116" stroke="#0a0a0a" stroke-width="4"/><circle cx="60" cy="398" r="14" fill="#050505"/><circle cx="280" cy="398" r="14" fill="#050505"/></g>'
-    b += '<rect x="30" y="392" width="280" height="60" fill="#f0c070" opacity=".07" filter="url(#b5)"/>'
-    b += '<g class="a-vapor"><g filter="url(#b5)" opacity=".55"><ellipse cx="120" cy="400" rx="90" ry="26" fill="#b8b6b0"/><ellipse cx="240" cy="390" rx="70" ry="22" fill="#b8b6b0"/></g></g>'
+    # el Topo: tren eléctrico de verdad, a escala de la gente, saliendo del cuadro por la izquierda
+    b += '<linearGradient id="carro" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4a1712"/><stop offset=".5" stop-color="#3a110d"/><stop offset="1" stop-color="#1c0806"/></linearGradient>'
+    b += '<g class="a-ralenti">'
+    b += '<path d="M150 112 L250 30 M190 112 L250 30" stroke="#0a0a0a" stroke-width="3"/><path d="M236 30h30" stroke="#0a0a0a" stroke-width="4"/>'
+    b += '<path d="M-40 128 Q-40 112 -24 110 L360 110 Q384 112 386 136 L392 384 L-40 384Z" fill="url(#carro)"/>'
+    b += '<path d="M-40 128 Q-40 112 -24 110 L360 110 Q384 112 386 136" fill="none" stroke="#5a2018" stroke-width="3"/>'
+    b += '<rect x="-40" y="110" width="430" height="16" fill="#260a07"/>'
+    for k in range(4):
+        x = -20 + k*92
+        b += f'<rect x="{x}" y="150" width="70" height="96" rx="5" fill="#0c0605"/><rect x="{x+4}" y="154" width="62" height="88" rx="3" fill="#e8b868" opacity=".72"/>'
+        b += f'<path d="M{x+4} 196h62" stroke="#3a1a10" stroke-width="3"/>'
+        if k in (1, 2): b += f'<path d="M{x+20} 242 q0 -30 14 -34 q14 4 14 34z" fill="#1a0e08" opacity=".75"/><circle cx="{x+34}" cy="200" r="8" fill="#1a0e08" opacity=".75"/>'
+    b += '<rect x="352" y="140" width="30" height="210" rx="3" fill="#2a0c08"/><rect x="356" y="150" width="22" height="70" rx="2" fill="#e8b868" opacity=".45"/>'
+    b += '<rect x="-40" y="262" width="430" height="7" fill="#7a5a28"/><rect x="-40" y="300" width="430" height="3" fill="#5a4020"/>'
+    b += ''.join(f'<circle cx="{x}" cy="282" r="1.6" fill="#140504"/>' for x in range(-30, 386, 18))
+    b += '<text x="170" y="292" text-anchor="middle" font-family="Georgia" font-size="16" fill="#b89860" letter-spacing="5" opacity=".85">TOPO</text>'
+    b += '<rect x="-40" y="340" width="430" height="44" fill="#120504"/><circle cx="40" cy="388" r="18" fill="#050505"/><circle cx="96" cy="388" r="18" fill="#050505"/><circle cx="250" cy="388" r="18" fill="#050505"/><circle cx="306" cy="388" r="18" fill="#050505"/>'
+    b += '<circle cx="372" cy="330" r="7" fill="#ffe0a0"/></g>'
+    b += '<rect x="-20" y="392" width="400" height="60" fill="#e8b868" opacity=".08" filter="url(#b5)"/>'
+    b += '<g class="a-vapor"><g filter="url(#b5)" opacity=".45"><ellipse cx="120" cy="400" rx="110" ry="24" fill="#a8a6a0"/><ellipse cx="290" cy="394" rx="80" ry="20" fill="#a8a6a0"/></g></g>'
     # letrero esmaltado
     b += '<rect x="540" y="150" width="3" height="40" fill="#111"/><rect x="606" y="150" width="3" height="40" fill="#111"/>'
     b += '<rect x="510" y="120" width="130" height="34" rx="4" fill="#142a40" stroke="#c8c0a8" stroke-width="2"/>'
@@ -210,7 +222,7 @@ def topo():
     b += '<g class="a-brillo"><circle cx="729" cy="165" r="90" fill="url(#warm)"/></g>'
     b += '<rect y="380" width="800" height="120" filter="url(#fog)" opacity=".35"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .62, [(729,200,170,240,1),(646,290,130,130,1),(170,310,230,150,1),(470,300,120,150,.7)], [(170,290,170,'warm',.3,0),(729,165,170,'warm',.5,0),(646,273,90,'warm',.55,12)], lluvia=True, tono=.15)
+    b = conluz(b, .62, [(729,200,170,240,1),(646,290,130,130,1),(180,250,230,190,1),(470,300,120,150,.7)], [(160,200,200,'warm',.25,0),(729,165,170,'warm',.5,0),(646,273,90,'warm',.55,12)], lluvia=True, tono=.15)
     return wrap(b)
 SVG['topo'] = topo()
 
