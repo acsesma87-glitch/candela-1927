@@ -53,13 +53,8 @@ def luz(dk, holes, glows=(), humo=0, lluvia=False, tono=.28):
 VIG='<rect width="800" height="500" fill="url(#vig)"/>'
 def conluz(b, *a, **k):
     """Mete la capa de luz justo antes de la viñeta final de la escena.
-    El humo va por detrás de la gente (si no, las personas parecen fantasmas)."""
-    humo=k.pop('humo',0)
-    if humo:
-        h=f'<rect width="800" height="330" filter="url(#smoke)" opacity="{humo}" class="ob"/>'
-        p=b.find('<g class="resp"')
-        if p<0: p=b.find('<g transform="translate(')
-        b=b[:p]+h+b[p:] if p>=0 else b+h
+    El humo va por delante de todo, pero muy transparente para no tapar a la gente."""
+    if k.get('humo'): k['humo']=round(k['humo']*.5,3)
     L=luz(*a, **k)
     i=b.rfind(VIG)
     return b[:i]+L+b[i:] if i>=0 else b+L
