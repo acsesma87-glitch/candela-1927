@@ -78,8 +78,9 @@ def clara(L):
     s+=P('M-20 -20 L-16 -102 Q0 -112 16 -102 L20 -20Z','#3a2434',L)
     s+='<path d="M-6 -104 Q0 -98 6 -104" stroke="#d8d0c4" stroke-width="2.5" fill="none"/>'
     s+=S('M-14 -100 Q-24 -78 -22 -58','#3a2434',9,L)+f'<circle cx="-22" cy="-56" r="5" fill="{SK}"/>'
-    s+=S('M14 -100 Q24 -86 22 -70','#3a2434',9,L)+f'<circle cx="22" cy="-68" r="5" fill="{SK}"/>'
-    s+='<rect x="16" y="-66" width="12" height="4" fill="#c9a24a"/><rect x="20" y="-84" width="4" height="18" fill="#efe6d0"/><path d="M22 -84 q-3 -5 0 -10 q3 5 0 10z" fill="#ffcf60"/>'
+    s+=S('M14 -100 Q24 -78 22 -58','#3a2434',9,L)+f'<circle cx="22" cy="-56" r="5" fill="{SK}"/>'
+    s+='<g fill="#1e2a6a"><circle cx="20" cy="-58" r="1.5"/><circle cx="24" cy="-55" r="1.2"/><circle cx="22" cy="-52.5" r="1"/><ellipse cx="25.5" cy="-58" rx="1.3" ry=".8"/></g>'  # manchas de tinta
+    s+='<rect x="16" y="-54" width="12" height="4" fill="#c9a24a"/><rect x="20" y="-72" width="4" height="18" fill="#efe6d0"/><path d="M22 -72 q-3 -5 0 -10 q3 5 0 10z" fill="#ffcf60"/>'
     s+=head(0,-126,12,L)+eye(-4,-127)+eye(4,-127)+'<path d="M-3 -119h6" stroke="#7a4a3a" stroke-width="1.3"/>'
     s+='<path d="M-14 -124 Q-16 -142 0 -142 Q16 -142 14 -124 L14 -114 L9 -114 L9 -130 Q0 -134 -9 -130 L-9 -114 L-14 -114Z" fill="#2a1a12"/>'
     return s
@@ -144,7 +145,7 @@ NF=lambda fn,L=1:f'<g transform="scale(1.6)">{fn(L)}</g>'
 
 def clara_sv(L):  # Clara sin vela
     s=clara(L)
-    i=s.index('<rect x="16" y="-66"');j=s.index('/>',s.index('<path d="M22 -84'))+2
+    i=s.index('<rect x="16" y="-54"');j=s.index('/>',s.index('<path d="M22 -72'))+2
     return s[:i]+s[j:]
 def estibador(L):  # COL y COL2 se sustituyen en cada uno
     s=shadow()+legs('#1a1612',-7,7,42)+P('M-22 -36 L-20 -100 Q0 -112 20 -100 L22 -36Z','COL',L)
