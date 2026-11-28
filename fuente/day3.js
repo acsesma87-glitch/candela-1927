@@ -35,8 +35,8 @@ DAYS[3]=[
       persona('Mateo «el Rubio»','Se fue de El Ancla a medianoche por «un asunto». Recibe notas escondidas detrás de la diana.');
       fin3();return}
     await talk('Paco','¿Otra sidra, señorita? Para la información hay que esperar a otro día.');endTalk()}},
-  {id:'dianaVer',tool:'mano',x:372,y:108,r:40,once:false,act:async()=>{goScene(2)}},
-  {id:'dianaLupa',tool:'lupa',x:372,y:108,w:70,h:70,act:async()=>{await bubble('La diana está torcida y el clavo, gastado. Como si alguien la moviera a menudo…',4000)}},
+  {id:'dianaVer',tool:'mano',x:100,y:192,r:42,once:false,act:async()=>{goScene(2)}},
+  {id:'dianaLupa',tool:'lupa',x:100,y:192,w:76,h:76,act:async()=>{await bubble('La diana está torcida y el clavo, gastado. Como si alguien la moviera a menudo…',4000)}},
   {id:'fiados',tool:'lupa',x:245,y:150,w:110,h:80,act:async()=>{await bubble('La pizarra de fiados: «Mateo… 2 sidras (30-XI)». Solo dos sidras. Para alguien que se quedó hasta el cierre, poca sed.',4800)}},
   {id:'sangre',tool:'linterna',x:50,y:462,w:80,h:40,act:async()=>{await bubble('Bajo la escalera, a oscuras: una silla rota y gotas de sangre seca en el suelo.',4000);
     await talk('Paco','(Desde la barra.) Una pelea, el otro día. Gente de fuera. Nada que le importe.');endTalk();

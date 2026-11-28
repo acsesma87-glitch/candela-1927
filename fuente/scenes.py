@@ -694,7 +694,10 @@ def taberna():
         fi+=f'<text x="200" y="{142+k*11}" font-size="6.4" fill="#e2e0d6" font-family="Special Elite,Courier New">{x}</text>'
     t=t[:i]+fi+t[j:]
     # diana en la pared, puerta de la trastienda y la sangre bajo los barriles
-    add='<g id="dianaPared" transform="translate(372 108) scale(.72) translate(-650 -150)"><circle cx="650" cy="150" r="40" fill="#141414"/><circle cx="650" cy="150" r="32" fill="#cfc4a8"/><circle cx="650" cy="150" r="22" fill="#222"/><circle cx="650" cy="150" r="12" fill="#8a1d14"/><circle cx="650" cy="150" r="4" fill="#2a6a3a"/><path d="M640 132l-14-10M664 160l14 6M650 140l2-16" stroke="#c9a24a" stroke-width="2"/></g>'
+    # sin las redes de pesca: la diana va a la izquierda, a la altura de la cabeza de Paco (se puede jugar)
+    i=t.index('<!-- red de pesca con corchos -->');j=t.index('<!-- pizarra -->')
+    t=t[:i]+t[j:]
+    add='<g id="dianaPared" transform="translate(100 192) scale(.8) translate(-650 -150)"><circle cx="650" cy="150" r="40" fill="#141414"/><circle cx="650" cy="150" r="32" fill="#cfc4a8"/><circle cx="650" cy="150" r="22" fill="#222"/><circle cx="650" cy="150" r="12" fill="#8a1d14"/><circle cx="650" cy="150" r="4" fill="#2a6a3a"/><path d="M640 132l-14-10M664 160l14 6M650 140l2-16" stroke="#c9a24a" stroke-width="2"/></g>'
     add+='<rect x="764" y="96" width="40" height="182" fill="#160d07" stroke="#0c0703" stroke-width="5"/><circle cx="772" cy="196" r="3" fill="#6a5222"/><text x="783" y="112" text-anchor="middle" font-size="5.5" fill="#8a7a5a" font-family="Georgia">PRIVADO</text>'
     t=t.replace('<!-- maqueta de barco -->',add+'<!-- maqueta de barco -->')
     sangre='<g class="ol"><path d="M14 476l30-34M26 486l12-40M10 452h40" stroke="#7a5a36" stroke-width="5"/><g fill="#8a1a12">'+''.join(f'<ellipse cx="{48+i*11}" cy="{462+(i%2)*7}" rx="{4+i%2}" ry="2.6"/>' for i in range(6))+'<ellipse cx="70" cy="476" rx="9" ry="3"/></g></g><path d="M0 500V420l120-10v90z" fill="#000" class="ob" opacity=".6"/>'
@@ -704,7 +707,7 @@ def taberna():
     esc='<g><path d="M0 250 L118 404 L118 418 L0 268Z" fill="#2a170d"/>'+''.join(f'<path d="M{k*14} {250+k*18.3}h16v6h-16z" fill="#3a2214"/>' for k in range(9))+'<path d="M0 268 L118 418 V500 H0Z" fill="#0e0804"/><path d="M60 330 V500" stroke="#1e1009" stroke-width="6"/></g>'
     t=t[:i]+'<!-- escalera -->'+esc+t[j:]
     t=t.replace('<ellipse cx="702" cy="150" rx="90" ry="90" fill="url(#t2hole)" opacity=".7"/>','<ellipse cx="702" cy="150" rx="90" ry="90" fill="url(#t2hole)" opacity=".7"/><ellipse cx="782" cy="190" rx="50" ry="110" fill="url(#t2hole)" opacity=".7"/>')
-    t=t.replace('<ellipse cx="702" cy="150" rx="90" ry="90" fill="url(#t2hole)" opacity=".7"/>','<ellipse cx="702" cy="150" rx="90" ry="90" fill="url(#t2hole)" opacity=".7"/><ellipse cx="380" cy="120" rx="60" ry="60" fill="url(#t2hole)" opacity=".6"/>')
+    t=t.replace('<ellipse cx="702" cy="150" rx="90" ry="90" fill="url(#t2hole)" opacity=".7"/>','<ellipse cx="702" cy="150" rx="90" ry="90" fill="url(#t2hole)" opacity=".7"/><ellipse cx="100" cy="192" rx="70" ry="70" fill="url(#t2hole)" opacity=".7"/>')
     return wrap(t)
 SVG['taberna'] = taberna()
 
