@@ -873,6 +873,12 @@ def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
     # secreter de Leonor (derecha)
     b += '<rect x="560" y="150" width="160" height="200" fill="#4a2a18"/><path d="M560 230h160" stroke="#2a180c" stroke-width="3"/><rect x="574" y="164" width="132" height="56" fill="#3a2014"/><circle cx="640" cy="196" r="7" fill="#c9a24a"/><rect x="637" y="194" width="6" height="10" fill="#1a0e08"/>'
     b += '<rect x="560" y="350" width="10" height="40" fill="#3a2014"/><rect x="710" y="350" width="10" height="40" fill="#3a2014"/>'
+    if noche:
+        # reloj de pie, parado
+        b += '<rect x="486" y="66" width="56" height="266" fill="#3a2010" stroke="#1e1008" stroke-width="3"/><path d="M482 66h64l-6-12h-52z" fill="#2a160a"/>'
+        b += '<circle cx="514" cy="104" r="21" fill="#e8dcc0" stroke="#8a6a2a" stroke-width="3"/><path d="M514 104H499" stroke="#1a1a1a" stroke-width="1.6"/><path d="M514 104L519.5 111.1" stroke="#1a1a1a" stroke-width="2.6"/>'
+        b += '<rect x="498" y="142" width="32" height="150" fill="#140a04" stroke="#8a6a2a" stroke-width="2"/><path d="M514 146v104" stroke="#c9a24a" stroke-width="2"/><circle cx="514" cy="258" r="9" fill="#c9a24a"/>'
+        b += '<g class="ol"><rect x="501" y="196" width="26" height="18" fill="#efe6d0" transform="rotate(-4 514 205)"/><path d="M504 201h20M504 205h16M504 209h18" stroke="#3a2a1a" stroke-width=".8" transform="rotate(-4 514 205)"/></g>'
     # escritorio de Julián con el bloc, el lápiz y la póliza
     b += '<rect y="0" width="800" height="18" fill="#120a05"/><path d="M110 500 L170 360 L640 360 L700 500Z" fill="#2a0e10" opacity=".85"/><path d="M130 490 L182 372 L628 372 L682 490Z" fill="none" stroke="#6a4a20" stroke-width="2" opacity=".5"/>'
     b += '<rect x="180" y="320" width="360" height="22" fill="#5a3a22"/><rect x="190" y="342" width="60" height="140" fill="#3a2414"/><rect x="470" y="342" width="60" height="140" fill="#3a2414"/>'
@@ -884,11 +890,6 @@ def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
     if noche:
         # inscripción del retrato (letra pequeña)
         b += '<text x="444" y="204" text-anchor="end" font-size="4.6" fill="#c9a24a" font-family="Georgia" font-style="italic">Julián y Leonor · 12 · IV · 1898</text>'
-        # reloj de pie, parado
-        b += '<rect x="486" y="66" width="56" height="266" fill="#3a2010" stroke="#1e1008" stroke-width="3"/><path d="M482 66h64l-6-12h-52z" fill="#2a160a"/>'
-        b += '<circle cx="514" cy="104" r="21" fill="#e8dcc0" stroke="#8a6a2a" stroke-width="3"/><path d="M514 104H499" stroke="#1a1a1a" stroke-width="1.6"/><path d="M514 104L519.5 111.1" stroke="#1a1a1a" stroke-width="2.6"/>'
-        b += '<rect x="498" y="142" width="32" height="150" fill="#140a04" stroke="#8a6a2a" stroke-width="2"/><path d="M514 146v104" stroke="#c9a24a" stroke-width="2"/><circle cx="514" cy="258" r="9" fill="#c9a24a"/>'
-        b += '<g class="ol"><rect x="501" y="196" width="26" height="18" fill="#efe6d0" transform="rotate(-4 514 205)"/><path d="M504 201h20M504 205h16M504 209h18" stroke="#3a2a1a" stroke-width=".8" transform="rotate(-4 514 205)"/></g>'
         # la Biblia familiar, sobre el escritorio
         b += '<rect x="194" y="300" width="56" height="20" rx="2" fill="#2a1408"/><rect x="196" y="300" width="52" height="6" fill="#e8dcc0"/><path d="M222 307v10M217 311h10" stroke="#c9a24a" stroke-width="2"/>'
         # gotas de lacre rojo, secas, del retrato hacia la puerta del pasillo (solo con la linterna)
