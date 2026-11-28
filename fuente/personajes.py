@@ -211,3 +211,42 @@ def benigna_sorpresa(L):  # se le ha caído la bandeja: ojos como platos y boca 
     s+=S('M-16 -98 Q-28 -110 -24 -122','#1e1e24',9,L)+S('M16 -98 Q28 -110 24 -122','#1e1e24',9,L)
     s+=f'<circle cx="-24" cy="-124" r="5" fill="{SK}"/><circle cx="24" cy="-124" r="5" fill="{SK}"/>'
     return s
+
+# ---------- personajes de perfil (para colocarlos de forma natural, no todos de frente) ----------
+def sentado(col,hat=True,cigarro=False,naipes=False):
+    def f(L):  # de perfil, mirando a la derecha; pies en y=0
+        s='<ellipse cx="4" rx="30" ry="5" fill="#000" opacity=".55"/>'
+        s+='<path d="M-16 0V-44M10 0V-44" stroke="#120a06" stroke-width="3"/><rect x="-20" y="-49" width="36" height="5" rx="2" fill="#2a160c"/><path d="M-17 -49 Q-24 -80 -16 -102" stroke="#2a160c" stroke-width="4" fill="none"/>'
+        s+='<path d="M22 -46 V-3" stroke="#141416" stroke-width="9" stroke-linecap="round"/><path d="M20 -2h13" stroke="#070707" stroke-width="5" stroke-linecap="round"/>'
+        s+='<path d="M-8 -50 H24" stroke="#18181c" stroke-width="12" stroke-linecap="round"/>'
+        s+=P('M-14 -46 L-8 -104 Q2 -112 12 -102 L14 -46Z',col,L)
+        s+='<path d="M8 -104 L12 -94 L4 -96Z" fill="#d8d4cc"/>'
+        s+=S('M6 -98 Q22 -86 38 -72',col,9,L)+f'<circle cx="40" cy="-71" r="5" fill="{SK}"/>'
+        if naipes: s+='<g transform="translate(42 -76) rotate(-20)"><rect x="-3" y="-8" width="7" height="10" fill="#f2ead6"/><rect x="0" y="-9" width="7" height="10" fill="#efe6d0" transform="rotate(14)"/></g>'
+        if cigarro: s+='<path d="M16 -119 l10 2" stroke="#5a3a1a" stroke-width="2.6"/><circle cx="27" cy="-117" r="1.6" fill="#ff8a30"/><path class="a-humoP" d="M28 -120 q-4 -9 2 -15 q6 -6 0 -15 q-5 -7 2 -15 q8 -9 1 -19" stroke="#e8e0d0" stroke-width="3.2" fill="none" opacity=".35" filter="url(#humoB)"/>'
+        s+=f'<rect x="-2" y="-114" width="10" height="10" fill="#b38d77"/><circle cx="4" cy="-124" r="13" fill="{SK}"/><path d="M4 -137 A13 13 0 0 0 4 -111Z" fill="#000" opacity=".4"/><path d="M16 -126 l4 4 -4 1" fill="{SK}"/><circle cx="10" cy="-127" r="1.4" fill="#111"/><path d="M8 -118 h6" stroke="#3a2a1a" stroke-width="1.4"/>'
+        if hat: s+='<ellipse cx="4" cy="-133" rx="21" ry="3.6" fill="#0c0c0c"/><path d="M-8 -134 Q-8 -150 4 -150 Q16 -150 16 -134Z" fill="#141414"/><path d="M-8 -137h24" stroke="#3a3a3a" stroke-width="1.6"/>'
+        else: s+='<path d="M-9 -128 Q-8 -140 4 -138 Q14 -138 16 -130 Q6 -134 -2 -130Z" fill="#1a120c"/>'
+        return s
+    return f
+def depie(col,hat=False):
+    def f(L):  # de pie y de perfil, mirando a la derecha
+        s='<ellipse cx="2" rx="26" ry="5" fill="#000" opacity=".55"/>'
+        s+='<path d="M-4 -60 L-8 -2 M6 -60 L10 -2" stroke="#101012" stroke-width="9" stroke-linecap="round"/><path d="M-10 -2h12M8 -2h12" stroke="#060606" stroke-width="5" stroke-linecap="round"/>'
+        s+=P('M-14 -56 L-10 -110 Q2 -118 12 -108 L14 -56Z',col,L)
+        s+='<path d="M8 -110 L13 -96 L4 -98Z" fill="#e8e4dc"/>'
+        s+=S('M6 -102 Q22 -88 34 -74',col,9,L)+f'<circle cx="36" cy="-73" r="5" fill="{SK}"/>'
+        s+=f'<rect x="-2" y="-120" width="10" height="10" fill="#b38d77"/><circle cx="4" cy="-130" r="13" fill="{SK}"/><path d="M4 -143 A13 13 0 0 0 4 -117Z" fill="#000" opacity=".4"/><path d="M16 -132 l4 4 -4 1" fill="{SK}"/><circle cx="10" cy="-133" r="1.4" fill="#111"/>'
+        s+='<path d="M6 -124 q5 -2 10 0" stroke="#1a1410" stroke-width="2.4" fill="none"/>'
+        if hat: s+='<ellipse cx="4" cy="-139" rx="20" ry="3.6" fill="#0c0c0c"/><path d="M-7 -140 Q-7 -155 4 -155 Q15 -155 15 -140Z" fill="#141414"/>'
+        else: s+='<path d="M-9 -134 Q-8 -146 4 -144 Q14 -144 16 -136 Q6 -140 -2 -136Z" fill="#0a0a0a"/>'
+        return s
+    return f
+def crupier(L):  # de frente, tras la ruleta: chaleco, pajarita y rastrillo
+    s=shadow()+legs('#0e0e10',-7,7,44)
+    s+=P('M-24 -40 L-22 -106 Q0 -116 22 -106 L24 -40Z','#141416',L)
+    s+='<path d="M-10 -108 L0 -60 L10 -108Z" fill="#e8e4dc"/><path d="M-6 -104 l6 4 6 -4 v6 l-6 -4 -6 4z" fill="#111"/><path d="M-18 -100 L-6 -60 M18 -100 L6 -60" stroke="#2a2a30" stroke-width="3"/>'
+    s+=S('M-18 -100 Q-30 -80 -22 -62','#e8e4dc',8,L)+f'<circle cx="-22" cy="-60" r="5" fill="{SK}"/>'+S('M18 -100 Q34 -84 40 -74','#e8e4dc',8,L)+f'<circle cx="42" cy="-73" r="5" fill="{SK}"/><path d="M44 -74 l26 -6" stroke="#6a4a2a" stroke-width="3"/>'
+    s+=head(0,-128,13,L)+eye(-4,-129)+eye(5,-129)+'<path d="M-7 -121 q7 -4 14 0" stroke="#1a1410" stroke-width="2.4" fill="none"/>'
+    s+='<path d="M-13 -130 Q-13 -144 0 -144 Q13 -144 13 -132 Q4 -140 -4 -139 Q-10 -137 -13 -130Z" fill="#0a0a0a"/><path d="M-12 -138 h24" stroke="#3a3a3a" stroke-width=".8"/>'
+    return s

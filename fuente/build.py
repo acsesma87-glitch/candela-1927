@@ -2,12 +2,13 @@ import json, sys, os
 D = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, D)
 import scenes
+import personajes as PJ
 from scenes import SVG, defs, AITOR, CANDELA
 
 eng = open(os.path.join(D, 'engine.html')).read()
 laika = open(os.path.join(D, 'laika.svgfrag')).read()
 eki = open(os.path.join(D, 'eki.svgfrag')).read()
-day1 = open(os.path.join(D, 'day1.js')).read() + '\n' + open(os.path.join(D, 'day2.js')).read() + '\n' + open(os.path.join(D, 'day3.js')).read() + '\n' + open(os.path.join(D, 'day4.js')).read() + '\n' + open(os.path.join(D, 'day5.js')).read() + '\n' + open(os.path.join(D, 'day6.js')).read() + '\n' + open(os.path.join(D, 'day7.js')).read() + '\n' + open(os.path.join(D, 'day8.js')).read() + '\n' + open(os.path.join(D, 'resumenes.js')).read() + '\n' + open(os.path.join(D, 'corcho.js')).read()
+day1 = open(os.path.join(D, 'day1.js')).read() + '\n' + open(os.path.join(D, 'day2.js')).read() + '\n' + open(os.path.join(D, 'day3.js')).read() + '\n' + open(os.path.join(D, 'day4.js')).read() + '\n' + open(os.path.join(D, 'day5.js')).read() + '\n' + open(os.path.join(D, 'day6.js')).read() + '\n' + open(os.path.join(D, 'day7.js')).read() + '\n' + open(os.path.join(D, 'day8.js')).read() + '\n' + open(os.path.join(D, 'day9.js')).read() + '\n' + open(os.path.join(D, 'resumenes.js')).read() + '\n' + open(os.path.join(D, 'corcho.js')).read()
 
 def face(vb, body, bg='#2a2520'):
     x, y, w, h = vb
@@ -59,6 +60,8 @@ faces = {
   'FACE_OBRERA': face((-32, -234, 64, 64), scenes.OBRERA.replace('COL','#2e3a46').replace('PAN','#d8c070')),
   'FACE_LOLA': face((-36, -240, 72, 72), scenes.LOLA),
   'FACE_PORTERO': face((-36, -246, 72, 72), scenes.PORTERO),
+  'FACE_CRUPIER': face((-26, -158, 52, 52), PJ.crupier(1)),
+  'FACE_JUGADOR': face((-18, -152, 46, 46), PJ.sentado('#2e2018',True,True,False)(1)),
   'FACE_EST': face((-32, -234, 64, 64), scenes.ESTIBADOR.replace('COL2','#34404a').replace('COL','#3a4652')),
 }
 consts = ''.join(f'const {k}={json.dumps(tono(v))};\n' for k, v in faces.items())

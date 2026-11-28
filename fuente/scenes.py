@@ -1467,6 +1467,76 @@ def carta():
     return wrap(b)
 SVG['carta'] = carta()
 
+# ======================= DÍA 9: EL CASINO =======================
+import math as _mt
+G_RULETA = f'<ellipse cx="125" cy="62" rx="80" ry="30" fill="{ink}"/><ellipse cx="125" cy="58" rx="64" ry="22" fill="#d3c7a8"/>' + ''.join(f'<path d="M125 58 L{125+60*_mt.cos(_mt.radians(a)):.0f} {58+20*_mt.sin(_mt.radians(a)):.0f}" stroke="{ink}" stroke-width="{3 if i%2 else 1}"/>' for i,a in enumerate(range(0,360,30))) + f'<ellipse cx="125" cy="58" rx="12" ry="5" fill="{ink}"/><path d="M40 100 h170" stroke="{ink}" stroke-width="2"/>'
+G_COCHE = f'<path d="M40 80 h150 v-24 l-24 -20 h-70 l-20 20 h-36z" fill="{ink}"/><circle cx="70" cy="84" r="12" fill="{ink}"/><circle cx="168" cy="84" r="12" fill="{ink}"/><circle cx="70" cy="84" r="5" fill="#d3c7a8"/><circle cx="168" cy="84" r="5" fill="#d3c7a8"/><rect x="104" y="42" width="40" height="16" fill="#d3c7a8"/>'
+SVG['periodico9'] = diario('Viernes, 9 de diciembre de 1927', 'EL CASINO DE ALTAMAR, LLENO PESE A LA HUELGA Y AL LUTO',
+  'Ruleta hasta el amanecer', G_RULETA,
+  ['Mientras el muelle sigue parado, el Casino','no cierra ni un día. «Aquí se juega lo que','se tiene y lo que no», bromea un crupier.','El director asegura que el joven Íñigo','Arrieta «es un cliente como otro cualquiera».'],
+  'Un coche negro, de madrugada', G_COCHE,
+  ['Un vecino de la cuesta del palacete jura','que la noche del 30 oyó un coche bajar','hacia el puerto pasada la una. «Iba sin','faros», dice. En Altamar, pocos coches','hay: el del médico y el de los Arrieta.'],
+  [('CASINO DE ALTAMAR', ['Ruleta, bacará y orquesta. Salón reservado.','Se admiten señoras acompañadas.']),
+   ('CABALLERIZAS IRIONDO', ['Coches de alquiler y carruajes. Mozo de confianza.'])],
+  'ECOS DEL BARRIO',
+  ['El sereno y la señorita argentina fueron vistos','anoche saliendo de la calle del Farol. Doña Puri','ha tenido que sentarse. Dice que en sus tiempos','eso no pasaba. En sus tiempos, sí pasaba.'],
+  'Lluvia por la tarde. Mar de fondo. Pleamar a las 6:50.')
+
+def casino():
+    b = '<radialGradient id="felt" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#2e5a3a"/><stop offset="1" stop-color="#14301e"/></radialGradient>'
+    b += '<rect width="800" height="500" fill="#1e0a0c"/>'
+    b += ''.join(f'<rect x="{x}" y="0" width="16" height="320" fill="#140608" opacity=".7"/><path d="M{x+30} 30 q6 10 0 20 q-6 10 0 20" stroke="#4a1a1c" stroke-width="1.6" fill="none" opacity=".6"/>' for x in range(0,800,46))
+    b += '<rect y="300" width="800" height="40" fill="#1a0e08"/><path d="M0 300H800" stroke="#5a3a1a" stroke-width="3"/><rect y="340" width="800" height="160" fill="#140c0a"/>' + ''.join(f'<path d="M0 {y}H800" stroke="#0c0605" stroke-width="2"/>' for y in range(356,500,22))
+    b += '<path d="M60 500 L120 380 L700 380 L760 500Z" fill="#2a0c10" opacity=".7"/>'
+    for x, w in ((30, 110), (640, 140)):
+        b += f'<rect x="{x}" y="60" width="{w}" height="180" fill="#2a3438"/><rect x="{x}" y="60" width="{w}" height="180" fill="none" stroke="#b8963e" stroke-width="7"/><path d="M{x+10} 70 L{x+50} 230 M{x+30} 70 L{x+64} 190" stroke="#fff" stroke-width="8" opacity=".06"/>'
+    # en el espejo de la derecha apenas se adivina el mostrador de la caja con el libro abierto
+    b += '<g transform="translate(686 196) scale(-1 1)" opacity=".45"><rect x="-34" y="-6" width="68" height="30" fill="#1a1210"/><path d="M-30 -6 v-12 M30 -6 v-12" stroke="#6a5a2a" stroke-width="1.4"/><rect x="-11" y="-2" width="22" height="14" fill="#cfc4a8" opacity=".55" transform="rotate(-6)"/><g stroke="#3a2a1a" stroke-width=".5" opacity=".7"><path d="M-8 2h16M-8 5h12M-8 8h14" transform="rotate(-6)"/></g></g>'
+    # ventanilla de la caja
+    b += '<rect x="330" y="100" width="170" height="140" fill="#24140c"/><rect x="348" y="120" width="134" height="80" fill="#3a2414"/>' + ''.join(f'<path d="M{x} 120V200" stroke="#b8963e" stroke-width="2"/>' for x in range(356,482,13)) + '<text x="415" y="114" text-anchor="middle" font-size="10" fill="#b8963e" font-family="Georgia" letter-spacing="3">CAJA</text><rect x="326" y="236" width="178" height="8" fill="#3a2414"/>'
+    b += '<rect x="404" y="226" width="26" height="10" fill="#cfc4a8" opacity=".7" transform="rotate(4 417 231)"/>'
+    # mesa de cartas, con dos jugadores sentados de perfil, uno frente al otro
+    b += fig(PJ.sentado('#20222a',True,False,True)(1), 80, 470, .95, who='Un jugador')
+    b += fig(PJ.sentado('#2e2018',True,True,True)(-1), 260, 470, .95, True, who='Un jugador')
+    b += '<ellipse cx="170" cy="468" rx="40" ry="6" fill="#000" opacity=".6"/><path d="M160 404 V466 M150 466 h20" stroke="#2a160c" stroke-width="8"/>'
+    b += '<ellipse cx="170" cy="406" rx="78" ry="15" fill="#3a2010"/><ellipse cx="170" cy="402" rx="76" ry="13" fill="url(#felt)"/>'
+    b += '<g fill="#f2ead6"><rect x="150" y="396" width="9" height="6" transform="rotate(-10 154 399)"/><rect x="176" y="398" width="9" height="6" transform="rotate(12 180 401)"/></g>' + ''.join(f'<ellipse cx="{x}" cy="{y}" rx="5" ry="2" fill="{c}"/><ellipse cx="{x}" cy="{y-2}" rx="5" ry="2" fill="{c}"/>' for x, y, c in [(130,402,'#a3271c'),(204,404,'#e8e4dc'),(212,400,'#a3271c')])
+    b += '<rect x="186" y="396" width="8" height="8" rx="2" fill="#c9a24a" opacity=".85"/>'
+    # ruleta: un jugador de pie en cada extremo y el crupier de frente, detrás
+    b += fig(PJ.depie('#202630',True)(1), 480, 474, .95, who='Un jugador')
+    b += fig(PJ.crupier(1), 600, 446, .95, who='El crupier')
+    b += '<path d="M510 470 V432 M690 470 V432" stroke="#1e1008" stroke-width="8"/><ellipse cx="600" cy="472" rx="110" ry="8" fill="#000" opacity=".55"/>'
+    b += '<path d="M500 410 L700 410 L690 432 L510 432Z" fill="#3a2010"/><path d="M506 396 L694 396 L700 410 L500 410Z" fill="url(#felt)"/><path d="M506 396 L694 396" stroke="#6a4a22" stroke-width="5"/>'
+    b += ''.join(f'<rect x="{x}" y="399" width="10" height="7" fill="none" stroke="#c8c0a0" stroke-width=".6" opacity=".55"/>' for x in range(540,640,12))
+    b += '<g transform="translate(660 400)"><ellipse rx="26" ry="8" fill="#3a2010"/><ellipse rx="20" ry="6" fill="#111"/>' + ''.join(f'<path d="M0 0 L{20*_mt.cos(_mt.radians(a)):.1f} {6*_mt.sin(_mt.radians(a)):.1f}" stroke="{"#8a1d14" if i%2 else "#000"}" stroke-width="3"/>' for i, a in enumerate(range(0,360,24))) + '<ellipse rx="5" ry="1.8" fill="#b8963e"/><circle cx="14" cy="-2" r="1.4" fill="#f0f0f0"/></g>'
+    b += ''.join(f'<ellipse cx="{x}" cy="{y}" rx="5" ry="2" fill="{c}"/><ellipse cx="{x}" cy="{y-2}" rx="5" ry="2" fill="{c}"/>' for x, y, c in [(560,402,'#a3271c'),(586,404,'#2a4a8a'),(612,401,'#e8e4dc')])
+    b += fig(PJ.depie('#2a2226',True)(-1), 740, 474, .95, True, who='Un jugador')
+    # Candela y Aitor, recién llegados, entre las dos mesas
+    b += candela(330, 494, 1/1.6)
+    b += aitor(405, 500, .5)
+    for x, y in ((170, 250), (600, 240)):
+        b += f'<path d="M{x} 0V{y}" stroke="#000" stroke-width="2"/><path d="M{x-26} {y}H{x+26}L{x+40} {y+26}H{x-40}Z" fill="#14301e"/><path d="M{x-26} {y}H{x+26}L{x+28} {y+6}H{x-28}Z" fill="#3a6a48"/>'
+    b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .66, [(170,380,200,170,1),(600,380,220,170,1),(365,420,110,150,.9),(415,170,120,100,.5),(170,262,60,40,1),(600,252,60,40,1)], [(170,274,230,'warm',.45,24),(600,264,230,'warm',.45,24)], humo=.22, tono=.08)
+    return wrap(b)
+SVG['casino'] = casino()
+
+def espejo():
+    b = '<rect width="800" height="500" fill="#1e0a0c"/>' + ''.join(f'<rect x="{x}" y="0" width="16" height="500" fill="#140608" opacity=".7"/>' for x in range(0,800,46))
+    b += '<rect x="158" y="48" width="500" height="420" rx="10" fill="#000" opacity=".5"/><rect x="150" y="40" width="500" height="420" rx="10" fill="#2a3438"/><rect x="150" y="40" width="500" height="420" rx="10" fill="none" stroke="#b8963e" stroke-width="14"/><rect x="164" y="54" width="472" height="392" fill="none" stroke="#7a5a20" stroke-width="2"/>'
+    # reflejo del mostrador y del libro abierto: todo al revés
+    b += '<g transform="translate(400 250) scale(-1 1)">'
+    b += '<rect x="-230" y="90" width="460" height="100" fill="#1a1210" opacity=".8"/>' + ''.join(f'<path d="M{x} -190 V90" stroke="#6a5a2a" stroke-width="3" opacity=".35"/>' for x in range(-220,240,40))
+    b += '<g transform="rotate(-3)"><rect x="-190" y="-150" width="380" height="300" fill="#d8ccb0" opacity=".66"/><path d="M0 -150 V150" stroke="#a89a7a" stroke-width="2" opacity=".6"/>'
+    lines = ['REGISTRO DE DEUDAS · NOVIEMBRE', 'I. Arrieta ...... 4.000 pts (2-XI)', 'I. Arrieta ...... 2.500 pts (16-XI)', 'I. Arrieta ...... 6.000 pts (29-XI)', 'J. Arrieta: «Paga mi hijo.', 'Es la última vez.»   — el director']
+    b += ''.join(f'<text x="-172" y="{-108+k*44}" font-size="{15 if k==0 else 16}" fill="#2a1a0c" font-family="Georgia" font-style="{"normal" if k==0 else "italic"}" opacity=".85">{t}</text>' for k, t in enumerate(lines))
+    b += '</g></g>'
+    b += '<path d="M190 60 L300 440 M240 60 L330 330 M560 60 L620 260" stroke="#fff" stroke-width="16" opacity=".05"/>'
+    b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .45, [(400,250,330,280,1)], [(400,-30,460,'warm',.3,0)], tono=.05)
+    return wrap(b)
+SVG['espejo'] = espejo()
+
 if __name__ == '__main__':
     for k, v in SVG.items():
         open(__import__('os').path.join('/tmp', f'{k}.svg'), 'w').write(v)
