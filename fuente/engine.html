@@ -150,6 +150,32 @@ button{font:inherit;color:inherit;cursor:pointer}
 .sus .x{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px}
 .obj{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
 .obj .o{width:44px;height:44px;flex:none;border:1px solid #b8aa88;border-radius:4px;background:#ddd2b4;display:flex;align-items:center;justify-content:center;font-size:22px}
+/* corcho */
+.pages.cork{background:#b98a55;background-image:radial-gradient(#9a6c3c 1px,transparent 1.4px),radial-gradient(#d0a26a 1px,transparent 1.4px);background-size:7px 7px,11px 11px;background-position:0 0,3px 5px}
+.pages.cork h2{color:#2a1a0c}
+.corcho{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 14px;padding-bottom:10px}
+.ficha{position:relative;background:#f4ecd8;padding:12px 8px 8px;box-shadow:2px 4px 8px #0006;min-height:150px}
+.ficha:nth-child(odd){transform:rotate(-.8deg)}.ficha:nth-child(even){transform:rotate(.7deg)}
+.ficha .chin{position:absolute;left:50%;top:-6px;width:14px;height:14px;margin-left:-7px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#e88a7a,#a3271c 60%);box-shadow:1px 2px 2px #0006}
+.ficha.vacia{background:transparent;border:2px dashed #6a4a2acc;box-shadow:none;display:flex;align-items:center;justify-content:center;transform:none}
+.ficha .hueco{font-size:40px;color:#6a4a2a;font-family:Spectral,serif}
+.ficha .cab{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:4px}
+.ficha .cab b{font-family:Spectral,serif;font-size:15px;color:#2a1a0c;font-weight:600;flex:1;min-width:70px}
+.cara{position:relative;display:inline-block;width:54px;height:54px;flex:none;border:3px solid #fff;box-shadow:0 1px 3px #0005;overflow:hidden}
+.cara svg{width:100%;height:100%;display:block}
+.cara .tache{position:absolute;inset:0;background:linear-gradient(45deg,transparent 45%,#a3271ccc 45% 55%,transparent 55%),linear-gradient(-45deg,transparent 45%,#a3271ccc 45% 55%,transparent 55%)}
+.cara .duda{position:absolute;right:1px;top:-4px;color:#c0281c;font:bold 26px Spectral,serif;text-shadow:0 0 3px #fff}
+.ficha .bt{display:flex;gap:4px;width:100%}
+.ficha .bt button{flex:1;border:1px solid #b8a37a;background:#efe4c8;border-radius:3px;font-family:'Special Elite',monospace;font-size:12px;padding:3px 0;color:#5a3a20}
+.ficha .bt button.on{background:#a3271c;color:#fff;border-color:#a3271c}
+.ficha .cat{font-family:Spectral,serif;font-style:italic;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7a5a3a;margin:7px 0 2px}
+.pap{font-family:'Special Elite',monospace;font-size:12px;line-height:1.35;padding:5px 6px;margin:3px 0;box-shadow:1px 1px 2px #0003}
+.pap.pm{background:#fff6a8}.pap.po{background:#fffdf4;border:1px solid #e4dac0}.pap.pc{background:#d8e8f4}
+.pap.nada{background:none;box-shadow:none;color:#9a8f7a;font-style:italic;padding:2px 6px}
+.fich{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
+.fich button{display:flex;flex-direction:column;align-items:center;gap:6px;background:#f4ecd8;border:0;padding:10px 6px;box-shadow:2px 3px 6px #0005;font-family:Spectral,serif;font-size:14px;color:#2a1a0c}
+.fich .cara{width:72px;height:72px}
+.corV{margin-top:14px;border:1px solid #6a4a2a;background:#efe4c8;border-radius:4px;padding:8px 14px;font-family:Spectral,serif;font-size:15px;color:#2a1a0c}
 /* nota a pantalla completa */
 #doc{position:absolute;inset:0;z-index:25;background:#000c;display:none;align-items:center;justify-content:center}
 #doc.on{display:flex}
@@ -670,9 +696,9 @@ let tab='pistas';const SUS=['Doña Leonor','Íñigo','Clara','Mateo','Lola','Cap
 const MK=['','✗','?','◯'];
 function openLib(t){tab=t||tab;S.leidas=S.pistas.length;save();badge();$('#lib').classList.add('on');libDraw()}
 function libDraw(){
-  const T=[['sabe','Lo que sé'],['pistas','Pistas'],['personas','Personas'],['sospechas','Sospechas'],['eki','Eki y la gente'],['bolsillo','Bolsillo']];
+  const T=[['sabe','Lo que sé'],['pistas','Pistas'],['personas','Personas'],['corcho','Corcho'],['eki','Eki y la gente'],['bolsillo','Bolsillo']];
   $('#tabs').innerHTML=T.map(([k,n])=>`<button class="${k===tab?'on':''}" data-t="${k}">${n}</button>`).join('');
-  $('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;libDraw()});
+  $('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;corPick=-1;libDraw()});
   let h='';
   if(tab==='sabe'){h='<h2>Lo que sé</h2>';const ds=Object.keys(RESUMEN).map(Number).filter(d=>S.days[d]&&S.days[d].flags&&S.days[d].flags.resumen);
     if(!ds.length)h+='<div class="it no">Cada mañana, aquí apuntaré lo que sé hasta ahora.</div>';ds.reverse().forEach(d=>{h+=`<h3>Día ${d}</h3><div class="it">${RESUMEN[d]}</div>`})}
@@ -680,13 +706,12 @@ function libDraw(){
     const days=[...new Set(S.pistas.map(p=>p.day))];days.forEach(d=>{h+=`<h3>Día ${d}</h3>`+S.pistas.filter(p=>p.day===d).map(p=>`<div class="it"><b>${p.t}.</b> ${p.d}</div>`).join('')})}
   if(tab==='personas'){h='<h2>Personas</h2>';const ks=Object.keys(S.personas);if(!ks.length)h+='<div class="it no">Aún no conozco a nadie en Altamar.</div>';
     ks.forEach(k=>{h+=`<h3>${k}</h3>`+S.personas[k].map(l=>`<div class="it">${l}</div>`).join('')})}
-  if(tab==='sospechas'){h='<h2>Sospechas</h2><div class="it no">Toca un nombre para tacharlo, dudar o marcarlo.</div><div class="sus">';
-    SUS.forEach(n=>{const m=S.sus[n]||0;h+=`<button data-n="${n}" class="${m===1?'x':''}">${n}</button><span class="mk">${MK[m]}</span>`});h+='</div>'}
+  if(tab==='corcho')h=corchoHTML();
   if(tab==='eki'){h='<h2>Eki y la gente</h2>';if(!S.eki.length)h+='<div class="it no">Eki todavía no ha saludado a nadie.</div>';
     S.eki.forEach(e=>h+=`<div class="it"><b>Día ${e.day} · ${e.who}:</b> ${e.t}</div>`)}
   if(tab==='bolsillo'){h='<h2>Bolsillo de la gabardina</h2>'+S.objetos.map(o=>`<div class="obj"><div class="o">${o.i}</div><div class="it" style="line-height:1.4"><b>${o.t}.</b> ${o.d}</div></div>`).join('')}
-  $('#pages').innerHTML=h;$('#pages').scrollTop=0;
-  $('#pages').querySelectorAll('.sus button').forEach(b=>b.onclick=()=>{const n=b.dataset.n;S.sus[n]=((S.sus[n]||0)+1)%4;save();libDraw()})}
+  const pg=$('#pages'),keep=tab==='corcho'&&corPick<0&&pg.classList.contains('cork')&&!pg.querySelector('.fich')?pg.scrollTop:0;pg.classList.toggle('cork',tab==='corcho');pg.innerHTML=h;pg.scrollTop=keep;
+  if(tab==='corcho')corchoWire()}
 $('#libBtn').onclick=()=>openLib();$('#calLib').onclick=()=>openLib();$('#libX').onclick=()=>{$('#lib').classList.remove('on')};
 {const b=$('#sndBtn');b.classList.toggle('off',!AU.isOn());b.onclick=()=>b.classList.toggle('off',!AU.toggle())}
 $('#homeBtn').onclick=()=>{SC=null;AU.music(null);drawCal();show('cal')};
@@ -714,7 +739,7 @@ function polvo(x,y){const k=K();for(let i=0;i<7;i++){const d=document.createElem
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 108';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 109';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
