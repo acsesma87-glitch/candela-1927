@@ -140,7 +140,7 @@ DAYS[1]=[
     if(!found('algas'))await talk('El guardia','Uno juraba que el muerto aprieta algo en la mano. Pero con tanta alga encima, nadie ha querido tocarle.');
     endTalk();persona('El guardia civil','Los pescadores encontraron el cuerpo a las 6:40. Uno dice que el muerto aprieta algo en la mano.')}},
   {id:'aitorF',tool:'mano',x:700,y:400,r:70,once:false,act:async()=>{await talk('Aitor','La cerré a las doce y media, Candela. Te lo juro. Está en mi cuaderno.');endTalk()}},
-  {id:'leonor',tool:'mano',x:560,y:400,r:80,once:false,when:()=>D(1).flags.leonor,act:async()=>{const n=faroN();
+  {id:'leonor',tool:'mano',x:150,y:405,r:75,once:false,when:()=>D(1).flags.leonor,act:async()=>{const n=faroN();
     if(!(found('ficha')&&D(1).flags.informe&&n>=4)){nar('Todavía no tengo suficiente para enfrentarme a esa mujer.<br><br><i>Busca más pistas en el faro.</i>');return}
     next()}},
  ],
@@ -196,9 +196,9 @@ async function ekiToCandela(){const f=D(1).flags;
 const faroN=()=>['informe','ficha','bajos','huellas','verja','ampolla'].filter(i=>S.pistas.find(p=>p.id===i)).length;
 async function faroCheck(){const f=D(1).flags;if(f.leonor||faroN()<3)return;f.leonor=1;save();await sleep(500);await shake();
   swapSvg(SVG.faroL);llegaLeonor();nar('Un motor. Un coche negro se para junto al camino del faro. Baja una mujer de luto, con velo y abrigo de pieles: Doña Leonor, la viuda.<br><br><i>Cuando tengas suficiente, habla con ella.</i>')}
-function llegaLeonor(){anima('.cocheL',[{transform:'translateX(160px)'},{transform:'none'}],{duration:1800,easing:'cubic-bezier(.2,.7,.3,1)'});
+function llegaLeonor(){anima('.cocheL',[{transform:'translateX(-160px)'},{transform:'none'}],{duration:1800,easing:'cubic-bezier(.2,.7,.3,1)'});
   anima('.farosL',[{opacity:0},{opacity:1,offset:.3},{opacity:1}],{duration:2600});
-  if(ANIM2)anima('.leoF',[{transform:'translateX(130px)',opacity:0},{transform:'translateX(130px)',opacity:0,offset:.45},{transform:'translateX(90px)',opacity:1,offset:.55},{transform:'none',opacity:1}],{duration:3400,easing:'ease-out'})}
+  if(ANIM2)anima('.leoF',[{transform:'translateX(-130px)',opacity:0},{transform:'translateX(-130px)',opacity:0,offset:.45},{transform:'translateX(-90px)',opacity:1,offset:.55},{transform:'none',opacity:1}],{duration:3400,easing:'ease-out'})}
 function luzVerde(){const t0=performance.now(),D=7000;const f=t=>{const p=Math.min(1,(t-t0)/D);
   document.querySelectorAll('.verde').forEach(c=>{c.setAttribute('cx',572+118*p);c.setAttribute('opacity',p<.15?p/.15:p>.8?(1-p)/.2:1)});if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
 async function alFaro(){narPaso('Corremos por el muelle. La niebla se traga las farolas una a una. Al fondo, la luz del faro gira, como si nada.');await sleep(5000);next()}

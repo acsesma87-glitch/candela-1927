@@ -450,7 +450,7 @@ import os as _os
 def faro(leonor=False):
     t=_muestra('muestra_faro.svg','f2')
     # la oscuridad la quita la linterna; huecos para el comisario y Aitor
-    t=t.replace('<polygon points="650,62 0,0 0,150"','<ellipse cx="640" cy="410" rx="100" ry="130" fill="url(#f2hole)"/><ellipse cx="720" cy="410" rx="90" ry="120" fill="url(#f2hole)"/><polygon points="650,62 0,0 0,150"')
+    t=t.replace('<polygon points="650,62 0,0 0,150"','<ellipse cx="640" cy="410" rx="100" ry="130" fill="url(#f2hole)"/><ellipse cx="150" cy="420" rx="90" ry="110" fill="url(#f2hole)"/><ellipse cx="720" cy="410" rx="90" ry="120" fill="url(#f2hole)"/><polygon points="650,62 0,0 0,150"')
     t=t.replace('opacity=".78" mask="url(#f2dark)"/>','opacity=".78" mask="url(#f2dark)" class="ob"/>')
     # la ficha del Casino en la mano, tapada por las algas (se apartan con el dedo)
     alg='<path d="M300 440 q-8 6 -18 4 q6 6 18 0 q-4 8 -14 10" stroke="#3e5a34" stroke-width="2.5" fill="none"/>'
@@ -466,8 +466,9 @@ def faro(leonor=False):
     extra+=fig(IBARRA, 620, 470, .64)
     extra+=aitor(700, 476, .5)
     if leonor:
-        extra+='<g class="cocheL"><path d="M720 490h80v-40h-50l-14 18h-16z" fill="#0a0a0a"/><circle cx="738" cy="492" r="9" fill="#030303"/><rect x="756" y="454" width="30" height="14" fill="#2a3a4a" opacity=".6"/><g class="farosL"><path d="M722 476L600 450v50z" fill="#fff3c4" opacity=".22"/><circle cx="723" cy="477" r="4" fill="#fff3c4"/></g></g>'
-        extra+=fig(LEONOR, 560, 480, .64, cls='leoF')
+        # Leonor llega por la izquierda, lejos del doctor (si no, al tocarla se toca a él)
+        extra+='<g class="cocheL"><g transform="translate(800 -36) scale(-1 1)"><path d="M720 490h80v-40h-50l-14 18h-16z" fill="#0a0a0a"/><circle cx="738" cy="492" r="9" fill="#030303"/><rect x="756" y="454" width="30" height="14" fill="#2a3a4a" opacity=".6"/><g class="farosL"><path d="M722 476L600 450v50z" fill="#fff3c4" opacity=".22"/><circle cx="723" cy="477" r="4" fill="#fff3c4"/></g></g></g>'
+        extra+=fig(LEONOR, 150, 484, .64, cls='leoF')
     t=t.replace('<!-- niebla baja delante -->',extra+'<!-- niebla baja delante -->')
     t=t.replace('<rect width="800" height="500" fill="url(#f2vig)"/>','<circle cx="670" cy="408" r="60" fill="url(#f2warm)" opacity=".6"/><rect width="800" height="500" fill="url(#f2vig)"/>')
     return wrap(t)
