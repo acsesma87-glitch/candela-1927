@@ -189,9 +189,9 @@ def topo():
     b += '<rect x="420" y="360" width="380" height="16" fill="#3a3530"/><path d="M420 360H800" stroke="#6a6258" stroke-width="3"/><rect x="420" y="376" width="380" height="8" fill="#0c0b0a"/>'
     b += '<path d="M440 384h340" stroke="#e8c27a" stroke-width="1.5" opacity=".18"/>'
     # el Topo
-    b += '<g class="a-ralenti"><rect x="20" y="230" width="300" height="160" rx="10" fill="#5a1c16"/><rect x="20" y="230" width="300" height="24" rx="8" fill="#3a100c"/>'
+    b += '<g class="a-ralenti"><rect x="20" y="230" width="300" height="160" rx="10" fill="#7a2a20"/><rect x="20" y="230" width="300" height="24" rx="8" fill="#3a100c"/>'
     for k in range(5):
-        b += f'<rect x="{40+k*56}" y="264" width="40" height="52" rx="4" fill="#120a08"/><rect x="{42+k*56}" y="266" width="36" height="48" rx="3" fill="#f0c070" opacity=".55"/>'
+        b += f'<rect x="{40+k*56}" y="264" width="40" height="52" rx="4" fill="#120a08"/><rect x="{42+k*56}" y="266" width="36" height="48" rx="3" fill="#f0c070" opacity=".8"/>'
     b += '<rect x="20" y="330" width="300" height="8" fill="#8a6a30"/><text x="170" y="364" text-anchor="middle" font-family="Georgia" font-size="14" fill="#c8b080" letter-spacing="3" opacity=".85">TOPO</text>'
     b += '<path d="M200 230L260 116" stroke="#0a0a0a" stroke-width="4"/><circle cx="60" cy="398" r="14" fill="#050505"/><circle cx="280" cy="398" r="14" fill="#050505"/></g>'
     b += '<rect x="30" y="392" width="280" height="60" fill="#f0c070" opacity=".07" filter="url(#b5)"/>'
@@ -210,7 +210,7 @@ def topo():
     b += '<g class="a-brillo"><circle cx="729" cy="165" r="90" fill="url(#warm)"/></g>'
     b += '<rect y="380" width="800" height="120" filter="url(#fog)" opacity=".35"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .62, [(729,200,170,240,1),(646,290,130,130,1),(170,300,200,110,.8),(470,300,120,150,.7)], [(729,165,170,'warm',.5,0),(646,273,90,'warm',.55,12)], lluvia=True, tono=.15)
+    b = conluz(b, .62, [(729,200,170,240,1),(646,290,130,130,1),(170,310,230,150,1),(470,300,120,150,.7)], [(170,290,170,'warm',.3,0),(729,165,170,'warm',.5,0),(646,273,90,'warm',.55,12)], lluvia=True, tono=.15)
     return wrap(b)
 SVG['topo'] = topo()
 
