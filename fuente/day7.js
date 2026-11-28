@@ -92,8 +92,8 @@ DAYS[7]=[
  ],
  check:()=>{const f=d7();if(f.maq||!found('reja')||!hasP('orden'))return;f.maq=1;save();
    nar('Don Julián mandó quitar la reja. Y el chaval de los Goñi lo pagó. Ahora entiendo a Mateo.');
-   narBtn('Volver a la entrada',async()=>{narPaso('Al volver, la puerta de la oficina de Doña Remedios está abierta: ella ha salido al muelle a discutir con un camionero.');await sleep(5000);goScene(4)})},
- enter:async()=>{const f=d7();if(f.maq){nar('La máquina, parada. Ya lo he visto todo.');narBtn('Volver a la entrada',()=>goScene(4));return}
+   narBtn('Salir de la nave',async()=>{narPaso('Al salir de la nave, la puerta del despacho de Doña Remedios está abierta: ella ha salido al muelle a discutir con un camionero. Aprovecharé para echar un vistazo.');await sleep(5000);goScene(4)})},
+ enter:async()=>{const f=d7();if(f.maq){nar('La máquina, parada. Ya lo he visto todo.');narBtn('Salir de la nave',()=>goScene(4));return}
    nar('La máquina del accidente, parada. Huele a grasa y a hierro. Abajo, todo está a oscuras.')}},
 
 // ===== La oficina de la encargada =====
