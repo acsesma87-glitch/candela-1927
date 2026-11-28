@@ -69,7 +69,7 @@ def inigo(L):
     s+='<path d="M-7 -110 L0 -84 L7 -110Z" fill="#e0dbd0"/><path d="M0 -104 l-2 14 2 4 2 -4z" fill="#7a1e18"/><path d="M-9 -108 L0 -80 M9 -108 L0 -80" stroke="#121420" stroke-width="2"/>'
     s+=S('M-18 -102 Q-28 -80 -26 -56','#1e2130',10,L)+f'<circle cx="-26" cy="-54" r="5" fill="{SK}"/><path d="M-26 -54 L-30 0" stroke="#3a2416" stroke-width="2.5"/><circle cx="-26" cy="-54" r="3" fill="#c9a24a"/>'
     s+=S('M18 -102 Q32 -90 26 -76 Q20 -84 14 -86','#1e2130',10,L)+f'<circle cx="16" cy="-86" r="5" fill="{SK}"/>'
-    s+='<path d="M18 -88 l12 -4" stroke="#eee" stroke-width="1.8"/><circle cx="30" cy="-92" r="1.6" fill="#ff8a30"/><path class="a-humoP" d="M31 -95 q-4 -10 2 -18 q6 -8 0 -16" stroke="#e8e0d0" stroke-width="2" fill="none" opacity=".4"/>'
+    s+='<path d="M18 -88 l12 -4" stroke="#eee" stroke-width="1.8"/><circle cx="30" cy="-92" r="1.6" fill="#ff8a30"/><path class="a-humoP" d="M31 -95 q-4 -9 2 -15 q6 -6 0 -15 q-5 -7 2 -15 q8 -9 1 -19" stroke="#e8e0d0" stroke-width="3.2" fill="none" opacity=".35" filter="url(#humoB)"/>'
     s+=head(0,-130,13,L)+eye(-4,-131)+eye(5,-131)+'<path d="M-4 -122 Q1 -119 5 -123" stroke="#6a3a2a" stroke-width="1.4" fill="none"/>'
     s+='<path d="M-14 -132 Q-14 -146 0 -146 Q14 -146 14 -134 Q8 -142 -4 -140 Q-10 -138 -14 -132Z" fill="#0e0b09"/>'
     return s
@@ -98,7 +98,7 @@ def lola(L):
     s+='<path d="M-17 -34 l3 8 3 -8 3 8 3 -8 3 8 3 -8 3 8 3 -8 3 8 3 -8" stroke="#8a2020" stroke-width="1.5" fill="none"/><g fill="#a83030" opacity=".6"><circle cx="-6" cy="-80" r="1"/><circle cx="4" cy="-70" r="1"/><circle cx="-4" cy="-56" r="1"/><circle cx="7" cy="-90" r="1"/><circle cx="6" cy="-48" r="1"/></g>'
     s+='<path d="M-20 -104 Q0 -94 20 -104 Q26 -96 18 -92 Q0 -86 -18 -92 Q-26 -96 -20 -104Z" fill="#e8dcd0" opacity=".85"/>'
     s+=S('M-14 -100 Q-22 -80 -20 -62','#c8a089',5,L)+S('M14 -100 Q24 -90 24 -76','#c8a089',5,L)
-    s+='<path d="M24 -78 l14 -10" stroke="#111" stroke-width="1.6"/><circle cx="38" cy="-88" r="1.6" fill="#ff8a30"/><path class="a-humoP" d="M39 -91 q-3 -8 2 -14 q4 -6 0 -12" stroke="#e8e0d0" stroke-width="2" fill="none" opacity=".4"/>'
+    s+='<path d="M24 -78 l14 -10" stroke="#111" stroke-width="1.6"/><circle cx="38" cy="-88" r="1.6" fill="#ff8a30"/><path class="a-humoP" d="M39 -91 q-4 -9 2 -15 q6 -6 0 -15 q-5 -7 2 -15 q8 -9 1 -19" stroke="#e8e0d0" stroke-width="3.2" fill="none" opacity=".35" filter="url(#humoB)"/>'
     s+=head(0,-124,12,L)+eye(-4,-125)+eye(4,-125)+'<path d="M-3 -117 Q0 -115 3 -117" stroke="#b01818" stroke-width="2.2" fill="none"/>'
     s+='<path d="M-14 -122 Q-16 -140 0 -140 Q16 -140 14 -122 L14 -116 Q12 -112 9 -116 L9 -128 Q0 -132 -9 -128 L-9 -116 Q-12 -112 -14 -116Z" fill="#0c0808"/>'
     s+='<path d="M10 -136 q8 -14 18 -14 q-8 6 -12 16z" fill="#c8505a"/><circle cx="10" cy="-134" r="2.5" fill="#c9a24a"/>'
