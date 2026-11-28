@@ -26,3 +26,8 @@ Solo cuando el usuario lo pida: copiar los archivos de `prueba/` a la raíz y su
 ## Lupa y linterna: BLINDADAS
 - El manejo de la lupa y la linterna (cómo se mueven con el dedo, el tamaño, lo que se ve dentro del cristal, que vuelvan al centro al cambiar de herramienta, cómo detectan las pistas) funciona bien y NO se toca.
 - Para cambiar cualquier cosa de su manejo hay que preguntárselo expresamente al usuario antes.
+
+## Cómo colocar a los personajes (petición del usuario)
+- Que NO salgan todos de frente mirando a la cámara: queda muy falso.
+- Colocarlos de forma natural: de perfil, sentados a una mesa, mirándose entre ellos, cada uno a lo suyo (como en El Ancla).
+- Todo a escala real: mesas, muebles y personas proporcionados entre sí, y nadie cortado de forma rara por un mueble.
