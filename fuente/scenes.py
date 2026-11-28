@@ -461,7 +461,7 @@ def faro(leonor=False):
     # huellas de bota claveteada, negras, que van desde el agua hacia el muerto (solo con la linterna)
     import math as _m
     def _bota(x,y,ang):
-        g=f'<g transform="translate({x} {y}) rotate({ang}) scale(1.25)"><ellipse cx="0" cy="0" rx="18" ry="8" fill="#5a544c" opacity=".55"/><ellipse cx="4" cy="0" rx="10" ry="5.5" fill="#050505"/><ellipse cx="-10" cy="0" rx="4.5" ry="4.5" fill="#050505"/>'
+        g=f'<g transform="translate({x} {y}) rotate({ang}) scale(1.25)"><ellipse cx="4" cy="0" rx="10" ry="5.5" fill="#050505"/><ellipse cx="-10" cy="0" rx="4.5" ry="4.5" fill="#050505"/>'
         g+=''.join(f'<circle cx="{dx}" cy="{dy}" r="1" fill="#3a3a3a"/>' for dx,dy in [(10,-2),(10,2),(5,-3.5),(5,3.5),(0,-3),(0,3),(-10,-2),(-10,2)])
         return g+'</g>'
     x0,y0,x1,y1=34,494,214,462
