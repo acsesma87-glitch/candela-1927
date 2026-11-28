@@ -78,8 +78,10 @@ DAYS[7]=[
 // ===== La máquina =====
 {svg:SVG.maquina,dark:.2,tools:['mano','linterna','lupa'],
  spots:[
-  {id:'reja',tool:'lupa',x:330,y:200,w:270,h:270,act:async()=>{await bubble('Los agujeros de la reja de protección: limpios, sin óxido y sin roscas rotas. La reja no se cayó: alguien la desatornilló con cuidado.',5000);
-    await pista('reja','La reja de la máquina','A la máquina del accidente le quitaron la reja de protección a propósito: los tornillos se sacaron, no se rompieron.')}},
+  // la lupa solo reacciona sobre los agujeros de los tornillos de la reja
+  ...[[214,84],[446,84],[214,316],[446,316]].map(([x,y],k)=>({id:'reja'+k,tool:'lupa',x,y,w:40,h:40,act:async()=>{if(hasP('reja'))return;markFound('reja');
+    await bubble('Los agujeros de la reja de protección: limpios, sin óxido y sin roscas rotas. La reja no se cayó: alguien la desatornilló con cuidado.',5000);
+    await pista('reja','La reja de la máquina','A la máquina del accidente le quitaron la reja de protección a propósito: los tornillos se sacaron, no se rompieron.')}})),
   {id:'ordenL',tool:'linterna',x:485,y:450,w:90,h:56,act:async()=>{await bubble('Debajo de la máquina, entre la grasa, hay un papel arrugado.',3200)}},
   {id:'orden',tool:'mano',x:485,y:450,r:50,once:false,when:()=>found('ordenL'),act:async()=>{
     await docShow('<div style="text-align:left;font-size:15px;line-height:1.7"><b style="color:#8a2a20">CONSERVAS ARRIETA · Orden a la encargada</b><br>Quítese la reja de la máquina n.º 3. Estorba y retrasa: con ella no sacamos las latas que pide el barco.<br><span style="float:right">J. A. · 2 de octubre de 1927</span></div>');
