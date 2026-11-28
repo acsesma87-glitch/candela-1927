@@ -42,7 +42,7 @@ DAYS[8]=[
    narBtn('Ir a la calle del Farol',async()=>{narPaso('Al caer la noche, Aitor me lleva por callejones que no salen en ningún mapa. «Tú no te separes de mí», dice, muy serio.');await sleep(5000);goScene(1)})}},
 
 // ===== La calle del Farol =====
-{svg:SVG.calleFarol,dark:.15,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>LA CALLE DEL FAROL',
+{svg:SVG.calleFarol,dark:.06,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>LA CALLE DEL FAROL',
  laika:()=>d8().colonia?null:(d8().colonia=1,save(),{x:430,t:'Laika olfatea un charco junto al portal y estornuda tres veces seguidas. Colonia barata, de la de litro.'}),
  spots:[
   {id:'portero',tool:'mano',x:270,y:330,r:80,once:false,act:async()=>{const f=d8();
@@ -63,7 +63,7 @@ DAYS[8]=[
    nar('La calle del Farol. Farolas rojas, un piano desafinado y señoritas fumando en los portales. En la puerta del Café Royal, un portero como un armario.')}},
 
 // ===== El camerino de Lola =====
-{svg:SVG.camerino,dark:.25,tools:['mano','linterna','lupa'],
+{svg:SVG.camerino,dark:.1,tools:['mano','linterna','lupa'],
  ekiSpots:[
   {who:'Lola',x:340,y:330,act:async()=>{await bubble('Eki se acerca a Lola, olfatea sus zapatos de tacón y le apoya la cabeza en la rodilla. Lola, sorprendida, le rasca detrás de las orejas.',4600);ekiLog('Lola','le cae bien: se deja rascar detrás de las orejas.')}},
  ],
@@ -95,7 +95,7 @@ DAYS[8]=[
    narBtn('Dejarlo para luego',()=>goScene(2));const b=document.createElement('button');b.className='go';b.textContent='Revolver los trozos otra vez';b.onclick=trozosReinicia;$('#acts').appendChild(b)}},
 
 // ===== En casa: atar cabos con Aitor =====
-{svg:SVG.cocinaMesa,dark:.22,laikaHome:560,ekiHome:150,cartel:'ALTAMAR<br>CASA DEL SERENO',
+{svg:SVG.cocinaMesa,dark:.05,laikaHome:560,ekiHome:150,cartel:'ALTAMAR<br>CASA DEL SERENO',
  enter:async()=>{const f=d8();
    if(!f.cabos){nar('Aitor enciende la estufa y pone dos tazas de caldo en la mesa. Laika y Eki se arriman al calor.');await sleep(1200);
      await talk('Aitor','(Sopla el caldo.) A ver, detective. La nota del bloc, la de «que Dios me perdone»… ¿qué era, entonces?');

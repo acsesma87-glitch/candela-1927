@@ -45,7 +45,7 @@ DAYS[6]=[
    narBtn('Ir al palacete, de noche',async()=>{narPaso('A las once de la noche, Aitor llama con los nudillos en la puerta de servicio: tres golpes cortos. No sé a quién espero encontrar.');await sleep(5000);goScene(1)})}},
 
 // ===== La cocina, de noche =====
-{svg:SVG.cocinaN,dark:.2,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>EL PALACETE, DE NOCHE',
+{svg:SVG.cocinaN,dark:.08,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>EL PALACETE, DE NOCHE',
  ekiSpots:[
   {who:'Clara Arrieta',x:190,y:330,act:async()=>{await bubble('Eki se acerca a Clara moviendo el rabo. Clara se agacha y le rasca detrás de las orejas. Por primera vez la veo sonreír.',4600);
     ekiLog('Clara Arrieta','le cae muy bien: le rasca detrás de las orejas.')}},
@@ -64,7 +64,7 @@ DAYS[6]=[
    nar('La puerta de servicio se abre una rendija. Al otro lado no está Benigna: es Clara, la hija, con una vela. Aitor se queda fuera, vigilando la calle.')}},
 
 // ===== El despacho, de noche =====
-{svg:SVG.despachoN,dark:.55,tools:['mano','linterna','lupa'],
+{svg:SVG.despachoN,dark:.3,tools:['mano','linterna','lupa'],
  ekiSpots:[
   {who:'Clara Arrieta',x:735,y:330,act:async()=>{await bubble('Eki se pega a las piernas de Clara. Clara, sin dejar de vigilar la puerta, le acaricia la cabeza.',4200);ekiLog('Clara Arrieta','le cae muy bien.')}},
  ],
@@ -127,7 +127,7 @@ DAYS[6]=[
    narBtn('Volver al despacho',()=>goScene(2))}},
 
 // ===== En casa: atar cabos con Aitor =====
-{svg:SVG.cocinaMesa,dark:.22,laikaHome:560,ekiHome:150,cartel:'ALTAMAR<br>CASA DEL SERENO',
+{svg:SVG.cocinaMesa,dark:.05,laikaHome:560,ekiHome:150,cartel:'ALTAMAR<br>CASA DEL SERENO',
  enter:async()=>{const f=d6();
    if(!f.cabos){nar('Aitor enciende la estufa sin decir nada. Laika y Eki se acercan al calor. Me quito la gabardina mojada.');await sleep(1200);
      {await talk('Aitor','(Se sienta enfrente, con las manos hacia la estufa.) A ver, detective. Despacio. Ese testamento nuevo: ¿quién sale perdiendo?');

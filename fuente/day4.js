@@ -26,7 +26,7 @@ DAYS[4]=[
    narBtn('Ir al palacete',async()=>{narPaso('El palacete de los Arrieta, en lo alto. Medio barrio hace cola para dar el pésame. Unos por respeto, otros por curiosidad.');await sleep(5000);goScene(1)})}},
 
 // ===== El salón (velatorio) =====
-{svg:SVG.salon,dark:.25,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>EL PALACETE',
+{svg:SVG.salon,dark:.08,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>EL PALACETE',
  spots:[
   {id:'leonor',tool:'mano',x:420,y:340,r:95,once:false,act:async()=>{const f=d4();
     if(!f.leonor1){await talk('Doña Leonor','(Sin mirarte.) El sereno tiene la desvergüenza de presentarse aquí. Y con compañía.');
@@ -71,7 +71,7 @@ DAYS[4]=[
    else nar(f.distr?'El salón sigue revuelto por lo de la bandeja. La puerta del despacho está a la izquierda.':'El salón huele a cera y a flores. Doña Leonor vigila.')}},
 
 // ===== El despacho =====
-{svg:SVG.despacho,dark:.55,tools:['mano','linterna','lupa'],
+{svg:SVG.despacho,dark:.3,tools:['mano','linterna','lupa'],
  spots:[
   {id:'blocVer',tool:'mano',x:295,y:310,r:45,once:false,act:async()=>{goScene(3)}},
   {id:'poliza',tool:'lupa',x:432,y:311,w:70,h:22,act:async()=>{await bubble('Una póliza de La Previsora: el seguro de vida de Don Julián, subido el 2 de noviembre a 200.000 pesetas. Beneficiaria: Leonor Arrieta.',5000);

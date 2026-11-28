@@ -39,7 +39,7 @@ DAYS[5]=[
    narBtn('Ir al palacete',async()=>{narPaso('A las once, la familia Arrieta sale detrás del coche fúnebre hacia el cementerio. Aitor y yo esperamos en la esquina hasta que se pierden de vista.');await sleep(5000);goScene(1)})}},
 
 // ===== La cocina del palacete =====
-{svg:SVG.cocinaP,dark:.3,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>LA COCINA DEL PALACETE',
+{svg:SVG.cocinaP,dark:.1,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>LA COCINA DEL PALACETE',
  laika:()=>d5().cajas?null:(d5().cajas=1,save(),{x:175,t:'Laika olfatea las cajas de Conservas Arrieta y gruñe bajito. «Envases vacíos», dicen. Pues pesan.'}),
  ekiSpots:[
   {who:'Benigna',x:545,y:330,act:async()=>{await bubble('Eki va derecha hacia Benigna… y Benigna la espanta con la escoba: «¡Fuera de mi cocina!». Eki vuelve con las orejas gachas.',4600);
@@ -81,7 +81,7 @@ DAYS[5]=[
    else nar('La cocina del palacete. Benigna barre sin mirarme.')}},
 
 // ===== El dispensario del doctor =====
-{svg:SVG.dispensario,dark:.1,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>EL DISPENSARIO DEL PUERTO',
+{svg:SVG.dispensario,dark:.03,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>EL DISPENSARIO DEL PUERTO',
  ekiSpots:[
   {who:'Dr. Salazar',x:430,y:360,when:()=>!d5().solo||d5().vuelta,act:async()=>{await bubble('Eki da dos pasos hacia el doctor, olfatea el aire… y se vuelve. Aquí todo huele a éter.',4200);
     ekiLog('Dr. Salazar','NO se acerca. Huele a éter (es médico).')}},

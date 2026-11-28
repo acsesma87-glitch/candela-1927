@@ -24,7 +24,7 @@ def defs(extra=''):
 <radialGradient id="redL"><stop offset="0" stop-color="#ff7a68" stop-opacity=".95"/><stop offset=".35" stop-color="#e03a2a" stop-opacity=".35"/><stop offset="1" stop-color="#a01010" stop-opacity="0"/></radialGradient>
 <filter id="smoke" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .022" numOctaves="3" seed="11"/><feColorMatrix values="0 0 0 0 .86 0 0 0 0 .8 0 0 0 0 .7 0 0 0 1.4 -.45"/></filter>
 <pattern id="rain" width="46" height="70" patternUnits="userSpaceOnUse"><path d="M6 0l-5 16M28 26l-5 16M17 48l-5 16M40 10l-5 16" stroke="#cfdbe0" stroke-width="1" opacity=".22"/></pattern>
-<filter id="desA"><feColorMatrix type="saturate" values=".8"/></filter><filter id="blkF"><feColorMatrix values="0 0 0 0 .02 0 0 0 0 .02 0 0 0 0 .03 0 0 0 1 0"/></filter>
+<pattern id="plkC" width="52" height="500" patternUnits="userSpaceOnUse"><rect width="52" height="500" fill="#2c1c12"/><rect width="3" height="500" fill="#170e08"/><path d="M16 0q5 120 -2 240q-4 120 2 260" stroke="#22150c" stroke-width="1.3" fill="none"/><circle cx="34" cy="170" r="2.6" fill="#170e08"/></pattern><pattern id="tarC" width="70" height="18" patternUnits="userSpaceOnUse"><rect width="70" height="18" fill="#1e130b"/><path d="M0 17.5H70M35 0V18" stroke="#100a05" stroke-width="1.5"/></pattern><filter id="desA"><feColorMatrix type="saturate" values=".8"/></filter><filter id="blkF"><feColorMatrix values="0 0 0 0 .02 0 0 0 0 .02 0 0 0 0 .03 0 0 0 1 0"/></filter>
 <linearGradient id="aitG" gradientUnits="userSpaceOnUse" x1="180" x2="260" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".5"/></linearGradient><mask id="aitM"><rect x="0" y="0" width="400" height="500" fill="url(#aitG)"/></mask>
 </defs>'''
 
@@ -238,7 +238,7 @@ AITOR_CASA = AITOR_CASA.replace('<!-- cuello y cabeza -->', '<circle cx="148" cy
 AITOR_CASA = _cut(AITOR_CASA, '<!-- gorra de sereno -->', '<!-- mechones')
 AITOR_CASA = AITOR_CASA.replace('<!-- mechones', '<path d="M175 150q0-30 30-33q30 3 31 33q-9-14-31-15q-21 1-30 15z" fill="url(#hairA)"/><path d="M190 126q8-3 14 0M212 124q8 0 12 5" stroke="#8a8680" stroke-width="1" fill="none"/>\n <!-- mechones')
 def aitor_casa(x, y, s=1):
-    return f'<g transform="translate({x-205*s} {y-462*s}) scale({s})">{resp(AITOR_CASA, "Aitor", x)}</g>'
+    return f'<g transform="translate({x-205*s} {y-462*s}) scale({s})">{resp(tAit(AITOR_CASA), "Aitor", x)}</g>'
 CANDELA_CASA = _cut(CANDELA_OLD, '<!-- brazo con maleta -->', '<path d="M-24 -184q-10 30-8 70"')
 CANDELA_CASA = CANDELA_CASA.replace('<path d="M-24 -184q-10 30-8 70"', '<path d="M24 -184q10 30 8 70" stroke="#7a6c52" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="32" cy="-112" r="6" fill="url(#skin)"/><path d="M-24 -184q-10 30-8 70"')
 CANDELA_CASA = CANDELA_CASA[:CANDELA_CASA.index('<!-- sombrero -->')] + '<path d="M-16 -226q0-20 16-21q16 1 16 21q-6-9-16-10q-10 1-16 10z" fill="#3a281e"/><path d="M0 -247v12" stroke="#22170f" stroke-width="1.2"/></g>'
@@ -298,7 +298,7 @@ def cocina(gente=True, mesa=False):
     # Aitor sentado (detrás de la mesa)
     if gente: b += '<clipPath id="tbl"><rect x="0" y="0" width="800" height="340"/></clipPath>'
     if gente and not mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(380, 478, .8)}</g>'
-    if mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(318, 478, .8)}{candela(470, 420, 1.0)}</g>'
+    if mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(318, 478, .8)}<g transform="translate(470 420)">{resp(PJ.NF(PJ.candela_sin), "Candela", 470)}</g></g>'
     # mesa
     b += '<rect x="226" y="330" width="300" height="16" fill="#4a2e18"/><rect x="226" y="346" width="300" height="12" fill="#2a1a0e"/>'
     b += '<rect x="240" y="358" width="12" height="118" fill="#2a1a0e"/><rect x="500" y="358" width="12" height="118" fill="#2a1a0e"/>'
@@ -580,6 +580,7 @@ ESTIBADOR = """<g>
  <rect x="-5" y="-142" width="10" height="12" fill="#b98f73"/><ellipse cx="0" cy="-152" rx="11" ry="13" fill="url(#skin)"/>
  <path d="M-12 -158q12-12 24 0q2 4-2 4h-20q-4 0-2-4z" fill="#1d1d1d"/><path d="M8 -156l8 2" stroke="#1d1d1d" stroke-width="3"/>
 </g>"""
+ESTIBADOR = PJ.NF(PJ.estibador)
 MATEO = """<g>
  <ellipse cx="0" cy="0" rx="40" ry="6" fill="#000" opacity=".45"/>
  <rect x="-17" y="-80" width="14" height="76" fill="#3a3630"/><rect x="3" y="-80" width="14" height="76" fill="#34302a"/>
@@ -593,17 +594,18 @@ MATEO = """<g>
  <circle cx="-6" cy="-198" r="2" fill="#2a2018"/><circle cx="6" cy="-198" r="2" fill="#2a2018"/>
  <path d="M-6 -188q6 2 12 0" stroke="#7a4f3f" stroke-width="1.6" fill="none"/><path d="M-10 -192q10-3 20 0" stroke="#b89a50" stroke-width="2" fill="none"/>
 </g>"""
+MATEO = PJ.NF(PJ.mateo)
 def est(x, y, s, col, col2, flip=False):
     g = ESTIBADOR.replace('COL2', col2).replace('COL', col)
     return fig(g, x, y, s, flip)
 
 def muelle():
-    b = '<linearGradient id="fogsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a7076"/><stop offset="1" stop-color="#a8a49a"/></linearGradient>'
+    b = '<linearGradient id="fogsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e2428"/><stop offset="1" stop-color="#4a4c4a"/></linearGradient>'
     b += '<rect width="800" height="500" fill="url(#fogsky)"/>'
     # grúas al fondo
     b += '<g fill="none" stroke="#3a3c3e" stroke-width="6"><path d="M90 300V60l140 20M90 120l120 -40"/><path d="M620 300V40l-150 30M620 110l-130-30"/></g><path d="M226 80v80" stroke="#3a3c3e" stroke-width="2"/><path d="M474 70v70" stroke="#3a3c3e" stroke-width="2"/>'
     # agua
-    b += '<rect y="250" width="800" height="90" fill="#3e4a50"/>'
+    b += '<rect y="250" width="800" height="90" fill="#1a262c"/>'
     b += '<g class="a-agua">'
     for k in range(4): b += f'<path d="M-160 {262+k*20}q40-6 80 0' + 't80 0'*11 + '" stroke="#5a6a72" stroke-width="1.5" fill="none"/>'
     b += '</g>'
@@ -619,7 +621,7 @@ def muelle():
     b += '<g class="a-gaviota"><path d="M0 0q7-7 14 0q7-7 14 0" stroke="#2a2a2a" stroke-width="2.2" fill="none"/></g>'
     b += '<path d="M330 270q-10 20-24 30" stroke="#2a2622" stroke-width="1.5" fill="none"/>'
     # muelle
-    b += '<rect y="320" width="800" height="180" fill="#57524a"/><path d="M0 320H800" stroke="#2a2622" stroke-width="5"/>'
+    b += '<rect y="320" width="800" height="180" fill="#2a2724"/><rect y="330" width="800" height="170" fill="url(#cob)" opacity=".35"/><path d="M0 320H800" stroke="#2a2622" stroke-width="5"/>'
     for k in range(0, 800, 60): b += f'<path d="M{k} 320v180" stroke="#4a463f" stroke-width="2"/>'
     b += '<rect x="250" y="310" width="16" height="18" rx="4" fill="#2a2622"/><rect x="540" y="310" width="16" height="18" rx="4" fill="#2a2622"/>'
     # cajas de conservas
@@ -637,6 +639,7 @@ def muelle():
     b += fig(MATEO, 592, 470, 1.05)
     b += '<rect width="800" height="500" filter="url(#fog)" opacity=".55"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .42, [(400,390,460,200,1),(700,270,120,120,.6)], tono=.1)
     return wrap(b)
 SVG['muelle'] = muelle()
 
@@ -690,9 +693,10 @@ PACO = """<g>
  <path d="M-18 -152q18-12 36 0q-9 8-18 4q-9 4-18-4z" fill="#3a2e26"/>
  <path d="M-8 -142q8 3 16 0" stroke="#7a4f3f" stroke-width="1.6" fill="none"/>
 </g>"""
+PACO = PJ.NF(PJ.paco)
 def taberna():
     b = '<rect width="800" height="500" fill="#2a1a10"/>'
-    b += '<rect width="800" height="300" fill="#3a2416"/>'
+    b += '<rect width="800" height="300" fill="url(#plkC)"/>'
     for k in range(0, 800, 46): b += f'<path d="M{k} 0V300" stroke="#2e1c10" stroke-width="2"/>'
     b += '<path d="M0 40H800M0 44H800" stroke="#1e120a" stroke-width="6"/>'
     # vigas y faroles
@@ -711,7 +715,7 @@ def taberna():
     for k, t in enumerate(['Koldo ... 4 sidras', 'Mateo ... 2 sidras (30-XI)', 'Patxi ... 1 txakoli', 'Bixente ... 6 sidras (!)']):
         b += f'<text x="338" y="{118+k*12}" font-size="5.6" fill="#e2e0d6" font-family="Special Elite,Courier New">{t}</text>'
     # barra
-    b += '<rect y="300" width="800" height="200" fill="#24160c"/>'
+    b += '<rect y="300" width="800" height="200" fill="url(#tarC)"/>'
     b += '<path d="M120 300h460v34H120z" fill="#6b4426"/><rect x="120" y="334" width="460" height="130" fill="#4a2e18"/>'
     for k in range(5): b += f'<path d="M{150+k*90} 340v120" stroke="#3a2412" stroke-width="3"/>'
     b += '<path d="M200 300h16v-22h-16zM470 300h12v-26h-12z" fill="#6a8a5a" opacity=".8"/><path d="M300 296h20l-2 6h-16z" fill="#e8e2d0"/>'
@@ -728,6 +732,7 @@ def taberna():
     # humo
     b += '<rect width="800" height="500" filter="url(#fog)" opacity=".35"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .6, [(180,150,200,230,1),(480,150,200,230,1),(400,330,300,170,.8)], [(180,96,170,'warm',.5,0),(480,96,170,'warm',.5,0)], humo=.22, tono=.1)
     return wrap(b)
 SVG['taberna'] = taberna()
 
@@ -793,6 +798,7 @@ INIGO = """<g>
  <circle cx="-5" cy="-206" r="1.8" fill="#2a2018"/><circle cx="6" cy="-206" r="1.8" fill="#2a2018"/>
  <path d="M-5 -196q6 4 11 0" stroke="#7a4f3f" stroke-width="1.4" fill="none"/>
 </g>"""
+INIGO = PJ.NF(PJ.inigo)
 CLARA = """<g>
  <ellipse cx="0" cy="0" rx="30" ry="6" fill="#000" opacity=".45"/>
  <path d="M-24 0q2-110 24-160q22 50 24 160z" fill="#2a1c24"/>
@@ -805,6 +811,7 @@ CLARA = """<g>
  <circle cx="-5" cy="-180" r="1.7" fill="#2a2018"/><circle cx="5" cy="-180" r="1.7" fill="#2a2018"/>
  <path d="M-4 -170h8" stroke="#8a4a3a" stroke-width="1.4"/>
 </g>"""
+CLARA = PJ.NF(PJ.clara_sv)
 BENIGNA = """<g>
  <ellipse cx="0" cy="0" rx="32" ry="6" fill="#000" opacity=".45"/>
  <path d="M-28 0q0-100 28-150q28 50 28 150z" fill="#1e1e24"/>
@@ -816,10 +823,11 @@ BENIGNA = """<g>
  <path d="M-14 -174q2-16 14-16q12 0 14 16q-6-8-14-8t-14 8z" fill="#8a8680"/><circle cx="0" cy="-190" r="7" fill="#8a8680"/>
  <circle cx="-5" cy="-171" r="1.6" fill="#2a2018"/><circle cx="5" cy="-171" r="1.6" fill="#2a2018"/><path d="M-5 -161q5-2 10 0" stroke="#7a4f3f" stroke-width="1.3" fill="none"/>
 </g>"""
+BENIGNA = PJ.NF(PJ.benigna)
 
 def salon():
     b = '<rect width="800" height="500" fill="#2a1418"/>'
-    b += '<rect width="800" height="330" fill="#3a1c22"/>'
+    b += '<rect width="800" height="330" fill="#2a1218"/>'
     for k in range(0, 800, 60): b += f'<path d="M{k} 0V330" stroke="#30161c" stroke-width="18" opacity=".5"/>'
     b += '<path d="M0 330H800" stroke="#1a0c0e" stroke-width="6"/>'
     # retratos
@@ -840,17 +848,18 @@ def salon():
     b += fig(INIGO, 680, 470, 1.0)
     b += fig(CLARA, 120, 470, .98)
     b += fig(BENIGNA, 300, 480, .95)
-    b += f'<g transform="translate({560-205*.78} {478-462*.78}) scale(.78)">{resp(AITOR_CASA, "Aitor", 560)}</g>'
+    b += f'<g transform="translate({560-205*.78} {478-462*.78}) scale(.78)">{resp(tAit(AITOR_CASA), "Aitor", 560)}</g>'
     b += '<path d="M548 380q-8 6-4 14l10-2z" fill="#1d2026"/>'
     # platito con horquillas en el velador
     b += '<rect x="752" y="380" width="40" height="6" fill="#4a2e18"/><rect x="768" y="386" width="6" height="90" fill="#4a2e18"/><ellipse cx="772" cy="379" rx="14" ry="4" fill="#d8d0c0"/><path d="M764 377l6-2M770 378l6-3M772 376l4 3" stroke="#3a3a3a" stroke-width="1.2"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .6, [(280,240,170,240,1),(540,240,170,240,1),(700,150,100,140,.5)], [(280,215,160,'warm',.5,0),(540,215,160,'warm',.5,0)], humo=.12, tono=.1)
     return wrap(b)
 SVG['salon'] = salon()
 
 def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
     b = '<rect width="800" height="500" fill="#20140c"/>'
-    b += '<rect width="800" height="320" fill="#2e1e12"/>'
+    b += '<rect width="800" height="320" fill="url(#plkC)"/>'
     for k in range(0, 800, 50): b += f'<path d="M{k} 40V320" stroke="#26180e" stroke-width="3"/>'
     # librería
     b += '<rect x="20" y="40" width="200" height="280" fill="#1a0e08"/>'
@@ -901,6 +910,7 @@ def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
         b += '<rect class="luzL" x="740" y="100" width="60" height="390" fill="#c9b48e" opacity=".25"/>'
         b += fig(LEONOR, 760, 488, 1.15, cls='leoD')
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, (.4 if noche else .55), [(497,296,210,190,1),(390,130,150,160,.5)], [(497,296,150,'warm',.45,0)], tono=.1)
     return wrap(b)
 SVG['despacho'] = despacho(); SVG['despachoL'] = despacho(True)
 SVG['despachoN'] = despacho(noche=True); SVG['despachoI'] = despacho(noche=True, inigo=True); SVG['despachoNA'] = despacho(noche=True, abrigo=True)
@@ -954,7 +964,7 @@ SVG['periodico5'] = diario('Lunes, 5 de diciembre de 1927', 'ALTAMAR DA HOY SEPU
 
 def cocinaP():
     b = '<rect width="800" height="500" fill="#2a2118"/>'
-    b += '<rect width="800" height="340" fill="#4a3a2a"/>'
+    b += '<rect width="800" height="340" fill="#2e2418"/>'
     for y in range(0, 340, 26):
         o = 0 if (y//26) % 2 else 30
         for x in range(-30, 800, 60): b += f'<rect x="{x+o}" y="{y}" width="58" height="24" fill="#54432f" opacity=".55"/>'
@@ -988,13 +998,14 @@ def cocinaP():
     b += '<rect y="340" width="800" height="160" fill="#3a2c1e"/>'
     for x in range(0, 800, 50): b += f'<path d="M{x} 340l{(x-400)*.25} 160" stroke="#2a2016" stroke-width="2"/>'
     # Benigna junto al fogón, con la escoba
-    b += fig(who='Benigna', g=BENIGNA.replace('<path d="M-16 -104h56" stroke="#8a8a8a" stroke-width="4"/><ellipse cx="22" cy="-106" rx="26" ry="4" fill="#b8b8b8"/><path d="M8 -110v-8h6v8M28 -110v-10h5v10" fill="#e8e2d4"/>', ''), x=545, y=470, s=1.25)
+    b += fig(who='Benigna', g=PJ.NF(PJ.benigna_base), x=545, y=470, s=1.25)
     # la escoba, delante, en su mano derecha
     # la escoba, delante, agarrada con las dos manos
     b += ('<g class="a-escoba"><path d="M566 300L600 452" stroke="#8a6a3a" stroke-width="5" stroke-linecap="round"/><path d="M588 448h26l10 30h-46z" fill="#b89a5a"/><path d="M584 462h34M582 470h38" stroke="#8a6a3a" stroke-width="1.5"/>'
-          '<path d="M515 304Q528 348 571 336M575 304Q600 352 586 394" stroke="#1e1e24" stroke-width="14" fill="none" stroke-linecap="round"/>'
+          '<path d="M515 268Q528 330 571 336M575 268Q600 340 586 394" stroke="#1e1e24" stroke-width="14" fill="none" stroke-linecap="round"/>'
           '<circle cx="574" cy="335" r="7" fill="url(#skin)"/><circle cx="587" cy="395" r="7" fill="url(#skin)"/></g>')
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .55, [(305,275,230,210,1),(545,330,170,230,1),(75,160,90,120,.6)], [(305,275,170,'fire',.5,0)], humo=.15, tono=.1)
     return wrap(b)
 SVG['cocinaP'] = cocinaP()
 
@@ -1002,9 +1013,10 @@ SALAZAR_D = SALAZAR_OLD.replace('<ellipse cx="0" cy="-140" rx="19" ry="4" fill="
   '<path d="M-13 -132q0-6 2-8M13 -132q0-6-2-8" stroke="#b8b4ac" stroke-width="3" fill="none"/><ellipse cx="0" cy="-140" rx="19" ry="4" fill="#151515"/>')  # siempre con su bombín
 SALAZAR_D = SALAZAR_D.replace('<rect x="-5" y="-118"', '<path d="M-22 -96q-20 20 -26 54" stroke="#4a4c50" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="-48" cy="-40" r="5" fill="url(#skin)"/><rect x="-5" y="-118"', 1)
 SALAZAR_D = re.sub(r'<g><rect x="52" y="-22".*?</g>', '', SALAZAR_D, flags=re.S)
+SALAZAR_D = PJ.NF(PJ.salazar)
 
 def dispensario(doctor=True):
-    b = '<defs><pattern id="tile" width="24" height="24" patternUnits="userSpaceOnUse"><rect width="24" height="24" fill="#d8d6cc"/><path d="M0 23.5H24M23.5 0V24" stroke="#b8b6aa" stroke-width="1"/></pattern></defs>'
+    b = '<defs><pattern id="tile" width="24" height="24" patternUnits="userSpaceOnUse"><rect width="24" height="24" fill="#8e948c"/><path d="M0 23.5H24M23.5 0V24" stroke="#b8b6aa" stroke-width="1"/></pattern></defs>'
     b += '<rect width="800" height="500" fill="#2a2a28"/><rect width="800" height="350" fill="url(#tile)"/><rect y="330" width="800" height="20" fill="#2a4a4a"/>'
     # diploma
     b += '<rect x="360" y="50" width="90" height="66" fill="#efe6d0" stroke="#4a3a1a" stroke-width="5"/><text x="405" y="72" text-anchor="middle" font-size="6.5" fill="#2a1d10" font-family="Georgia">LICENCIADO EN MEDICINA</text><text x="405" y="86" text-anchor="middle" font-size="5" fill="#2a1d10" font-family="Georgia">Ramón Salazar Ortiz</text><text x="405" y="98" text-anchor="middle" font-size="4.5" fill="#2a1d10" font-family="Georgia">Valladolid, 1901</text><circle cx="430" cy="106" r="5" fill="#a3271c"/>'
@@ -1029,16 +1041,17 @@ def dispensario(doctor=True):
     b += ''.join(f'<g class="a-gota" style="animation-delay:-{d}s"><path d="M{x} 356q2 6 0 8q-2-2 0-8z" fill="#9ab8c8" opacity=".8"/></g>' for x, d in ((660, 0), (700, 1.1), (736, 2.0)))
     b += '<ellipse cx="700" cy="470" rx="34" ry="4" fill="#5a6a72" opacity=".5"/>'
     # suelo
-    b += '<rect y="350" width="800" height="150" fill="#3a3a36"/>'
+    b += '<rect y="350" width="800" height="150" fill="#1e1e1c"/><path d="M430 0V96" stroke="#000" stroke-width="2"/><path d="M406 96H454L466 118H394Z" fill="#1c2a22"/><path d="M406 96H454L456 102H404Z" fill="#3a5a48"/>'
     for x in range(0, 900, 60): b += f'<path d="M{x} 350l-60 150" stroke="#2e2e2a" stroke-width="2"/>'
     # doctor
-    if doctor: b += fig(SALAZAR_D, 430, 545, 1.9, cls='docG')
+    if doctor: b += fig(SALAZAR_D, 430, 545, 1.18, cls='docG')
     b += f'<g class="chaval" opacity="0">{fig(TXOMIN, 770, 330, 1.5)}</g>'
     # mostrador
     b += '<rect x="250" y="440" width="340" height="14" fill="#5a4a3a"/><rect x="260" y="454" width="320" height="46" fill="#4a3a2a"/><path d="M260 480h320" stroke="#3a2c1e" stroke-width="3"/>'
     b += '<path d="M300 440v-26h4v26M290 414h24M292 414l-6 12h16zM312 414l-6 12h16z" stroke="#c9a24a" stroke-width="2" fill="#c9a24a" opacity=".85"/>'
     b += '<rect x="500" y="424" width="60" height="16" fill="#2a3a2a"/><rect x="504" y="427" width="52" height="10" fill="#efe6d0"/>'
     b += '<rect width="800" height="500" fill="url(#vig)" opacity=".7"/>'
+    b = conluz(b, .55, [(430,260,310,270,1)], [(430,118,250,'cold',.45,26)], tono=.14)
     return wrap(b)
 SVG['dispensario'] = dispensario(); SVG['dispensarioV'] = dispensario(False)
 
@@ -1111,6 +1124,7 @@ def cocinaN():
     b += fig(CLARA, 190, 470, 1.15)
     b += '<rect x="219" y="362" width="5" height="16" fill="#efe6d0"/><path class="a-llama" d="M221 354q4 5 0 8q-4-3 0-8z" fill="#ffd27a"/><g class="a-brillo"><circle cx="221" cy="360" r="150" fill="url(#warm)" opacity=".9"/></g>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .6, [(221,360,190,210,1)], [(221,358,150,'warm',.5,0)], tono=.08)
     return wrap(b)
 SVG['cocinaN'] = cocinaN()
 
@@ -1173,6 +1187,7 @@ OBRERA = """<g>
  <path d="M-13 -158q0-16 13-16q13 0 13 16l2 8q-15-8-30 0z" fill="PAN"/>
  <circle cx="-4" cy="-156" r="1.4" fill="#2a2018"/><circle cx="4" cy="-156" r="1.4" fill="#2a2018"/><path d="M-4 -148q4 2 8 0" stroke="#7a4f3f" stroke-width="1.2" fill="none"/>
 </g>"""
+OBRERA = PJ.NF(PJ.obrera)
 def obrera(x, y, s, col, pan, flip=False, who=None):
     return fig(OBRERA.replace('COL', col).replace('PAN', pan), x, y, s, flip, who=who)
 REMEDIOS = """<g>
@@ -1187,6 +1202,7 @@ REMEDIOS = """<g>
  <circle cx="-5" cy="-183" r="1.6" fill="#2a2018"/><circle cx="5" cy="-183" r="1.6" fill="#2a2018"/><path d="M-6 -173h12" stroke="#6a3f2f" stroke-width="1.4"/>
  <path d="M-9 -189l6 2M9 -189l-6 2" stroke="#2a2a2a" stroke-width="1.6"/>
 </g>"""
+REMEDIOS = PJ.NF(PJ.remedios)
 G_LATAS = f'<g fill="{ink}">' + ''.join(f'<rect x="{60+c*30+r*15}" y="{76-r*18}" width="26" height="15" rx="3"/>' for r in range(4) for c in range(6) if c < 6-r) + '</g>'
 SVG['periodico7'] = diario('Miércoles, 7 de diciembre de 1927', 'LA VIUDA REABRE LA CONSERVERA; EL MUELLE SIGUE PARADO',
   'Las mujeres vuelven a las latas', G_FABRICA,
@@ -1200,8 +1216,8 @@ SVG['periodico7'] = diario('Miércoles, 7 de diciembre de 1927', 'LA VIUDA REABR
   'Viento sur. Cielo despejado. Pleamar a las 5:30.')
 
 def conservera():
-    b = '<rect width="800" height="500" fill="#3a3a36"/>'
-    b += '<rect width="800" height="330" fill="#5a5a52"/>'
+    b = '<rect width="800" height="500" fill="#1e1e1c"/>'
+    b += '<rect width="800" height="330" fill="#2e2e2a"/>'
     for x in range(0, 800, 100): b += f'<path d="M{x} 0V330" stroke="#4a4a44" stroke-width="10"/>'
     b += '<path d="M0 40h800" stroke="#3a3a34" stroke-width="12"/>'
     for x in (120, 360, 600): b += f'<rect x="{x}" y="70" width="90" height="120" fill="#8a9a9a" opacity=".6"/><path d="M{x+45} 70v120M{x} 130h90" stroke="#4a4a44" stroke-width="4"/>'
@@ -1209,7 +1225,7 @@ def conservera():
     b += '<g class="a-humo"><g filter="url(#b5)" opacity=".5"><ellipse cx="700" cy="220" rx="60" ry="40" fill="#e8e6e0"/><ellipse cx="660" cy="170" rx="40" ry="30" fill="#e8e6e0"/></g></g>'
     b += '<rect x="650" y="230" width="110" height="110" fill="#2a2a2a"/><rect x="664" y="250" width="80" height="30" fill="#ff8a30" opacity=".6"/>'
     # mesa larga de enlatar
-    b += '<rect y="330" width="800" height="170" fill="#4a4a44"/>'
+    b += '<rect y="330" width="800" height="170" fill="#262622"/>'
     b += '<rect x="120" y="360" width="460" height="16" fill="#7a6a52"/><rect x="130" y="376" width="12" height="100" fill="#5a4a36"/><rect x="560" y="376" width="12" height="100" fill="#5a4a36"/>'
     for k in range(12): b += f'<rect x="{140+k*36}" y="{348-(k%3)*2}" width="18" height="12" rx="3" fill="#b8bcc0"/>'
     b += '<ellipse cx="230" cy="358" rx="22" ry="5" fill="#9aa8b0"/><path d="M215 356l12-4l8 3" stroke="#6a7a82" stroke-width="2"/>'
@@ -1221,6 +1237,7 @@ def conservera():
     # Aitor en la puerta
     b += aitor(90, 480, .62)
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .5, [(705,265,180,180,1),(165,130,110,110,.7),(405,130,110,110,.7),(645,130,110,110,.7),(400,400,340,150,.8)], [(704,265,150,'fire',.45,0)], humo=.2, tono=.1)
     return wrap(b)
 SVG['conservera'] = conservera()
 
@@ -1267,12 +1284,13 @@ def maquina():
     b += '<g class="ol"><rect x="450" y="430" width="70" height="40" fill="#e8dcc0" transform="rotate(-6 485 450)"/><path d="M458 440h50M458 448h40M458 456h46" stroke="#3a2a1a" stroke-width="1" transform="rotate(-6 485 450)"/></g>'
     b += '<rect x="160" y="390" width="480" height="110" fill="#000" class="ob" opacity=".6"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .45, [(330,200,270,250,1)], tono=.1)
     return wrap(b)
 SVG['maquina'] = maquina()
 
 def oficina():
-    b = '<rect width="800" height="500" fill="#3a2e22"/>'
-    b += '<rect width="800" height="320" fill="#4a3c2c"/>'
+    b = '<rect width="800" height="500" fill="#1e160e"/>'
+    b += '<rect width="800" height="320" fill="url(#plkC)"/>'
     b += '<rect x="560" y="60" width="180" height="150" fill="#8a9a9a" opacity=".5"/><path d="M650 60v150M560 135h180" stroke="#3a2e22" stroke-width="6"/>'
     # estante con frascos de matarratas
     b += '<rect x="60" y="80" width="200" height="8" fill="#2a1e14"/>'
@@ -1289,6 +1307,7 @@ def oficina():
     b += '<path d="M560 300v-30h4v30M548 270h28l-6-10h-16z" fill="#2a2a2a"/><circle cx="562" cy="270" r="60" fill="url(#warm)" opacity=".6"/>'
     b += '<rect y="482" width="800" height="18" fill="#22180e"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .6, [(562,280,250,210,1),(650,135,110,90,.5)], [(562,268,190,'warm',.45,0)], tono=.12)
     return wrap(b)
 SVG['oficina'] = oficina()
 
@@ -1309,6 +1328,7 @@ LOLA = """<g>
  <circle cx="-5" cy="-181" r="1.6" fill="#1a1010"/><circle cx="5" cy="-181" r="1.6" fill="#1a1010"/><path d="M-8 -186l5 1M8 -186l-5 1" stroke="#1a1010" stroke-width="1.2"/>
  <path d="M-4 -172q4 3 8 0" stroke="#b02030" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="-8" cy="-176" r="2.5" fill="#e0707a" opacity=".5"/><circle cx="8" cy="-176" r="2.5" fill="#e0707a" opacity=".5"/>
 </g>"""
+LOLA = PJ.NF(PJ.lola)
 PORTERO = """<g>
  <ellipse cx="0" cy="0" rx="38" ry="7" fill="#000" opacity=".45"/>
  <rect x="-22" y="-80" width="18" height="80" fill="#1a1a1a"/><rect x="4" y="-80" width="18" height="80" fill="#1a1a1a"/>
@@ -1320,6 +1340,7 @@ PORTERO = """<g>
  <circle cx="-6" cy="-194" r="1.8" fill="#1a1010"/><circle cx="6" cy="-194" r="1.8" fill="#1a1010"/><path d="M-11 -200l8 2M11 -200l-8 2" stroke="#1a1010" stroke-width="2.2"/>
  <path d="M-8 -182h16" stroke="#6a3f2f" stroke-width="1.8"/><path d="M-14 -186q14 10 28 0" stroke="#2a1a14" stroke-width="3" fill="none"/>
 </g>"""
+PORTERO = PJ.NF(PJ.portero)
 SVG['periodico8'] = diario('Jueves, 8 de diciembre de 1927', 'INMACULADA: PROCESIÓN SIN HUELGUISTAS Y CON MUCHO FRÍO',
   'Altamar sale a la calle', G_CRUZ,
   ['La procesión de la Inmaculada recorrió ayer','el muelle con más paraguas que velas. Los','estibadores no la siguieron: «La Virgen','no carga cajas, pero nosotros tampoco»,','dijo uno, entre risas.'],
@@ -1352,12 +1373,13 @@ def calleFarol():
     b += fig(PORTERO, 270, 440, 1.0, who='El portero')
     b += aitor(80, 480, .7)
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .45, [(120,236,170,230,1),(560,236,170,230,1),(355,330,150,170,1)], lluvia=True, tono=.08)
     return wrap(b)
 SVG['calleFarol'] = calleFarol()
 
 def camerino():
     b = '<rect width="800" height="500" fill="#2a1418"/>'
-    b += '<rect width="800" height="330" fill="#3a1a22"/>'
+    b += '<rect width="800" height="330" fill="#2a1218"/>'
     for x in range(0, 800, 40): b += f'<path d="M{x} 0V330" stroke="#42202a" stroke-width="14"/>'
     # biombo con vestidos
     b += '<path d="M600 90l60-10v300l-60 10zM660 80l60 10v300l-60-10zM720 90l60-10v300l-60 10z" fill="#4a2a2a" stroke="#2a1416" stroke-width="3"/>'
@@ -1382,6 +1404,7 @@ def camerino():
     b += '<rect y="430" width="800" height="70" fill="#1e0e10"/>'
     b += fig(LOLA, 340, 480, 1.45, who='Lola')
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .55, [(370,160,270,240,1)], [(370,140,200,'warm',.35,0)], tono=.1)
     return wrap(b)
 SVG['camerino'] = camerino()
 

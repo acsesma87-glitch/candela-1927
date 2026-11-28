@@ -12,7 +12,7 @@ DAYS[3]=[
    narBtn('Ir a El Ancla',async()=>{narPaso('Si Mateo no estuvo en El Ancla hasta el cierre, el tabernero lo sabrá. En Altamar, los taberneros lo saben todo.');await sleep(5000);goScene(1)})}},
 
 // ===== Taberna El Ancla =====
-{svg:SVG.taberna,dark:.3,cartel:'ALTAMAR<br>TABERNA EL ANCLA',
+{svg:SVG.taberna,dark:.08,cartel:'ALTAMAR<br>TABERNA EL ANCLA',
  ekiSpots:[
   {who:'Paco',x:400,y:240,act:async()=>{await bubble('Eki se pone de pie contra la barra. Paco le da un trozo de chorizo «porque es sábado».',4000);ekiLog('Paco, el tabernero','le cae genial (y le da chorizo).')}},
   {who:'Un marinero',x:110,y:360,act:async()=>{await bubble('Eki va a saludar al marinero de la barra. Él le hace un nudo con una cuerdita para que juegue.',4000);ekiLog('Los marineros de El Ancla','saluda a todos.')}},

@@ -14,7 +14,7 @@ DAYS[2]=[
  enter:async()=>{persona('Doña Leonor','Dicen que el seguro de vida de Don Julián se subió hace apenas un mes.');nar('Aitor deja el periódico encima de la mesa sin decir nada. Ya sale en portada.<br><br><i>Léelo bien: la letra pequeña también cuenta.</i>');narBtn('Ir al muelle',async()=>{narPaso('Los estibadores se juntan en el muelle a mediodía. Si alguien sabe qué pasa en el puerto de noche, son ellos.');await sleep(5000);next()})}},
 
 // ===== El muelle =====
-{svg:SVG.muelle,dark:.22,cartel:'ALTAMAR<br>EL MUELLE',
+{svg:SVG.muelle,dark:.06,cartel:'ALTAMAR<br>EL MUELLE',
  ekiSpots:[
   {who:'Los estibadores',x:175,y:330,act:async()=>{await bubble('Eki va de estibador en estibador recogiendo caricias. Uno le da un trozo de pan duro.',3600);ekiLog('Los estibadores','saluda a todos, uno por uno.')}},
   {who:'Mateo',x:592,y:330,act:async()=>{await bubble('Eki se tira panza arriba a los pies de Mateo. El Rubio, muy serio, se agacha a rascarle la tripa.',3800);ekiLog('Mateo «el Rubio»','le encanta. Panza arriba y todo.')}},

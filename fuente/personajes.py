@@ -139,3 +139,58 @@ def txomin(L):  # crío asomado: busto, en las unidades de la escena (pecho en y
     s+='<path d="M-20 -18 Q-18 -38 2 -38 Q22 -38 24 -20 Q10 -26 0 -25 Q-10 -24 -20 -18Z" fill="#1a1c20"/><circle cx="2" cy="-38" r="3" fill="#1a1c20"/>'
     return s
 NF=lambda fn,L=1:f'<g transform="scale(1.6)">{fn(L)}</g>'
+
+def clara_sv(L):  # Clara sin vela
+    s=clara(L)
+    i=s.index('<rect x="16" y="-66"');j=s.index('/>',s.index('<path d="M22 -84'))+2
+    return s[:i]+s[j:]
+def estibador(L):  # COL y COL2 se sustituyen en cada uno
+    s=shadow()+legs('#1a1612',-7,7,42)+P('M-22 -36 L-20 -100 Q0 -112 20 -100 L22 -36Z','COL',L)
+    s+=S('M-16 -96 Q-24 -76 10 -72','COL2',10,L)+S('M16 -96 Q24 -76 -10 -68','COL',10,L)+f'<circle cx="10" cy="-72" r="4.5" fill="{SK}"/><circle cx="-10" cy="-68" r="4.5" fill="{SK}"/>'
+    s+=head(0,-124,13,L)+eye(-4,-125)+eye(5,-125)+'<path d="M-4 -116h8" stroke="#3a2a1a" stroke-width="1.6"/>'
+    s+='<path d="M-14 -128 Q-14 -142 0 -142 Q14 -142 16 -130 L22 -128 L-14 -126Z" fill="#141414"/>'
+    return s
+def paco(L):  # tabernero: calvo, bigote, mandil
+    s=shadow()+legs('#1a1410',-8,8,44)
+    s+=P('M-28 -36 L-24 -108 Q0 -122 24 -108 L28 -36Z','#33302c',L)+'<path d="M-16 -86 L16 -86 L22 -36 L-22 -36Z" fill="#cfc8b6" opacity=".85"/>'
+    s+=S('M-24 -100 Q-44 -70 -36 -44','#33302c',11,L)+f'<circle cx="-36" cy="-42" r="6" fill="{SK}"/>'+S('M24 -100 Q38 -76 30 -52','#33302c',11,L)+f'<circle cx="30" cy="-50" r="6" fill="{SK}"/>'
+    s+=head(0,-138,15,L,.35)+eye(-5,-140)+eye(5,-140)
+    s+='<path d="M-15 -142 Q0 -162 15 -142 Q0 -152 -15 -142Z" fill="#111"/><path d="M-14 -140 q-3 6 0 12M14 -140 q3 6 0 12" stroke="#2a2420" stroke-width="3" fill="none"/>'
+    s+='<path d="M-11 -130 Q0 -124 11 -130 L9 -126 Q0 -121 -9 -126Z" fill="#2a1a10"/>'
+    return s
+def benigna_base(L):  # ama de llaves: vestido oscuro, delantal blanco, moño gris
+    s=shadow()+'<path d="M-6 0 V-20 M6 0 V-20" stroke="#121014" stroke-width="5"/>'
+    s+=P('M-24 -18 L-20 -102 Q0 -112 20 -102 L24 -18Z','#1e1e24',L)
+    s+='<path d="M-14 -86 Q0 -90 14 -86 L18 -22 L-18 -22Z" fill="#d8d2c4" opacity=".9"/><path d="M-14 -86 Q0 -96 14 -86" stroke="#d8d2c4" stroke-width="3" fill="none"/>'
+    s+=head(0,-126,13,L,.38,'#c4a08a')+eye(-4,-127)+eye(4,-127)+'<path d="M-4 -119h8" stroke="#5a3a2a" stroke-width="1.4"/>'
+    s+='<path d="M-13 -128 Q-12 -142 0 -142 Q12 -142 13 -128 Q6 -134 0 -134 Q-6 -134 -13 -128Z" fill="#8a8680"/><circle cx="0" cy="-143" r="6" fill="#8a8680"/>'
+    return s
+def benigna(L):
+    return benigna_base(L)+S('M-16 -98 Q-22 -78 -4 -66','#1e1e24',9,L)+S('M16 -98 Q22 -78 4 -66','#1e1e24',9,L)+f'<circle cx="0" cy="-64" r="5.5" fill="{SK}"/>'
+def obrera(L):  # COL: vestido, PAN: pañuelo
+    s=shadow()+'<path d="M-6 0 V-22 M6 0 V-22" stroke="#1a1612" stroke-width="5"/>'
+    s+=P('M-20 -20 L-16 -100 Q0 -110 16 -100 L20 -20Z','COL',L)+'<path d="M-12 -84 L12 -84 L16 -24 L-16 -24Z" fill="#cfc8b6" opacity=".8"/>'
+    s+=S('M-14 -96 Q-22 -76 -18 -58','COL',8,L)+f'<circle cx="-18" cy="-56" r="4.5" fill="{SK}"/>'+S('M14 -96 Q22 -76 18 -58','COL',8,L)+f'<circle cx="18" cy="-56" r="4.5" fill="{SK}"/>'
+    s+=head(0,-124,12,L)+eye(-4,-125)+eye(4,-125)+'<path d="M-3 -117 Q0 -115 3 -117" stroke="#6a3a2a" stroke-width="1.3" fill="none"/>'
+    s+='<path d="M-14 -124 Q-14 -142 0 -142 Q14 -142 14 -124 L16 -118 Q0 -130 -16 -118Z" fill="PAN"/>'
+    return s
+def remedios(L):  # encargada: seca, moño, llavero
+    s=shadow()+'<path d="M-7 0 V-20 M7 0 V-20" stroke="#121214" stroke-width="5"/>'
+    s+=P('M-24 -18 L-20 -104 Q0 -114 20 -104 L24 -18Z','#1a1a1e',L)
+    s+=S('M-16 -100 Q-24 -76 -20 -56','#1a1a1e',9,L)+f'<circle cx="-20" cy="-54" r="5" fill="{SK}"/>'+S('M16 -100 Q24 -76 20 -56','#1a1a1e',9,L)+f'<circle cx="20" cy="-54" r="5" fill="{SK}"/>'
+    s+='<path d="M20 -50v12" stroke="#8a7a5a" stroke-width="1.6"/><circle cx="20" cy="-34" r="4" fill="none" stroke="#c9a24a" stroke-width="1.5"/>'
+    s+=head(0,-128,13,L)+eye(-4,-129)+eye(5,-129)+'<path d="M-9 -134l6 2M9 -134l-6 2" stroke="#2a2a2a" stroke-width="1.4"/><path d="M-5 -120h10" stroke="#5a3a2a" stroke-width="1.4"/>'
+    s+='<path d="M-14 -130 Q-13 -144 0 -144 Q13 -144 14 -130 Q6 -136 0 -136 Q-6 -136 -14 -130Z" fill="#3a3a3a"/><circle cx="0" cy="-146" r="5.5" fill="#3a3a3a"/>'
+    return s
+def portero(L):
+    s=shadow()+legs('#0a0a0c',-9,9,44)+P('M-30 -40 L-28 -106 Q0 -120 28 -106 L30 -40Z','#141418',L)
+    s+=S('M-24 -100 Q-34 -76 -30 -50','#141418',13,L)+f'<circle cx="-30" cy="-48" r="7" fill="{SK}"/>'+S('M24 -100 Q34 -76 30 -50','#141418',13,L)+f'<circle cx="30" cy="-48" r="7" fill="{SK}"/>'
+    s+=head(0,-132,14,L,.45)+eye(-5,-134)+eye(5,-134)+'<path d="M-9 -138l7 2M9 -138l-7 2" stroke="#111" stroke-width="2"/><path d="M-8 -124 h16" stroke="#2a1a14" stroke-width="2"/>'
+    s+='<path d="M-15 -138 Q-15 -150 0 -150 Q15 -150 15 -138Z" fill="#0a0a0a"/>'
+    return s
+def mateo_cap(L): return mateo(L)
+def candela_sin(L):  # sin sombrero ni maletín (en casa)
+    s=candela(L)
+    s=s[:s.index('<ellipse cx="0" cy="-141"')]
+    i=s.index('<rect x="20" y="-48"');j=s.index('fill="none"/>',i)+13
+    return s[:i]+s[j:]

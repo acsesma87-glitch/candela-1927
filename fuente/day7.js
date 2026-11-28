@@ -39,7 +39,7 @@ DAYS[7]=[
    narBtn('Ir a la conservera',async()=>{narPaso('La conservera Arrieta huele a sardina, a aceite y a vapor. Dentro, una fila de mujeres con pañuelo llena latas sin levantar la vista.');await sleep(5000);goScene(1)})}},
 
 // ===== La conservera =====
-{svg:SVG.conservera,dark:.1,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>LA CONSERVERA ARRIETA',
+{svg:SVG.conservera,dark:.03,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>LA CONSERVERA ARRIETA',
  ekiSpots:[
   {who:'Una obrera',x:210,y:360,act:async()=>{await bubble('Eki se planta delante de una obrera y pone su mejor cara. La mujer mira a los lados y le da una sardina por debajo de la mesa.',4600);ekiLog('Las obreras de la conservera','le dan sardinas a escondidas.')}},
   {who:'Doña Remedios',x:640,y:360,act:async()=>{await bubble('Eki va hacia Doña Remedios… «¡Ese chucho, fuera de mi fábrica!». Eki da media vuelta sin discutir.',4400);ekiLog('Doña Remedios','no la deja acercarse: «¡fuera de mi fábrica!».')}},
@@ -76,7 +76,7 @@ DAYS[7]=[
    narBtn('Volver con las obreras',()=>goScene(1));const b=document.createElement('button');b.className='go';b.textContent='Colocar las cajas como estaban';b.onclick=cajasReinicia;$('#acts').appendChild(b)}},
 
 // ===== La máquina =====
-{svg:SVG.maquina,dark:.35,tools:['mano','linterna','lupa'],
+{svg:SVG.maquina,dark:.2,tools:['mano','linterna','lupa'],
  spots:[
   {id:'reja',tool:'lupa',x:330,y:200,w:270,h:270,act:async()=>{await bubble('Los agujeros de la reja de protección: limpios, sin óxido y sin roscas rotas. La reja no se cayó: alguien la desatornilló con cuidado.',5000);
     await pista('reja','La reja de la máquina','A la máquina del accidente le quitaron la reja de protección a propósito: los tornillos se sacaron, no se rompieron.')}},
@@ -95,7 +95,7 @@ DAYS[7]=[
    nar('La máquina del accidente, parada. Huele a grasa y a hierro. Abajo, todo está a oscuras.')}},
 
 // ===== La oficina de la encargada =====
-{svg:SVG.oficina,dark:.3,tools:['mano','linterna','lupa'],
+{svg:SVG.oficina,dark:.12,tools:['mano','linterna','lupa'],
  laika:()=>d7().venenoL?null:(d7().venenoL=1,save(),{x:160,t:'Laika olfatea el estante de los frascos y se aparta estornudando. Ni ella quiere saber nada de eso.'}),
  spots:[
   {id:'registro',tool:'lupa',x:250,y:286,w:150,h:44,act:async()=>{await bubble('«Registro de venenos. 14-XI · 2 frascos · Remedios (ratas del almacén). 28-XI · 1 frasco · C. Arrieta.»',5000);
