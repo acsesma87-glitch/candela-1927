@@ -15,7 +15,18 @@ def defs(extra=''):
 <filter id="b5"><feGaussianBlur stdDeviation="5"/></filter>
 <filter id="paperT"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 .4 0 0 0 0 .33 0 0 0 0 .22 0 0 0 .22 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
 <pattern id="cob" width="36" height="16" patternUnits="userSpaceOnUse"><rect width="36" height="16" fill="#3a3530"/><path d="M0 15.5H36M18 0V8M0 7.5H36M9 8V16M27 8V16" stroke="#22201c" stroke-width="1.5"/></pattern>
-{extra}</defs>'''
+{extra}<linearGradient id="lgR" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".5"/><stop offset=".55" stop-color="#000" stop-opacity=".05"/><stop offset=".85" stop-color="#ffcf80" stop-opacity=".08"/><stop offset="1" stop-color="#ffcf80" stop-opacity=".28"/></linearGradient>
+<linearGradient id="lgL" x1="1" x2="0"><stop offset="0" stop-color="#000" stop-opacity=".5"/><stop offset=".55" stop-color="#000" stop-opacity=".05"/><stop offset=".85" stop-color="#ffcf80" stop-opacity=".08"/><stop offset="1" stop-color="#ffcf80" stop-opacity=".28"/></linearGradient>
+<radialGradient id="hole"><stop offset="0" stop-color="#000"/><stop offset=".55" stop-color="#000" stop-opacity=".85"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+<radialGradient id="fire"><stop offset="0" stop-color="#ffb060" stop-opacity=".95"/><stop offset=".4" stop-color="#ff7a20" stop-opacity=".35"/><stop offset="1" stop-color="#c04000" stop-opacity="0"/></radialGradient>
+<radialGradient id="pale"><stop offset="0" stop-color="#fff2c8" stop-opacity=".9"/><stop offset="1" stop-color="#fff2c8" stop-opacity="0"/></radialGradient>
+<radialGradient id="cold"><stop offset="0" stop-color="#d8f0e0" stop-opacity=".85"/><stop offset=".4" stop-color="#a8d0c0" stop-opacity=".25"/><stop offset="1" stop-color="#80b0a0" stop-opacity="0"/></radialGradient>
+<radialGradient id="redL"><stop offset="0" stop-color="#ff7a68" stop-opacity=".95"/><stop offset=".35" stop-color="#e03a2a" stop-opacity=".35"/><stop offset="1" stop-color="#a01010" stop-opacity="0"/></radialGradient>
+<filter id="smoke" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .022" numOctaves="3" seed="11"/><feColorMatrix values="0 0 0 0 .86 0 0 0 0 .8 0 0 0 0 .7 0 0 0 1.4 -.45"/></filter>
+<pattern id="rain" width="46" height="70" patternUnits="userSpaceOnUse"><path d="M6 0l-5 16M28 26l-5 16M17 48l-5 16M40 10l-5 16" stroke="#cfdbe0" stroke-width="1" opacity=".22"/></pattern>
+<filter id="desA"><feColorMatrix type="saturate" values=".8"/></filter><filter id="blkF"><feColorMatrix values="0 0 0 0 .02 0 0 0 0 .02 0 0 0 0 .03 0 0 0 1 0"/></filter>
+<linearGradient id="aitG" gradientUnits="userSpaceOnUse" x1="180" x2="260" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".5"/></linearGradient><mask id="aitM"><rect x="0" y="0" width="400" height="500" fill="url(#aitG)"/></mask>
+</defs>'''
 
 def resp(inner, who=None, x=0):
     d = f' data-who="{who}"' if who else ''
@@ -28,6 +39,23 @@ def fig(g, x, y, s=1, flip=False, who=None, cls=''):
     g2 = f'<g transform="translate({x} {y}) scale({-s if flip else s} {s})">{resp(g, who, x)}</g>'
     return f'<g class="{cls}">{g2}</g>' if cls else g2
 
+def luz(dk, holes, glows=(), humo=0, lluvia=False, tono=.28):
+    """Claroscuro: oscuridad con huecos en las fuentes de luz (la linterna la quita) y halos encima."""
+    m=''.join(f'<ellipse cx="{x}" cy="{y}" rx="{rx}" ry="{ry}" fill="url(#hole)" opacity="{o}"/>' for x,y,rx,ry,o in holes)
+    g=''
+    if humo: g+=f'<rect width="800" height="330" filter="url(#smoke)" opacity="{humo}" class="ob"/>'
+    if lluvia: g+='<rect width="800" height="500" fill="url(#rain)"/>'
+    g+=f'<rect width="800" height="500" fill="#0a0705" opacity="{tono}" class="ob"/>'
+    g+=f'<mask id="oscuro"><rect width="800" height="500" fill="#fff"/>{m}</mask><rect width="800" height="500" fill="#030201" opacity="{dk}" mask="url(#oscuro)" class="ob"/>'
+    for x,y,r,gr,o,core in glows:
+        g+=f'<circle cx="{x}" cy="{y}" r="{r}" fill="url(#{gr})" opacity="{o}"/>'+(f'<circle cx="{x}" cy="{y}" r="{core}" fill="url(#{gr})"/>' if core else '')
+    return g
+VIG='<rect width="800" height="500" fill="url(#vig)"/>'
+def conluz(b, *a, **k):
+    """Mete la capa de luz justo antes de la viñeta final de la escena."""
+    L=luz(*a, **k)
+    i=b.rfind(VIG)
+    return b[:i]+L+b[i:] if i>=0 else b+L
 def wrap(body, extra=''):
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="none">{defs(extra)}{body}</svg>'
 
@@ -39,8 +67,12 @@ AITOR = AITOR.replace('<rect x="196" y="127" width="18" height="8" rx="1" fill="
   '<rect x="196" y="127" width="18" height="8" rx="1" fill="#c9a24a"/><text x="205" y="133.6" text-anchor="middle" font-size="4.2" fill="#3a2a10" font-family="Georgia">SERENO 7</text>')
 
 def aitor(x, y, s=1):  # x,y = pies (centro)
-    return f'<g transform="translate({x-205*s} {y-462*s}) scale({s})">{resp(AITOR, "Aitor", x)}</g>'
+    return f'<g transform="translate({x-205*s} {y-462*s}) scale({s})">{resp(AITOR_T, "Aitor", x)}</g>'
 
+# Aitor con los toques del estilo nuevo (color apagado, lado en sombra y media cara)
+AITOR_T = f'<g><g filter="url(#desA)">{AITOR}</g><g mask="url(#aitM)"><g filter="url(#blkF)">{AITOR}</g></g><path d="M205 138 A25 30 0 0 1 205 198Z" fill="#000" opacity=".33"/></g>'
+import personajes as PJ
+def tAit(g): return f'<g><g filter="url(#desA)">{g}</g><g mask="url(#aitM)"><g filter="url(#blkF)">{g}</g></g><path d="M205 138 A25 30 0 0 1 205 198Z" fill="#000" opacity=".33"/></g>'
 # ---------------- Candela de pie con maleta ----------------
 CANDELA = '''<g>
  <ellipse cx="0" cy="0" rx="42" ry="7" fill="#000" opacity=".45"/>
@@ -70,6 +102,8 @@ CANDELA = '''<g>
  <path d="M-15 -239q0-18 15-18t15 18z" fill="#3a322b"/>
  <path d="M-15 -243h30v4h-30z" fill="#8a2a20"/>
 </g>'''
+CANDELA_OLD = CANDELA
+CANDELA = PJ.NF(PJ.candela)
 def candela(x, y, s=1):
     return f'<g transform="translate({x} {y}) scale({s})">{resp(CANDELA, "Candela", x)}</g>'
 
@@ -173,6 +207,7 @@ def topo():
     b += candela(470, 372, .95)
     b += aitor(690, 374, .74)
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .74, [(729,200,170,240,1),(646,280,120,120,1),(170,290,200,110,.8),(470,300,120,150,.6)], [(729,165,170,'warm',.5,0),(646,273,90,'warm',.55,12)], lluvia=True)
     return wrap(b)
 SVG['topo'] = topo()
 
@@ -189,7 +224,7 @@ AITOR_CASA = _cut(AITOR_CASA, '<!-- gorra de sereno -->', '<!-- mechones')
 AITOR_CASA = AITOR_CASA.replace('<!-- mechones', '<path d="M175 150q0-30 30-33q30 3 31 33q-9-14-31-15q-21 1-30 15z" fill="url(#hairA)"/><path d="M190 126q8-3 14 0M212 124q8 0 12 5" stroke="#8a8680" stroke-width="1" fill="none"/>\n <!-- mechones')
 def aitor_casa(x, y, s=1):
     return f'<g transform="translate({x-205*s} {y-462*s}) scale({s})">{resp(AITOR_CASA, "Aitor", x)}</g>'
-CANDELA_CASA = _cut(CANDELA, '<!-- brazo con maleta -->', '<path d="M-24 -184q-10 30-8 70"')
+CANDELA_CASA = _cut(CANDELA_OLD, '<!-- brazo con maleta -->', '<path d="M-24 -184q-10 30-8 70"')
 CANDELA_CASA = CANDELA_CASA.replace('<path d="M-24 -184q-10 30-8 70"', '<path d="M24 -184q10 30 8 70" stroke="#7a6c52" stroke-width="13" fill="none" stroke-linecap="round"/><circle cx="32" cy="-112" r="6" fill="url(#skin)"/><path d="M-24 -184q-10 30-8 70"')
 CANDELA_CASA = CANDELA_CASA[:CANDELA_CASA.index('<!-- sombrero -->')] + '<path d="M-16 -226q0-20 16-21q16 1 16 21q-6-9-16-10q-10 1-16 10z" fill="#3a281e"/><path d="M0 -247v12" stroke="#22170f" stroke-width="1.2"/></g>'
 def candela_casa(x, y, s=1):
@@ -205,6 +240,7 @@ TXOMIN = """<g>
  <ellipse cx="0" cy="0" rx="4" ry="3" fill="#7a3a2a"/>
  <g fill="#b77a5a" opacity=".6"><circle cx="-9" cy="-5" r="1"/><circle cx="-6" cy="-3" r="1"/><circle cx="9" cy="-5" r="1"/><circle cx="6" cy="-3" r="1"/></g>
 </g>"""
+TXOMIN = PJ.txomin(1)
 
 # ======================= COCINA DE AITOR =======================
 def cocina(gente=True, mesa=False):
@@ -264,6 +300,7 @@ def cocina(gente=True, mesa=False):
     b += '<rect x="716" y="246" width="84" height="232" fill="#000" class="ob" opacity=".85"/>'
     if gente: b += f'<g class="txoP" opacity="0"><path d="M800 250L700 500H800z" fill="#ffd28a" opacity=".18"/>{fig(TXOMIN, 760, 430, 1.7)}</g>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .68, [(100,320,220,200,1),(633,150,110,110,.6),(470,260,260,190,.8)], [(97,332,170,'fire',.45,0)], humo=.12)
     return wrap(b)
 SVG['cocina'] = cocina(); SVG['cocinaMesa'] = cocina(mesa=True)
 
@@ -298,6 +335,7 @@ def portal():
     b += '<rect x="360" y="452" width="190" height="34" rx="3" fill="#8a6a3a"/>'
     for k in range(18): b += f'<path d="M{366+k*10} 455v28" stroke="#6a4e28" stroke-width="2"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .66, [(340,330,250,230,.9),(110,330,120,180,.7)], [(340,0,320,'pale',.18,0)])
     return wrap(b)
 SVG['portal'] = portal()
 
@@ -329,6 +367,7 @@ GUARDIA = """<g>
  <path d="M-14 -214q-2-22 14-24q16 2 14 24z" fill="#0b0c0d"/><path d="M6 -238q16-2 20 22l-10 2z" fill="#0b0c0d"/><path d="M-22 -213q22-9 46 0l-6 8q-17-6-34 0z" fill="#16181a"/><path d="M-10 -232q8-4 14 0" stroke="#3a3d40" stroke-width="1.5" fill="none"/>
  <path d="M28 -120v34" stroke="#2a2420" stroke-width="2"/><rect x="20" y="-90" width="16" height="22" rx="2" fill="#ffd28a" stroke="#2a2420" stroke-width="2"/>
 </g>"""
+GUARDIA = PJ.NF(PJ.guardia)
 SALAZAR = """<g>
  <ellipse cx="0" cy="0" rx="50" ry="7" fill="#000" opacity=".45"/>
  <path d="M-30 0v-40q0-14 14-14h40v54h-14v-38h-26v38z" fill="#2f3236"/>
@@ -342,6 +381,8 @@ SALAZAR = """<g>
  <ellipse cx="0" cy="-140" rx="19" ry="4" fill="#151515"/><path d="M-11 -141q0-16 11-16t11 16z" fill="#1c1c1c"/>
  <g><rect x="52" y="-22" width="40" height="22" rx="3" fill="#3a2414"/><path d="M52 -22l6-10h28l6 10" fill="#2a180c"/><rect x="60" y="-30" width="4" height="8" fill="#c9c9c9"/></g>
 </g>"""
+SALAZAR_OLD = SALAZAR
+SALAZAR = PJ.NF(PJ.salazar_k)
 IBARRA = """<g>
  <ellipse cx="0" cy="0" rx="44" ry="7" fill="#000" opacity=".45"/>
  <rect x="-18" y="-76" width="14" height="74" fill="#2a2420"/><rect x="4" y="-76" width="14" height="74" fill="#241f1b"/>
@@ -355,6 +396,7 @@ IBARRA = """<g>
  <path d="M-14 -204q14-8 28 0q-7 6-14 3q-7 3-14-3z" fill="#3a3a3a"/>
  <g transform="translate(0 -216) scale(1.25 1.15) translate(0 208)"><path d="M-14 -214q-2-22 14-24q16 2 14 24z" fill="#0b0c0d"/><path d="M6 -238q16-2 20 22l-10 2z" fill="#0b0c0d"/><path d="M-22 -213q22-9 46 0l-6 8q-17-6-34 0z" fill="#16181a"/><path d="M-10 -232q8-4 14 0" stroke="#3a3d40" stroke-width="1.5" fill="none"/></g>
 </g>"""
+IBARRA = PJ.NF(PJ.ibarra)
 LEONOR = """<g>
  <ellipse cx="0" cy="0" rx="38" ry="6" fill="#000" opacity=".45"/>
  <path d="M-30 0q4-120 30-170q26 50 30 170z" fill="#121014"/>
@@ -366,6 +408,7 @@ LEONOR = """<g>
  <path d="M-20 -206q20-20 40 0v4h-40z" fill="#0c0b0d"/><ellipse cx="0" cy="-205" rx="24" ry="5" fill="#0c0b0d"/>
  <path d="M-18 -204q-2 16 2 26h32q4-10 2-26" fill="#000" opacity=".35"/>
 </g>"""
+LEONOR = PJ.NF(PJ.leonor)
 def faro(leonor=False):
     b = '<linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3340"/><stop offset=".6" stop-color="#5a5e62"/><stop offset="1" stop-color="#7a7266"/></linearGradient>'
     b += '<rect width="800" height="500" fill="url(#dawn)"/>'
@@ -414,6 +457,7 @@ def faro(leonor=False):
         b += fig(LEONOR, 598, 470, .95, cls='leoF')
     b += '<rect width="800" height="500" filter="url(#fog)" opacity=".45"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .64, [(660,40,160,160,1),(216,309,140,150,1),(420,400,300,150,1),(700,360,110,150,.8)], [(216,309,110,'warm',.5,14),(660,31,130,'pale',.45,0),(678,336,70,'warm',.5,10)])
     return wrap(b)
 SVG['faro'] = faro(); SVG['faroL'] = faro(True)
 
@@ -422,10 +466,11 @@ def trato():
     b += '<g filter="url(#b5)" opacity=".7"><path d="M0 300q200-20 400 0t400 0V500H0z" fill="#2a2622"/><path d="M300 320q70-20 150-6l6 18q-80 10-160 2z" fill="#d6d2c6"/><rect x="620" y="60" width="40" height="160" fill="#d8d4cc"/></g>'
     b += '<rect width="800" height="500" filter="url(#fog)" opacity=".5"/>'
     b += fig(LEONOR, 180, 500, 1.9)
-    b += f'<g transform="translate({400-205*1.2} {560-462*1.2}) scale(1.2)">{resp(AITOR_CASA, "Aitor", 400)}</g>'
+    b += f'<g transform="translate({400-205*1.2} {560-462*1.2}) scale(1.2)">{resp(tAit(AITOR_CASA), "Aitor", 400)}</g>'
     b += '<path d="M330 420q-14 6-10 20q14 6 24-2z" fill="#1d2026"/>'
     b += fig(IBARRA, 630, 520, 1.85)
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
+    b = conluz(b, .5, [(400,300,380,300,1)])
     return wrap(b)
 SVG['trato'] = trato()
 
@@ -914,7 +959,7 @@ def cocinaP():
     return wrap(b)
 SVG['cocinaP'] = cocinaP()
 
-SALAZAR_D = SALAZAR.replace('<ellipse cx="0" cy="-140" rx="19" ry="4" fill="#151515"/>',
+SALAZAR_D = SALAZAR_OLD.replace('<ellipse cx="0" cy="-140" rx="19" ry="4" fill="#151515"/>',
   '<path d="M-13 -132q0-6 2-8M13 -132q0-6-2-8" stroke="#b8b4ac" stroke-width="3" fill="none"/><ellipse cx="0" cy="-140" rx="19" ry="4" fill="#151515"/>')  # siempre con su bombín
 SALAZAR_D = SALAZAR_D.replace('<rect x="-5" y="-118"', '<path d="M-22 -96q-20 20 -26 54" stroke="#4a4c50" stroke-width="12" fill="none" stroke-linecap="round"/><circle cx="-48" cy="-40" r="5" fill="url(#skin)"/><rect x="-5" y="-118"', 1)
 SALAZAR_D = re.sub(r'<g><rect x="52" y="-22".*?</g>', '', SALAZAR_D, flags=re.S)

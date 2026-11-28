@@ -12,7 +12,7 @@ DAYS[1]=[
    narBtn('Pasar la página',next)}},
 
 // ===== Escena 1 · La estación del Topo =====
-{svg:SVG.topo,dark:.28,laikaHome:395,laikaStand:1,cartel:'DONOSTIA<br>ESTACIÓN DEL TOPO',
+{svg:SVG.topo,dark:.08,laikaHome:395,laikaStand:1,cartel:'DONOSTIA<br>ESTACIÓN DEL TOPO',
  spots:[
   {id:'aitor',tool:'mano',x:690,y:250,r:80,glow:()=>!D(1).flags.saludo,act:async()=>{
     const f=D(1).flags;
@@ -36,7 +36,7 @@ DAYS[1]=[
    if(D(1).flags.saludo)narBtn('Ir a casa',next)}},
 
 // ===== Escena 2 · La casa de Aitor y Eki =====
-{svg:SVG.cocina,dark:.22,laikaHome:560,cartel:'ALTAMAR<br>CASA DEL SERENO',ekiHome:150,
+{svg:SVG.cocina,dark:.05,laikaHome:560,cartel:'ALTAMAR<br>CASA DEL SERENO',ekiHome:150,
  ekiSpots:[
   {who:'Aitor',x:380,y:260,act:async()=>{const f=D(1).flags;
     if(!f.ekiTut){await bubble('Eki va a saludar a Aitor, pero cambia de idea a medio camino…',3000);await ekiToCandela();return}
@@ -78,7 +78,7 @@ DAYS[1]=[
    else nar('La cocina huele a café y a leña. Aitor tiene su cuaderno de ronda abierto encima de la mesa.')}},
 
 // ===== Escena 3 · El portal =====
-{svg:SVG.portal,dark:.8,
+{svg:SVG.portal,dark:.5,
  spots:[
   {id:'papel',tool:'linterna',x:505,y:460,act:async()=>{await bubble('Algo blanco asoma por debajo del felpudo. La esquina de un papel.',3000);nar('Hay un papel debajo del felpudo.<br><br><i>Tócalo con la mano para cogerlo.</i>')}},
   {id:'coger',tool:'mano',x:505,y:462,r:55,when:()=>found('papel'),once:false,act:async()=>{next()}},
@@ -107,7 +107,7 @@ DAYS[1]=[
    if(found('eta'))narBtn('Al faro',alFaro)}},
 
 // ===== Escena 4 · El faro =====
-{svg:SVG.faro,dark:.45,cartel:'ALTAMAR<br>EL FARO',
+{svg:SVG.faro,dark:.15,cartel:'ALTAMAR<br>EL FARO',
  ekiSpots:[
   {who:'El guardia',x:190,y:300,act:async()=>{await bubble('Eki va corriendo a saludar al guardia. Él, muy serio, le rasca detrás de las orejas.',3400);ekiLog('El guardia civil','saludo y rascada de orejas.')}},
   {who:'El comisario',x:532,y:300,act:async()=>{await bubble('Eki va derecha al comisario y le olisquea los bolsillos del gabán. Parece que le ha caído bien.',3600);ekiLog('Comisario Ibarra','le cae bien (sobre todo sus bolsillos).')}},

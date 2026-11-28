@@ -15,12 +15,12 @@ def face(vb, body, bg='#2a2520'):
 
 faces = {
   'FACE_AITOR': face((150, 106, 110, 110), AITOR),
-  'FACE_CANDELA': face((-42, -266, 84, 84), CANDELA),
+  'FACE_CANDELA': face((-36, -256, 72, 72), CANDELA),
   'FACE_TXOMIN': face((-40, -50, 80, 80), scenes.TXOMIN),
-  'FACE_IBARRA': face((-34, -250, 68, 68), scenes.IBARRA),
-  'FACE_SALAZAR': face((-26, -158, 52, 52), scenes.SALAZAR),
-  'FACE_GUARDIA': face((-30, -240, 60, 60), scenes.GUARDIA),
-  'FACE_LEONOR': face((-30, -228, 60, 60), scenes.LEONOR),
+  'FACE_IBARRA': face((-38, -266, 76, 76), scenes.IBARRA),
+  'FACE_SALAZAR': face((-44, -252, 68, 68), scenes.SALAZAR),
+  'FACE_GUARDIA': face((-38, -262, 72, 72), scenes.GUARDIA),
+  'FACE_LEONOR': face((-34, -250, 68, 68), scenes.LEONOR),
   'FACE_PACO': face((-30, -194, 60, 60), scenes.PACO),
   'FACE_INIGO': face((-26, -232, 52, 52), scenes.INIGO),
   'FACE_CLARA': face((-24, -204, 48, 48), scenes.CLARA),

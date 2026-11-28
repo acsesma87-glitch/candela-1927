@@ -48,7 +48,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .lit{opacity:0;-webkit-mask-image:radial-gradient(circle at var(--x,50%) var(--y,50%),#000 0,#000 calc(var(--r,90px)*.4),rgba(0,0,0,.6) calc(var(--r,90px)*.75),transparent var(--r,90px));mask-image:radial-gradient(circle at var(--x,50%) var(--y,50%),#000 0,#000 calc(var(--r,90px)*.4),rgba(0,0,0,.6) calc(var(--r,90px)*.75),transparent var(--r,90px));filter:brightness(1.15)}
 .scene.t-linterna .lit{opacity:1}
 .recu{pointer-events:none;-webkit-mask-image:linear-gradient(transparent,transparent);mask-image:linear-gradient(transparent,transparent)}#recu .ob{display:none}#recu *{animation:none!important}
-#base .ol{display:none}#lit .ob{display:none}
+#base .ol{display:none}#lit .ob,#recu .ob{display:none}
 .shake{animation:shake .5s}@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 .scene.pick{cursor:crosshair}.pring{position:absolute;width:70px;height:70px;margin:-35px 0 0 -35px;border-radius:50%;border:2px dashed #f3dc9a;pointer-events:none;animation:spk 1.2s infinite;z-index:3}
 .lens{position:absolute;left:0;top:0;border-radius:50%;overflow:hidden;display:none;border:6px solid var(--brass);box-shadow:0 0 0 2px #5a4318,0 8px 24px #000c;pointer-events:none;z-index:5;background:#000}
@@ -523,7 +523,7 @@ function lensDogs(){if(tool!=='lupa')return;const z=2.6,k=K(),l=L(),[fx,fy]=focu
   [[LDL,$('#laika'),$('#flipL')],[LDE,$('#eki'),$('#flipE')]].forEach(([c,o,f])=>{c.className=o.className;c.style.transform=getComputedStyle(o).transform;c.firstElementChild.style.transform=f.style.transform})}
 // La lupa y la linterna se redibujan con cada movimiento del dedo: sin los filtros caros (niebla y textura
 // del papel) van fluidas también en el iPad. Dentro del cristal y de la luz no se nota su falta.
-function ligero(){[lens,lit,$('#recu')].forEach(c=>c.querySelectorAll('[filter="url(#fog)"],[filter="url(#paperT)"]').forEach(e=>e.remove()));lens.querySelectorAll('[filter]').forEach(e=>e.removeAttribute('filter'))}
+function ligero(){[lens,lit,$('#recu')].forEach(c=>c.querySelectorAll('[filter="url(#fog)"],[filter="url(#paperT)"],[filter="url(#smoke)"]').forEach(e=>e.remove()));lens.querySelectorAll('[filter]').forEach(e=>e.removeAttribute('filter'))}
 // Lo que ya se ha descubierto con la linterna no vuelve a quedar a oscuras del todo: queda en penumbra,
 // lo justo para volver a encontrarlo (y cogerlo con la mano o mirarlo con la lupa).
 function revelados(){const recu=$('#recu'),nada='linear-gradient(transparent,transparent)';if(!SC){recu.style.webkitMaskImage=recu.style.maskImage=nada;return}const k=K(),zonas=(SC.spots||[]).filter(s=>s.tool==='linterna'&&found(s.id)).map(s=>({x:s.x,y:s.y,w:(s.w||(s.reach||40)*2)/2+14,h:(s.h||(s.reach||40)*2)/2+14}));
@@ -739,7 +739,7 @@ function polvo(x,y){const k=K();for(let i=0;i<7;i++){const d=document.createElem
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 109';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 110';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
