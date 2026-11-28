@@ -452,6 +452,8 @@ def faro(leonor=False):
     t=t.replace('<polygon points="650,62 0,0 0,150" fill="url(#f2beam)"/>','<g class="a-giro"><polygon points="650,62 0,0 0,150" fill="url(#f2beam)"/>',1).replace('fill="url(#f2beam)" opacity=".7" filter="url(#f2blur8)"/>','fill="url(#f2beam)" opacity=".7" filter="url(#f2blur8)"/></g>',1)
     # la oscuridad la quita la linterna; huecos para el comisario y Aitor
     t=t.replace('<polygon points="650,62 0,0 0,150"','<ellipse cx="640" cy="410" rx="100" ry="130" fill="url(#f2hole)"/><ellipse cx="150" cy="420" rx="90" ry="110" fill="url(#f2hole)"/><ellipse cx="720" cy="410" rx="90" ry="120" fill="url(#f2hole)"/><polygon points="650,62 0,0 0,150"')
+    # sin la franja gris de niebla a media altura (con la linterna se veía como una banda dura)
+    t=_re.sub(r'<rect y="225" width="800" height="50"[^>]*/>','',t)
     t=t.replace('opacity=".78" mask="url(#f2dark)"/>','opacity=".78" mask="url(#f2dark)" class="ob"/>')
     # la ficha del Casino en la mano, tapada por las algas (se apartan con el dedo)
     alg='<path d="M300 440 q-8 6 -18 4 q6 6 18 0 q-4 8 -14 10" stroke="#3e5a34" stroke-width="2.5" fill="none"/>'
