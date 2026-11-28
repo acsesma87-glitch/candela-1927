@@ -103,7 +103,7 @@ DAYS[6]=[
    nar(f.desp?'El despacho de Don Julián. Clara vigila la puerta.':'El despacho de Don Julián, solo con la vela de Clara. Huele a tabaco frío y a cera.<br><br><i>La caja fuerte, detrás del retrato. Sin la combinación, no hay nada que hacer.</i>');f.desp=1;save()}},
 
 // ===== La caja fuerte =====
-{svg:SVG.cajaF,dark:0,tools:['mano','linterna','lupa'],
+{svg:SVG.cajaF,pre:()=>cajaPinta(),dark:0,tools:['mano','linterna','lupa'],
  spots:[
   ...[0,1,2].flatMap(i=>[
     {id:'arriba'+i,tool:'mano',x:300+i*100,y:165,r:30,once:false,when:()=>!d6().abierta,act:async()=>cifra(i,1)},

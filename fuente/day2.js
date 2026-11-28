@@ -59,7 +59,7 @@ DAYS[2]=[
    else nar('El muelle sigue en silencio. La pizarra de la caseta sigue ahí.')}},
 
 // ===== La pizarra de turnos =====
-{svg:SVG.pizarra,dark:0,tools:['mano','linterna','lupa'],
+{svg:SVG.pizarra,pre:()=>pizarraPinta(),dark:0,tools:['mano','linterna','lupa'],
  spots:[
   ...[160,222,284,346].map((y,i)=>({id:'slot'+i,tool:'mano',x:520,y:y,r:40,once:false,act:async()=>{const f=D(2).flags;if(f.turnosOk)return;
     const k=await choose('Candela',`¿Quién hacía la guardia de ${['23:00 a 1:00','1:00 a 3:00','3:00 a 5:00','5:00 a 7:00'][i]}?`,NOMBRES);endTalk();

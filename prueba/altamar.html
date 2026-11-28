@@ -768,7 +768,7 @@ async function playDay(d){curDay=d;if(d>1&&!S.tools.includes('eki')){S.tools.pus
   const day=DAYS[d];let i=dd.done?0:dd.scene;if(i>=day.length)i=0;await goScene(i,true)}
 async function goScene(i,first){const day=DAYS[curDay],dd=D(curDay);dd.scene=i;save();
   const sc=day[i];if(sc.cartel&&!first){await cartel(sc.cartel)}else if(sc.cartel){await cartel(sc.cartel)}
-  loadScene(sc);await cartelOff();if(sc.enter){busy=true;try{await sc.enter()}finally{busy=false;marks()}}if(SC===sc&&sc.check)sc.check()}
+  loadScene(sc);if(sc.pre)sc.pre();await cartelOff();/* pre: colocar las piezas antes de que se vea la escena */if(sc.enter){busy=true;try{await sc.enter()}finally{busy=false;marks()}}if(SC===sc&&sc.check)sc.check()}
 const next=()=>goScene(D(curDay).scene+1);
 function endDay(){const dd=D(curDay);dd.done=true;save()}
 
@@ -1071,7 +1071,7 @@ DAYS[2]=[
    else nar('El muelle sigue en silencio. La pizarra de la caseta sigue ahí.')}},
 
 // ===== La pizarra de turnos =====
-{svg:SVG.pizarra,dark:0,tools:['mano','linterna','lupa'],
+{svg:SVG.pizarra,pre:()=>pizarraPinta(),dark:0,tools:['mano','linterna','lupa'],
  spots:[
   ...[160,222,284,346].map((y,i)=>({id:'slot'+i,tool:'mano',x:520,y:y,r:40,once:false,act:async()=>{const f=D(2).flags;if(f.turnosOk)return;
     const k=await choose('Candela',`¿Quién hacía la guardia de ${['23:00 a 1:00','1:00 a 3:00','3:00 a 5:00','5:00 a 7:00'][i]}?`,NOMBRES);endTalk();
@@ -1424,7 +1424,7 @@ DAYS[5]=[
    nar('Azulejo blanco, frascos de colores y olor a éter. El sitio más limpio y más seguro de todo Altamar.<br><br><i>El doctor Salazar está detrás del mostrador.</i>')}},
 
 // ===== El armario de los frascos =====
-{svg:SVG.armario,dark:0,tools:['mano','linterna','lupa'],
+{svg:SVG.armario,pre:()=>armarioPinta(1),dark:0,tools:['mano','linterna','lupa'],
  spots:[
   ...[0,1,2,3,4,5].map(i=>({id:'fr'+i,tool:'mano',x:FR_X(i),y:290,r:44,once:false,when:()=>!d5().cajon,act:()=>frasco(i)})),
   {id:'tabla',tool:'lupa',x:740,y:200,w:104,h:176,act:async()=>{await bubble('Una hoja del recetario: «Pesas de botica». 1 escrúpulo (℈) = 24 granos · 1 dracma (ʒ) = 72 granos · 1 onza (℥) = 576 granos.',5000);
@@ -1553,7 +1553,7 @@ DAYS[6]=[
    nar(f.desp?'El despacho de Don Julián. Clara vigila la puerta.':'El despacho de Don Julián, solo con la vela de Clara. Huele a tabaco frío y a cera.<br><br><i>La caja fuerte, detrás del retrato. Sin la combinación, no hay nada que hacer.</i>');f.desp=1;save()}},
 
 // ===== La caja fuerte =====
-{svg:SVG.cajaF,dark:0,tools:['mano','linterna','lupa'],
+{svg:SVG.cajaF,pre:()=>cajaPinta(),dark:0,tools:['mano','linterna','lupa'],
  spots:[
   ...[0,1,2].flatMap(i=>[
     {id:'arriba'+i,tool:'mano',x:300+i*100,y:165,r:30,once:false,when:()=>!d6().abierta,act:async()=>cifra(i,1)},
@@ -1676,7 +1676,7 @@ DAYS[7]=[
    nar(f.permiso?'Las obreras llenan latas sin parar. Doña Remedios no me quita ojo.':'Doña Remedios, la encargada, vigila la fila de obreras como un guardia civil.')}},
 
 // ===== La nave: las cajas =====
-{svg:SVG.cajas,dark:.1,tools:['mano','linterna','lupa'],
+{svg:SVG.cajas,pre:()=>cajasPinta(),dark:.1,tools:['mano','linterna','lupa'],
  enter:async()=>{const f=d7();if(f.carretilla){goScene(3);return}cajasPinta();
    nar('Las cajas de latas tapan el paso a la máquina. Cada una solo se puede empujar por su raíl: unas a lo largo, otras a lo ancho.<br><br><i>Arrastra las cajas con el dedo hasta que la carretilla roja pueda llegar a la máquina.</i>');
    narBtn('Volver con las obreras',()=>goScene(1));const b=document.createElement('button');b.className='go';b.textContent='Colocar las cajas como estaban';b.onclick=cajasReinicia;$('#acts').appendChild(b)}},
@@ -1822,7 +1822,7 @@ DAYS[8]=[
    nar(f.lola1?'Lola se pinta los labios frente al espejo. Me vigila por el reflejo.':'El camerino de Lola: espejo con bombillas, vestidos de lentejuelas, olor a polvos de arroz. Ella, sentada frente al espejo, ni se vuelve.')}},
 
 // ===== La carta rota =====
-{svg:SVG.carta,dark:0,tools:['mano','linterna','lupa'],
+{svg:SVG.carta,pre:()=>trozosPinta(),dark:0,tools:['mano','linterna','lupa'],
  enter:async()=>{const f=d8();if(f.carta){goScene(2);return}trozosPinta();
    nar('Los trozos de la carta, mezclados con los de otro papel, sobre el tocador.<br><br><i>Arrastra cada trozo a su sitio dentro del marco. Toca dos veces un trozo para girarlo.</i>');
    narBtn('Dejarlo para luego',()=>goScene(2));const b=document.createElement('button');b.className='go';b.textContent='Revolver los trozos otra vez';b.onclick=trozosReinicia;$('#acts').appendChild(b)}},
@@ -1968,7 +1968,7 @@ function corchoWire(){const P=$('#pages');
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 134';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 135';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});

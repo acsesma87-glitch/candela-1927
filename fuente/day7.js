@@ -70,7 +70,7 @@ DAYS[7]=[
    nar(f.permiso?'Las obreras llenan latas sin parar. Doña Remedios no me quita ojo.':'Doña Remedios, la encargada, vigila la fila de obreras como un guardia civil.')}},
 
 // ===== La nave: las cajas =====
-{svg:SVG.cajas,dark:.1,tools:['mano','linterna','lupa'],
+{svg:SVG.cajas,pre:()=>cajasPinta(),dark:.1,tools:['mano','linterna','lupa'],
  enter:async()=>{const f=d7();if(f.carretilla){goScene(3);return}cajasPinta();
    nar('Las cajas de latas tapan el paso a la máquina. Cada una solo se puede empujar por su raíl: unas a lo largo, otras a lo ancho.<br><br><i>Arrastra las cajas con el dedo hasta que la carretilla roja pueda llegar a la máquina.</i>');
    narBtn('Volver con las obreras',()=>goScene(1));const b=document.createElement('button');b.className='go';b.textContent='Colocar las cajas como estaban';b.onclick=cajasReinicia;$('#acts').appendChild(b)}},

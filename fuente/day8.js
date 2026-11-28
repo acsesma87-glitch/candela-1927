@@ -89,7 +89,7 @@ DAYS[8]=[
    nar(f.lola1?'Lola se pinta los labios frente al espejo. Me vigila por el reflejo.':'El camerino de Lola: espejo con bombillas, vestidos de lentejuelas, olor a polvos de arroz. Ella, sentada frente al espejo, ni se vuelve.')}},
 
 // ===== La carta rota =====
-{svg:SVG.carta,dark:0,tools:['mano','linterna','lupa'],
+{svg:SVG.carta,pre:()=>trozosPinta(),dark:0,tools:['mano','linterna','lupa'],
  enter:async()=>{const f=d8();if(f.carta){goScene(2);return}trozosPinta();
    nar('Los trozos de la carta, mezclados con los de otro papel, sobre el tocador.<br><br><i>Arrastra cada trozo a su sitio dentro del marco. Toca dos veces un trozo para girarlo.</i>');
    narBtn('Dejarlo para luego',()=>goScene(2));const b=document.createElement('button');b.className='go';b.textContent='Revolver los trozos otra vez';b.onclick=trozosReinicia;$('#acts').appendChild(b)}},

@@ -116,7 +116,7 @@ DAYS[5]=[
    nar('Azulejo blanco, frascos de colores y olor a éter. El sitio más limpio y más seguro de todo Altamar.<br><br><i>El doctor Salazar está detrás del mostrador.</i>')}},
 
 // ===== El armario de los frascos =====
-{svg:SVG.armario,dark:0,tools:['mano','linterna','lupa'],
+{svg:SVG.armario,pre:()=>armarioPinta(1),dark:0,tools:['mano','linterna','lupa'],
  spots:[
   ...[0,1,2,3,4,5].map(i=>({id:'fr'+i,tool:'mano',x:FR_X(i),y:290,r:44,once:false,when:()=>!d5().cajon,act:()=>frasco(i)})),
   {id:'tabla',tool:'lupa',x:740,y:200,w:104,h:176,act:async()=>{await bubble('Una hoja del recetario: «Pesas de botica». 1 escrúpulo (℈) = 24 granos · 1 dracma (ʒ) = 72 granos · 1 onza (℥) = 576 granos.',5000);
