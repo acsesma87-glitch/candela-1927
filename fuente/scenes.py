@@ -687,6 +687,9 @@ PACO = PJ.NF(PJ.paco)
 def taberna():
     t=_muestra('muestra_bar.svg','t2')
     t=t.replace('<path d="M318 270','<path class="a-humoP" d="M318 270',1)
+    # la lámpara de delante de la pizarra, a la derecha: entre el velero y las estanterías
+    for x0,x1 in (('M250 62 V118','M385 62 V118'),('M234 118 H266 L274 140 H226Z','M369 118 H401 L409 140 H361Z'),('M234 118 H266 L268 124 H232Z','M369 118 H401 L403 124 H367Z'),('<ellipse cx="250" cy="144"','<ellipse cx="385" cy="144"'),('<circle cx="250" cy="146"','<circle cx="385" cy="146"')):
+        t=t.replace(x0,x1)
     # pizarra de fiados en lugar del menú
     i=t.index('<g fill="#d6d6cc" font-family="Georgia,serif" font-size="11">');j=t.index('</g>',i)+4
     fi='<text x="245" y="128" text-anchor="middle" font-size="9" fill="#e2e0d6" font-family="Special Elite,Courier New">FIADOS</text>'
