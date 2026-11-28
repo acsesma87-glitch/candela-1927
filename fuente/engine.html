@@ -150,6 +150,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .sus .x{text-decoration:line-through;text-decoration-color:var(--red);text-decoration-thickness:2px}
 .obj{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px}
 .obj .o{width:44px;height:44px;flex:none;border:1px solid #b8aa88;border-radius:4px;background:#ddd2b4;display:flex;align-items:center;justify-content:center;font-size:22px}
+/* perras: un punto menos de color, a juego con el estilo */
+.dog svg{filter:saturate(.7) brightness(.8)}
 /* corcho */
 .pages.cork{background:#b98a55;background-image:radial-gradient(#9a6c3c 1px,transparent 1.4px),radial-gradient(#d0a26a 1px,transparent 1.4px);background-size:7px 7px,11px 11px;background-position:0 0,3px 5px}
 .pages.cork h2{color:#2a1a0c}
@@ -739,7 +741,7 @@ function polvo(x,y){const k=K();for(let i=0;i<7;i++){const d=document.createElem
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 110';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 111';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});

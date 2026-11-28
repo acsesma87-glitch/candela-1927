@@ -165,49 +165,52 @@ SVG['periodico'] = periodico()
 
 # ======================= ESTACIÓN DEL TOPO =======================
 def topo():
-    b = '<rect width="800" height="500" fill="url(#skyD)"/>'
-    # mar entre edificios
-    b += '<rect x="330" y="150" width="140" height="120" fill="#5d6870"/><path d="M330 200h140M330 225h140" stroke="#7a868d" stroke-width="1" opacity=".6"/>'
-    # fachadas con miradores
-    def facade(x, w, h, col):
-        s = f'<rect x="{x}" y="{330-h}" width="{w}" height="{h+40}" fill="{col}"/>'
-        for r in range(int(h/60)):
-            for c in range(int(w/44)):
-                wx = x+12+c*44; wy = 330-h+20+r*60
-                s += f'<rect x="{wx}" y="{wy}" width="22" height="34" fill="#2b2f33"/>'
-                if (r+c) % 3 == 0: s += f'<rect x="{wx+2}" y="{wy+2}" width="18" height="30" fill="#e8c27a" opacity=".55"/>'
-            s += f'<rect x="{x+w/2-30}" y="{330-h+16+r*60}" width="60" height="44" fill="#e8e2d6" opacity=".35"/>'
-        return s
-    b += facade(0, 330, 260, '#4a4642') + facade(470, 330, 280, '#433f3b')
-    b += '<rect x="0" y="330" width="800" height="170" fill="url(#cob)"/>'
-    b += '<path d="M0 420L800 420M0 452L800 452" stroke="#6f6a62" stroke-width="4"/>'
-    # andén
-    b += '<rect x="420" y="360" width="380" height="20" fill="#5c564e"/><rect x="420" y="380" width="380" height="8" fill="#2a2622"/>'
+    b = '<linearGradient id="skyT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06090c"/><stop offset=".7" stop-color="#1e2428"/><stop offset="1" stop-color="#2c3236"/></linearGradient>'
+    b += '<rect width="800" height="500" fill="url(#skyT)"/>'
+    # edificios de fondo, con ventanas encendidas sueltas
+    for x, w, h in [(0, 150, 270), (140, 120, 310), (470, 130, 290), (590, 210, 250)]:
+        b += f'<rect x="{x}" y="{370-h}" width="{w}" height="{h}" fill="#14171a"/><rect x="{x}" y="{370-h}" width="{w}" height="6" fill="#0b0d0f"/>'
+        for yy in range(390-h, 340, 34):
+            for xx in range(x+14, x+w-14, 26):
+                on = (xx*7+yy*3) % 11 < 2
+                b += f'<rect x="{xx}" y="{yy}" width="11" height="16" fill="{"#e8b860" if on else "#0a0c0e"}" opacity="{.75 if on else 1}"/>'
+    b += '<rect width="800" height="320" filter="url(#fog)" opacity=".45"/>'
     # cable del trole
-    b += '<path d="M0 118L800 104" stroke="#1a1a1a" stroke-width="2"/>'
-    # el Topo (tranvía)
-    b += '<g class="a-ralenti"><rect x="20" y="230" width="300" height="160" rx="10" fill="#7a2a22"/><rect x="20" y="230" width="300" height="24" rx="8" fill="#5a1d18"/>'
+    b += '<path d="M0 118L800 104" stroke="#0c0c0c" stroke-width="2"/>'
+    # marquesina de hierro del andén
+    b += '<path d="M380 92 L800 76 V96 L380 114Z" fill="#191b1d"/><path d="M380 114 L800 96" stroke="#2c2f32" stroke-width="3"/>'
+    for x in (430, 600, 770):
+        t = 112 - (x-380)*.042
+        b += f'<rect x="{x-4}" y="{t}" width="8" height="{372-t}" fill="#111315"/><path d="M{x} {t+24} l-24 -20 M{x} {t+24} l24 -20" stroke="#111315" stroke-width="4"/>'
+    # vías y andén (adoquín mojado)
+    b += '<rect y="372" width="800" height="128" fill="#121110"/>'
+    b += '<rect x="0" y="390" width="800" height="110" fill="url(#cob)" opacity=".55"/>'
+    b += '<path d="M0 420H800M0 452H800" stroke="#4a4640" stroke-width="4"/>' + ''.join(f'<rect x="{x}" y="414" width="30" height="44" fill="#1a1612" opacity=".7"/>' for x in range(0, 800, 52))
+    b += '<rect x="420" y="360" width="380" height="16" fill="#3a3530"/><path d="M420 360H800" stroke="#6a6258" stroke-width="3"/><rect x="420" y="376" width="380" height="8" fill="#0c0b0a"/>'
+    b += '<path d="M440 384h340" stroke="#e8c27a" stroke-width="1.5" opacity=".18"/>'
+    # el Topo
+    b += '<g class="a-ralenti"><rect x="20" y="230" width="300" height="160" rx="10" fill="#5a1c16"/><rect x="20" y="230" width="300" height="24" rx="8" fill="#3a100c"/>'
     for k in range(5):
-        b += f'<rect x="{40+k*56}" y="264" width="40" height="52" rx="4" fill="#2a2724"/><rect x="{42+k*56}" y="266" width="36" height="48" rx="3" fill="#e8c27a" opacity=".45"/>'
-    b += '<rect x="20" y="330" width="300" height="10" fill="#c9a24a"/><text x="170" y="364" text-anchor="middle" font-family="Georgia" font-size="14" fill="#e8d6a8" letter-spacing="3">TOPO</text>'
-    b += '<path d="M200 230L260 116" stroke="#111" stroke-width="4"/><circle cx="60" cy="398" r="14" fill="#111"/><circle cx="280" cy="398" r="14" fill="#111"/></g>'
-    # vapor
-    b += '<g class="a-vapor"><g filter="url(#b5)" opacity=".7"><ellipse cx="120" cy="400" rx="90" ry="26" fill="#d8d6d0"/><ellipse cx="240" cy="390" rx="70" ry="22" fill="#d8d6d0"/></g></g>'
-    # letrero esmaltado sobre el andén
-    b += '<rect x="540" y="150" width="3" height="40" fill="#222"/><rect x="606" y="150" width="3" height="40" fill="#222"/>'
-    b += '<rect x="510" y="120" width="130" height="34" rx="4" fill="#1d3a5a" stroke="#e8e2d6" stroke-width="2"/>'
-    b += '<text x="575" y="135" text-anchor="middle" font-family="Georgia" font-size="11" fill="#f0ead8" letter-spacing="2">TOPO</text>'
-    b += '<text x="575" y="148" text-anchor="middle" font-family="Georgia" font-size="6.5" fill="#f0ead8">Frontera – San Sebastián</text>'
-    # farola encendida
-    b += '<rect x="726" y="150" width="6" height="214" fill="#1a1715"/><path d="M714 150h30l-5 26h-20z" fill="#2a2420"/><rect x="719" y="155" width="20" height="18" fill="#ffd28a"/>'
-    b += '<g class="a-brillo"><circle cx="729" cy="165" r="90" fill="url(#warm)"/></g>'
-    # niebla
-    b += '<rect width="800" height="500" filter="url(#fog)" opacity=".55"/>'
-    # personajes
+        b += f'<rect x="{40+k*56}" y="264" width="40" height="52" rx="4" fill="#120a08"/><rect x="{42+k*56}" y="266" width="36" height="48" rx="3" fill="#f0c070" opacity=".55"/>'
+    b += '<rect x="20" y="330" width="300" height="8" fill="#8a6a30"/><text x="170" y="364" text-anchor="middle" font-family="Georgia" font-size="14" fill="#c8b080" letter-spacing="3" opacity=".85">TOPO</text>'
+    b += '<path d="M200 230L260 116" stroke="#0a0a0a" stroke-width="4"/><circle cx="60" cy="398" r="14" fill="#050505"/><circle cx="280" cy="398" r="14" fill="#050505"/></g>'
+    b += '<rect x="30" y="392" width="280" height="60" fill="#f0c070" opacity=".07" filter="url(#b5)"/>'
+    b += '<g class="a-vapor"><g filter="url(#b5)" opacity=".55"><ellipse cx="120" cy="400" rx="90" ry="26" fill="#b8b6b0"/><ellipse cx="240" cy="390" rx="70" ry="22" fill="#b8b6b0"/></g></g>'
+    # letrero esmaltado
+    b += '<rect x="540" y="150" width="3" height="40" fill="#111"/><rect x="606" y="150" width="3" height="40" fill="#111"/>'
+    b += '<rect x="510" y="120" width="130" height="34" rx="4" fill="#142a40" stroke="#c8c0a8" stroke-width="2"/>'
+    b += '<text x="575" y="135" text-anchor="middle" font-family="Georgia" font-size="11" fill="#d8d0b8" letter-spacing="2">TOPO</text>'
+    b += '<text x="575" y="148" text-anchor="middle" font-family="Georgia" font-size="6.5" fill="#d8d0b8">Frontera – San Sebastián</text>'
+    # farola
+    b += '<rect x="726" y="150" width="6" height="214" fill="#0e0c0a"/><path d="M714 150h30l-5 26h-20z" fill="#1c1814"/><rect x="719" y="155" width="20" height="18" fill="#ffd88a"/>'
+    # charcos con reflejos
+    b += '<ellipse cx="729" cy="440" rx="40" ry="6" fill="#ffd88a" opacity=".16"/><ellipse cx="560" cy="470" rx="70" ry="7" fill="#2a3a44" opacity=".6"/><ellipse cx="560" cy="470" rx="30" ry="3" fill="#ffd88a" opacity=".12"/>'
     b += candela(470, 372, .95)
     b += aitor(690, 374, .74)
+    b += '<g class="a-brillo"><circle cx="729" cy="165" r="90" fill="url(#warm)"/></g>'
+    b += '<rect y="380" width="800" height="120" filter="url(#fog)" opacity=".35"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .74, [(729,200,170,240,1),(646,280,120,120,1),(170,290,200,110,.8),(470,300,120,150,.6)], [(729,165,170,'warm',.5,0),(646,273,90,'warm',.55,12)], lluvia=True)
+    b = conluz(b, .62, [(729,200,170,240,1),(646,290,130,130,1),(170,300,200,110,.8),(470,300,120,150,.7)], [(729,165,170,'warm',.5,0),(646,273,90,'warm',.55,12)], lluvia=True, tono=.15)
     return wrap(b)
 SVG['topo'] = topo()
 
@@ -244,98 +247,112 @@ TXOMIN = PJ.txomin(1)
 
 # ======================= COCINA DE AITOR =======================
 def cocina(gente=True, mesa=False):
-    b = '<rect width="800" height="500" fill="#3a2618"/>'
-    b += '<rect width="800" height="300" fill="#4a3020"/><path d="M0 300H800" stroke="#2a1a10" stroke-width="4"/>'
-    for k in range(0, 800, 40):
-        b += f'<path d="M{k} 300V500" stroke="#2f1f14" stroke-width="1.2"/>'
-    b += '<rect y="400" width="800" height="100" fill="#2a1a10" opacity=".55"/>'
-    # ventana al puerto
-    b += '<rect x="548" y="60" width="170" height="170" fill="#1a1410"/><rect x="556" y="68" width="154" height="154" fill="#7d8b93"/>'
-    b += '<path d="M570 222V120M600 222V100M690 222V130" stroke="#3a4248" stroke-width="3"/><path d="M570 130l20 14M600 112l22 18" stroke="#3a4248" stroke-width="1.5"/>'
-    b += '<rect x="556" y="68" width="154" height="154" filter="url(#fog)" opacity=".8"/>'
-    b += '<path d="M633 68V222M556 145H710" stroke="#1a1410" stroke-width="6"/><rect x="540" y="228" width="186" height="10" fill="#5a3a22"/>'
+    # pared de tablones con veta, zócalo y suelo de tarima
+    b = '<pattern id="plk" width="52" height="500" patternUnits="userSpaceOnUse"><rect width="52" height="500" fill="#2c1c12"/><rect width="3" height="500" fill="#170e08"/><path d="M16 0q5 120 -2 240q-4 120 2 260" stroke="#22150c" stroke-width="1.3" fill="none"/><circle cx="34" cy="170" r="2.6" fill="#170e08"/><circle cx="26" cy="390" r="2" fill="#170e08"/></pattern>'
+    b += '<pattern id="tar" width="70" height="18" patternUnits="userSpaceOnUse"><rect width="70" height="18" fill="#1e130b"/><path d="M0 17.5H70M35 0V18" stroke="#100a05" stroke-width="1.5"/></pattern>'
+    b += '<rect width="800" height="500" fill="url(#plk)"/>'
+    b += '<rect y="292" width="800" height="48" fill="#22160d"/><path d="M0 292H800" stroke="#120b06" stroke-width="5"/><path d="M0 340H800" stroke="#120b06" stroke-width="3"/>'
+    b += '<rect y="340" width="800" height="160" fill="url(#tar)"/>'
+    # viga del techo
+    b += '<rect y="0" width="800" height="22" fill="#170e08"/><rect y="22" width="800" height="4" fill="#0c0704"/>'
+    # ventana al puerto, con lluvia y niebla
+    b += '<rect x="548" y="60" width="170" height="170" fill="#0e0907"/><rect x="556" y="68" width="154" height="154" fill="#16222a"/>'
+    b += '<path d="M570 222V120M600 222V100M690 222V130" stroke="#0c1216" stroke-width="3"/><path d="M570 130l20 14M600 112l22 18" stroke="#0c1216" stroke-width="1.5"/>'
+    b += '<rect x="556" y="68" width="154" height="154" filter="url(#fog)" opacity=".6"/><rect x="556" y="68" width="154" height="154" fill="url(#rain)"/>'
+    b += '<path d="M633 68V222M556 145H710" stroke="#0e0907" stroke-width="6"/><rect x="540" y="228" width="186" height="10" fill="#2e1c10"/>'
+    b += '<path d="M548 238 q85 30 170 0" fill="#9ab0b8" opacity=".05"/>'
     # tablón de corcho con las cartas
-    b += '<rect x="214" y="70" width="170" height="118" rx="3" fill="#6b4a2a" stroke="#3a2414" stroke-width="5"/>'
+    b += '<rect x="214" y="70" width="170" height="118" rx="3" fill="#5a3e22" stroke="#24160a" stroke-width="5"/>'
     for (x, y, r) in [(232, 84, -6), (282, 80, 4), (334, 88, -3)]:
-        b += f'<g transform="rotate({r} {x+20} {y+30})"><rect x="{x}" y="{y}" width="40" height="56" fill="#e9dfc7"/>'
-        for l in range(6): b += f'<path d="M{x+5} {y+10+l*7}h{30-(l%3)*6}" stroke="#7a6c58" stroke-width="1.2"/>'
-        b += f'<circle cx="{x+20}" cy="{y+4}" r="3" fill="#a3271c"/></g>'
-    b += '<ellipse cx="248" cy="128" rx="9" ry="7" fill="#8a5a2a" opacity=".45"/>'
-    b += '<text x="252" y="176" font-size="5" fill="#e9dfc7" font-family="Georgia" opacity=".9">La Plata</text>'
-    # fogón de hierro
-    b += '<g class="a-brillo"><circle cx="120" cy="300" r="190" fill="url(#warm)" opacity=".9"/></g>'
-    b += '<rect x="40" y="220" width="160" height="190" rx="6" fill="#1c1a18"/><rect x="40" y="214" width="160" height="12" fill="#2c2926"/>'
-    b += '<rect x="62" y="310" width="70" height="44" rx="4" fill="#ff9a30"/><path class="a-llama" d="M70 350q10-30 20-6q6-24 16 0q8-20 18 4" fill="#ffd27a"/>'
-    b += '<rect x="58" y="306" width="78" height="52" rx="4" fill="none" stroke="#3a3632" stroke-width="5"/>'
-    b += '<rect x="150" y="250" width="34" height="140" fill="#2c2926"/><rect x="70" y="40" width="30" height="176" fill="#24211e"/>'
+        b += f'<g transform="rotate({r} {x+20} {y+30})"><rect x="{x}" y="{y}" width="40" height="56" fill="#d8cdb0"/>'
+        for l in range(6): b += f'<path d="M{x+5} {y+10+l*7}h{30-(l%3)*6}" stroke="#6a5c48" stroke-width="1.2"/>'
+        b += f'<circle cx="{x+20}" cy="{y+4}" r="3" fill="#8a1d14"/></g>'
+    b += '<ellipse cx="248" cy="128" rx="9" ry="7" fill="#6a4a2a" opacity=".45"/>'
+    b += '<text x="252" y="176" font-size="5" fill="#d8cdb0" font-family="Georgia" opacity=".9">La Plata</text>'
+    # estufa de hierro con su tubo
+    b += '<rect x="70" y="26" width="30" height="190" fill="#0c0a09"/><rect x="66" y="120" width="38" height="6" fill="#1a1816"/>'
+    b += '<rect x="40" y="220" width="160" height="190" rx="6" fill="#121110"/><rect x="40" y="214" width="160" height="12" fill="#22201e"/><path d="M48 230v170" stroke="#1e1c1a" stroke-width="3"/>'
+    b += '<rect x="62" y="310" width="70" height="44" rx="4" fill="#ff8a20"/><path class="a-llama" d="M70 350q10-30 20-6q6-24 16 0q8-20 18 4" fill="#ffd27a"/>'
+    b += '<rect x="58" y="306" width="78" height="52" rx="4" fill="none" stroke="#2a2622" stroke-width="5"/><path d="M70 306v52M86 306v52M102 306v52M118 306v52" stroke="#2a2622" stroke-width="2" opacity=".7"/>'
+    b += '<rect x="150" y="250" width="34" height="140" fill="#1a1816"/>'
+    b += '<path d="M40 410 q80 26 160 0" fill="#ff9a30" opacity=".12" filter="url(#b5)"/>'
     # cafetera humeando
-    b += '<path d="M90 214l6-34h28l6 34z" fill="#8d8a80"/><path d="M130 196q12 2 10 14" stroke="#8d8a80" stroke-width="4" fill="none"/>'
-    b += '<g class="a-humo"><g filter="url(#b5)" opacity=".7"><ellipse cx="110" cy="160" rx="12" ry="20" fill="#e8e2d6"/><ellipse cx="118" cy="128" rx="10" ry="16" fill="#e8e2d6"/></g></g>'
+    b += '<path d="M90 214l6-34h28l6 34z" fill="#5a5850"/><path d="M130 196q12 2 10 14" stroke="#5a5850" stroke-width="4" fill="none"/>'
+    b += '<g class="a-humo"><g filter="url(#b5)" opacity=".55"><ellipse cx="110" cy="160" rx="12" ry="20" fill="#d8d2c6"/><ellipse cx="118" cy="128" rx="10" ry="16" fill="#d8d2c6"/></g></g>'
+    # estante con tarros
+    b += '<rect x="400" y="96" width="110" height="6" fill="#2e1c10"/>' + ''.join(f'<rect x="{x}" y="{78 if i%2 else 82}" width="14" height="{18 if i%2 else 14}" rx="2" fill="{c}"/>' for i,(x,c) in enumerate(zip(range(408,500,20),['#3a4a3a','#5a3a22','#4a3a2a','#2a3a44','#5a4a2a'])))
+    # lámpara colgante sobre la mesa
+    b += '<path d="M376 0V150" stroke="#000" stroke-width="2"/><path d="M356 150H396L406 172H346Z" fill="#0e0e0e"/><path d="M356 150H396L398 156H354Z" fill="#5a4a3a"/>'
     # Aitor sentado (detrás de la mesa)
     if gente: b += '<clipPath id="tbl"><rect x="0" y="0" width="800" height="340"/></clipPath>'
     if gente and not mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(380, 478, .8)}</g>'
-    if mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(318, 478, .8)}{candela_casa(462, 512, 1.22)}</g>'
+    if mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(318, 478, .8)}{candela(470, 420, 1.0)}</g>'
     # mesa
-    b += '<rect x="226" y="330" width="300" height="16" fill="#6b4426"/><rect x="226" y="346" width="300" height="12" fill="#4a2e18"/>'
-    b += '<rect x="240" y="358" width="12" height="118" fill="#4a2e18"/><rect x="500" y="358" width="12" height="118" fill="#4a2e18"/>'
+    b += '<rect x="226" y="330" width="300" height="16" fill="#4a2e18"/><rect x="226" y="346" width="300" height="12" fill="#2a1a0e"/>'
+    b += '<rect x="240" y="358" width="12" height="118" fill="#2a1a0e"/><rect x="500" y="358" width="12" height="118" fill="#2a1a0e"/>'
+    b += '<ellipse cx="376" cy="476" rx="170" ry="12" fill="#000" opacity=".45"/>'
     # cosas de la mesa
-    b += '<ellipse cx="268" cy="328" rx="26" ry="9" fill="#c9924a"/><path d="M250 324q18-8 36 0" stroke="#8a5a2a" stroke-width="1.5" fill="none"/>'
-    b += '<path d="M314 316h20l-2 16h-16z" fill="#e8e2d6"/><path d="M334 320q6 2 0 8" stroke="#e8e2d6" stroke-width="2" fill="none"/>'
-    b += '<path d="M448 316h20l-2 16h-16z" fill="#e8e2d6"/><path d="M448 320q-6 2 0 8" stroke="#e8e2d6" stroke-width="2" fill="none"/>'
-    # cuaderno de ronda abierto
-    b += '<g transform="rotate(-4 400 330)"><path d="M366 322h34v14h-34zM400 322h34v14h-34z" fill="#e9dfc7" stroke="#6a5a42" stroke-width=".8"/>'
+    b += '<ellipse cx="268" cy="328" rx="26" ry="9" fill="#a8763a"/><path d="M250 324q18-8 36 0" stroke="#6a4a2a" stroke-width="1.5" fill="none"/>'
+    b += '<path d="M314 316h20l-2 16h-16z" fill="#d8d2c6"/><path d="M334 320q6 2 0 8" stroke="#d8d2c6" stroke-width="2" fill="none"/>'
+    b += '<path d="M448 316h20l-2 16h-16z" fill="#d8d2c6"/><path d="M448 320q-6 2 0 8" stroke="#d8d2c6" stroke-width="2" fill="none"/>'
+    b += '<g transform="rotate(-4 400 330)"><path d="M366 322h34v14h-34zM400 322h34v14h-34z" fill="#e0d6be" stroke="#6a5a42" stroke-width=".8"/>'
     for l in range(4): b += f'<path d="M370 {325+l*3}h26M404 {325+l*3}h{24-l*3}" stroke="#4a3a2a" stroke-width=".7"/>'
     b += '</g>'
-    # moneda de PortAventura
     b += '<circle cx="498" cy="331" r="5" fill="#c9a24a" stroke="#6e5320"/><path d="M495 331h6M498 328v6" stroke="#8a6a2a" stroke-width=".6"/>'
     b += '<text x="498" y="332.4" text-anchor="middle" font-size="1.6" fill="#3a2a10" font-family="Georgia">PortAventura</text>'
     # Candela de pie junto a la ventana
-    if gente and not mesa: b += candela_casa(628, 484, .9)
+    if gente and not mesa: b += candela(628, 484, .9)
     if mesa: b += '<rect x="556" y="68" width="154" height="154" fill="#0a0e14" opacity=".7"/>'
     # despensa (puerta entreabierta, a oscuras)
-    b += '<rect x="716" y="246" width="84" height="232" fill="#120c08"/>'
+    b += '<rect x="716" y="246" width="84" height="232" fill="#0c0806"/>'
     b += '<g class="ol"><path d="M724 280h76M724 330h76" stroke="#5a3a22" stroke-width="5"/><rect x="742" y="258" width="34" height="22" rx="2" fill="#a3271c"/><text x="759" y="272" text-anchor="middle" font-size="6" fill="#f0e0b0" font-family="Georgia">GALLETAS</text>'
     b += '<rect x="732" y="306" width="16" height="24" fill="#6a7a5a"/><rect x="756" y="300" width="14" height="30" fill="#8a6a3a"/></g>'
-    b += '<path d="M716 246l-30 10v228l30-6z" fill="#5a3a22"/><circle cx="694" cy="370" r="3" fill="#c9a24a"/>'
+    b += '<path d="M716 246l-30 10v228l30-6z" fill="#3a2414"/><circle cx="694" cy="370" r="3" fill="#c9a24a"/>'
     b += '<rect x="716" y="246" width="84" height="232" fill="#000" class="ob" opacity=".85"/>'
     if gente: b += f'<g class="txoP" opacity="0"><path d="M800 250L700 500H800z" fill="#ffd28a" opacity=".18"/>{fig(TXOMIN, 760, 430, 1.7)}</g>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .68, [(100,320,220,200,1),(633,150,110,110,.6),(470,260,260,190,.8)], [(97,332,170,'fire',.45,0)], humo=.12)
+    b = conluz(b, .62, [(110,320,230,210,1),(376,250,250,200,1),(633,150,110,110,.5)], [(97,332,170,'fire',.5,0),(376,165,190,'warm',.45,26)], humo=.16, tono=.12)
     return wrap(b)
 SVG['cocina'] = cocina(); SVG['cocinaMesa'] = cocina(mesa=True)
 
 # ======================= PORTAL =======================
 def portal():
-    b = '<rect width="800" height="500" fill="#2a2420"/>'
-    # paredes encaladas viejas
-    b += '<rect x="0" y="0" width="800" height="500" fill="#4a4038"/>'
-    b += '<path d="M0 0h230v500H0z" fill="#3a322c"/>'
-    # escalera de piedra que baja a la izquierda
+    # escalera de vecinos: pared de cal sucia, desconchones, bombilla pelada
+    b = '<rect width="800" height="500" fill="#2a2520"/>'
+    b += '<rect x="232" y="0" width="568" height="446" fill="#3a332c"/>'
+    b += ''.join(f'<path d="M{x} {y}q{w*.4} -6 {w} 2q-4 {h*.6} -{w*.3} {h}q-{w*.5} 4 -{w*.7} -{h*.4}z" fill="#2c2620" opacity=".35"/>' for x,y,w,h in [(640,90,60,40),(260,300,50,60),(700,330,40,50),(600,40,30,22)])
+    b += '<path d="M232 380H800" stroke="#2a241e" stroke-width="2"/><rect x="232" y="380" width="568" height="66" fill="#2e2822"/>'
+    b += '<path d="M0 0h230v500H0z" fill="#26201b"/>'
     for k in range(7):
-        y = 300 + k*28; x = 40 + k*18
-        b += f'<rect x="0" y="{y}" width="{230-k*14}" height="28" fill="#5a524a"/><path d="M0 {y}h{230-k*14}" stroke="#7a7068" stroke-width="2"/>'
-    b += '<path d="M232 0V500" stroke="#2a2420" stroke-width="6"/>'
+        y = 300 + k*28
+        b += f'<rect x="0" y="{y}" width="{230-k*14}" height="28" fill="#3e3832"/><path d="M0 {y}h{230-k*14}" stroke="#5a524a" stroke-width="2"/>'
+    b += '<path d="M10 300 L200 250" stroke="#1a1612" stroke-width="5"/>' + ''.join(f'<path d="M{20+i*36} {297-i*9.5}v28" stroke="#1a1612" stroke-width="2"/>' for i in range(5))
+    b += '<path d="M232 0V500" stroke="#16120e" stroke-width="6"/>'
     # Aitor bajando, de espaldas, poniéndose la gorra
     b += """<g transform="translate(120 360) scale(.62)">
- <path d="M-40 -150q40-16 80 0l12 170h-104z" fill="#2a2e35"/>
- <path d="M40 -146q20 -40 6 -86" stroke="#2a2e35" stroke-width="20" fill="none" stroke-linecap="round"/>
- <ellipse cx="0" cy="-185" rx="27" ry="31" fill="#33281f"/>
- <path d="M-26 -196q26-14 52 0l-2-16q-24-12-48 0z" fill="#1d2026"/><path d="M-30 -196q30 6 60 0l-2 6q-28 6-56 0z" fill="#0e0f12"/>
- <circle cx="44" cy="-232" r="9" fill="#c9a084"/>
+ <path d="M-40 -150q40-16 80 0l12 170h-104z" fill="#1e2228"/>
+ <path d="M40 -146q20 -40 6 -86" stroke="#1e2228" stroke-width="20" fill="none" stroke-linecap="round"/>
+ <ellipse cx="0" cy="-185" rx="27" ry="31" fill="#2a2018"/>
+ <path d="M-26 -196q26-14 52 0l-2-16q-24-12-48 0z" fill="#14161a"/><path d="M-30 -196q30 6 60 0l-2 6q-28 6-56 0z" fill="#0a0b0d"/>
+ <circle cx="44" cy="-232" r="9" fill="#a88470"/>
 </g>"""
+    # bombilla pelada colgando
+    b += '<path d="M455 0V40" stroke="#0a0a0a" stroke-width="2"/><rect x="450" y="40" width="10" height="8" fill="#2a2a2a"/><ellipse cx="455" cy="54" rx="7" ry="9" fill="#ffe8b0"/>'
     # puerta de madera con rendija de luz
-    b += '<rect x="330" y="40" width="250" height="400" fill="#3a2414" stroke="#1a100a" stroke-width="8"/>'
-    b += '<rect x="352" y="66" width="206" height="150" fill="none" stroke="#2a1a0e" stroke-width="5"/><rect x="352" y="246" width="206" height="170" fill="none" stroke="#2a1a0e" stroke-width="5"/>'
-    b += '<circle cx="548" cy="250" r="7" fill="#c9a24a"/><rect x="460" y="180" width="30" height="8" rx="2" fill="#8a6a2a"/>'
-    b += '<rect x="330" y="440" width="250" height="6" fill="#d8d0b8" opacity=".85"/>'
-    b += '<rect x="330" y="446" width="250" height="40" fill="#d8d0b8" opacity=".08"/>'
-    # suelo y felpudo
-    b += '<rect y="446" width="800" height="54" fill="#2c2622"/>'
+    b += '<rect x="330" y="80" width="250" height="360" fill="#2a1a0e" stroke="#120a05" stroke-width="8"/>'
+    b += '<rect x="352" y="102" width="206" height="130" fill="none" stroke="#1a1008" stroke-width="5"/><rect x="352" y="256" width="206" height="160" fill="none" stroke="#1a1008" stroke-width="5"/>'
+    b += '<path d="M360 110l40 120M500 270l40 130" stroke="#3a2614" stroke-width="2" opacity=".6"/>'
+    b += '<circle cx="548" cy="260" r="7" fill="#a88a3a"/><rect x="460" y="196" width="30" height="8" rx="2" fill="#6a5222"/>'
+    b += '<rect x="440" y="110" width="30" height="18" fill="#c8bca0"/><text x="455" y="122" text-anchor="middle" font-size="6" fill="#2a2018" font-family="Georgia">2º</text>'
+    b += '<rect x="330" y="440" width="250" height="6" fill="#e8d8b0" opacity=".85"/>'
+    b += '<rect x="330" y="446" width="250" height="40" fill="#e8d8b0" opacity=".08"/>'
+    # suelo de baldosa y felpudo
+    b += '<rect y="446" width="800" height="54" fill="#1e1a16"/>' + ''.join(f'<path d="M{x} 446 L{x*1.3-120} 500" stroke="#141210" stroke-width="1.5"/>' for x in range(240,800,40))
     b += '<g class="ol"><path d="M486 456l34-6 6 16-34 6z" fill="#e9dfc7"/><path d="M492 460l20-3M494 465l16-3" stroke="#6a5a42" stroke-width="1"/></g>'
-    b += '<rect x="360" y="452" width="190" height="34" rx="3" fill="#8a6a3a"/>'
-    for k in range(18): b += f'<path d="M{366+k*10} 455v28" stroke="#6a4e28" stroke-width="2"/>'
+    b += '<rect x="360" y="452" width="190" height="34" rx="3" fill="#6a5030"/>'
+    for k in range(18): b += f'<path d="M{366+k*10} 455v28" stroke="#4e3a20" stroke-width="2"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .66, [(340,330,250,230,.9),(110,330,120,180,.7)], [(340,0,320,'pale',.18,0)])
+    b = conluz(b, .6, [(455,120,260,260,1),(110,330,130,180,.6)], [(455,54,230,'warm',.4,20)], tono=.12)
     return wrap(b)
 SVG['portal'] = portal()
 
@@ -410,54 +427,64 @@ LEONOR = """<g>
 </g>"""
 LEONOR = PJ.NF(PJ.leonor)
 def faro(leonor=False):
-    b = '<linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3340"/><stop offset=".6" stop-color="#5a5e62"/><stop offset="1" stop-color="#7a7266"/></linearGradient>'
+    b = '<linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06090c"/><stop offset=".55" stop-color="#1a242c"/><stop offset="1" stop-color="#3a3e40"/></linearGradient>'
+    b += '<linearGradient id="seaF" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a3439"/><stop offset=".4" stop-color="#121c21"/><stop offset="1" stop-color="#03080a"/></linearGradient>'
+    b += '<linearGradient id="clf" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2e2c29"/><stop offset="1" stop-color="#0a0a09"/></linearGradient>'
+    b += '<linearGradient id="rk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a3530"/><stop offset="1" stop-color="#0b0a09"/></linearGradient>'
+    b += '<linearGradient id="beamF" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#ffe9b0" stop-opacity=".6"/><stop offset=".6" stop-color="#ffe9b0" stop-opacity=".14"/><stop offset="1" stop-color="#ffe9b0" stop-opacity="0"/></linearGradient>'
     b += '<rect width="800" height="500" fill="url(#dawn)"/>'
-    # faro y casa del farero arriba a la derecha
-    b += '<path d="M640 40h40v-8h-40z" fill="#2a2a2a"/><rect x="644" y="20" width="32" height="22" fill="#fff3c4"/><circle cx="660" cy="31" r="70" fill="url(#warm)"/>'
-    b += '<g class="a-haz"><path d="M676 30L860 -6v76z" fill="#ffe9a8" opacity=".2"/></g>'
-    b += '<path d="M636 42h48l8 150h-64z" fill="#d8d4cc"/><path d="M634 90h52M630 140h60" stroke="#8a2a20" stroke-width="14"/>'
-    b += '<rect x="700" y="150" width="70" height="44" fill="#c8c0b0"/><path d="M694 152l41-22 41 22z" fill="#6a2a22"/><rect x="712" y="164" width="12" height="12" fill="#ffd28a"/>'
-    # mar y olas a la izquierda
-    b += '<path d="M0 230q100-10 200 0t260 6V500H0z" fill="#26323a"/>'
+    b += '<rect width="800" height="260" filter="url(#fog)" opacity=".5"/>'
+    # mar
+    b += '<path d="M0 228q100-10 200 0t260 6V500H0z" fill="url(#seaF)"/>'
     b += '<g class="a-olas">'
     for k in range(6):
         y = 250 + k*30
-        b += f'<path d="M-120 {y}' + 'q30-8 60 0' + 't60 0'*8 + '" stroke="#4a5a64" stroke-width="2" fill="none" opacity=".6"/>'
+        b += f'<path d="M-120 {y}' + 'q30-8 60 0' + 't60 0'*8 + f'" stroke="#3a4a52" stroke-width="{1.2+k*.3}" fill="none" opacity=".55"/>'
     b += '</g>'
     # barca sin luces en la niebla
-    b += '<path d="M60 236h90l-12 14h-66z" fill="#1a1e22" opacity=".7"/><path d="M104 236v-40" stroke="#1a1e22" stroke-width="3" opacity=".7"/>'
-    # camino y verja hacia el faro
-    b += '<path d="M560 500L620 200h40l60 300z" fill="#2e2a27"/>'
-    b += '<rect x="576" y="250" width="6" height="110" fill="#1a1a1a"/><rect x="686" y="250" width="6" height="110" fill="#1a1a1a"/>'
-    b += '<g stroke="#1a1a1a" stroke-width="3">' + ''.join(f'<path d="M{x} 262v96"/>' for x in range(592, 640, 10)) + '<path d="M582 262h58M582 350h58"/></g>'
-    b += '<path d="M640 262l26-10v96l-26 10" fill="none" stroke="#1a1a1a" stroke-width="3"/>'
+    b += '<path d="M60 236h90l-12 14h-66z" fill="#0c1013" opacity=".8"/><path d="M104 236v-40" stroke="#0c1013" stroke-width="3" opacity=".8"/>'
+    b += '<rect y="200" width="800" height="90" filter="url(#fog)" opacity=".35"/>'
+    # acantilado y faro
+    b += '<path d="M560 500 L560 230 Q590 200 620 196 L800 186 V500Z" fill="url(#clf)"/>'
+    b += '<path d="M590 250l14 40-8 30M720 220l-10 50 14 40M650 330l-20 60" stroke="#050505" stroke-width="2" fill="none" opacity=".7"/>'
+    b += '<g class="a-haz"><path d="M672 30L-40 -40V150Z" fill="url(#beamF)"/></g>'
+    b += '<path d="M640 40h40v-8h-40z" fill="#1a1a1a"/><rect x="644" y="20" width="32" height="22" fill="#fff3c4"/><path d="M644 20v22M652 20v22M660 20v22M668 20v22" stroke="#6a5a3a" stroke-width="1.5"/>'
+    b += '<path d="M636 42h48l8 150h-64z" fill="#b8b4ac"/><path d="M636 42h48l8 150h-64z" fill="url(#lgR)"/><path d="M634 90h52M630 140h60" stroke="#7a2018" stroke-width="14"/>'
+    b += '<rect x="654" y="160" width="12" height="20" rx="6" fill="#151515"/><rect x="656" y="110" width="8" height="12" fill="#ffd88a" opacity=".8"/>'
+    b += '<rect x="700" y="150" width="70" height="44" fill="#a8a094"/><path d="M694 152l41-22 41 22z" fill="#4a1a14"/><rect x="712" y="164" width="12" height="12" fill="#ffd28a"/><rect x="738" y="164" width="12" height="12" fill="#1a1a1a"/>'
+    # camino y verja
+    b += '<path d="M560 500L620 200h40l60 300z" fill="#1e1c1a"/>'
+    b += '<rect x="576" y="250" width="6" height="110" fill="#0c0c0c"/><rect x="686" y="250" width="6" height="110" fill="#0c0c0c"/>'
+    b += '<g stroke="#0c0c0c" stroke-width="3">' + ''.join(f'<path d="M{x} 262v96"/>' for x in range(592, 640, 10)) + '<path d="M582 262h58M582 350h58"/></g>'
+    b += '<path d="M640 262l26-10v96l-26 10" fill="none" stroke="#0c0c0c" stroke-width="3"/>'
     b += '<path d="M636 300a6 6 0 1 1 0 .1" fill="none" stroke="#8a6a2a" stroke-width="2.5"/><rect x="630" y="304" width="12" height="10" rx="1" fill="#8a6a2a"/>'
-    # rocas planas y cuerpo
-    b += '<path d="M120 500L170 360q120-30 300-10l90 150z" fill="#3a3632"/><path d="M200 380q100-14 220 0" stroke="#2a2622" stroke-width="3" fill="none"/>'
-    # rocas del primer plano en sombra (huellas solo con luz)
-    b += '<path d="M0 420q60-30 140-10l40 90H0z" fill="#1e1c1a"/>'
+    # rocas planas, con grietas y charcos
+    b += '<path d="M120 500L170 360q120-30 300-10l90 150z" fill="url(#rk)"/><path d="M200 380q100-14 220 0" stroke="#1a1714" stroke-width="3" fill="none"/>'
+    b += '<path d="M260 440l30 20 40-6M380 420l20 30" stroke="#0a0908" stroke-width="2" fill="none"/>'
+    b += '<ellipse cx="300" cy="462" rx="44" ry="7" fill="#2a3a44" opacity=".7"/><ellipse cx="300" cy="462" rx="18" ry="3" fill="#ffcf80" opacity=".25"/><ellipse cx="470" cy="478" rx="50" ry="6" fill="#2a3a44" opacity=".6"/>'
+    b += '<path d="M0 420q60-30 140-10l40 90H0z" fill="#121110"/>'
     b += '<g class="ol" fill="#0e0c0a" opacity=".8">' + ''.join(f'<ellipse cx="{30+i*26}" cy="{470-i*9}" rx="7" ry="11" transform="rotate(-60 {30+i*26} {470-i*9})"/>' for i in range(5)) + '</g>'
     b += '<rect x="0" y="420" width="180" height="80" fill="#000" class="ob" opacity=".55"/>'
+    # gaviota posada
+    b += '<path d="M500 356q8-8 16 0q-4 6-16 0z" fill="#b8b4ac"/><circle cx="516" cy="352" r="3" fill="#c8c4bc"/><path d="M518 352l5 1" stroke="#c9a24a" stroke-width="1.5"/>'
     # el cuerpo bajo la sábana
-    b += '<path d="M250 386q70-26 150-10l10 22q-80 14-162 6z" fill="#d6d2c6"/><path d="M262 392q60-12 130-4" stroke="#b8b2a4" stroke-width="2" fill="none"/>'
-    b += '<path d="M404 380l18-6 4 12-18 4zM406 394l18-2 2 10-18 2z" fill="#1a1612"/>'
-    # mano fuera de la sábana con ficha roja; las algas encima (se apartan)
-    b += '<path d="M246 400q-14 4-22 16l6 4q8-6 18-10z" fill="#c9b0a0"/><rect x="216" y="412" width="12" height="9" rx="2" fill="#a3271c"/><text x="222" y="419.4" text-anchor="middle" font-size="5" fill="#f0d8a0" font-family="Georgia">C</text>'
-    b += '<g id="algas"><path d="M200 420q20-24 50-14q-10 10-6 22q-20-8-44-8z" fill="#2e4a2a"/><path d="M206 424q16-14 40-10M212 430q14-6 30-4" stroke="#1e3a1a" stroke-width="3" fill="none"/><path d="M196 414q14-4 24 4" stroke="#3a5a34" stroke-width="5" fill="none"/></g>'
-    # guardia civil con farol (izquierda del cuerpo)
+    b += '<path d="M250 386q70-26 150-10l10 22q-80 14-162 6z" fill="#cdc8ba"/><path d="M262 392q60-12 130-4M280 398q50-6 110 -2" stroke="#a8a294" stroke-width="2" fill="none"/>'
+    b += '<path d="M250 386q70-26 150-10l10 22q-80 14-162 6z" fill="url(#lgL)"/>'
+    b += '<path d="M404 380l18-6 4 12-18 4zM406 394l18-2 2 10-18 2z" fill="#0e0c0a"/>'
+    b += '<path d="M246 400q-14 4-22 16l6 4q8-6 18-10z" fill="#b8a090"/><rect x="216" y="412" width="12" height="9" rx="2" fill="#a3271c"/><text x="222" y="419.4" text-anchor="middle" font-size="5" fill="#f0d8a0" font-family="Georgia">C</text>'
+    b += '<g id="algas"><path d="M200 420q20-24 50-14q-10 10-6 22q-20-8-44-8z" fill="#22381f"/><path d="M206 424q16-14 40-10M212 430q14-6 30-4" stroke="#142a12" stroke-width="3" fill="none"/><path d="M196 414q14-4 24 4" stroke="#2e4a28" stroke-width="5" fill="none"/></g>'
+    # gente
     b += fig(GUARDIA, 190, 380, .9)
-    b += '<g class="a-brillo"><circle cx="216" cy="309" r="60" fill="url(#warm)"/></g>'
-    # doctor arrodillado y comisario
     b += fig(SALAZAR, 450, 404, .95)
     b += fig(IBARRA, 532, 404, .95)
-    # Aitor junto a la verja
     b += aitor(715, 420, .62)
     if leonor:
-        b += '<g class="cocheL"><path d="M720 470h80v-40h-50l-14 18h-16z" fill="#0c0c0c"/><circle cx="738" cy="472" r="9" fill="#050505"/><rect x="756" y="434" width="30" height="14" fill="#3a4a5a" opacity=".6"/><g class="farosL"><path d="M722 456L600 430v50z" fill="#fff3c4" opacity=".22"/><circle cx="723" cy="457" r="4" fill="#fff3c4"/></g></g>'
+        b += '<g class="cocheL"><path d="M720 470h80v-40h-50l-14 18h-16z" fill="#0a0a0a"/><circle cx="738" cy="472" r="9" fill="#030303"/><rect x="756" y="434" width="30" height="14" fill="#2a3a4a" opacity=".6"/><g class="farosL"><path d="M722 456L600 430v50z" fill="#fff3c4" opacity=".22"/><circle cx="723" cy="457" r="4" fill="#fff3c4"/></g></g>'
         b += fig(LEONOR, 598, 470, .95, cls='leoF')
-    b += '<rect width="800" height="500" filter="url(#fog)" opacity=".45"/>'
+    b += '<rect y="400" width="800" height="100" filter="url(#fog)" opacity=".4"/>'
+    b += '<rect width="800" height="500" fill="url(#rain)" opacity=".6"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .64, [(660,40,160,160,1),(216,309,140,150,1),(420,400,300,150,1),(700,360,110,150,.8)], [(216,309,110,'warm',.5,14),(660,31,130,'pale',.45,0),(678,336,70,'warm',.5,10)])
+    b = conluz(b, .62, [(660,40,170,170,1),(216,320,150,160,1),(420,400,300,140,1),(700,360,110,150,.8)], [(216,309,120,'warm',.55,16),(660,31,140,'pale',.5,22),(678,336,70,'warm',.5,10),(300,462,60,'warm',.25,0)], tono=.1)
     return wrap(b)
 SVG['faro'] = faro(); SVG['faroL'] = faro(True)
 
