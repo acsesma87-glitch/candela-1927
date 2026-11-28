@@ -24,6 +24,22 @@ def _hex(m):
     hh,l,s=_cs.rgb_to_hls(r,g,bb); r,g,bb=_cs.hls_to_rgb(hh,l,s*SAT)
     f=lambda c:max(0,min(1,(c-.5)*CON+.5))
     return '#%02x%02x%02x'%tuple(round(f(c)*255) for c in (r,g,bb))
+
+def _por(m, k):
+    return f'{m.group(1)}{float(m.group(2))*k:.3g}{m.group(3)}'
+def efectos(t):
+    # lluvia que cae (solo la que cubre toda la escena) y el patrón de la muestra del faro un 30 % más transparente
+    t=t.replace('stroke="#cfdbe0" stroke-width="1" opacity=".2"','stroke="#cfdbe0" stroke-width="1" opacity=".14"')
+    t=_re.sub(r'<rect ((?:x="0" y="0" )?)width="800" height="500" fill="url\(#((?:f2|t2)?rain)\)"([^/]*)/>', lambda m:f'<g class="a-lluvia"><rect x="0" y="-70" width="800" height="570" fill="url(#{m.group(2)})"{m.group(3)}/></g>', t)
+    # humo y niebla: un 20 % más transparentes
+    def hum(m):
+        el=m.group(0)
+        if 'opacity="' in el: return _re.sub(r'(opacity=")([0-9.]+)(")', lambda q:_por(q,.8), el, count=1)
+        return el.replace('/>',' opacity=".8"/>') if el.endswith('/>') else el[:-1]+' opacity=".8">'
+    t=_re.sub(r'<(?:rect|g)[^>]*filter="url\(#(?:f2|t2)?(?:fog|smoke|fogW)\)"[^>]*>', hum, t)
+    t=_re.sub(r'<g filter="url\(#b5\)" opacity="([0-9.]+)"', lambda m:f'<g filter="url(#b5)" opacity="{float(m.group(1))*.8:.3g}"', t)
+    return t
+
 def tono(t): return _re.sub(r'#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![0-9a-fA-F])', _hex, t)
 
 faces = {
@@ -48,7 +64,7 @@ faces = {
 consts = ''.join(f'const {k}={json.dumps(tono(v))};\n' for k, v in faces.items())
 
 out = eng.replace('{{LAIKA}}', laika).replace('{{EKI}}', eki)
-out = out.replace('{{SCENES}}', json.dumps({k: tono(v) for k, v in SVG.items()}, ensure_ascii=False))
+out = out.replace('{{SCENES}}', json.dumps({k: efectos(tono(v)) for k, v in SVG.items()}, ensure_ascii=False))
 out = out.replace('{{DAY1}}', consts + day1)
 open(os.path.join(D, '..', 'prueba', 'altamar.html'), 'w').write(out)
 print(len(out))

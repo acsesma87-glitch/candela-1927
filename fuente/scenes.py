@@ -23,7 +23,7 @@ def defs(extra=''):
 <radialGradient id="cold"><stop offset="0" stop-color="#d8f0e0" stop-opacity=".85"/><stop offset=".4" stop-color="#a8d0c0" stop-opacity=".25"/><stop offset="1" stop-color="#80b0a0" stop-opacity="0"/></radialGradient>
 <radialGradient id="redL"><stop offset="0" stop-color="#ff7a68" stop-opacity=".95"/><stop offset=".35" stop-color="#e03a2a" stop-opacity=".35"/><stop offset="1" stop-color="#a01010" stop-opacity="0"/></radialGradient>
 <filter id="smoke" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".012 .022" numOctaves="3" seed="11"/><feColorMatrix values="0 0 0 0 .86 0 0 0 0 .8 0 0 0 0 .7 0 0 0 1.4 -.45"/></filter>
-<pattern id="rain" width="46" height="70" patternUnits="userSpaceOnUse"><path d="M6 0l-5 16M28 26l-5 16M17 48l-5 16M40 10l-5 16" stroke="#cfdbe0" stroke-width="1" opacity=".22"/></pattern>
+<pattern id="rain" width="46" height="70" patternUnits="userSpaceOnUse"><path d="M6 0l-5 16M28 26l-5 16M17 48l-5 16M40 10l-5 16" stroke="#cfdbe0" stroke-width="1" opacity=".154"/></pattern>
 <pattern id="plkC" width="52" height="500" patternUnits="userSpaceOnUse"><rect width="52" height="500" fill="#2c1c12"/><rect width="3" height="500" fill="#170e08"/><path d="M16 0q5 120 -2 240q-4 120 2 260" stroke="#22150c" stroke-width="1.3" fill="none"/><circle cx="34" cy="170" r="2.6" fill="#170e08"/></pattern><pattern id="tarC" width="70" height="18" patternUnits="userSpaceOnUse"><rect width="70" height="18" fill="#1e130b"/><path d="M0 17.5H70M35 0V18" stroke="#100a05" stroke-width="1.5"/></pattern><filter id="desA"><feColorMatrix type="saturate" values=".8"/></filter><filter id="blkF"><feColorMatrix values="0 0 0 0 .02 0 0 0 0 .02 0 0 0 0 .03 0 0 0 1 0"/></filter>
 <linearGradient id="aitG" gradientUnits="userSpaceOnUse" x1="180" x2="260" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity=".5"/></linearGradient><mask id="aitM"><rect x="0" y="0" width="400" height="500" fill="url(#aitG)"/></mask>
 </defs>'''
@@ -349,7 +349,7 @@ def portal():
  <circle cx="44" cy="-232" r="9" fill="#a88470"/>
 </g>"""
     # bombilla pelada colgando
-    b += '<path d="M455 0V40" stroke="#0a0a0a" stroke-width="2"/><rect x="450" y="40" width="10" height="8" fill="#2a2a2a"/><ellipse cx="455" cy="54" rx="7" ry="9" fill="#ffe8b0"/>'
+    b += '<path d="M455 0V40" stroke="#0a0a0a" stroke-width="2"/><rect x="450" y="40" width="10" height="8" fill="#2a2a2a"/><ellipse class="a-parpadeo" cx="455" cy="54" rx="7" ry="9" fill="#ffe8b0"/>'
     # puerta de madera con rendija de luz
     b += '<rect x="330" y="80" width="250" height="360" fill="#2a1a0e" stroke="#120a05" stroke-width="8"/>'
     b += '<rect x="352" y="102" width="206" height="130" fill="none" stroke="#1a1008" stroke-width="5"/><rect x="352" y="256" width="206" height="160" fill="none" stroke="#1a1008" stroke-width="5"/>'
@@ -449,6 +449,7 @@ def _muestra(fich, pre):
 import os as _os
 def faro(leonor=False):
     t=_muestra('muestra_faro.svg','f2')
+    t=t.replace('<polygon points="650,62 0,0 0,150" fill="url(#f2beam)"/>','<g class="a-giro"><polygon points="650,62 0,0 0,150" fill="url(#f2beam)"/>',1).replace('fill="url(#f2beam)" opacity=".7" filter="url(#f2blur8)"/>','fill="url(#f2beam)" opacity=".7" filter="url(#f2blur8)"/></g>',1)
     # la oscuridad la quita la linterna; huecos para el comisario y Aitor
     t=t.replace('<polygon points="650,62 0,0 0,150"','<ellipse cx="640" cy="410" rx="100" ry="130" fill="url(#f2hole)"/><ellipse cx="150" cy="420" rx="90" ry="110" fill="url(#f2hole)"/><ellipse cx="720" cy="410" rx="90" ry="120" fill="url(#f2hole)"/><polygon points="650,62 0,0 0,150"')
     t=t.replace('opacity=".78" mask="url(#f2dark)"/>','opacity=".78" mask="url(#f2dark)" class="ob"/>')
@@ -490,6 +491,7 @@ def trato():
     b += f'<g transform="translate({400-205*1.2} {560-462*1.2}) scale(1.2)">{resp(tAit(AITOR_CASA), "Aitor", 400)}</g>'
     b += '<path d="M330 420q-14 6-10 20q14 6 24-2z" fill="#1d2026"/>'
     b += fig(IBARRA, 630, 520, 1.85)
+    b += '<rect width="800" height="500" fill="url(#rain)"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     b = conluz(b, .5, [(400,300,380,300,1)])
     return wrap(b)
@@ -682,6 +684,7 @@ PACO = """<g>
 PACO = PJ.NF(PJ.paco)
 def taberna():
     t=_muestra('muestra_bar.svg','t2')
+    t=t.replace('<path d="M318 270','<path class="a-humoP" d="M318 270',1)
     # pizarra de fiados en lugar del menú
     i=t.index('<g fill="#d6d6cc" font-family="Georgia,serif" font-size="11">');j=t.index('</g>',i)+4
     fi='<text x="245" y="128" text-anchor="middle" font-size="9" fill="#e2e0d6" font-family="Special Elite,Courier New">FIADOS</text>'
@@ -1013,7 +1016,7 @@ def dispensario(doctor=True):
     b += ''.join(f'<g class="a-gota" style="animation-delay:-{d}s"><path d="M{x} 356q2 6 0 8q-2-2 0-8z" fill="#9ab8c8" opacity=".8"/></g>' for x, d in ((660, 0), (700, 1.1), (736, 2.0)))
     b += '<ellipse cx="700" cy="470" rx="34" ry="4" fill="#5a6a72" opacity=".5"/>'
     # suelo
-    b += '<rect y="350" width="800" height="150" fill="#1e1e1c"/><path d="M430 0V96" stroke="#000" stroke-width="2"/><path d="M406 96H454L466 118H394Z" fill="#1c2a22"/><path d="M406 96H454L456 102H404Z" fill="#3a5a48"/>'
+    b += '<rect y="350" width="800" height="150" fill="#1e1e1c"/><g class="a-lampara" style="transform-origin:430px 0px"><path d="M430 0V96" stroke="#000" stroke-width="2"/><path d="M406 96H454L466 118H394Z" fill="#1c2a22"/><path d="M406 96H454L456 102H404Z" fill="#3a5a48"/></g>'
     for x in range(0, 900, 60): b += f'<path d="M{x} 350l-60 150" stroke="#2e2e2a" stroke-width="2"/>'
     # doctor
     if doctor: b += fig(SALAZAR_D, 430, 545, 1.18, cls='docG')
@@ -1197,7 +1200,7 @@ def conservera():
     b += '<g class="a-humo"><g filter="url(#b5)" opacity=".5"><ellipse cx="700" cy="220" rx="60" ry="40" fill="#e8e6e0"/><ellipse cx="660" cy="170" rx="40" ry="30" fill="#e8e6e0"/></g></g>'
     b += '<rect x="650" y="230" width="110" height="110" fill="#2a2a2a"/><rect x="664" y="300" width="80" height="26" fill="#ff8a30" opacity=".6"/>'
     b += '<path d="M0 52H800M0 60H800" stroke="#141412" stroke-width="5"/><path d="M600 60V230" stroke="#141412" stroke-width="8"/>'
-    b += ''.join(f'<path d="M{x} 60V134" stroke="#000" stroke-width="2"/><path d="M{x-22} 134H{x+22}L{x+30} 152H{x-30}Z" fill="#1a1c1a"/><ellipse cx="{x}" cy="154" rx="14" ry="5" fill="#ffd98a"/>' for x in (270,400))
+    b += ''.join(f'<g class="a-lampara" style="transform-origin:{x}px 60px;animation-delay:-{x%3}s"><path d="M{x} 60V134" stroke="#000" stroke-width="2"/><path d="M{x-22} 134H{x+22}L{x+30} 152H{x-30}Z" fill="#1a1c1a"/><ellipse cx="{x}" cy="154" rx="14" ry="5" fill="#ffd98a"/></g>' for x in (270,400))
     # mesa larga de enlatar
     b += '<rect y="330" width="800" height="170" fill="#262622"/>'
     b += '<rect x="120" y="360" width="460" height="16" fill="#7a6a52"/><rect x="130" y="376" width="12" height="100" fill="#5a4a36"/><rect x="560" y="376" width="12" height="100" fill="#5a4a36"/>'
@@ -1253,6 +1256,7 @@ def maquina():
     b += '<rect x="214" y="84" width="232" height="232" fill="none" stroke="#4a4e52" stroke-width="2" stroke-dasharray="6 6"/>'
     for x, y in ((214, 84), (446, 84), (214, 316), (446, 316)): b += f'<circle cx="{x}" cy="{y}" r="6" fill="#141414"/><circle cx="{x}" cy="{y}" r="9" fill="none" stroke="#c9a24a" stroke-width="1.2" opacity=".6"/>'
     b += '<rect x="500" y="110" width="100" height="160" fill="#2e3236"/><circle cx="550" cy="150" r="16" fill="#8a2a20"/><text x="550" y="200" text-anchor="middle" font-size="9" fill="#c9c4b8" font-family="Georgia">PARADA</text>'
+    b += '<g class="a-gota"><path d="M330 300q3 7 0 10q-3 -3 0 -10z" fill="#2a2416"/></g>'
     b += '<rect x="160" y="390" width="480" height="110" fill="#121210"/>'
     # la orden, debajo de la máquina (solo con la linterna)
     b += '<g class="ol"><rect x="450" y="430" width="70" height="40" fill="#e8dcc0" transform="rotate(-6 485 450)"/><path d="M458 440h50M458 448h40M458 456h46" stroke="#3a2a1a" stroke-width="1" transform="rotate(-6 485 450)"/></g>'
@@ -1361,7 +1365,7 @@ def camerino():
     b += '<path d="M640 100q20 40 0 160h40q-20-120 0-160z" fill="#b8a040" opacity=".8"/><path d="M730 110q-30 60 10 170" stroke="#f0e8e0" stroke-width="14" fill="none" opacity=".7"/>'
     # espejo con bombillas
     b += '<rect x="250" y="40" width="240" height="190" rx="10" fill="#1a1012" stroke="#c9a24a" stroke-width="6"/><rect x="262" y="52" width="216" height="166" fill="#5a4a52" opacity=".6"/><path d="M280 60l60 150" stroke="#fff" stroke-width="10" opacity=".08"/>'
-    for k in range(7): b += f'<circle cx="{262+k*36}" cy="34" r="7" fill="#ffe6a8"/>'
+    for k in range(7): b += f'<circle cx="{262+k*36}" cy="34" r="7" fill="#ffe6a8"' + (f' class="a-parpadeo" style="animation-delay:-{k*.7}s"' if k in (1,4,6) else '') + '/>'
     for k in range(5): b += f'<circle cx="244" cy="{62+k*38}" r="7" fill="#ffe6a8"/><circle cx="496" cy="{62+k*38}" r="7" fill="#ffe6a8"/>'
     b += '<g class="a-brillo"><circle cx="370" cy="140" r="200" fill="url(#warm)" opacity=".55"/></g>'
     # la foto metida en el marco del espejo
