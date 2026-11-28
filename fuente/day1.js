@@ -85,7 +85,7 @@ DAYS[1]=[
   {id:'felpudo',tool:'mano',x:455,y:468,r:60,when:()=>!found('papel'),once:false,act:async()=>{await bubble('Está demasiado oscuro para ver qué he pisado.',2200)}},
  ],
  laika:()=>({x:430,t:'Laika olfatea el felpudo y estornuda.'}),
- enter:async()=>{nar('Aitor ya va por la escalera. Yo me paro. Juraría que he pisado algo…<br><br><i>Está muy oscuro. Usa la linterna.</i>');setTool('linterna',1);
+ enter:async()=>{nar('Aitor ya va por la escalera. Yo me paro. Juraría que he pisado algo…<br><br><i>Está muy oscuro. Usa la linterna.</i>');
    if(found('papel'))nar('Hay un papel debajo del felpudo.<br><br><i>Tócalo con la mano para cogerlo.</i>')}},
 
 // ===== Escena 3b · La nota =====
