@@ -13,6 +13,19 @@ def face(vb, body, bg='#2a2520'):
     x, y, w, h = vb
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="{x} {y} {w} {h}">{defs()}<rect x="{x}" y="{y}" width="{w}" height="{h}" fill="{bg}"/><circle cx="{x+w*.3}" cy="{y+h*.3}" r="{w*.7}" fill="url(#warm)" opacity=".5"/>{body}</svg>'
 
+
+# ---- tono general: un poco menos de saturación y un poco más de contraste (se aplica a los colores al generar) ----
+import re as _re, colorsys as _cs
+SAT, CON = .72, 1.08
+def _hex(m):
+    h=m.group(1)
+    if len(h)==3: h=''.join(c*2 for c in h)
+    r,g,bb=(int(h[i:i+2],16)/255 for i in (0,2,4))
+    hh,l,s=_cs.rgb_to_hls(r,g,bb); r,g,bb=_cs.hls_to_rgb(hh,l,s*SAT)
+    f=lambda c:max(0,min(1,(c-.5)*CON+.5))
+    return '#%02x%02x%02x'%tuple(round(f(c)*255) for c in (r,g,bb))
+def tono(t): return _re.sub(r'#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})(?![0-9a-fA-F])', _hex, t)
+
 faces = {
   'FACE_AITOR': face((150, 106, 110, 110), AITOR),
   'FACE_CANDELA': face((-34, -266, 68, 68), CANDELA),
@@ -32,10 +45,10 @@ faces = {
   'FACE_PORTERO': face((-36, -246, 72, 72), scenes.PORTERO),
   'FACE_EST': face((-32, -234, 64, 64), scenes.ESTIBADOR.replace('COL2','#34404a').replace('COL','#3a4652')),
 }
-consts = ''.join(f'const {k}={json.dumps(v)};\n' for k, v in faces.items())
+consts = ''.join(f'const {k}={json.dumps(tono(v))};\n' for k, v in faces.items())
 
 out = eng.replace('{{LAIKA}}', laika).replace('{{EKI}}', eki)
-out = out.replace('{{SCENES}}', json.dumps(SVG, ensure_ascii=False))
+out = out.replace('{{SCENES}}', json.dumps({k: tono(v) for k, v in SVG.items()}, ensure_ascii=False))
 out = out.replace('{{DAY1}}', consts + day1)
 open(os.path.join(D, '..', 'prueba', 'altamar.html'), 'w').write(out)
 print(len(out))
