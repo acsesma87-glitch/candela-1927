@@ -903,15 +903,16 @@ def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
             b += fig(CLARA, 735, 488, 1.12)
             b += '<rect x="764" y="380" width="5" height="16" fill="#efe6d0"/><path class="a-llama" d="M766 372q4 5 0 8q-4-3 0-8z" fill="#ffd27a"/><g class="a-brillo"><circle cx="766" cy="378" r="90" fill="url(#warm)" opacity=".8"/></g>'
         else:
-            b += '<rect class="luzI" x="740" y="100" width="60" height="390" fill="#c9b48e" opacity=".22"/>'
-            b += fig(INIGO, 752, 488, 1.12, cls='borracho')
-            b += '<path d="M0 0h70q-20 140 0 500H0z" fill="#3a0e12"/><path d="M60 0q-16 140 4 500" stroke="#2a080c" stroke-width="6" fill="none"/>'
+            # Clara y Candela, escondidas tras la cortina de la derecha; Íñigo entra por la puerta de la izquierda
+            b += '<rect class="luzI" x="0" y="100" width="60" height="390" fill="#c9b48e" opacity=".22"/>'
+            b += fig(INIGO, 120, 488, 1.12, cls='borracho')
+            b += '<path d="M800 0h-70q20 140 0 500H800z" fill="#3a0e12"/><path d="M740 0q16 140 -4 500" stroke="#2a080c" stroke-width="6" fill="none"/>'
         b += '<rect width="800" height="500" fill="#05070c" opacity=".45"/>'
     if leonor:
         b += '<rect class="luzL" x="740" y="100" width="60" height="390" fill="#c9b48e" opacity=".25"/>'
         b += fig(LEONOR, 760, 488, 1.15, cls='leoD')
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, (.4 if noche else .55), [(497,296,210,190,1),(390,130,150,160,.5)]+([(766,390,110,150,1)] if noche else []), [(497,296,150,'warm',.45,0)], tono=.1)
+    b = conluz(b, (.4 if noche else .55), [(497,296,210,190,1),(390,130,150,160,.5)]+([(766,390,110,150,1)] if noche and not inigo else [])+([(110,360,130,180,1)] if inigo else []), [(497,296,150,'warm',.45,0)], tono=.1)
     return wrap(b)
 SVG['despacho'] = despacho(); SVG['despachoL'] = despacho(True)
 SVG['despachoN'] = despacho(noche=True); SVG['despachoI'] = despacho(noche=True, inigo=True); SVG['despachoNA'] = despacho(noche=True, abrigo=True)

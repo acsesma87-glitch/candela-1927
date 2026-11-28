@@ -14,6 +14,7 @@ async function manija(){const f=d6();if(f.abierta)return;const c=f.cifras;AU.sfx
 async function susto(){const f=d6();f.susto=1;save();await sleep(400);AU.sfx('toc');await shake();
   await bubble('¡La puerta de la calle! Clara apaga la vela de un soplo y me empuja detrás de la cortina.',4400);
   swapSvg(SVG.despachoI);anima('.luzI',[{opacity:0},{opacity:.22}],{duration:700});
+  await anima('.borracho',[{transform:'translateX(-240px)',opacity:0},{transform:'translateX(-120px)',opacity:1,offset:.4},{transform:'none',opacity:1}],{duration:1500,easing:'ease-out'});
   if(ANIM2)anima('.borracho',[{transform:'translateX(0) rotate(0)'},{transform:'translateX(-6px) rotate(-2deg)'},{transform:'translateX(3px) rotate(1.5deg)'},{transform:'translateX(0) rotate(0)'}],{duration:1600,iterations:Infinity,fill:'none'});
   await talk('Íñigo Arrieta','(Arrastrando las palabras.) ¿Clara? ¿Estás despierta? … Nadie. Como siempre en esta casa.');
   await talk('Íñigo Arrieta','(Se sirve una copa del mueble de su padre.) A tu salud, viejo. Mañana el notario lee el papel y todo esto es mío. Todo.');
