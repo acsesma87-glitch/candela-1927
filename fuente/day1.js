@@ -194,7 +194,7 @@ async function ekiToCandela(){const f=D(1).flags;
   f.ekiTut=1;save();ekiLog('Candela','le cae bien. Muy bien.');
   nar('Eki ya me ha adoptado. Ahora, a ver qué tiene Aitor encima de la mesa…<br><br><i>Hay cosas que solo se ven con la lupa o con la linterna.</i>')}
 const faroN=()=>['informe','ficha','bajos','huellas','verja','ampolla'].filter(i=>S.pistas.find(p=>p.id===i)).length;
-async function faroCheck(){const f=D(1).flags;if(f.leonor||faroN()<3)return;f.leonor=1;save();await sleep(500);await shake();
+async function faroCheck(){const f=D(1).flags;if(f.leonor||faroN()<3||!S.pistas.find(p=>p.id==='huellas'))return;f.leonor=1;save();await sleep(500);await shake();
   swapSvg(SVG.faroL);llegaLeonor();nar('Un motor. Un coche negro se para junto al camino del faro. Baja una mujer de luto, con velo y abrigo de pieles: Doña Leonor, la viuda.<br><br><i>Cuando tengas suficiente, habla con ella.</i>')}
 function llegaLeonor(){anima('.cocheL',[{transform:'translateX(-160px)'},{transform:'none'}],{duration:1800,easing:'cubic-bezier(.2,.7,.3,1)'});
   anima('.farosL',[{opacity:0},{opacity:1,offset:.3},{opacity:1}],{duration:2600});
