@@ -1493,8 +1493,11 @@ def casino():
     # en el espejo de la derecha apenas se adivina el mostrador de la caja con el libro abierto
     b += '<g transform="translate(686 196) scale(-1 1)" opacity=".45"><rect x="-34" y="-6" width="68" height="30" fill="#1a1210"/><path d="M-30 -6 v-12 M30 -6 v-12" stroke="#6a5a2a" stroke-width="1.4"/><rect x="-11" y="-2" width="22" height="14" fill="#cfc4a8" opacity=".55" transform="rotate(-6)"/><g stroke="#3a2a1a" stroke-width=".5" opacity=".7"><path d="M-8 2h16M-8 5h12M-8 8h14" transform="rotate(-6)"/></g></g>'
     # ventanilla de la caja
-    b += '<rect x="330" y="100" width="170" height="140" fill="#24140c"/><rect x="348" y="120" width="134" height="80" fill="#3a2414"/>' + ''.join(f'<path d="M{x} 120V200" stroke="#b8963e" stroke-width="2"/>' for x in range(356,482,13)) + '<text x="415" y="114" text-anchor="middle" font-size="10" fill="#b8963e" font-family="Georgia" letter-spacing="3">CAJA</text><rect x="326" y="236" width="178" height="8" fill="#3a2414"/>'
-    b += '<rect x="404" y="226" width="26" height="10" fill="#cfc4a8" opacity=".7" transform="rotate(4 417 231)"/>'
+    b += '<rect x="330" y="100" width="170" height="140" fill="#24140c"/><rect x="348" y="120" width="134" height="80" fill="#3a2414"/>'
+    # el cajero, detrás de la rejilla: visera verde y manguitos
+    b += '<path d="M386 200 Q388 172 415 168 Q442 172 444 200Z" fill="#1a1a1e"/><path d="M408 172 L415 186 L422 172Z" fill="#d8d4cc"/><rect x="410" y="158" width="10" height="10" fill="#b38d77"/><circle cx="415" cy="150" r="11" fill="#c8a089"/><path d="M415 139 A11 11 0 0 1 415 161Z" fill="#000" opacity=".35"/><circle cx="411" cy="151" r="1.2" fill="#111"/><circle cx="419" cy="151" r="1.2" fill="#111"/><path d="M411 156h8" stroke="#3a2a1a" stroke-width="1.4"/><path d="M402 146 Q415 136 428 146 L430 150 Q415 144 400 150Z" fill="#2a6a3a" opacity=".9"/><path d="M404 140 Q415 134 426 140" stroke="#111" stroke-width="3" fill="none"/>'
+    b += ''.join(f'<path d="M{x} 120V200" stroke="#b8963e" stroke-width="2"/>' for x in range(356,482,13)) + '<text x="415" y="114" text-anchor="middle" font-size="10" fill="#b8963e" font-family="Georgia" letter-spacing="3">CAJA</text><rect x="326" y="236" width="178" height="8" fill="#3a2414"/>'
+    b += '<path d="M398 236 L415 226 L432 236Z" fill="#1e2a3a"/><path d="M400 235 L415 227 L415 233Z" fill="#d8ccb0"/><path d="M430 235 L415 227 L415 233Z" fill="#cfc4a8"/>'
     # mesa de cartas, con dos jugadores sentados de perfil, uno frente al otro
     b += fig(PJ.sentado('#20222a',True,False,True)(1), 80, 470, .95, who='Un jugador')
     b += fig(PJ.sentado('#2e2018',True,True,True)(-1), 260, 470, .95, True, who='Un jugador')

@@ -47,7 +47,7 @@ DAYS[9]=[
   {id:'caja9',tool:'mano',x:415,y:170,r:60,once:false,act:async()=>{const f=d9();
     if(!f.caja){f.caja=1;save();await talk('El cajero','(Tras la rejilla.) ¿Desea fichas, señorita?');
       await talk('Candela','Quisiera ver las cuentas de Íñigo Arrieta.');
-      await talk('El cajero','(Cierra el libro a medias, sin prisa.) Los libros del Casino no se enseñan, señorita. Ni a la policía, si viene sin papeles.');endTalk();
+      await talk('El cajero','(Aparta el libro de la ventanilla, sin cerrarlo.) Los libros del Casino no se enseñan, señorita. Ni a la policía, si viene sin papeles.');endTalk();
       nar('El cajero deja el libro de deudas abierto sobre el mostrador, de espaldas a mí. Detrás de la rejilla. Imposible acercarse.');return}
     await bubble('El cajero me vigila. El libro sigue abierto sobre el mostrador, de espaldas a mí.',3600)}},
   {id:'espejoVer',tool:'lupa',x:686,y:196,w:80,h:50,act:async()=>{await bubble('En el espejo se refleja el mostrador de la caja… y el libro abierto. Al revés, pero se ve.',4200);goScene(2)}},
@@ -64,8 +64,8 @@ DAYS[9]=[
  spots:[
   {id:'deudasLeer',tool:'lupa',x:400,y:250,w:380,h:300,act:async()=>{d9().espejo=1;save();await bubble('Todo al revés… tendré que leerlo como en un espejo.',3200)}},
  ],
- enter:async()=>{nar('El espejo dorado, frente a la caja. En el reflejo, el libro de deudas abierto sobre el mostrador. Las letras, del revés.');
-   narBtn('Dejar de mirar',()=>{const f=d9();if(f.espejo&&!f.cuenta){goScene(1);return}goScene(1)})}},
+ enter:async()=>{d9().espejo=1;save();nar('El espejo dorado, frente a la caja. En el reflejo, el libro de deudas abierto sobre el mostrador. Las letras, del revés.');
+   narBtn('Dejar de mirar',()=>goScene(1))}},
 
 // ===== El Ancla: Paco vende un dato =====
 {svg:SVG.taberna,dark:.08,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>TABERNA EL ANCLA',
