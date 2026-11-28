@@ -128,18 +128,18 @@ DAYS[1]=[
   {id:'verja',tool:'lupa',x:752,y:398,w:40,h:34,act:async()=>{await bubble('El candado de la verja está abierto. No forzado. Quien lo abrió tenía la llave.',3600);
     await bubble('Miro a Aitor. Aitor mira al suelo.',2600);
     await pista('verja','La verja del faro','El candado está abierto, no forzado. Quien lo abrió tenía la llave. Y la llave la tiene Aitor.');faroCheck()}},
-  {id:'doctor',tool:'mano',x:540,y:390,r:72,once:false,act:async()=>{const f=D(1).flags;
+  {id:'doctor',tool:'mano',x:540,y:390,r:58,once:false,act:async()=>{const f=D(1).flags;
     if(!f.informe){await talk('Dr. Salazar','¡Vaya! Usted debe de ser la famosa argentina. Doctor Ramón Salazar, para servirla. Mi querida detective…');
       await talk('Dr. Salazar','(Saca un papel del maletín y lo lee en voz alta.) «Suicidio. Muerte por la caída, hacia las tres de la madrugada.» Pobre Julián. Estaba hundido.');
       await talk('Dr. Salazar','Si necesita cualquier cosa, el dispensario del puerto está siempre abierto. Para usted, también.');endTalk();
       f.informe=1;save();persona('Dr. Salazar','Médico del dispensario del puerto. Muy amable conmigo: me llama «mi querida detective».');
       await pista('informe','El informe del doctor','«Suicidio. Muerte por la caída, hacia las tres de la madrugada.» Firmado: Dr. R. Salazar.');faroCheck()}
     else{await talk('Dr. Salazar','No se canse, querida. A veces las cosas son exactamente lo que parecen.');endTalk()}}},
-  {id:'comisario',tool:'mano',x:620,y:400,r:70,once:false,act:async()=>{await talk('Comisario Ibarra','Estaba arruinado. Se tiró. Caso cerrado antes del almuerzo.');endTalk();persona('Comisario Ibarra','Quiere cerrar el caso como suicidio «antes del almuerzo».')}},
+  {id:'comisario',tool:'mano',x:622,y:400,r:50,once:false,act:async()=>{await talk('Comisario Ibarra','Estaba arruinado. Se tiró. Caso cerrado antes del almuerzo.');endTalk();persona('Comisario Ibarra','Quiere cerrar el caso como suicidio «antes del almuerzo».')}},
   {id:'guardia',tool:'mano',x:250,y:380,r:90,once:false,act:async()=>{await talk('El guardia','(Apenas habla.) Lo encontraron los pescadores. A las seis y cuarenta.');
     if(!found('algas'))await talk('El guardia','Uno juraba que el muerto aprieta algo en la mano. Pero con tanta alga encima, nadie ha querido tocarle.');
     endTalk();persona('El guardia civil','Los pescadores encontraron el cuerpo a las 6:40. Uno dice que el muerto aprieta algo en la mano.')}},
-  {id:'aitorF',tool:'mano',x:700,y:400,r:70,once:false,act:async()=>{await talk('Aitor','La cerré a las doce y media, Candela. Te lo juro. Está en mi cuaderno.');endTalk()}},
+  {id:'aitorF',tool:'mano',x:702,y:400,r:50,once:false,act:async()=>{await talk('Aitor','La cerré a las doce y media, Candela. Te lo juro. Está en mi cuaderno.');endTalk()}},
   {id:'leonor',tool:'mano',x:150,y:405,r:75,once:false,when:()=>D(1).flags.leonor,act:async()=>{const n=faroN();
     if(!(found('ficha')&&D(1).flags.informe&&n>=4)){nar('Todavía no tengo suficiente para enfrentarme a esa mujer.<br><br><i>Busca más pistas en el faro.</i>');return}
     next()}},

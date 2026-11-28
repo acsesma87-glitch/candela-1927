@@ -298,7 +298,7 @@ def cocina(gente=True, mesa=False):
     # Aitor sentado (detrás de la mesa)
     if gente: b += '<clipPath id="tbl"><rect x="0" y="0" width="800" height="340"/></clipPath>'
     if gente and not mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(380, 478, .8)}</g>'
-    if mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(318, 478, .8)}<g transform="translate(470 420)">{resp(PJ.NF(PJ.candela_sin), "Candela", 470)}</g></g>'
+    if mesa: b += f'<g clip-path="url(#tbl)">{aitor_casa(318, 478, .8)}<g transform="translate(470 445)">{resp(PJ.NF(PJ.candela_sin), "Candela", 470)}</g></g>'
     # mesa
     b += '<rect x="226" y="330" width="300" height="16" fill="#4a2e18"/><rect x="226" y="346" width="300" height="12" fill="#2a1a0e"/>'
     b += '<rect x="240" y="358" width="12" height="118" fill="#2a1a0e"/><rect x="500" y="358" width="12" height="118" fill="#2a1a0e"/>'
@@ -692,9 +692,13 @@ def taberna():
     add='<g id="dianaPared" transform="translate(372 108) scale(.72) translate(-650 -150)"><circle cx="650" cy="150" r="40" fill="#141414"/><circle cx="650" cy="150" r="32" fill="#cfc4a8"/><circle cx="650" cy="150" r="22" fill="#222"/><circle cx="650" cy="150" r="12" fill="#8a1d14"/><circle cx="650" cy="150" r="4" fill="#2a6a3a"/><path d="M640 132l-14-10M664 160l14 6M650 140l2-16" stroke="#c9a24a" stroke-width="2"/></g>'
     add+='<rect x="764" y="96" width="40" height="182" fill="#160d07" stroke="#0c0703" stroke-width="5"/><circle cx="772" cy="196" r="3" fill="#6a5222"/><text x="783" y="112" text-anchor="middle" font-size="5.5" fill="#8a7a5a" font-family="Georgia">PRIVADO</text>'
     t=t.replace('<!-- maqueta de barco -->',add+'<!-- maqueta de barco -->')
-    sangre='<g class="ol"><path d="M20 470l26-30M30 480l10-34" stroke="#5a3a22" stroke-width="5"/><g fill="#5a1410">'+''.join(f'<ellipse cx="{50+i*9}" cy="{462+(i%2)*6}" rx="{3+i%2}" ry="2"/>' for i in range(5))+'</g></g><path d="M0 500V420l110-10v90z" fill="#000" class="ob" opacity=".6"/>'
+    sangre='<g class="ol"><path d="M14 476l30-34M26 486l12-40M10 452h40" stroke="#7a5a36" stroke-width="5"/><g fill="#8a1a12">'+''.join(f'<ellipse cx="{48+i*11}" cy="{462+(i%2)*7}" rx="{4+i%2}" ry="2.6"/>' for i in range(6))+'<ellipse cx="70" cy="476" rx="9" ry="3"/></g></g><path d="M0 500V420l120-10v90z" fill="#000" class="ob" opacity=".6"/>'
     t=t.replace('<!-- marinero A (gorra) -->',sangre+'<!-- marinero A (gorra) -->')
     t=t.replace('opacity=".8" mask="url(#t2dark)"/>','opacity=".8" mask="url(#t2dark)" class="ob"/>')
+    i=t.index('<!-- barriles -->');j=t.index('\n',t.index('\n',i)+1)
+    esc='<g><path d="M0 250 L118 404 L118 418 L0 268Z" fill="#2a170d"/>'+''.join(f'<path d="M{k*14} {250+k*18.3}h16v6h-16z" fill="#3a2214"/>' for k in range(9))+'<path d="M0 268 L118 418 V500 H0Z" fill="#0e0804"/><path d="M60 330 V500" stroke="#1e1009" stroke-width="6"/></g>'
+    t=t[:i]+'<!-- escalera -->'+esc+t[j:]
+    t=t.replace('<ellipse cx="702" cy="150" rx="90" ry="90" fill="url(#t2hole)" opacity=".7"/>','<ellipse cx="702" cy="150" rx="90" ry="90" fill="url(#t2hole)" opacity=".7"/><ellipse cx="782" cy="190" rx="50" ry="110" fill="url(#t2hole)" opacity=".7"/>')
     t=t.replace('<ellipse cx="702" cy="150" rx="90" ry="90" fill="url(#t2hole)" opacity=".7"/>','<ellipse cx="702" cy="150" rx="90" ry="90" fill="url(#t2hole)" opacity=".7"/><ellipse cx="380" cy="120" rx="60" ry="60" fill="url(#t2hole)" opacity=".6"/>')
     return wrap(t)
 SVG['taberna'] = taberna()
@@ -806,7 +810,7 @@ def salon():
     b += '<g fill="#d8d2c4" opacity=".85">' + ''.join(f'<circle cx="{x}" cy="{y}" r="6"/>' for x,y in [(296,286),(306,280),(316,288),(524,286),(534,280),(544,288)]) + '</g>'
     # ataúd y velas
     b += '<path d="M300 300h220l20 30h-260z" fill="#2a1a10"/><path d="M296 290h228v14H296z" fill="#4a2e18"/><path d="M300 290h220l-10-14H310z" fill="#3a2414"/><path d="M410 278v10M402 283h16" stroke="#c9a24a" stroke-width="2"/>'
-    for x in (280, 540):
+    for x in (360, 490):
         b += f'<rect x="{x-3}" y="230" width="6" height="66" fill="#c9a24a"/><rect x="{x-4}" y="212" width="8" height="18" fill="#efe6d0"/><path class="a-llama" d="M{x} 202q5 6 0 10q-5-4 0-10z" fill="#ffd27a"/><g class="a-brillo"><circle cx="{x}" cy="208" r="70" fill="url(#warm)"/></g>'
     # alfombra y suelo
     b += '<rect y="330" width="800" height="170" fill="#2a1a12"/><path d="M120 360h560l40 140H80z" fill="#4a1a1e"/><path d="M140 372h520l34 120H106z" fill="none" stroke="#8a6a2a" stroke-width="2"/>'
@@ -820,7 +824,7 @@ def salon():
     # platito con horquillas en el velador
     b += '<rect x="752" y="380" width="40" height="6" fill="#4a2e18"/><rect x="768" y="386" width="6" height="90" fill="#4a2e18"/><ellipse cx="772" cy="379" rx="14" ry="4" fill="#d8d0c0"/><path d="M764 377l6-2M770 378l6-3M772 376l4 3" stroke="#3a3a3a" stroke-width="1.2"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .6, [(280,240,170,240,1),(540,240,170,240,1),(700,150,100,140,.5)], [(280,215,160,'warm',.5,0),(540,215,160,'warm',.5,0)], humo=.12, tono=.1)
+    b = conluz(b, .6, [(360,240,170,240,1),(490,240,170,240,1),(120,360,110,150,.8),(300,360,110,150,.8),(560,360,110,150,.8),(680,360,110,150,.8),(700,150,100,140,.5)], [(360,215,160,'warm',.5,0),(490,215,160,'warm',.5,0)], humo=.12, tono=.1)
     return wrap(b)
 SVG['salon'] = salon()
 
@@ -878,7 +882,7 @@ def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
         b += '<rect class="luzL" x="740" y="100" width="60" height="390" fill="#c9b48e" opacity=".25"/>'
         b += fig(LEONOR, 760, 488, 1.15, cls='leoD')
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, (.4 if noche else .55), [(497,296,210,190,1),(390,130,150,160,.5)], [(497,296,150,'warm',.45,0)], tono=.1)
+    b = conluz(b, (.4 if noche else .55), [(497,296,210,190,1),(390,130,150,160,.5)]+([(766,390,110,150,1)] if noche else []), [(497,296,150,'warm',.45,0)], tono=.1)
     return wrap(b)
 SVG['despacho'] = despacho(); SVG['despachoL'] = despacho(True)
 SVG['despachoN'] = despacho(noche=True); SVG['despachoI'] = despacho(noche=True, inigo=True); SVG['despachoNA'] = despacho(noche=True, abrigo=True)
@@ -1191,9 +1195,9 @@ def conservera():
     for x in (120, 360, 600): b += f'<rect x="{x}" y="70" width="90" height="120" fill="#8a9a9a" opacity=".6"/><path d="M{x+45} 70v120M{x} 130h90" stroke="#4a4a44" stroke-width="4"/>'
     # vapor de las calderas
     b += '<g class="a-humo"><g filter="url(#b5)" opacity=".5"><ellipse cx="700" cy="220" rx="60" ry="40" fill="#e8e6e0"/><ellipse cx="660" cy="170" rx="40" ry="30" fill="#e8e6e0"/></g></g>'
-    b += '<rect x="650" y="230" width="110" height="110" fill="#2a2a2a"/><rect x="664" y="250" width="80" height="30" fill="#ff8a30" opacity=".6"/>'
+    b += '<rect x="650" y="230" width="110" height="110" fill="#2a2a2a"/><rect x="664" y="300" width="80" height="26" fill="#ff8a30" opacity=".6"/>'
     b += '<path d="M0 52H800M0 60H800" stroke="#141412" stroke-width="5"/><path d="M600 60V230" stroke="#141412" stroke-width="8"/>'
-    b += ''.join(f'<path d="M{x} 60V214" stroke="#000" stroke-width="2"/><path d="M{x-22} 214H{x+22}L{x+30} 232H{x-30}Z" fill="#1a1c1a"/><ellipse cx="{x}" cy="234" rx="14" ry="5" fill="#ffd98a"/>' for x in (230,440))
+    b += ''.join(f'<path d="M{x} 60V134" stroke="#000" stroke-width="2"/><path d="M{x-22} 134H{x+22}L{x+30} 152H{x-30}Z" fill="#1a1c1a"/><ellipse cx="{x}" cy="154" rx="14" ry="5" fill="#ffd98a"/>' for x in (270,400))
     # mesa larga de enlatar
     b += '<rect y="330" width="800" height="170" fill="#262622"/>'
     b += '<rect x="120" y="360" width="460" height="16" fill="#7a6a52"/><rect x="130" y="376" width="12" height="100" fill="#5a4a36"/><rect x="560" y="376" width="12" height="100" fill="#5a4a36"/>'
@@ -1205,9 +1209,9 @@ def conservera():
     b += obrera(470, 470, 1.15, '#3a4436', '#e8e2d4')
     b += fig(REMEDIOS, 640, 482, 1.12, who='Doña Remedios')
     # Aitor en la puerta
-    b += aitor(90, 480, .62)
+    b += aitor(92, 484, .78)
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .5, [(705,265,180,180,1),(165,130,110,110,.7),(405,130,110,110,.7),(645,130,110,110,.7),(230,330,170,180,1),(440,330,170,180,1),(400,420,340,120,.7)], [(704,265,150,'fire',.45,0),(230,236,170,'warm',.45,24),(440,236,170,'warm',.45,24)], humo=.2, tono=.1)
+    b = conluz(b, .5, [(705,312,180,180,1),(100,380,110,160,1),(165,130,110,110,.7),(405,130,110,110,.7),(645,130,110,110,.7),(270,300,190,200,1),(400,300,190,200,1),(400,420,340,120,.7)], [(704,312,150,'fire',.45,0),(270,156,170,'warm',.45,24),(400,156,170,'warm',.45,24)], humo=.2, tono=.1)
     return wrap(b)
 SVG['conservera'] = conservera()
 
@@ -1330,7 +1334,7 @@ def calleFarol():
         b += f'<rect x="{x}" y="{500-h-80}" width="{w}" height="{h}" fill="#1a1418"/>'
         for k in range(2): b += f'<rect x="{x+30+k*90}" y="{500-h-40}" width="44" height="60" fill="#3a1418" opacity=".8"/><rect x="{x+34+k*90}" y="{500-h-36}" width="36" height="52" fill="#a83a2a" opacity=".35"/>'
     # farolas rojas
-    for x in (120, 560):
+    for x in (190, 560):
         b += f'<rect x="{x-3}" y="230" width="6" height="190" fill="#111"/><path d="M{x-12} 222h24l-4 20h-16z" fill="#1e0e0e"/><rect x="{x-7}" y="226" width="14" height="14" fill="#ff5a4a"/>'
         b += f'<g class="a-brillo"><circle cx="{x}" cy="236" r="150" fill="url(#rojo)"/></g>'
     # puerta del Café Royal
@@ -1344,7 +1348,7 @@ def calleFarol():
     b += fig(PORTERO, 270, 440, 1.0, who='El portero')
     b += aitor(80, 480, .7)
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .45, [(120,236,170,230,1),(560,236,170,230,1),(355,330,150,170,1)], lluvia=True, tono=.08)
+    b = conluz(b, .45, [(190,236,170,230,1),(80,350,90,150,.8),(495,360,90,120,1),(560,236,170,230,1),(355,330,150,170,1)], lluvia=True, tono=.08)
     return wrap(b)
 SVG['calleFarol'] = calleFarol()
 
@@ -1373,9 +1377,9 @@ def camerino():
     b += '<g class="ol"><path d="M452 396l10-8 6 6-8 6zM470 392l12-4 2 8-10 2zM486 398l8-6 4 6-8 4z" fill="#e8dcc0"/></g>'
     b += '<rect x="420" y="380" width="110" height="100" fill="#000" class="ob" opacity=".55"/>'
     b += '<rect y="430" width="800" height="70" fill="#1e0e10"/>'
-    b += fig(LOLA, 340, 480, 1.45, who='Lola')
+    b += fig(LOLA, 190, 480, 1.45, who='Lola')
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .55, [(370,160,270,240,1)], [(370,140,200,'warm',.35,0)], tono=.1)
+    b = conluz(b, .55, [(370,160,270,240,1),(190,330,120,200,1)], [(370,140,200,'warm',.35,0)], tono=.1)
     return wrap(b)
 SVG['camerino'] = camerino()
 

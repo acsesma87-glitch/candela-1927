@@ -28,33 +28,33 @@ DAYS[4]=[
 // ===== El salón (velatorio) =====
 {svg:SVG.salon,dark:.08,tools:['mano','linterna','lupa'],cartel:'ALTAMAR<br>EL PALACETE',
  spots:[
-  {id:'leonor',tool:'mano',x:420,y:340,r:95,once:false,act:async()=>{const f=d4();
+  {id:'leonor',tool:'mano',x:420,y:340,r:62,once:false,act:async()=>{const f=d4();
     if(!f.leonor1){await talk('Doña Leonor','(Sin mirarte.) El sereno tiene la desvergüenza de presentarse aquí. Y con compañía.');
       await talk('Candela','Mis condolencias, Doña Leonor. ¿Puedo preguntarle dónde estuvo la noche del 30?');
       await talk('Doña Leonor','En mi casa. Dormida. No salí en toda la noche. Y ahora, si me disculpa, tengo un marido que enterrar.');endTalk();
       f.leonor1=1;save();persona('Doña Leonor','Dice que la noche del 30 no salió de casa: «estuve dormida».');return}
     await talk('Doña Leonor','No tengo nada más que decirle, señorita.');endTalk()}},
-  {id:'inigo',tool:'mano',x:680,y:340,r:95,once:false,act:async()=>{const f=d4();
+  {id:'inigo',tool:'mano',x:680,y:340,r:62,once:false,act:async()=>{const f=d4();
     if(!f.inigo1){await talk('Íñigo Arrieta','Así que usted es la famosa argentina. Mi padre habría odiado que alguien tan guapa husmeara en sus cosas.');
       await talk('Candela','Dicen que discutieron en el Casino la noche que murió.');
       await talk('Íñigo Arrieta','(Sonríe y da una calada.) Discutimos, sí. ¿Quién no discutía con él? Luego me fui a casa a medianoche. Pregúntele a quien quiera.');endTalk();
       f.inigo1=1;save();persona('Íñigo Arrieta','Encantador y fumador. Reconoce que discutió con su padre en el Casino; dice que volvió a casa a medianoche.');return}
     await talk('Íñigo Arrieta','¿Otra vez por aquí? Empiezo a pensar que le caigo bien.');endTalk()}},
   {id:'baston',tool:'lupa',x:650,y:420,w:30,h:90,act:async()=>{await bubble('Íñigo lleva un bastón con puño dorado. Muy elegante. Y nuevo: el de los retratos es otro.',4200)}},
-  {id:'clara',tool:'mano',x:120,y:345,r:85,once:false,act:async()=>{const f=d4();
+  {id:'clara',tool:'mano',x:120,y:345,r:62,once:false,act:async()=>{const f=d4();
     if(!f.clara1){await talk('Clara Arrieta','¿Usted es la que hace preguntas? Haga muchas. En esta casa todos mienten.');
       await talk('Candela','¿Usted también?');await talk('Clara Arrieta','(Se ríe sin ganas.) Yo la que más. Pero no de eso.');endTalk();
       f.clara1=1;save();persona('Clara Arrieta','La hija. Lista y rebelde: «En esta casa todos mienten. Yo la que más».');return}
     await talk('Clara Arrieta','Siga preguntando, señorita.');endTalk()}},
   {id:'tinta',tool:'lupa',x:148,y:392,w:40,h:30,act:async()=>{await bubble('Las manos de Clara: tiene los dedos manchados de tinta azul. Como si hubiera estado escribiendo… o imprimiendo.',4600);
     await pista('tintaClara','Tinta en las manos de Clara','Clara Arrieta tiene los dedos manchados de tinta azul.')}},
-  {id:'benigna',tool:'mano',x:300,y:360,r:85,once:false,act:async()=>{const f=d4();
+  {id:'benigna',tool:'mano',x:300,y:360,r:62,once:false,act:async()=>{const f=d4();
     if(!f.ben1){await talk('Benigna','(Te ofrece la bandeja. Te mira fijamente y baja la voz.) Usted es la de… (se calla).');
       await talk('Candela','Traigo una carta de su hermana Maite. Me la dio en el barco, para usted.');
       await talk('Benigna','Aquí no, señorita. Mañana, por la puerta de servicio. A las once.');endTalk();
       f.ben1=1;save();persona('Benigna','El ama de llaves. Me mira raro. Quiere verme mañana a las once por la puerta de servicio.');return}
     await talk('Benigna','Mañana, señorita. Por la puerta de servicio.');endTalk()}},
-  {id:'aitorS',tool:'mano',x:560,y:330,r:90,once:false,act:async()=>{const f=d4();
+  {id:'aitorS',tool:'mano',x:560,y:330,r:62,once:false,act:async()=>{const f=d4();
     if(f.distr){await talk('Aitor','Ahora, Candela. Que no te vean.');endTalk();return}
     if(!f.leonor1){await talk('Aitor','(En voz baja.) No le quites ojo a la viuda. Ni ella a nosotros.');endTalk();return}
     const c=await choose('Candela','(Le hablo a Aitor al oído.)',['«Necesito entrar en el despacho. ¿Me cubres?»','Nada, luego te cuento.']);

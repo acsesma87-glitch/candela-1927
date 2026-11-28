@@ -68,7 +68,7 @@ DAYS[8]=[
   {who:'Lola',x:340,y:330,act:async()=>{await bubble('Eki se acerca a Lola, olfatea sus zapatos de tacón y le apoya la cabeza en la rodilla. Lola, sorprendida, le rasca detrás de las orejas.',4600);ekiLog('Lola','le cae bien: se deja rascar detrás de las orejas.')}},
  ],
  spots:[
-  {id:'lola',tool:'mano',x:340,y:330,r:80,once:false,act:async()=>{const f=d8();
+  {id:'lola',tool:'mano',x:190,y:330,r:75,once:false,act:async()=>{const f=d8();
     if(!f.lola1){await talk('Lola','(Sin dejar de empolvarse frente al espejo.) ¿Y tú quién eres? ¿La nueva? No, tú no eres de aquí. Ese acento…');
       await talk('Candela','Vengo por Don Julián Arrieta.');
       await talk('Lola','(Se le para la mano un segundo.) ¿Julián? Hace semanas que no venía. Esa noche ni lo vi.');
