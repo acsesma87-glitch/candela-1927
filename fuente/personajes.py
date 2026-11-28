@@ -13,17 +13,19 @@ def legs(c='#15100c',a=-7,b=7,h=44):
 def shadow(): return '<ellipse rx="34" ry="6" fill="#000" opacity=".6"/>'
 def eye(x,y): return f'<circle cx="{x}" cy="{y}" r="1.3" fill="#111"/>'
 
-def candela(L):
-    s=shadow()+legs('#2a2420',-6,6,40)
-    s+=P('M-24 -34 L-20 -104 Q0 -116 20 -104 L24 -34Z','#6e6248',L)          # gabardina
-    s+='<path d="M-21 -66h42" stroke="#4e4434" stroke-width="4"/><path d="M0 -110 V-34" stroke="#4e4434" stroke-width="1.5"/><path d="M-10 -106 L0 -92 L10 -106" stroke="#4e4434" stroke-width="3" fill="none"/>'
-    s+=S('M16 -100 Q30 -76 30 -54','#5e5440',10,L)+f'<circle cx="30" cy="-52" r="5" fill="{SK}"/>'
-    s+='<rect x="20" y="-48" width="26" height="20" rx="2" fill="#4a2e1a"/><path d="M26 -48v-4h14v4" stroke="#2a1a0e" stroke-width="2" fill="none"/>'
-    s+=S('M-16 -100 Q-26 -76 -24 -56','#5e5440',10,L)+f'<circle cx="-24" cy="-54" r="5" fill="{SK}"/>'
-    s+='<path d="M-15 -134 Q-18 -108 -16 -92 Q-10 -90 -8 -96 L-8 -128Z M15 -134 Q18 -108 16 -92 Q10 -90 8 -96 L8 -128Z" fill="#2e1e14"/>'
-    s+=head(0,-128,13,L)+eye(-4,-129)+eye(5,-129)+'<path d="M-3 -120 Q1 -118 4 -120" stroke="#8a4a3a" stroke-width="1.4" fill="none"/>'
-    s+='<path d="M-13 -134 Q-12 -144 0 -144 Q12 -144 13 -134 Q2 -139 -13 -134Z" fill="#2e1e14"/>'
-    s+='<ellipse cx="0" cy="-141" rx="21" ry="5" fill="#2a2420"/><path d="M-12 -142 Q-12 -156 0 -156 Q12 -156 12 -142Z" fill="#3a322b"/><path d="M-12 -146h24" stroke="#7a2018" stroke-width="3"/>'
+def candela(L):  # más estirada y fina: cuerpo más estrecho y largo, cabeza 10 más arriba
+    s=shadow()+legs('#2a2420',-5,5,48)
+    s+=P('M-19 -42 L-16 -114 Q0 -124 16 -114 L19 -42Z','#6e6248',L)
+    s+='<path d="M-17 -76h34" stroke="#4e4434" stroke-width="3.5"/><path d="M0 -120 V-42" stroke="#4e4434" stroke-width="1.5"/><path d="M-8 -116 L0 -102 L8 -116" stroke="#4e4434" stroke-width="3" fill="none"/>'
+    s+=S('M13 -110 Q23 -86 24 -62','#5e5440',8,L)+f'<circle cx="24" cy="-60" r="4.5" fill="{SK}"/>'
+    s+='<rect x="15" y="-56" width="24" height="19" rx="2" fill="#4a2e1a"/><path d="M21 -56v-4h12v4" stroke="#2a1a0e" stroke-width="2" fill="none"/>'
+    s+=S('M-13 -110 Q-21 -86 -19 -64','#5e5440',8,L)+f'<circle cx="-19" cy="-62" r="4.5" fill="{SK}"/>'
+    s+='<g transform="translate(0 -10)">'
+    s+='<path d="M-14 -134 Q-17 -108 -15 -92 Q-10 -90 -8 -96 L-8 -128Z M14 -134 Q17 -108 15 -92 Q10 -90 8 -96 L8 -128Z" fill="#2e1e14"/>'
+    s+=head(0,-128,12,L)+eye(-4,-129)+eye(4,-129)+'<path d="M-3 -121 Q1 -119 4 -121" stroke="#8a4a3a" stroke-width="1.4" fill="none"/>'
+    s+='<path d="M-12 -134 Q-11 -143 0 -143 Q11 -143 12 -134 Q2 -139 -12 -134Z" fill="#2e1e14"/>'
+    s+='<ellipse cx="0" cy="-140" rx="19" ry="4.5" fill="#2a2420"/><path d="M-11 -141 Q-11 -155 0 -155 Q11 -155 11 -141Z" fill="#3a322b"/><path d="M-11 -145h22" stroke="#7a2018" stroke-width="3"/>'
+    s+='</g>'
     return s
 def aitor(L):
     s=shadow()+legs('#121418',-8,8,40)
@@ -191,6 +193,6 @@ def portero(L):
 def mateo_cap(L): return mateo(L)
 def candela_sin(L):  # sin sombrero ni maletín (en casa)
     s=candela(L)
-    s=s[:s.index('<ellipse cx="0" cy="-141"')]
-    i=s.index('<rect x="20" y="-48"');j=s.index('fill="none"/>',i)+13
+    s=s[:s.index('<ellipse cx="0" cy="-140"')]+'</g>'
+    i=s.index('<rect x="15" y="-56"');j=s.index('fill="none"/>',i)+13
     return s[:i]+s[j:]

@@ -15,7 +15,7 @@ def face(vb, body, bg='#2a2520'):
 
 faces = {
   'FACE_AITOR': face((150, 106, 110, 110), AITOR),
-  'FACE_CANDELA': face((-36, -256, 72, 72), CANDELA),
+  'FACE_CANDELA': face((-34, -266, 68, 68), CANDELA),
   'FACE_TXOMIN': face((-40, -50, 80, 80), scenes.TXOMIN),
   'FACE_IBARRA': face((-38, -266, 76, 76), scenes.IBARRA),
   'FACE_SALAZAR': face((-44, -252, 68, 68), scenes.SALAZAR),
