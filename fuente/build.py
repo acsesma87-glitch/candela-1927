@@ -16,7 +16,7 @@ def face(vb, body, bg='#2a2520'):
 
 # ---- tono general: un poco menos de saturación y un poco más de contraste (se aplica a los colores al generar) ----
 import re as _re, colorsys as _cs
-SAT, CON = .72, 1.08
+SAT, CON = .648, 1.242
 def _hex(m):
     h=m.group(1)
     if len(h)==3: h=''.join(c*2 for c in h)
