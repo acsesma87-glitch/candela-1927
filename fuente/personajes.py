@@ -197,3 +197,17 @@ def candela_sin(L):  # sin sombrero ni maletín (en casa)
     s=s[:s.index('<ellipse cx="0" cy="-140"')]+'</g>'
     i=s.index('<rect x="15" y="-56"');j=s.index('fill="none"/>',i)+13
     return s[:i]+s[j:]
+def benigna_bandeja(L):  # con la bandeja de copas en las manos
+    s=benigna_base(L)
+    s+=S('M-16 -98 Q-24 -80 -16 -66','#1e1e24',9,L)+S('M16 -98 Q24 -80 16 -66','#1e1e24',9,L)
+    s+=f'<circle cx="-16" cy="-65" r="5" fill="{SK}"/><circle cx="16" cy="-65" r="5" fill="{SK}"/>'
+    s+='<ellipse cx="0" cy="-70" rx="27" ry="4.5" fill="#9a9a98"/><ellipse cx="0" cy="-71" rx="23" ry="3" fill="#c8c8c4"/>'
+    s+='<path d="M-12 -72v-9h6v9M4 -72v-11h6v11" fill="#e8e2d4" opacity=".85"/><path d="M-11 -80h4M5 -82h4" stroke="#fff" stroke-width=".8" opacity=".6"/>'
+    return s
+def benigna_sorpresa(L):  # se le ha caído la bandeja: ojos como platos y boca abierta
+    s=benigna_base(L)
+    i=s.index('<circle cx="-4" cy="-127"');j=s.index('<path d="M-13 -128')
+    s=s[:i]+'<circle cx="-4.5" cy="-127.5" r="2.6" fill="#f4efe6"/><circle cx="4.5" cy="-127.5" r="2.6" fill="#f4efe6"/><circle cx="-4.5" cy="-127.5" r="1.3" fill="#1a1410"/><circle cx="4.5" cy="-127.5" r="1.3" fill="#1a1410"/><path d="M-8 -132q3 -2 6 -1M2 -133q3 -1 6 1" stroke="#5e5a55" stroke-width="1.2" fill="none"/><ellipse cx="0" cy="-119" rx="2.2" ry="3" fill="#4a2620"/>'+s[j:]
+    s+=S('M-16 -98 Q-28 -110 -24 -122','#1e1e24',9,L)+S('M16 -98 Q28 -110 24 -122','#1e1e24',9,L)
+    s+=f'<circle cx="-24" cy="-124" r="5" fill="{SK}"/><circle cx="24" cy="-124" r="5" fill="{SK}"/>'
+    return s

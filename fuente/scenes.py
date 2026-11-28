@@ -811,7 +811,7 @@ BENIGNA = """<g>
 </g>"""
 BENIGNA = PJ.NF(PJ.benigna)
 
-def salon():
+def salon(caida=0):  # 0: Benigna con la bandeja · 1: bandeja en el suelo · 2: la bandeja cayendo
     b = '<rect width="800" height="500" fill="#2a1418"/>'
     b += '<rect width="800" height="330" fill="#2a1218"/>'
     for k in range(0, 800, 60): b += f'<path d="M{k} 0V330" stroke="#30161c" stroke-width="18" opacity=".5"/>'
@@ -837,7 +837,17 @@ def salon():
     b += fig(LEONOR, 420, 470, 1.05)
     b += fig(INIGO, 680, 470, 1.0)
     b += fig(CLARA, 120, 470, .98)
-    b += fig(BENIGNA, 300, 480, .95)
+    if not caida: b += fig(PJ.NF(PJ.benigna_bandeja), 300, 480, .95, who='Benigna')
+    else:
+        b += fig(PJ.NF(PJ.benigna_sorpresa), 300, 480, .95, who='Benigna')
+        MANCHA='<ellipse cx="44" cy="0" rx="24" ry="5" fill="#6e1f2e" opacity=".6"/>'
+        BANDEJA='<ellipse cx="36" cy="-3" rx="26" ry="4" fill="#b8b8b8" transform="rotate(-5 36 -3)"/><ellipse cx="36" cy="-4" rx="22" ry="2.6" fill="#d4d4d4" transform="rotate(-5 36 -4)"/><rect x="50" y="-10" width="11" height="5" rx="1.5" fill="#e8e2d4" transform="rotate(-18 55 -7)"/><rect x="12" y="-8" width="10" height="5" rx="1.5" fill="#e8e2d4" transform="rotate(14 17 -5)"/><path d="M66 -3l4-3l1 4zM6 -2l-3-4l5 1zM60 1l5-1l-2 3z" fill="#f2efe8"/>'
+        if caida == 1: b += f'<g transform="translate(300 480) scale(.95)">{MANCHA}{BANDEJA}</g>'
+        else:
+            b += ('<style>.bjCae{animation:bjCae .7s cubic-bezier(.5,0,.75,0) both}.bjCae>g{animation:bjRebota .35s .7s ease-out both}.bjMan{animation:bjMan .6s .75s ease-out both}'
+                  '@keyframes bjCae{0%{transform:translate(-36px,-112px)}100%{transform:none}}@keyframes bjRebota{0%{transform:none}40%{transform:translateY(-6px)}100%{transform:none}}@keyframes bjMan{from{opacity:0}to{opacity:1}}</style>')
+            b += f'<g transform="translate(300 480) scale(.95)"><g class="bjMan">{MANCHA}</g><g class="bjCae"><g>{BANDEJA}</g></g></g>'
+
     b += f'<g transform="translate({560-205*.78} {478-462*.78}) scale(.78)">{resp(tAit(AITOR_CASA), "Aitor", 560)}</g>'
     b += '<path d="M548 380q-8 6-4 14l10-2z" fill="#1d2026"/>'
     # platito con horquillas en el velador
@@ -845,7 +855,7 @@ def salon():
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     b = conluz(b, .6, [(360,240,170,240,1),(490,240,170,240,1),(120,360,110,150,.8),(300,360,110,150,.8),(560,360,110,150,.8),(680,360,110,150,.8),(700,150,100,140,.5)], [(360,215,160,'warm',.5,0),(490,215,160,'warm',.5,0)], humo=.12, tono=.1)
     return wrap(b)
-SVG['salon'] = salon()
+SVG['salon'] = salon(); SVG['salonC'] = salon(1); SVG['salonCa'] = salon(2)
 
 def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
     b = '<rect width="800" height="500" fill="#20140c"/>'
