@@ -577,6 +577,7 @@ def muelle():
     b += '<rect width="800" height="500" fill="url(#fogsky)"/>'
     # grúas al fondo
     b += '<g fill="none" stroke="#3a3c3e" stroke-width="6"><path d="M90 300V60l140 20M90 120l120 -40"/><path d="M620 300V40l-150 30M620 110l-130-30"/></g><path d="M226 80v80" stroke="#3a3c3e" stroke-width="2"/><path d="M474 70v70" stroke="#3a3c3e" stroke-width="2"/>'
+    b += '<path d="M0 236 L110 196 L170 212 L260 176 L340 204 L460 190 L560 172 L680 198 L800 186 V252 H0Z" fill="#141a1e" opacity=".9"/>'
     # agua
     b += '<rect y="250" width="800" height="90" fill="#1a262c"/>'
     b += '<g class="a-agua">'
@@ -597,6 +598,9 @@ def muelle():
     b += '<rect y="320" width="800" height="180" fill="#2a2724"/><rect y="330" width="800" height="170" fill="url(#cob)" opacity=".35"/><path d="M0 320H800" stroke="#2a2622" stroke-width="5"/>'
     for k in range(0, 800, 60): b += f'<path d="M{k} 320v180" stroke="#4a463f" stroke-width="2"/>'
     b += '<rect x="250" y="310" width="16" height="18" rx="4" fill="#2a2622"/><rect x="540" y="310" width="16" height="18" rx="4" fill="#2a2622"/>'
+    b += ''.join(f'<path d="M{x} 320 L{x*1.4-160} 500" stroke="#1a1816" stroke-width="2"/>' for x in range(0,800,70))
+    b += '<path d="M258 318 q30 30 80 26 M548 318 q-20 40 -70 30" stroke="#4a3a24" stroke-width="3" fill="none"/>'
+    b += '<ellipse cx="330" cy="470" rx="70" ry="6" fill="#3a4a52" opacity=".5"/><ellipse cx="690" cy="440" rx="50" ry="5" fill="#3a4a52" opacity=".5"/><rect width="800" height="500" fill="url(#rain)" opacity=".5"/>'
     # cajas de conservas
     b += '<g><rect x="40" y="350" width="70" height="44" fill="#7a5a34"/><rect x="50" y="320" width="56" height="32" fill="#8a6a3e"/><text x="75" y="378" text-anchor="middle" font-size="7" fill="#2a1d10" font-family="Georgia">ARRIETA</text></g>'
     # caseta con la pizarra
@@ -610,7 +614,7 @@ def muelle():
         b += est(x, 440, s, *cols[i], flip=i % 2 == 1)
     # Mateo en primer plano
     b += fig(MATEO, 592, 470, 1.05)
-    b += '<rect width="800" height="500" filter="url(#fog)" opacity=".55"/>'
+    b += '<rect width="800" height="300" filter="url(#fog)" opacity=".35"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
     b = conluz(b, .42, [(400,390,460,200,1),(700,270,120,120,.6)], tono=.1)
     return wrap(b)
@@ -787,6 +791,10 @@ def salon():
     b += '<rect x="640" y="50" width="120" height="200" fill="#5a6a72"/><rect x="640" y="50" width="120" height="200" filter="url(#fog)" opacity=".7"/><path d="M630 40q30 120 10 220h-14V40zM770 40q-30 120-10 220h14V40z" fill="#5a1a22"/>'
     # puerta del despacho (izquierda, entreabierta)
     b += '<rect x="170" y="110" width="80" height="220" fill="#1a0e08" stroke="#4a2a14" stroke-width="5"/><circle cx="240" cy="230" r="3" fill="#c9a24a"/><text x="210" y="102" text-anchor="middle" font-size="7" fill="#8a7a5a" font-family="Georgia">DESPACHO</text>'
+    b += ''.join(f'<rect x="{x}" y="0" width="14" height="330" fill="#1e0c10" opacity=".6"/>' for x in range(0,800,40))
+    b += '<rect y="290" width="800" height="40" fill="#1a0c0a"/><path d="M0 290H800" stroke="#3a2014" stroke-width="3"/>'
+    b += '<path d="M420 0V40" stroke="#0a0a0a" stroke-width="2"/><path d="M380 40h80l-10 16h-60z" fill="#3a2a10"/>' + ''.join(f'<path d="M{x} 56 q0 14 -6 18" stroke="#3a2a10" stroke-width="2" fill="none"/><rect x="{x-9}" y="70" width="6" height="10" fill="#cfc4a8" opacity=".6"/>' for x in (396,420,444))
+    b += '<g fill="#d8d2c4" opacity=".85">' + ''.join(f'<circle cx="{x}" cy="{y}" r="6"/>' for x,y in [(296,286),(306,280),(316,288),(524,286),(534,280),(544,288)]) + '</g>'
     # ataúd y velas
     b += '<path d="M300 300h220l20 30h-260z" fill="#2a1a10"/><path d="M296 290h228v14H296z" fill="#4a2e18"/><path d="M300 290h220l-10-14H310z" fill="#3a2414"/><path d="M410 278v10M402 283h16" stroke="#c9a24a" stroke-width="2"/>'
     for x in (280, 540):
@@ -824,6 +832,7 @@ def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
     b += '<rect x="560" y="150" width="160" height="200" fill="#4a2a18"/><path d="M560 230h160" stroke="#2a180c" stroke-width="3"/><rect x="574" y="164" width="132" height="56" fill="#3a2014"/><circle cx="640" cy="196" r="7" fill="#c9a24a"/><rect x="637" y="194" width="6" height="10" fill="#1a0e08"/>'
     b += '<rect x="560" y="350" width="10" height="40" fill="#3a2014"/><rect x="710" y="350" width="10" height="40" fill="#3a2014"/>'
     # escritorio de Julián con el bloc, el lápiz y la póliza
+    b += '<rect y="0" width="800" height="18" fill="#120a05"/><path d="M110 500 L170 360 L640 360 L700 500Z" fill="#2a0e10" opacity=".85"/><path d="M130 490 L182 372 L628 372 L682 490Z" fill="none" stroke="#6a4a20" stroke-width="2" opacity=".5"/>'
     b += '<rect x="180" y="320" width="360" height="22" fill="#5a3a22"/><rect x="190" y="342" width="60" height="140" fill="#3a2414"/><rect x="470" y="342" width="60" height="140" fill="#3a2414"/>'
     b += '<rect x="260" y="300" width="70" height="20" fill="#efe6d0"/><path d="M262 304h66M262 309h50" stroke="#cfc4a8" stroke-width=".8"/><path d="M336 316l40-8" stroke="#c9a24a" stroke-width="3"/>'
     b += '<rect x="400" y="302" width="64" height="18" fill="#e8dcc0" transform="rotate(4 432 311)"/><text x="432" y="313" text-anchor="middle" font-size="4" fill="#2a1d10" font-family="Georgia" transform="rotate(4 432 311)">LA PREVISORA</text>'
@@ -1174,6 +1183,8 @@ def conservera():
     # vapor de las calderas
     b += '<g class="a-humo"><g filter="url(#b5)" opacity=".5"><ellipse cx="700" cy="220" rx="60" ry="40" fill="#e8e6e0"/><ellipse cx="660" cy="170" rx="40" ry="30" fill="#e8e6e0"/></g></g>'
     b += '<rect x="650" y="230" width="110" height="110" fill="#2a2a2a"/><rect x="664" y="250" width="80" height="30" fill="#ff8a30" opacity=".6"/>'
+    b += '<path d="M0 52H800M0 60H800" stroke="#141412" stroke-width="5"/><path d="M600 60V230" stroke="#141412" stroke-width="8"/>'
+    b += ''.join(f'<path d="M{x} 60V214" stroke="#000" stroke-width="2"/><path d="M{x-22} 214H{x+22}L{x+30} 232H{x-30}Z" fill="#1a1c1a"/><ellipse cx="{x}" cy="234" rx="14" ry="5" fill="#ffd98a"/>' for x in (230,440))
     # mesa larga de enlatar
     b += '<rect y="330" width="800" height="170" fill="#262622"/>'
     b += '<rect x="120" y="360" width="460" height="16" fill="#7a6a52"/><rect x="130" y="376" width="12" height="100" fill="#5a4a36"/><rect x="560" y="376" width="12" height="100" fill="#5a4a36"/>'
@@ -1187,7 +1198,7 @@ def conservera():
     # Aitor en la puerta
     b += aitor(90, 480, .62)
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .5, [(705,265,180,180,1),(165,130,110,110,.7),(405,130,110,110,.7),(645,130,110,110,.7),(400,400,340,150,.8)], [(704,265,150,'fire',.45,0)], humo=.2, tono=.1)
+    b = conluz(b, .5, [(705,265,180,180,1),(165,130,110,110,.7),(405,130,110,110,.7),(645,130,110,110,.7),(230,330,170,180,1),(440,330,170,180,1),(400,420,340,120,.7)], [(704,265,150,'fire',.45,0),(230,236,170,'warm',.45,24),(440,236,170,'warm',.45,24)], humo=.2, tono=.1)
     return wrap(b)
 SVG['conservera'] = conservera()
 
@@ -1246,6 +1257,7 @@ def oficina():
     b += '<rect x="60" y="80" width="200" height="8" fill="#2a1e14"/>'
     for k in range(5): b += f'<rect x="{74+k*36}" y="44" width="22" height="36" rx="3" fill="#3a5a3a"/><rect x="{76+k*36}" y="56" width="18" height="12" fill="#e8dcc0"/><path d="M{80+k*36} 60h10M{80+k*36} 64h8" stroke="#8a1a1a" stroke-width="1.2"/>'
     b += '<text x="160" y="104" text-anchor="middle" font-size="8" fill="#e8dcc0" font-family="Georgia">VENENO · MATARRATAS</text>'
+    b += '<rect y="0" width="800" height="18" fill="#120a05"/><rect x="680" y="230" width="90" height="250" fill="#24180e"/>' + ''.join(f'<rect x="690" y="{y}" width="70" height="48" fill="#2e2012" stroke="#140c06" stroke-width="2"/><rect x="716" y="{y+20}" width="18" height="5" fill="#8a6a2a"/>' for y in (240,296,352,408))
     # mesa con el registro y el libro de envíos
     b += '<rect x="120" y="300" width="520" height="20" fill="#6a4a2a"/><rect x="130" y="320" width="16" height="160" fill="#4a3018"/><rect x="614" y="320" width="16" height="160" fill="#4a3018"/>'
     b += '<g transform="rotate(-3 250 288)"><rect x="180" y="268" width="140" height="36" fill="#e8dcc0"/><path d="M250 268v36" stroke="#a89a7a"/>'
@@ -1319,7 +1331,7 @@ def calleFarol():
     # señoritas en el portal (siluetas, fumando)
     for x, f in ((470, False), (520, True)):
         b += f'<g transform="translate({x} 420) scale({-1 if f else 1} 1)"><path d="M-12 0q-2-60 12-96q14 36 12 96z" fill="#2a0e1a"/><circle cx="0" cy="-104" r="9" fill="#1a0e10"/><path d="M6 -98l12-4" stroke="#e8e2d4" stroke-width="1.6"/><circle class="a-brasa" cx="18" cy="-102" r="1.4" fill="#ff8a3a"/></g>'
-    b += '<rect y="420" width="800" height="80" fill="#121014"/><ellipse cx="120" cy="450" rx="60" ry="5" fill="#ff3a2a" opacity=".15"/><ellipse cx="560" cy="452" rx="60" ry="5" fill="#ff3a2a" opacity=".15"/>'
+    b += '<rect y="420" width="800" height="80" fill="#0c0a0e"/><rect y="424" width="800" height="76" fill="url(#cob)" opacity=".3"/><rect x="110" y="424" width="20" height="76" fill="#ff3a2a" opacity=".16" filter="url(#b5)"/><rect x="550" y="424" width="20" height="76" fill="#ff3a2a" opacity=".16" filter="url(#b5)"/><ellipse cx="120" cy="450" rx="60" ry="5" fill="#ff3a2a" opacity=".15"/><ellipse cx="560" cy="452" rx="60" ry="5" fill="#ff3a2a" opacity=".15"/>'
     b += fig(PORTERO, 270, 440, 1.0, who='El portero')
     b += aitor(80, 480, .7)
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
