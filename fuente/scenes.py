@@ -878,7 +878,7 @@ def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
     b += '<rect x="180" y="320" width="360" height="22" fill="#5a3a22"/><rect x="190" y="342" width="60" height="140" fill="#3a2414"/><rect x="470" y="342" width="60" height="140" fill="#3a2414"/>'
     b += '<rect x="260" y="300" width="70" height="20" fill="#efe6d0"/><path d="M262 304h66M262 309h50" stroke="#cfc4a8" stroke-width=".8"/><path d="M336 316l40-8" stroke="#c9a24a" stroke-width="3"/>'
     b += '<rect x="400" y="302" width="64" height="18" fill="#e8dcc0" transform="rotate(4 432 311)"/><text x="432" y="313" text-anchor="middle" font-size="4" fill="#2a1d10" font-family="Georgia" transform="rotate(4 432 311)">LA PREVISORA</text>'
-    b += '<path d="M490 300v20h14v-20z" fill="#2a2a2a"/><g class="a-brillo"><circle cx="497" cy="296" r="70" fill="url(#warm)" opacity=".7"/></g><path d="M486 300l11-24 11 24z" fill="#6a4a2a"/>'
+    b += '<path d="M490 300v20h14v-20z" fill="#2a2a2a"/>' + ('' if noche else '<g class="a-brillo"><circle cx="497" cy="296" r="70" fill="url(#warm)" opacity=".7"/></g>') + '<path d="M486 300l11-24 11 24z" fill="#6a4a2a"/>'
     # suelo
     b += '<rect y="482" width="800" height="18" fill="#1a0e08"/>'
     if noche:
@@ -892,7 +892,7 @@ def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
         # la Biblia familiar, sobre el escritorio
         b += '<rect x="194" y="300" width="56" height="20" rx="2" fill="#2a1408"/><rect x="196" y="300" width="52" height="6" fill="#e8dcc0"/><path d="M222 307v10M217 311h10" stroke="#c9a24a" stroke-width="2"/>'
         # gotas de lacre rojo, secas, del retrato hacia la puerta del pasillo (solo con la linterna)
-        b += '<g class="ol" fill="#8a1a1a">' + ''.join(f'<ellipse cx="{x}" cy="{y}" rx="{r}" ry="{r*.55}"/>' for x, y, r in ((392, 470, 3.2), (468, 474, 2.4), (560, 477, 2.8), (650, 474, 2.2), (722, 478, 2.6))) + '</g>'
+        b += '<g class="ol">' + ''.join(f'<ellipse cx="{x}" cy="{y}" rx="{r*1.3}" ry="{r*.75}" fill="#d0301e"/><ellipse cx="{x-r*.4}" cy="{y-r*.25}" rx="{r*.4}" ry="{r*.2}" fill="#ff9a80" opacity=".8"/>' for x, y, r in ((392, 470, 3.2), (468, 474, 2.4), (560, 477, 2.8), (650, 474, 2.2), (722, 478, 2.6))) + '</g>'
         if abrigo:
             # el abrigo de Íñigo, empapado, en el sillón
             b += '<g transform="translate(-75 0)"><path d="M600 400h110v70h-110z" fill="#3a2018"/><path d="M594 380h16v90h-16zM700 380h16v90h-16z" fill="#2a160e"/>'
@@ -912,7 +912,7 @@ def despacho(leonor=False, noche=False, inigo=False, abrigo=False):
         b += '<rect class="luzL" x="740" y="100" width="60" height="390" fill="#c9b48e" opacity=".25"/>'
         b += fig(LEONOR, 760, 488, 1.15, cls='leoD')
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, (.4 if noche else .55), [(497,296,210,190,1),(390,130,150,160,.5)]+([(766,390,110,150,1)] if noche and not inigo else [])+([(110,360,130,180,1)] if inigo else []), [(497,296,150,'warm',.45,0)], tono=.1)
+    b = conluz(b, (.4 if noche else .55), [(497,296,210,190,1),(390,130,150,160,.5)]+([(766,390,110,150,1)] if noche and not inigo else [])+([(110,360,130,180,1)] if inigo else []), ([] if noche else [(497,296,150,'warm',.45,0)]), tono=.1)
     return wrap(b)
 SVG['despacho'] = despacho(); SVG['despachoL'] = despacho(True)
 SVG['despachoN'] = despacho(noche=True); SVG['despachoI'] = despacho(noche=True, inigo=True); SVG['despachoNA'] = despacho(noche=True, abrigo=True)
