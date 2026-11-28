@@ -458,7 +458,12 @@ def faro(leonor=False):
     t=t.replace(alg,'<rect x="290" y="432" width="12" height="9" rx="2" fill="#a3271c"/><text x="296" y="439.4" text-anchor="middle" font-size="5" fill="#f0d8a0" font-family="Georgia">C</text>'
       '<g id="algas"><path d="M276 444q14-22 40-12q-8 8-4 18q-18-6-36-6z" fill="#22381f"/><path d="M280 446q14-12 32-8M286 450q12-5 24-3" stroke="#142a12" stroke-width="3" fill="none"/><path d="M272 438q12-4 22 4" stroke="#2e4a28" stroke-width="5" fill="none"/></g>')
     # huellas de bota en las rocas del primer plano (solo con luz)
-    extra='<g class="ol" fill="#0e0c0a" opacity=".85">' + ''.join(f'<ellipse cx="{50+i*26}" cy="{488-i*7}" rx="7" ry="11" transform="rotate(-60 {50+i*26} {488-i*7})"/>' for i in range(5)) + '</g>'
+    # huellas de bota claveteada: suela mojada con el borde brillante y los clavos (solo con la linterna)
+    def _bota(x,y):
+        g=f'<g transform="rotate(-60 {x} {y})"><ellipse cx="{x}" cy="{y}" rx="8" ry="13" fill="#2a3338" stroke="#8a9aa0" stroke-width="1.6"/><ellipse cx="{x}" cy="{y+10}" rx="6" ry="4" fill="#2a3338" stroke="#8a9aa0" stroke-width="1.2"/>'
+        g+=''.join(f'<circle cx="{x+dx}" cy="{y+dy}" r="1.3" fill="#c8d0d4"/>' for dx,dy in [(-5,-7),(0,-10),(5,-7),(-6,-1),(6,-1),(-5,5),(5,5),(0,2)])
+        return g+'</g>'
+    extra='<g class="ol">' + ''.join(_bota(50+i*26, 488-i*7) for i in range(5)) + '</g>'
     extra+='<rect x="20" y="440" width="180" height="60" fill="#000" class="ob" opacity=".55"/>'
     # verja con candado, el comisario y Aitor
     extra+='<g stroke="#0a0a0a" stroke-width="3"><path d="M738 352v96M790 352v96"/>' + ''.join(f'<path d="M{x} 362v84"/>' for x in range(748, 790, 9)) + '<path d="M738 364h52M738 440h52"/></g>'
