@@ -202,15 +202,15 @@ def topo():
     b += '<text x="575" y="135" text-anchor="middle" font-family="Georgia" font-size="11" fill="#d8d0b8" letter-spacing="2">TOPO</text>'
     b += '<text x="575" y="148" text-anchor="middle" font-family="Georgia" font-size="6.5" fill="#d8d0b8">Frontera – San Sebastián</text>'
     # farola
-    b += '<rect x="776" y="150" width="6" height="214" fill="#0e0c0a"/><path d="M764 150h30l-5 26h-20z" fill="#1c1814"/><rect x="769" y="155" width="20" height="18" fill="#ffd88a"/>'
+    b += '<rect x="726" y="150" width="6" height="214" fill="#0e0c0a"/><path d="M714 150h30l-5 26h-20z" fill="#1c1814"/><rect x="719" y="155" width="20" height="18" fill="#ffd88a"/>'
     # charcos con reflejos
-    b += '<ellipse cx="779" cy="440" rx="40" ry="6" fill="#ffd88a" opacity=".16"/><ellipse cx="560" cy="470" rx="70" ry="7" fill="#2a3a44" opacity=".6"/><ellipse cx="560" cy="470" rx="30" ry="3" fill="#ffd88a" opacity=".12"/>'
+    b += '<ellipse cx="729" cy="440" rx="40" ry="6" fill="#ffd88a" opacity=".16"/><ellipse cx="560" cy="470" rx="70" ry="7" fill="#2a3a44" opacity=".6"/><ellipse cx="560" cy="470" rx="30" ry="3" fill="#ffd88a" opacity=".12"/>'
     b += candela(470, 372, .95)
     b += aitor(690, 374, .74)
-    b += '<g class="a-brillo"><circle cx="779" cy="165" r="70" fill="url(#warm)" opacity=".8"/></g>'
+    b += '<g class="a-brillo"><circle cx="729" cy="165" r="90" fill="url(#warm)"/></g>'
     b += '<rect y="380" width="800" height="120" filter="url(#fog)" opacity=".35"/>'
     b += '<rect width="800" height="500" fill="url(#vig)"/>'
-    b = conluz(b, .62, [(779,200,150,240,1),(646,290,130,130,1),(170,300,200,110,.8),(470,300,120,150,.7)], [(779,165,140,'warm',.4,0),(646,273,90,'warm',.55,12)], lluvia=True, tono=.15)
+    b = conluz(b, .62, [(729,200,170,240,1),(646,290,130,130,1),(170,300,200,110,.8),(470,300,120,150,.7)], [(729,165,170,'warm',.5,0),(646,273,90,'warm',.55,12)], lluvia=True, tono=.15)
     return wrap(b)
 SVG['topo'] = topo()
 
