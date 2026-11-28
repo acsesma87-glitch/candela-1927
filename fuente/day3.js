@@ -18,7 +18,7 @@ DAYS[3]=[
   {who:'Un marinero',x:110,y:360,act:async()=>{await bubble('Eki va a saludar al marinero de la barra. Él le hace un nudo con una cuerdita para que juegue.',4000);ekiLog('Los marineros de El Ancla','saluda a todos.')}},
  ],
  spots:[
-  {id:'paco',tool:'mano',x:400,y:230,r:60,once:false,act:async()=>{const f=D(3).flags;
+  {id:'paco',tool:'mano',x:560,y:240,r:60,once:false,act:async()=>{const f=D(3).flags;
     if(!f.paco1){await talk('Paco','¡La argentina! Ya le dije a Doña Puri que vendría. Siéntese, siéntese. ¿Sidra?');
       await talk('Candela','Vengo a preguntar por Mateo. Dice que la noche del 30 estuvo aquí hasta el cierre.');
       await talk('Paco','(Sonríe y se seca las manos en el mandil.) En El Ancla nada es gratis, señorita. Ni la sidra ni lo que se oye.');
@@ -35,14 +35,14 @@ DAYS[3]=[
       persona('Mateo «el Rubio»','Se fue de El Ancla a medianoche por «un asunto». Recibe notas escondidas detrás de la diana.');
       fin3();return}
     await talk('Paco','¿Otra sidra, señorita? Para la información hay que esperar a otro día.');endTalk()}},
-  {id:'dianaVer',tool:'mano',x:650,y:150,r:50,once:false,act:async()=>{goScene(2)}},
-  {id:'dianaLupa',tool:'lupa',x:650,y:150,w:90,h:90,act:async()=>{await bubble('La diana está torcida y el clavo, gastado. Como si alguien la moviera a menudo…',4000)}},
-  {id:'fiados',tool:'lupa',x:385,y:132,w:110,h:60,act:async()=>{await bubble('La pizarra de fiados: «Mateo… 2 sidras (30-XI)». Solo dos sidras. Para alguien que se quedó hasta el cierre, poca sed.',4800)}},
+  {id:'dianaVer',tool:'mano',x:372,y:108,r:40,once:false,act:async()=>{goScene(2)}},
+  {id:'dianaLupa',tool:'lupa',x:372,y:108,w:70,h:70,act:async()=>{await bubble('La diana está torcida y el clavo, gastado. Como si alguien la moviera a menudo…',4000)}},
+  {id:'fiados',tool:'lupa',x:245,y:150,w:110,h:80,act:async()=>{await bubble('La pizarra de fiados: «Mateo… 2 sidras (30-XI)». Solo dos sidras. Para alguien que se quedó hasta el cierre, poca sed.',4800)}},
   {id:'sangre',tool:'linterna',x:50,y:462,w:80,h:40,act:async()=>{await bubble('Bajo la escalera, a oscuras: una silla rota y gotas de sangre seca en el suelo.',4000);
     await talk('Paco','(Desde la barra.) Una pelea, el otro día. Gente de fuera. Nada que le importe.');endTalk();
     await pista('sangreAncla','Sangre en El Ancla','Bajo la escalera de El Ancla: una silla rota y gotas de sangre seca. Paco dice que fue una pelea «de gente de fuera».')}},
-  {id:'trastienda',tool:'mano',x:755,y:210,r:40,once:false,act:async()=>{await bubble('«PRIVADO». La puerta de la trastienda está cerrada con llave. Paco la mira de reojo cuando me acerco.',4400)}},
-  {id:'marinero',tool:'mano',x:110,y:360,r:50,once:false,act:async()=>{const t=['Dicen que la viuda no derramó ni una lágrima en el faro. Ni una.','Al sereno lo van a echar, ya verá. Los Arrieta no perdonan.','Don Julián estaba enfermo, ¿sabe? Lo decían en la conservera. Algo malo.'];
+  {id:'trastienda',tool:'mano',x:782,y:190,r:40,once:false,act:async()=>{await bubble('«PRIVADO». La puerta de la trastienda está cerrada con llave. Paco la mira de reojo cuando me acerco.',4400)}},
+  {id:'marinero',tool:'mano',x:150,y:330,r:55,once:false,act:async()=>{const t=['Dicen que la viuda no derramó ni una lágrima en el faro. Ni una.','Al sereno lo van a echar, ya verá. Los Arrieta no perdonan.','Don Julián estaba enfermo, ¿sabe? Lo decían en la conservera. Algo malo.'];
     const f=D(3).flags;f.chisme=((f.chisme||0)+1);save();await talk('Un marinero',t[(f.chisme-1)%3]);endTalk();if(f.chisme===3)persona('Don Julián Arrieta','Según un marinero de El Ancla, «estaba enfermo, algo malo».')}},
  ],
  laika:()=>{const f=D(3).flags;if(!f.tortilla){f.tortilla=1;save();return{x:300,t:'Laika ha encontrado medio pintxo de tortilla en el suelo. Paco hace como que no ha visto nada.'}}return null},

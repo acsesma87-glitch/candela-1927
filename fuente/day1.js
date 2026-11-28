@@ -117,30 +117,30 @@ DAYS[1]=[
     await bubble('El abrigo de luto huele muchísimo a naftalina.',2800);ekiLog('Doña Leonor','NO se acerca. Huele a naftalina.')}},
  ],
  spots:[
-  {id:'algas',tool:'drag',el:'algas',x:222,y:420,r:50,dist:60,hint:'Hay algas tapando la mano. Arrástralas con el dedo hacia un lado.',act:async()=>{await bubble('Debajo de las algas, la mano del muerto. Tiene algo rojo entre los dedos.',3200);nar('La mano aprieta algo rojo, pequeño.<br><br><i>Míralo con la lupa.</i>')}},
-  {id:'ficha',tool:'lupa',x:222,y:416,w:30,h:20,when:()=>found('algas'),act:async()=>{await bubble('Una ficha del Casino. Donde estaba su hijo Íñigo anoche, «de excelente humor», según el periódico.',4000);
+  {id:'algas',tool:'drag',el:'algas',x:292,y:442,r:50,dist:60,hint:'Hay algas tapando la mano. Arrástralas con el dedo hacia un lado.',act:async()=>{await bubble('Debajo de las algas, la mano del muerto. Tiene algo rojo entre los dedos.',3200);nar('La mano aprieta algo rojo, pequeño.<br><br><i>Míralo con la lupa.</i>')}},
+  {id:'ficha',tool:'lupa',x:296,y:437,w:30,h:20,when:()=>found('algas'),act:async()=>{await bubble('Una ficha del Casino. Donde estaba su hijo Íñigo anoche, «de excelente humor», según el periódico.',4000);
     await pista('ficha','La ficha del Casino','Una ficha roja del Casino de Altamar, con una «C», apretada en la mano del muerto. Íñigo, el hijo, estuvo anoche en el Casino.');faroCheck()}},
-  {id:'bajos',tool:'lupa',x:444,y:398,w:70,h:18,act:async()=>{await bubble('Los bajos del pantalón del doctor: empapados de agua de mar, con arena y un hilo de alga.',3600);
+  {id:'bajos',tool:'lupa',x:525,y:432,w:70,h:20,act:async()=>{await bubble('Los bajos del pantalón del doctor: empapados de agua de mar, con arena y un hilo de alga.',3600);
     await talk('Dr. Salazar','(Se da cuenta de que lo mira.) Las rocas, querida. Para atender a un muerto hay que mojarse los pies.');endTalk();
     await pista('bajos','El pantalón del doctor','Los bajos, mojados de mar, con arena y un hilo de alga. Dice que se mojó al bajar a las rocas.');faroCheck()}},
-  {id:'huellas',tool:'linterna',x:90,y:452,w:150,h:50,act:async()=>{await bubble('En las rocas todavía a oscuras: pisadas de bota grande, de suela claveteada, que salen del agua y van hacia el cuerpo. Botas de trabajo, como las de los estibadores.',4800);
+  {id:'huellas',tool:'linterna',x:110,y:470,w:150,h:50,act:async()=>{await bubble('En las rocas todavía a oscuras: pisadas de bota grande, de suela claveteada, que salen del agua y van hacia el cuerpo. Botas de trabajo, como las de los estibadores.',4800);
     await pista('huellas','Huellas en las rocas','Pisadas de bota claveteada, como las de los estibadores, que salen del agua y van hacia el cuerpo. El puerto está en huelga contra Arrieta…');faroCheck()}},
-  {id:'verja',tool:'lupa',x:636,y:306,w:40,h:34,act:async()=>{await bubble('El candado de la verja está abierto. No forzado. Quien lo abrió tenía la llave.',3600);
+  {id:'verja',tool:'lupa',x:752,y:398,w:40,h:34,act:async()=>{await bubble('El candado de la verja está abierto. No forzado. Quien lo abrió tenía la llave.',3600);
     await bubble('Miro a Aitor. Aitor mira al suelo.',2600);
     await pista('verja','La verja del faro','El candado está abierto, no forzado. Quien lo abrió tenía la llave. Y la llave la tiene Aitor.');faroCheck()}},
-  {id:'doctor',tool:'mano',x:448,y:340,r:72,once:false,act:async()=>{const f=D(1).flags;
+  {id:'doctor',tool:'mano',x:540,y:390,r:72,once:false,act:async()=>{const f=D(1).flags;
     if(!f.informe){await talk('Dr. Salazar','¡Vaya! Usted debe de ser la famosa argentina. Doctor Ramón Salazar, para servirla. Mi querida detective…');
       await talk('Dr. Salazar','(Saca un papel del maletín y lo lee en voz alta.) «Suicidio. Muerte por la caída, hacia las tres de la madrugada.» Pobre Julián. Estaba hundido.');
       await talk('Dr. Salazar','Si necesita cualquier cosa, el dispensario del puerto está siempre abierto. Para usted, también.');endTalk();
       f.informe=1;save();persona('Dr. Salazar','Médico del dispensario del puerto. Muy amable conmigo: me llama «mi querida detective».');
       await pista('informe','El informe del doctor','«Suicidio. Muerte por la caída, hacia las tres de la madrugada.» Firmado: Dr. R. Salazar.');faroCheck()}
     else{await talk('Dr. Salazar','No se canse, querida. A veces las cosas son exactamente lo que parecen.');endTalk()}}},
-  {id:'comisario',tool:'mano',x:532,y:300,r:95,once:false,act:async()=>{await talk('Comisario Ibarra','Estaba arruinado. Se tiró. Caso cerrado antes del almuerzo.');endTalk();persona('Comisario Ibarra','Quiere cerrar el caso como suicidio «antes del almuerzo».')}},
-  {id:'guardia',tool:'mano',x:190,y:290,r:90,once:false,act:async()=>{await talk('El guardia','(Apenas habla.) Lo encontraron los pescadores. A las seis y cuarenta.');
+  {id:'comisario',tool:'mano',x:620,y:400,r:70,once:false,act:async()=>{await talk('Comisario Ibarra','Estaba arruinado. Se tiró. Caso cerrado antes del almuerzo.');endTalk();persona('Comisario Ibarra','Quiere cerrar el caso como suicidio «antes del almuerzo».')}},
+  {id:'guardia',tool:'mano',x:250,y:380,r:90,once:false,act:async()=>{await talk('El guardia','(Apenas habla.) Lo encontraron los pescadores. A las seis y cuarenta.');
     if(!found('algas'))await talk('El guardia','Uno juraba que el muerto aprieta algo en la mano. Pero con tanta alga encima, nadie ha querido tocarle.');
     endTalk();persona('El guardia civil','Los pescadores encontraron el cuerpo a las 6:40. Uno dice que el muerto aprieta algo en la mano.')}},
-  {id:'aitorF',tool:'mano',x:715,y:320,r:85,once:false,act:async()=>{await talk('Aitor','La cerré a las doce y media, Candela. Te lo juro. Está en mi cuaderno.');endTalk()}},
-  {id:'leonor',tool:'mano',x:598,y:375,r:100,once:false,when:()=>D(1).flags.leonor,act:async()=>{const n=faroN();
+  {id:'aitorF',tool:'mano',x:700,y:400,r:70,once:false,act:async()=>{await talk('Aitor','La cerré a las doce y media, Candela. Te lo juro. Está en mi cuaderno.');endTalk()}},
+  {id:'leonor',tool:'mano',x:560,y:400,r:80,once:false,when:()=>D(1).flags.leonor,act:async()=>{const n=faroN();
     if(!(found('ficha')&&D(1).flags.informe&&n>=4)){nar('Todavía no tengo suficiente para enfrentarme a esa mujer.<br><br><i>Busca más pistas en el faro.</i>');return}
     next()}},
  ],
