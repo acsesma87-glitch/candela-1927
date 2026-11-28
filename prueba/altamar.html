@@ -715,10 +715,12 @@ let tab='pistas';const SUS=['Doña Leonor','Íñigo','Clara','Mateo','Lola','Cap
 const MK=['','✗','?','◯'];
 function openLib(t){tab=t||tab;S.leidas=S.pistas.length;save();badge();$('#lib').classList.add('on');libDraw()}
 function libDraw(){
-  const T=[['pistas','Pistas'],['personas','Personas'],['sospechas','Sospechas'],['eki','Eki y la gente'],['bolsillo','Bolsillo']];
+  const T=[['sabe','Lo que sé'],['pistas','Pistas'],['personas','Personas'],['sospechas','Sospechas'],['eki','Eki y la gente'],['bolsillo','Bolsillo']];
   $('#tabs').innerHTML=T.map(([k,n])=>`<button class="${k===tab?'on':''}" data-t="${k}">${n}</button>`).join('');
   $('#tabs').querySelectorAll('button').forEach(b=>b.onclick=()=>{tab=b.dataset.t;libDraw()});
   let h='';
+  if(tab==='sabe'){h='<h2>Lo que sé</h2>';const ds=Object.keys(RESUMEN).map(Number).filter(d=>S.days[d]&&S.days[d].flags&&S.days[d].flags.resumen);
+    if(!ds.length)h+='<div class="it no">Cada mañana, aquí apuntaré lo que sé hasta ahora.</div>';ds.reverse().forEach(d=>{h+=`<h3>Día ${d}</h3><div class="it">${RESUMEN[d]}</div>`})}
   if(tab==='pistas'){h='<h2>Pistas</h2>';if(!S.pistas.length)h+='<div class="it no">Todavía nada. Mira bien.</div>';
     const days=[...new Set(S.pistas.map(p=>p.day))];days.forEach(d=>{h+=`<h3>Día ${d}</h3>`+S.pistas.filter(p=>p.day===d).map(p=>`<div class="it"><b>${p.t}.</b> ${p.d}</div>`).join('')})}
   if(tab==='personas'){h='<h2>Personas</h2>';const ks=Object.keys(S.personas);if(!ks.length)h+='<div class="it no">Aún no conozco a nadie en Altamar.</div>';
@@ -737,6 +739,7 @@ $('#homeBtn').onclick=()=>{SC=null;AU.music(null);drawCal();show('cal')};
 // ================= días =================
 const DAYS={};
 async function playDay(d){curDay=d;if(d>1&&!S.tools.includes('eki')){S.tools.push('eki');save()}const dd=D(d);show('game');$('#dayLbl').innerHTML=`Día ${d} · ${d} dic<b id="cdLbl">${countdown(d)}</b>`;toolsUI();badge();
+  if(typeof RESUMEN!=='undefined'&&RESUMEN[d]&&!dd.flags.resumen){dd.flags.resumen=1;save();$('#base').innerHTML=$('#lit').innerHTML=$('#lens').innerHTML='';await docShow(resumenHTML(d))}
   const day=DAYS[d];let i=dd.done?0:dd.scene;if(i>=day.length)i=0;await goScene(i,true)}
 async function goScene(i,first){const day=DAYS[curDay],dd=D(curDay);dd.scene=i;save();
   const sc=day[i];if(sc.cartel&&!first){await cartel(sc.cartel)}else if(sc.cartel){await cartel(sc.cartel)}
@@ -1835,10 +1838,23 @@ async function confiesa8(){const f=d8();f.confesion=1;save();
   nar('Volvemos por los callejones sin decir nada. Detrás, el piano del Café Royal empieza una canción triste.');narBtn('Volver a casa',()=>{narSigue=true;goScene(4)})}
 FACES['Lola']=FACE_LOLA;FACES['El portero']=FACE_PORTERO;
 
+// ---------- «Lo que sé hasta ahora»: resumen al empezar cada día (solo lo que Candela ya ha descubierto) ----------
+const RESUMEN={
+2:'Don Julián Arrieta apareció muerto en las rocas del faro, y el doctor Salazar firmó «suicidio». Pero alguien me dejó una nota: «No fue un suicidio. Que lo mire la argentina».<br><br>En su mano apretaba una ficha del Casino, y en las rocas había huellas de botas de estibador. El comisario Ibarra me ha dado hasta Nochebuena.',
+3:'Don Julián murió en las rocas del faro y el doctor dice que se tiró. Una nota anónima dice que no.<br><br>Las huellas de botas claveteadas apuntan a los estibadores, y Mateo «el Rubio», el que lleva la huelga, mintió: dejó su guardia a medianoche y no quiere decir adónde fue.',
+4:'Mateo salió de El Ancla a medianoche «por un asunto». Detrás de la diana encontré una cita: «A las doce, donde siempre. Trae los papeles. — C.». ¿Quién es «C.»?<br><br>Hoy velan a Don Julián en el palacete. Toda la familia estará allí.',
+5:'En el despacho de Don Julián calqué una nota de su bloc: «Esta noche se acaba todo. Que Dios me perdone». Parece una despedida.<br><br>Pero Doña Leonor mintió: salió esa noche. El seguro de vida, subido hace un mes, es para ella. Clara tiene los dedos manchados de tinta azul. Y detrás del retrato hay una caja fuerte.',
+6:'Don Julián estaba muy enfermo: le quedaban pocos meses, y el doctor guardaba su ficha en un cajón secreto. Todo apunta a que se tiró… quizá demasiado bien.<br><br>En el despacho del palacete sigue esa caja fuerte que nadie ha abierto.',
+7:'En la caja fuerte había un testamento nuevo, firmado un día antes de morir: deja a Íñigo sin nada y una renta «a L. y a la niña». Don Julián tenía otra mujer y una hija secreta.<br><br>Doña Leonor ya lo sabía: el rastro de lacre llevaba a su dormitorio. ¿Quién es «L.»?',
+8:'«L.» puede ser Lola, la «artista» de la calle del Farol: Don Julián iba los jueves «a oírla cantar».<br><br>Él mismo mandó quitar la reja de la máquina que mató a un chaval. Clara firmó por un frasco de matarratas dos días antes de su muerte. Y el libro de envíos de la conservera está escrito en clave.',
+9:'Don Julián no pensaba matarse: «esta noche se acaba todo» era el borrador de su carta de despedida a Lola. La citó en el faro a la una, y ella dice que no llegó. Tienen una hija, Julia, de ocho años.<br><br>Si todo Altamar cree que se tiró, quien sale ganando es quien lo mató.',
+};
+function resumenHTML(d){return `<div style="text-align:left;font-size:17px;line-height:1.65"><b style="color:#8a2a20;font-size:19px">Lo que sé hasta ahora</b><br><span style="opacity:.6;font-size:14px">Día ${d} · ${d} de diciembre</span><br><br>${RESUMEN[d]}</div>`}
+
 
 $('#calDay').onclick=()=>{if(pickReset){pickReset=0;$('#calDay').textContent='↺ Reiniciar un día';bubCal('Vale, no se reinicia nada.');return}
   pickReset=-1;$('#calDay').textContent='✕ Cancelar';bubCal('Toca la puerta del día que quieres reiniciar.')};
-if(ALL){$('#ver').textContent=' · versión de prueba 107';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
+if(ALL){$('#ver').textContent=' · versión de prueba 108';const r=$('#calReset');r.style.display='';r.onclick=()=>{if(r.dataset.ok){try{localStorage.removeItem(KEY)}catch(e){}location.reload()}else{r.dataset.ok=1;r.textContent='¿Seguro? Toca otra vez';setTimeout(()=>{delete r.dataset.ok;r.textContent='↺ Empezar desde cero'},3000)}}}
 // arrastrar con el dedo para leer (funciona también con la pantalla girada)
 document.querySelectorAll('.scr').forEach(el=>{let last=null,id=null,vel=0,raf=0;
   el.addEventListener('pointerdown',e=>{last=toApp(e.clientX,e.clientY)[1];id=e.pointerId;vel=0;cancelAnimationFrame(raf)});
