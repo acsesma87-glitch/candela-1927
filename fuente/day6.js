@@ -6,7 +6,7 @@ function cifra(i,paso){const f=d6();if(f.abierta)return;const c=f.cifras;c[i]=(c
   AU.sfx('tic')}
 async function manija(){const f=d6();if(f.abierta)return;const c=f.cifras;AU.sfx('cerradura');
   if(c.every((n,i)=>n===CAJA_OK[i])){f.abierta=1;$('#acts').innerHTML='';save();await sleep(300);swapSvg(SVG.cajaA);await shake();
-    await bubble('¡Clac! La puerta de la caja se abre. Dentro, unos billetes… y un sobre lacrado: «Testamento».',4600);
+    await bubble('¡Clac! La puerta de la caja se abre. Dentro, unos billetes… y un sobre con el lacre roto: «Testamento».',4600);
     nar('Un testamento. Y el lacre está roto: alguien ya lo ha abierto antes que yo.');return}
   if(c.every((n,i)=>n===CAJA_BODA[i])){f.boda=1;save();await bubble('Un clic sordo. Nada. La fecha de su boda no es.',3600);return}
   if(c[0]===4&&c[1]===45){await bubble('Un clic sordo. Las 4:45 tampoco. Esa hora no es la clave.',3800);return}
